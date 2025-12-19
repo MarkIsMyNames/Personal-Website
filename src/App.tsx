@@ -12,7 +12,7 @@ import { Projects } from './components/Projects';
 import { Contact } from './components/Contact';
 import { profile, skills, projects } from './data/portfolioData';
 
-function App(): React.JSX.Element {
+export default function App(): React.JSX.Element {
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyles />
@@ -36,5 +36,3 @@ function App(): React.JSX.Element {
     </ThemeProvider>
   );
 }
-
-export default App;

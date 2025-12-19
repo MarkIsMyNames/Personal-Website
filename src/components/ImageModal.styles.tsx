@@ -93,8 +93,9 @@ export const NavigationButton = styled.button`
   justify-content: center;
   transition: all 0.3s ease;
   z-index: 1001;
-  line-height: 1;
+  line-height: 0;
   padding: 0;
+  padding-bottom: 0.3rem;
   animation: fadeInNav 0.3s ease;
   opacity: 0;
   animation-fill-mode: forwards;
@@ -114,12 +115,14 @@ export const NavigationButton = styled.button`
     background: ${({ theme }) => theme.colors.accentPrimary};
     border-color: ${({ theme }) => theme.colors.accentPrimary};
     transform: translateY(-50%) scale(1.1);
+    padding-bottom: 0.3rem;
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     width: 3rem;
     height: 3rem;
     font-size: 2rem;
+    padding-bottom: 0.3rem;
   }
 `;
 

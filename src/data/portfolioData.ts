@@ -36,7 +36,7 @@ export const projects: Project[] = [
     title: 'Intercom',
     role: 'Software Engineer - Messenger Team',
     description:
-      'Worked on the Messenger team at Intercom, maintaining a platform used daily by thousands of businesses daily. Contributed to both backend and frontend development while winning multiple internal hackathons building innovative AI-powered tools.',
+      'Worked on the Messenger team at Intercom, maintaining a platform used by thousands of businesses daily. Contributed to both backend and frontend development while winning multiple internal hackathons building innovative AI-powered tools.',
     highlights: [
       {
         id: '1',
@@ -59,7 +59,7 @@ export const projects: Project[] = [
         orderIndex: 3,
       },
     ],
-    images: ['intercom improved.png'],
+    images: ['Intercom.png'],
     tags: [
       'Ember.js',
       'JavaScript',
@@ -77,7 +77,7 @@ export const projects: Project[] = [
     title: 'NASA Space Apps Challenge',
     role: 'Team Lead - 3rd Place Winner',
     description:
-      'Led a team to 3rd place in the NASA Space Apps Challenge in Athlone. Developed an solution for displaying and navigating multi-gigabyte/terabyte images online, enabling simplified exploration of Mars surface imagery and deep space photographs.',
+      'Led a team to 3rd place in the NASA Space Apps Challenge in Athlone. Developed a solution for displaying and navigating multi-gigabyte/terabyte images online, enabling simplified exploration of Mars surface imagery and deep space photographs.',
     highlights: [
       {
         id: '5',
@@ -91,7 +91,7 @@ export const projects: Project[] = [
       },
       {
         id: '7',
-        text: 'Figured out how to to render multi-gigabyte images with smooth panning and no loading delays',
+        text: 'Figured out how to render multi-gigabyte images with smooth panning and no loading delays',
         orderIndex: 2,
       },
       {
@@ -105,7 +105,7 @@ export const projects: Project[] = [
         orderIndex: 4,
       },
     ],
-    images: ['NASA1.jpeg', 'NASA2.jpeg', 'NASA3.jpeg'],
+    images: ['NASA1.jpg', 'NASA2.jpg', 'NASA3.jpg'],
     tags: [
       'TypeScript',
       'Python',
@@ -145,7 +145,7 @@ export const projects: Project[] = [
         orderIndex: 3,
       },
     ],
-    images: ['Hult 1.jpg', 'Hult 2.jpg', 'Hult 3.jpeg'],
+    images: ['Hult 1.jpg', 'Hult 2.jpg', 'Hult 3.jpg'],
     tags: [
       'Python',
       'AI/ML',
@@ -156,5 +156,86 @@ export const projects: Project[] = [
       'Sustainability',
     ],
     orderIndex: 2,
+  },
+  {
+    id: '4',
+    title: 'HackJunction - Finland',
+    role: 'AI Hackathon Participant',
+    description:
+      "Participated in HackJunction, the world's largest AI hackathon, held in Helsinki, Finland. Developed a personal finance management tool that uses machine learning to analyse spending patterns and generate personalised financial recommendations based on individual user behavior.",
+    highlights: [
+      {
+        id: '14',
+        text: 'Competed in international AI hackathon with over 1500 participants',
+        orderIndex: 0,
+      },
+      {
+        id: '15',
+        text: 'Built AI-powered personal finance tool to manage expenses',
+        orderIndex: 1,
+      },
+      {
+        id: '16',
+        text: 'Implemented machine learning models to identify spending patterns and predict future expenses',
+        orderIndex: 2,
+      },
+      {
+        id: '17',
+        text: 'Created personalised recommendation system to help users improve their financial decisions',
+        orderIndex: 3,
+      },
+    ],
+    images: ['HackJunction1.jpg', 'HackJunction2.jpg', 'HackJunction3.jpg'],
+    tags: [
+      'Python',
+      'AI/ML',
+      'Data Analysis',
+      'FinTech',
+      'Machine Learning',
+      'Personal Finance',
+      'Pattern Recognition',
+    ],
+    orderIndex: 3,
+  },
+  {
+    id: '5',
+    title: 'Breaking Barriers Hackathon',
+    role: 'Security Research & AI Development',
+    description:
+      'Developing an AI-powered penetration testing tool at the AWS Telco Hackathon (Breaking Barriers). The system used MCP servers to gather intelligence from LinkedIn, Instagram, and Facebook, then applied AI to generate phishing scenarios.',
+    highlights: [
+      {
+        id: '18',
+        text: 'Built automated penetration testing tool to demonstrate AI-powered security assessment techniques',
+        orderIndex: 0,
+      },
+      {
+        id: '19',
+        text: 'Integrated MCP servers to collect OSINT data (Data gathered from public sources) from multiple social media platforms',
+        orderIndex: 1,
+      },
+      {
+        id: '20',
+        text: 'Developed AI-powered phishing simulation tool for security awareness training',
+        orderIndex: 2,
+      },
+      {
+        id: '21',
+        text: 'Trained an AI to create highly sophisticated phishing emails',
+        orderIndex: 3,
+      },
+    ],
+    images: ['AWSHACK1.jpg', 'AWSHACK2.png', 'AWSHACK3.jpg'],
+    tags: [
+      'Python',
+      'AI/ML',
+      'MCP Servers',
+      'Cybersecurity',
+      'Penetration Testing',
+      'OSINT',
+      'AWS',
+      'Social Engineering',
+    ],
+    orderIndex: 4,
   },
 ];
