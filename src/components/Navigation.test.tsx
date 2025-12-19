@@ -14,7 +14,7 @@ describe('Navigation Component', () => {
   beforeEach(() => {
     // Mock window.scrollTo
     scrollToMock = vi.fn();
-    window.scrollTo = scrollToMock;
+    window.scrollTo = scrollToMock as typeof window.scrollTo;
 
     // Mock getBoundingClientRect
     Element.prototype.getBoundingClientRect = vi.fn(() => ({
@@ -139,5 +139,124 @@ describe('Navigation Component', () => {
       const element = document.getElementById(sectionId);
       if (element) document.body.removeChild(element);
     });
+  });
+
+  it('renders name section with profile image and text', () => {
+    renderWithTheme(<Navigation />);
+    const nameButton = screen.getByRole('button', { name: /scroll to top/i });
+    expect(nameButton).toBeInTheDocument();
+
+    const profileImage = screen.getByAltText('Mark Drohan profile picture');
+    const nameText = screen.getByText('Mark Drohan');
+
+    expect(profileImage).toBeInTheDocument();
+    expect(nameText).toBeInTheDocument();
+  });
+
+  it('name section is clickable and scrolls to top', () => {
+    renderWithTheme(<Navigation />);
+    const nameButton = screen.getByRole('button', { name: /scroll to top/i });
+
+    fireEvent.click(nameButton);
+    expect(scrollToMock).toHaveBeenCalledWith({ top: 0, behavior: 'smooth' });
+  });
+
+  it('does not reattach scroll listener on every scroll event', () => {
+    const addEventListenerSpy = vi.spyOn(window, 'addEventListener');
+    const removeEventListenerSpy = vi.spyOn(window, 'removeEventListener');
+
+    const { unmount } = renderWithTheme(<Navigation />);
+
+    const initialAddCalls = addEventListenerSpy.mock.calls.length;
+
+    // Simulate multiple scroll events
+    Object.defineProperty(window, 'scrollY', { value: 100, writable: true });
+    fireEvent.scroll(window);
+
+    Object.defineProperty(window, 'scrollY', { value: 200, writable: true });
+    fireEvent.scroll(window);
+
+    Object.defineProperty(window, 'scrollY', { value: 300, writable: true });
+    fireEvent.scroll(window);
+
+    // addEventListener should only be called once during mount, not after each scroll
+    expect(addEventListenerSpy).toHaveBeenCalledTimes(initialAddCalls);
+
+    unmount();
+
+    // removeEventListener should be called once during unmount
+    expect(removeEventListenerSpy).toHaveBeenCalled();
+
+    addEventListenerSpy.mockRestore();
+    removeEventListenerSpy.mockRestore();
+  });
+
+  it('handles clicking link when section does not exist', () => {
+    renderWithTheme(<Navigation />);
+    const aboutLink = screen.getByText(/About/i);
+
+    // Don't add the section to DOM
+    fireEvent.click(aboutLink);
+
+    // Should not throw error
+    expect(scrollToMock).not.toHaveBeenCalled();
+  });
+
+  it('handles case when nav element height is unavailable', () => {
+    const mockElement = document.createElement('div');
+    mockElement.id = 'about';
+    document.body.appendChild(mockElement);
+
+    // Mock querySelector to return null for nav
+    const originalQuerySelector = document.querySelector;
+    document.querySelector = vi.fn((selector) => {
+      if (selector === 'nav') {
+        return null;
+      }
+      return originalQuerySelector.call(document, selector);
+    });
+
+    renderWithTheme(<Navigation />);
+    const aboutLink = screen.getByText(/About/i);
+    fireEvent.click(aboutLink);
+
+    // Should still call scrollTo with navHeight = 0
+    expect(scrollToMock).toHaveBeenCalled();
+
+    document.body.removeChild(mockElement);
+    document.querySelector = originalQuerySelector;
+  });
+
+  it('maintains visibility state when already visible and scrolling to top', () => {
+    const { container } = renderWithTheme(<Navigation />);
+
+    // Start at top (visible = true)
+    Object.defineProperty(window, 'scrollY', { value: 5, writable: true });
+    fireEvent.scroll(window);
+
+    // Scroll down slightly but still < 10
+    Object.defineProperty(window, 'scrollY', { value: 8, writable: true });
+    fireEvent.scroll(window);
+
+    // Nav should still be visible
+    expect(container.querySelector('nav')).toBeInTheDocument();
+  });
+
+  it('maintains visibility state when already visible and scrolling up', () => {
+    const { container } = renderWithTheme(<Navigation />);
+
+    // Start scrolled down
+    Object.defineProperty(window, 'scrollY', { value: 300, writable: true });
+    fireEvent.scroll(window);
+
+    // Scroll up to make visible
+    Object.defineProperty(window, 'scrollY', { value: 200, writable: true });
+    fireEvent.scroll(window);
+
+    // Scroll up again (already visible)
+    Object.defineProperty(window, 'scrollY', { value: 100, writable: true });
+    fireEvent.scroll(window);
+
+    expect(container.querySelector('nav')).toBeInTheDocument();
   });
 });

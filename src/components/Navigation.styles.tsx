@@ -29,6 +29,7 @@ export const NavContainer = styled.div`
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     padding: 0 1rem;
+    justify-content: center;
   }
 `;
 
@@ -41,6 +42,10 @@ export const NavBrandContainer = styled.div`
 
   &:hover {
     transform: scale(1.05);
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    display: none;
   }
 `;
 

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef, useCallback } from 'react';
 import {
   ModalOverlay,
   ModalImage,
@@ -28,17 +28,32 @@ export const ImageModal: React.FC<ImageModalProps> = ({
   hasPrevious = false,
   hasNext = false,
 }) => {
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent): void => {
-      if (e.key === 'Escape') {
-        onClose();
-      } else if (e.key === 'ArrowLeft' && hasPrevious && onPrevious) {
-        onPrevious();
-      } else if (e.key === 'ArrowRight' && hasNext && onNext) {
-        onNext();
-      }
-    };
+  const onCloseRef = useRef(onClose);
+  const onPreviousRef = useRef(onPrevious);
+  const onNextRef = useRef(onNext);
+  const hasPreviousRef = useRef(hasPrevious);
+  const hasNextRef = useRef(hasNext);
 
+  // Keep refs updated with latest values
+  useEffect(() => {
+    onCloseRef.current = onClose;
+    onPreviousRef.current = onPrevious;
+    onNextRef.current = onNext;
+    hasPreviousRef.current = hasPrevious;
+    hasNextRef.current = hasNext;
+  });
+
+  const handleKeyDown = useCallback((e: KeyboardEvent): void => {
+    if (e.key === 'Escape') {
+      onCloseRef.current();
+    } else if (e.key === 'ArrowLeft' && hasPreviousRef.current && onPreviousRef.current) {
+      onPreviousRef.current();
+    } else if (e.key === 'ArrowRight' && hasNextRef.current && onNextRef.current) {
+      onNextRef.current();
+    }
+  }, []);
+
+  useEffect(() => {
     if (isOpen) {
       document.addEventListener('keydown', handleKeyDown);
       document.body.style.overflow = 'hidden';
@@ -48,7 +63,7 @@ export const ImageModal: React.FC<ImageModalProps> = ({
       document.removeEventListener('keydown', handleKeyDown);
       document.body.style.overflow = 'unset';
     };
-  }, [isOpen, onClose, onPrevious, onNext, hasPrevious, hasNext]);
+  }, [isOpen, handleKeyDown]);
 
   const handleOverlayClick = (e: React.MouseEvent<HTMLDivElement>): void => {
     if (e.target === e.currentTarget) {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import {
   Nav,
   NavContainer,
@@ -11,29 +11,29 @@ import {
 
 export const Navigation: React.FC = () => {
   const [isVisible, setIsVisible] = useState(true);
-  const [lastScrollY, setLastScrollY] = useState(0);
+  const lastScrollYRef = useRef(0);
+
+  const handleScroll = useCallback((): void => {
+    const currentScrollY = window.scrollY;
+
+    if (currentScrollY < 10) {
+      setIsVisible((prev) => (prev ? prev : true));
+    } else if (currentScrollY > lastScrollYRef.current) {
+      setIsVisible((prev) => (prev ? false : prev));
+    } else {
+      setIsVisible((prev) => (prev ? prev : true));
+    }
+
+    lastScrollYRef.current = currentScrollY;
+  }, []);
 
   useEffect(() => {
-    const handleScroll = (): void => {
-      const currentScrollY = window.scrollY;
-
-      if (currentScrollY < 10) {
-        setIsVisible(true);
-      } else if (currentScrollY > lastScrollY) {
-        setIsVisible(false);
-      } else {
-        setIsVisible(true);
-      }
-
-      setLastScrollY(currentScrollY);
-    };
-
     window.addEventListener('scroll', handleScroll, { passive: true });
 
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, [lastScrollY]);
+  }, [handleScroll]);
 
   const scrollToSection = (sectionId: string): void => {
     const element = document.getElementById(sectionId);

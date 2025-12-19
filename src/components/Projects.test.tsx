@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import { ThemeProvider } from 'styled-components';
 import { Projects } from './Projects';
 import { theme } from '../styles/theme';
@@ -173,5 +173,107 @@ describe('Projects Component', () => {
     ];
     renderWithTheme(<Projects projects={projectWithNoTags} />);
     expect(screen.getByText(/Test Project 1/i)).toBeInTheDocument();
+  });
+
+  it('opens modal when pressing Enter key on project image', () => {
+    renderWithTheme(<Projects projects={mockProjects} />);
+    const image = screen.getByAltText(/Test Project 1 screenshot 1 of 1/i);
+
+    // Simulate Enter key press
+    fireEvent.keyDown(image, { key: 'Enter', code: 'Enter' });
+
+    // Modal should be open
+    expect(screen.getByRole('dialog')).toBeInTheDocument();
+  });
+
+  it('opens modal when pressing Space key on project image', () => {
+    renderWithTheme(<Projects projects={mockProjects} />);
+    const image = screen.getByAltText(/Test Project 1 screenshot 1 of 1/i);
+
+    // Simulate Space key press
+    fireEvent.keyDown(image, { key: ' ', code: 'Space' });
+
+    // Modal should be open
+    expect(screen.getByRole('dialog')).toBeInTheDocument();
+  });
+
+  it('does not open modal when pressing other keys on project image', () => {
+    const { container } = renderWithTheme(<Projects projects={mockProjects} />);
+    const image = screen.getByAltText(/Test Project 1 screenshot 1 of 1/i);
+
+    // Simulate a different key press (e.g., 'a')
+    fireEvent.keyDown(image, { key: 'a', code: 'KeyA' });
+
+    // Modal should not be open
+    const modal = container.querySelector('[role="dialog"]');
+    expect(modal).not.toBeInTheDocument();
+  });
+
+  it('does not open modal when pressing Enter on Intercom project image', () => {
+    const intercomProject: Project[] = [
+      {
+        ...mockProjects[0],
+        title: 'Intercom',
+        images: ['intercom.jpg'],
+      },
+    ];
+    const { container } = renderWithTheme(<Projects projects={intercomProject} />);
+    const image = screen.getByAltText(/Intercom screenshot 1 of 1/i);
+
+    // Simulate Enter key press
+    fireEvent.keyDown(image, { key: 'Enter', code: 'Enter' });
+
+    // Modal should not be open
+    const modal = container.querySelector('[role="dialog"]');
+    expect(modal).not.toBeInTheDocument();
+  });
+
+  it('navigates to next image when clicking next button in modal', () => {
+    const { container } = renderWithTheme(<Projects projects={mockProjects} />);
+    const firstImage = screen.getByAltText(/Test Project 2 screenshot 1 of 3/i);
+    fireEvent.click(firstImage);
+
+    // Modal should be open with next button
+    const nextButton = screen.getByLabelText(/Next image/i);
+    expect(nextButton).toBeInTheDocument();
+
+    fireEvent.click(nextButton);
+
+    // Check that image index changed - modal image should have updated alt text
+    const modalImage = container.querySelector('[role="dialog"] img');
+    expect(modalImage).toHaveAttribute('alt', 'Image 2');
+  });
+
+  it('navigates to previous image when clicking previous button in modal', () => {
+    const { container } = renderWithTheme(<Projects projects={mockProjects} />);
+    const secondImage = screen.getByAltText(/Test Project 2 screenshot 2 of 3/i);
+    fireEvent.click(secondImage);
+
+    // Modal should be open with previous button
+    const prevButton = screen.getByLabelText(/Previous image/i);
+    expect(prevButton).toBeInTheDocument();
+
+    fireEvent.click(prevButton);
+
+    // Check that image index changed - modal image should have updated alt text
+    const modalImage = container.querySelector('[role="dialog"] img');
+    expect(modalImage).toHaveAttribute('alt', 'Image 1');
+  });
+
+  it('closes modal when close button is clicked', () => {
+    const { container } = renderWithTheme(<Projects projects={mockProjects} />);
+    const image = screen.getByAltText(/Test Project 1 screenshot 1 of 1/i);
+    fireEvent.click(image);
+
+    // Modal should be open
+    expect(screen.getByRole('dialog')).toBeInTheDocument();
+
+    // Click close button
+    const closeButton = screen.getByLabelText(/Close modal/i);
+    fireEvent.click(closeButton);
+
+    // Modal should be closed
+    const modal = container.querySelector('[role="dialog"]');
+    expect(modal).not.toBeInTheDocument();
   });
 });
