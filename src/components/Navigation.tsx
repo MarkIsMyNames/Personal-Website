@@ -8,6 +8,7 @@ import {
   NavLinks,
   NavLink,
 } from './Navigation.styles';
+import { profile } from '../data/portfolioData';
 
 export const Navigation: React.FC = () => {
   const [isVisible, setIsVisible] = useState(true);
@@ -59,8 +60,8 @@ export const Navigation: React.FC = () => {
     <Nav $isVisible={isVisible} role="navigation" aria-label="Main navigation">
       <NavContainer>
         <NavBrandContainer onClick={scrollToTop} role="button" aria-label="Scroll to top">
-          <NavProfileImage src="Personal Profile.jpg" alt="Mark Drohan profile picture" />
-          <NavBrand>Mark Drohan</NavBrand>
+          <NavProfileImage src={profile.image} alt={`${profile.name} profile picture`} />
+          <NavBrand>{profile.name}</NavBrand>
         </NavBrandContainer>
         <NavLinks role="menu">
           <NavLink
