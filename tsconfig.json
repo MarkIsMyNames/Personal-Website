@@ -29,7 +29,7 @@
     "forceConsistentCasingInFileNames": true,
 
     /* Testing */
-    "types": ["vitest/globals", "@testing-library/jest-dom"],
+    "types": ["node", "vitest/globals", "@testing-library/jest-dom"],
 
     /* Other */
     "allowJs": true,
@@ -37,5 +37,5 @@
     "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true
   },
-  "include": ["src"]
+  "include": ["src", "scripts"]
 }
