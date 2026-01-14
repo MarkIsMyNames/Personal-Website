@@ -3,6 +3,7 @@ import { ThemeProvider } from 'styled-components';
 import { vi } from 'vitest';
 import { Navigation } from './Navigation';
 import { theme } from '../styles/theme';
+import { profile } from '../data/portfolioData';
 
 const renderWithTheme = (component: React.ReactElement): ReturnType<typeof render> => {
   return render(<ThemeProvider theme={theme}>{component}</ThemeProvider>);
@@ -32,7 +33,7 @@ describe('Navigation Component', () => {
 
   it('renders brand name', () => {
     renderWithTheme(<Navigation />);
-    expect(screen.getByText(/Mark Drohan/i)).toBeInTheDocument();
+    expect(screen.getByText(new RegExp(profile.name, 'i'))).toBeInTheDocument();
   });
 
   it('renders all navigation links', () => {
@@ -71,7 +72,7 @@ describe('Navigation Component', () => {
 
   it('scrolls to top when brand is clicked', () => {
     renderWithTheme(<Navigation />);
-    const brand = screen.getByText(/Mark Drohan/i);
+    const brand = screen.getByText(new RegExp(profile.name, 'i'));
     fireEvent.click(brand);
     expect(scrollToMock).toHaveBeenCalledWith({ top: 0, behavior: 'smooth' });
   });
@@ -113,9 +114,9 @@ describe('Navigation Component', () => {
 
   it('renders profile image', () => {
     renderWithTheme(<Navigation />);
-    const image = screen.getByAltText('Mark Drohan profile picture');
+    const image = screen.getByAltText(`${profile.name} profile picture`);
     expect(image).toBeInTheDocument();
-    expect(image).toHaveAttribute('src', 'Personal Profile.jpg');
+    expect(image).toHaveAttribute('src', profile.image);
   });
 
   it('scrolls to correct section when clicking each link', () => {
@@ -146,8 +147,8 @@ describe('Navigation Component', () => {
     const nameButton = screen.getByRole('button', { name: /scroll to top/i });
     expect(nameButton).toBeInTheDocument();
 
-    const profileImage = screen.getByAltText('Mark Drohan profile picture');
-    const nameText = screen.getByText('Mark Drohan');
+    const profileImage = screen.getByAltText(`${profile.name} profile picture`);
+    const nameText = screen.getByText(profile.name);
 
     expect(profileImage).toBeInTheDocument();
     expect(nameText).toBeInTheDocument();
