@@ -9,5 +9,10 @@
   "endOfLine": "lf",
   "bracketSpacing": true,
   "jsxSingleQuote": false,
-  "bracketSameLine": false
+  "bracketSameLine": false,
+  "quoteProps": "as-needed",
+  "proseWrap": "preserve",
+  "htmlWhitespaceSensitivity": "css",
+  "embeddedLanguageFormatting": "auto",
+  "singleAttributePerLine": true
 }
