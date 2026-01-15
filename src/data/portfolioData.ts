@@ -145,7 +145,7 @@ export const projects: Project[] = [
         orderIndex: 3,
       },
     ],
-    images: ['Hult 1.jpg', 'Hult 2.jpg', 'Hult 3.jpg'],
+    images: ['Hult 1.jpg', 'Hult 2.png', 'Hult 3.jpg'],
     tags: [
       'Python',
       'AI/ML',
