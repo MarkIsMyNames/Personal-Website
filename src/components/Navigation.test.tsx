@@ -4,6 +4,7 @@ import { vi } from 'vitest';
 import { Navigation } from './Navigation';
 import { theme } from '../styles/theme';
 import { profile } from '../data/portfolioData';
+import React from 'react';
 
 const renderWithTheme = (component: React.ReactElement): ReturnType<typeof render> => {
   return render(<ThemeProvider theme={theme}>{component}</ThemeProvider>);
@@ -146,7 +147,9 @@ describe('Navigation Component', () => {
 
   it('renders name section with profile image and text', () => {
     renderWithTheme(<Navigation />);
-    const nameButton = screen.getByRole('button', { name: /scroll to top/i });
+    const nameButton = screen.getByRole('button', {
+      name: /Navigate to About section/i,
+    });
     expect(nameButton).toBeInTheDocument();
 
     const profileImage = screen.getByAltText(`${profile.name} profile picture`);
@@ -158,7 +161,9 @@ describe('Navigation Component', () => {
 
   it('name section is clickable and scrolls to top', () => {
     renderWithTheme(<Navigation />);
-    const nameButton = screen.getByRole('button', { name: /scroll to top/i });
+    const nameButton = screen.getByRole('button', {
+      name: /Navigate to About section/i,
+    });
 
     fireEvent.click(nameButton);
     expect(scrollToMock).toHaveBeenCalledWith({ top: 0, behavior: 'smooth' });
@@ -196,12 +201,12 @@ describe('Navigation Component', () => {
 
   it('handles clicking link when section does not exist', () => {
     renderWithTheme(<Navigation />);
-    const aboutLink = screen.getByText(/About/i);
+    const skillsLink = screen.getByText(/Skills/i);
 
     // Don't add the section to DOM
-    fireEvent.click(aboutLink);
+    fireEvent.click(skillsLink);
 
-    // Should not throw error
+    // Should not throw error and should not scroll since element doesn't exist
     expect(scrollToMock).not.toHaveBeenCalled();
   });
 

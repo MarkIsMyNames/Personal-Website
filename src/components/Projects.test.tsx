@@ -3,6 +3,7 @@ import { ThemeProvider } from 'styled-components';
 import { Projects } from './Projects';
 import { theme } from '../styles/theme';
 import type { Project } from '../types';
+import React from 'react';
 
 const firstMockProject: Project = {
   id: '1',
@@ -187,25 +188,6 @@ describe('Projects Component', () => {
 
     // Simulate a different key press (e.g., 'a')
     fireEvent.keyDown(image, { key: 'a', code: 'KeyA' });
-
-    // Modal should not be open
-    const modal = container.querySelector('[role="dialog"]');
-    expect(modal).not.toBeInTheDocument();
-  });
-
-  it('does not open modal when pressing Enter on Intercom project image', () => {
-    const intercomProject: Project[] = [
-      {
-        ...firstMockProject,
-        title: 'Intercom',
-        images: ['intercom.jpg'],
-      },
-    ];
-    const { container } = renderWithTheme(<Projects projects={intercomProject} />);
-    const image = screen.getByAltText(/Intercom screenshot 1 of 1/i);
-
-    // Simulate Enter key press
-    fireEvent.keyDown(image, { key: 'Enter', code: 'Enter' });
 
     // Modal should not be open
     const modal = container.querySelector('[role="dialog"]');

@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 
 export const BioSection = styled.section`
-  padding: 4rem 1rem;
+  padding-top: 4rem;
+  padding-bottom: 3.5rem;
   text-align: center;
 `;
 
@@ -17,7 +18,7 @@ export const ProfileImage = styled.img`
   object-fit: cover;
   border: 4px solid ${({ theme }) => theme.colors.accentPrimary};
   box-shadow: ${({ theme }) => theme.shadows.large};
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
     width: 200px;
