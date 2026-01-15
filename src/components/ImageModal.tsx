@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useCallback } from 'react';
+import { useEffect, useRef, useCallback, type MouseEvent } from 'react';
 import {
   ModalOverlay,
   ModalImage,
@@ -18,7 +18,7 @@ type ImageModalProps = {
   hasNext?: boolean;
 };
 
-export const ImageModal: React.FC<ImageModalProps> = ({
+export function ImageModal({
   isOpen,
   imageUrl,
   altText,
@@ -27,7 +27,7 @@ export const ImageModal: React.FC<ImageModalProps> = ({
   onNext,
   hasPrevious = false,
   hasNext = false,
-}) => {
+}: ImageModalProps) {
   const onCloseRef = useRef(onClose);
   const onPreviousRef = useRef(onPrevious);
   const onNextRef = useRef(onNext);
@@ -65,20 +65,17 @@ export const ImageModal: React.FC<ImageModalProps> = ({
     };
   }, [isOpen, handleKeyDown]);
 
-  const handleOverlayClick = (e: React.MouseEvent<HTMLDivElement>): void => {
+  const handleOverlayClick = (e: MouseEvent<HTMLDivElement>) => {
     if (e.target === e.currentTarget) {
       onClose();
     }
   };
 
-  const handleImageClick = (e: React.MouseEvent<HTMLImageElement>): void => {
+  const handleImageClick = (e: MouseEvent<HTMLImageElement>) => {
     e.stopPropagation();
   };
 
-  const handleNavigationClick = (
-    e: React.MouseEvent<HTMLButtonElement>,
-    callback: () => void,
-  ): void => {
+  const handleNavigationClick = (e: MouseEvent<HTMLButtonElement>, callback: () => void) => {
     e.stopPropagation();
     callback();
   };
@@ -124,4 +121,4 @@ export const ImageModal: React.FC<ImageModalProps> = ({
       />
     </ModalOverlay>
   );
-};
+}

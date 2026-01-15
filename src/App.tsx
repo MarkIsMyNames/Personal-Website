@@ -1,4 +1,3 @@
-import React from 'react';
 import { ThemeProvider } from 'styled-components';
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/react';
@@ -12,7 +11,7 @@ import { Projects } from './components/Projects';
 import { Contact } from './components/Contact';
 import { profile, skills, projects } from './data/portfolioData';
 
-export default function App(): React.JSX.Element {
+export default function App() {
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyles />

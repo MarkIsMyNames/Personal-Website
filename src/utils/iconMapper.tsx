@@ -1,4 +1,4 @@
-import React from 'react';
+import type { ComponentType } from 'react';
 import { FaJava, FaPython, FaReact, FaLinux, FaServer, FaGithub, FaEnvelope } from 'react-icons/fa';
 import { DiRuby } from 'react-icons/di';
 import { SiCplusplus, SiEmberdotjs, SiTypescript } from 'react-icons/si';
@@ -30,16 +30,14 @@ type IconProps = {
   size?: number;
 };
 
-export const Icon = ({ iconName, className = '', size }: IconProps): React.JSX.Element => {
+export function Icon({ iconName, className = '', size }: IconProps) {
   const IconComponent = iconMap[iconName];
 
   if (!IconComponent) {
     return <span className={className}>?</span>;
   }
 
-  const Component = IconComponent as React.ComponentType<{ className?: string; size?: number }>;
+  const Component = IconComponent as ComponentType<{ className?: string; size?: number }>;
   const props = size !== undefined ? { className, size } : { className };
   return <Component {...props} />;
-};
-
-export default Icon;
+}

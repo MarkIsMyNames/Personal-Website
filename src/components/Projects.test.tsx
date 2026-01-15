@@ -115,23 +115,6 @@ describe('Projects Component', () => {
     ).toBeInTheDocument();
   });
 
-  it('does not open modal for Intercom project images', () => {
-    const intercomProject: Project[] = [
-      {
-        ...firstMockProject,
-        title: 'Intercom',
-        images: ['intercom.jpg'],
-      },
-    ];
-    const { container } = renderWithTheme(<Projects projects={intercomProject} />);
-    const image = screen.getByAltText(/Intercom screenshot 1 of 1/i);
-    image.click();
-
-    // Modal should not have been opened
-    const modalImages = container.querySelectorAll('img[alt="Intercom screenshot 1 of 1"]');
-    expect(modalImages.length).toBe(1); // Only the original image, no modal
-  });
-
   it('navigates to next image in modal', () => {
     renderWithTheme(<Projects projects={mockProjects} />);
     const firstImage = screen.getByAltText(/Test Project 2 screenshot 1 of 3/i);

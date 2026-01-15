@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import type { Project } from '../types';
 import { ImageModal } from './ImageModal';
 import {
@@ -22,7 +22,7 @@ type ProjectsProps = {
   projects: Project[];
 };
 
-export const Projects: React.FC<ProjectsProps> = ({ projects }) => {
+export function Projects({ projects }: ProjectsProps) {
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState({ url: '', alt: '' });
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -31,14 +31,9 @@ export const Projects: React.FC<ProjectsProps> = ({ projects }) => {
   const handleImageClick = (
     imageUrl: string,
     altText: string,
-    projectTitle: string,
     imageIndex: number,
     allImages: string[],
-  ): void => {
-    // Don't open modal for Intercom images
-    if (projectTitle === 'Intercom') {
-      return;
-    }
+  ) => {
     setSelectedImage({ url: imageUrl, alt: altText });
     setCurrentImageIndex(imageIndex);
     setCurrentProjectImages(allImages);
@@ -99,30 +94,23 @@ export const Projects: React.FC<ProjectsProps> = ({ projects }) => {
                     src={image}
                     alt={`${project.title} screenshot ${index + 1} of ${project.images.length}`}
                     $isSingle={isSingleImage}
-                    $isClickable={project.title !== 'Intercom'}
                     onClick={() =>
                       handleImageClick(
                         image,
                         `${project.title} ${index + 1}`,
-                        project.title,
                         index,
                         project.images,
                       )
                     }
-                    role={project.title !== 'Intercom' ? 'button' : undefined}
-                    aria-label={
-                      project.title !== 'Intercom'
-                        ? `View full size image ${index + 1} of ${project.title}`
-                        : undefined
-                    }
-                    tabIndex={project.title !== 'Intercom' ? 0 : undefined}
+                    role="button"
+                    aria-label={`View full size image ${index + 1} of ${project.title}`}
+                    tabIndex={0}
                     onKeyDown={(e) => {
-                      if (project.title !== 'Intercom' && (e.key === 'Enter' || e.key === ' ')) {
+                      if (e.key === 'Enter' || e.key === ' ') {
                         e.preventDefault();
                         handleImageClick(
                           image,
                           `${project.title} ${index + 1}`,
-                          project.title,
                           index,
                           project.images,
                         );
@@ -162,4 +150,4 @@ export const Projects: React.FC<ProjectsProps> = ({ projects }) => {
       />
     </ProjectsSection>
   );
-};
+}

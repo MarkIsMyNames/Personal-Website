@@ -1,4 +1,3 @@
-import React from 'react';
 import type { Skill } from '../types';
 import { Icon } from '../utils/iconMapper';
 import { SkillsSection, SectionTitle, SkillsGrid, SkillCard, SkillName } from './Skills.styles';
@@ -7,7 +6,7 @@ type SkillsProps = {
   skills: Skill[];
 };
 
-export const Skills: React.FC<SkillsProps> = ({ skills }) => {
+export function Skills({ skills }: SkillsProps) {
   return (
     <SkillsSection aria-label="Technical Skills section">
       <SectionTitle>Technical Skills</SectionTitle>
@@ -31,4 +30,4 @@ export const Skills: React.FC<SkillsProps> = ({ skills }) => {
       </SkillsGrid>
     </SkillsSection>
   );
-};
+}

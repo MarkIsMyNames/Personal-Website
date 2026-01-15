@@ -67,19 +67,18 @@ npm run build
 ### TypeScript
 
 - **Strict mode enabled** in tsconfig.json
-- **Explicit return types required** for all functions (ESLint enforced)
-- Use `React.JSX.Element` for component return types (not bare `JSX.Element`)
-- Import React when using `React.JSX.Element` type annotation
 - No `any` types allowed
 - No non-null assertions
 - Unused variables must be prefixed with `_`
+- Use function declarations for components (e.g., `export function Component()`)
+- Import React types directly when needed (e.g., `import type { MouseEvent } from 'react'`)
 
 ### Before Completing Any Task
 
 **ALWAYS run all quality checks before considering a task complete:**
 
 ```bash
-npm test -- --watchAll=false     # Tests must pass
+npm test                          # Tests must pass
 npm run format:check              # Formatting must be correct
 npm run lint                      # Linting must pass
 npm run build                     # Build must succeed
@@ -94,26 +93,25 @@ If any check fails:
 
 ## Important Technical Details
 
-### React + TypeScript Type Issue
+### React Component Pattern
 
-When adding explicit return types to React components:
-- ❌ `function App(): JSX.Element` (causes TS2503 error)
-- ✅ `function App(): React.JSX.Element` (requires React import)
-
-Always import React when using `React.JSX.Element`:
+Use function declarations without explicit return types (TypeScript infers them):
 ```typescript
-import React from 'react';
-
-function App(): React.JSX.Element {
-  // component code
+export function MyComponent({ prop }: Props) {
+  return <div>{prop}</div>;
 }
+```
+
+Import React types directly when needed:
+```typescript
+import type { MouseEvent, ComponentType } from 'react';
+import { useState, useEffect, Fragment } from 'react';
 ```
 
 ### ESLint Configuration
 
 Custom rules enforced (see `.eslintrc.json`):
-- Explicit function return types required
-- No console logs (warnings)
+- No console logs (errors)
 - No debugger statements
 - Prefer const over let
 - Prettier integration

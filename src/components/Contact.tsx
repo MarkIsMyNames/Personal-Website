@@ -1,4 +1,3 @@
-import React from 'react';
 import type { Profile } from '../types';
 import { Icon } from '../utils/iconMapper';
 import { ContactSection, SectionTitle, ContactLinks, ContactLink } from './Contact.styles';
@@ -7,7 +6,7 @@ type ContactProps = {
   profile: Profile;
 };
 
-export const Contact: React.FC<ContactProps> = ({ profile }) => {
+export function Contact({ profile }: ContactProps) {
   return (
     <ContactSection aria-label="Contact section">
       <SectionTitle>Get In Touch</SectionTitle>
@@ -42,4 +41,4 @@ export const Contact: React.FC<ContactProps> = ({ profile }) => {
       </ContactLinks>
     </ContactSection>
   );
-};
+}

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import {
   Nav,
   NavContainer,
@@ -10,7 +10,7 @@ import {
 } from './Navigation.styles';
 import { profile } from '../data/portfolioData';
 
-export const Navigation: React.FC = () => {
+export function Navigation() {
   const [isVisible, setIsVisible] = useState(true);
   const lastScrollYRef = useRef(0);
 
@@ -107,4 +107,4 @@ export const Navigation: React.FC = () => {
       </NavContainer>
     </Nav>
   );
-};
+}

@@ -1,4 +1,4 @@
-import React from 'react';
+import { Fragment } from 'react';
 import type { Profile } from '../types';
 import {
   BioSection,
@@ -14,7 +14,7 @@ type BioProps = {
   profile: Profile;
 };
 
-export const Bio: React.FC<BioProps> = ({ profile }) => {
+export function Bio({ profile }: BioProps) {
   const bioSentences = profile.bio.split('. ').filter((sentence) => sentence.trim() !== '');
 
   return (
@@ -31,11 +31,11 @@ export const Bio: React.FC<BioProps> = ({ profile }) => {
           aria-label="Biography"
         >
           {bioSentences.map((sentence, index) => (
-            <React.Fragment key={index}>
+            <Fragment key={index}>
               {sentence}
               {index < bioSentences.length - 1 && '.'}
               {index < bioSentences.length - 1 && <br />}
-            </React.Fragment>
+            </Fragment>
           ))}
         </BioText>
         <BioEducation aria-label="Education information">
@@ -44,4 +44,4 @@ export const Bio: React.FC<BioProps> = ({ profile }) => {
       </BioContent>
     </BioSection>
   );
-};
+}
