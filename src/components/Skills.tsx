@@ -1,6 +1,6 @@
 import type { Skill } from '../types';
 import { Icon } from '../utils/iconMapper';
-import { SkillsSection, SectionTitle, SkillsGrid, SkillCard, SkillName } from './Skills.styles';
+import {SkillsSection, SectionTitle, SkillsGrid, SkillCard, SkillName } from './Skills.styles';
 
 type SkillsProps = {
   skills: Skill[];

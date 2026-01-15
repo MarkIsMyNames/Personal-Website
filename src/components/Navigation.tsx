@@ -13,8 +13,13 @@ import { profile } from '../data/portfolioData';
 export function Navigation() {
   const [isVisible, setIsVisible] = useState(true);
   const lastScrollYRef = useRef(0);
+  const isNavClickScrollRef = useRef(false);
 
   const handleScroll = useCallback((): void => {
+    if (isNavClickScrollRef.current) {
+      return;
+    }
+
     const currentScrollY = window.scrollY;
 
     if (currentScrollY < 10) {
@@ -38,22 +43,30 @@ export function Navigation() {
 
   const scrollToSection = (sectionId: string): void => {
     const element = document.getElementById(sectionId);
-    const nav = document.querySelector('nav');
-    const navHeight = nav?.offsetHeight ?? 0;
 
     if (element) {
       const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.scrollY - navHeight - 20;
+      const offsetPosition = elementPosition + window.scrollY;
 
+      isNavClickScrollRef.current = true;
       window.scrollTo({
         top: offsetPosition,
         behavior: 'smooth',
       });
+      setTimeout(() => {
+        isNavClickScrollRef.current = false;
+        lastScrollYRef.current = window.scrollY;
+      }, 1000);
     }
   };
 
   const scrollToTop = (): void => {
+    isNavClickScrollRef.current = true;
     window.scrollTo({ top: 0, behavior: 'smooth' });
+    setTimeout(() => {
+      isNavClickScrollRef.current = false;
+      lastScrollYRef.current = window.scrollY;
+    }, 1000);
   };
 
   return (
@@ -66,7 +79,7 @@ export function Navigation() {
         <NavBrandContainer
           onClick={scrollToTop}
           role="button"
-          aria-label="Scroll to top"
+          aria-label="Navigate to About section"
         >
           <NavProfileImage
             src={profile.image}
@@ -76,7 +89,7 @@ export function Navigation() {
         </NavBrandContainer>
         <NavLinks role="menu">
           <NavLink
-            onClick={() => scrollToSection('about')}
+            onClick={scrollToTop}
             role="menuitem"
             aria-label="Navigate to About section"
           >

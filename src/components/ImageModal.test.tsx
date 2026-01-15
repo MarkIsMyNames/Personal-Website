@@ -3,6 +3,7 @@ import { ThemeProvider } from 'styled-components';
 import { vi } from 'vitest';
 import { ImageModal } from './ImageModal';
 import { theme } from '../styles/theme';
+import React from 'react';
 
 const renderWithTheme = (component: React.ReactElement): ReturnType<typeof render> => {
   return render(<ThemeProvider theme={theme}>{component}</ThemeProvider>);

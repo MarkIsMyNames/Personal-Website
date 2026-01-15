@@ -3,6 +3,7 @@ import { ThemeProvider } from 'styled-components';
 import { Skills } from './Skills';
 import { theme } from '../styles/theme';
 import type { Skill } from '../types';
+import React from 'react';
 
 const mockSkills: Skill[] = [
   { id: '1', name: 'Java', iconName: 'FaJava', category: 'language' },

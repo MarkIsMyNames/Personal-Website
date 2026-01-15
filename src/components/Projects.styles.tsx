@@ -1,14 +1,14 @@
 import styled from 'styled-components';
 
 export const ProjectsSection = styled.section`
-  padding: 2rem 0;
+  padding-bottom: 2rem;
 `;
 
 export const SectionTitle = styled.h2`
   font-size: 2.5rem;
   font-weight: 700;
   text-align: center;
-  margin: 4rem 0 3rem;
+  margin-bottom: 2rem;
   background: ${({ theme }) => theme.gradients.accent};
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
