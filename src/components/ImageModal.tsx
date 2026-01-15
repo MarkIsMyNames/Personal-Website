@@ -83,7 +83,9 @@ export const ImageModal: React.FC<ImageModalProps> = ({
     callback();
   };
 
-  if (!isOpen) return null;
+  if (!isOpen) {
+    return null;
+  }
 
   return (
     <ModalOverlay
@@ -93,7 +95,10 @@ export const ImageModal: React.FC<ImageModalProps> = ({
       aria-modal="true"
       aria-label="Image modal"
     >
-      <CloseButton onClick={onClose} aria-label="Close modal">
+      <CloseButton
+        onClick={onClose}
+        aria-label="Close modal"
+      >
         ✕
       </CloseButton>
       {hasPrevious && onPrevious && (
@@ -112,7 +117,11 @@ export const ImageModal: React.FC<ImageModalProps> = ({
           ›
         </NavigationButtonRight>
       )}
-      <ModalImage src={imageUrl} alt={altText} onClick={handleImageClick} />
+      <ModalImage
+        src={imageUrl}
+        alt={altText}
+        onClick={handleImageClick}
+      />
     </ModalOverlay>
   );
 };

@@ -32,7 +32,7 @@ describe('ImageModal Component', () => {
   it('renders when isOpen is true', () => {
     renderWithTheme(
       <ImageModal
-        isOpen={true}
+        isOpen
         imageUrl={testImageUrl}
         altText={testAltText}
         onClose={mockOnClose}
@@ -44,7 +44,7 @@ describe('ImageModal Component', () => {
   it('displays the correct image', () => {
     renderWithTheme(
       <ImageModal
-        isOpen={true}
+        isOpen
         imageUrl={testImageUrl}
         altText={testAltText}
         onClose={mockOnClose}
@@ -57,7 +57,7 @@ describe('ImageModal Component', () => {
   it('calls onClose when close button is clicked', () => {
     renderWithTheme(
       <ImageModal
-        isOpen={true}
+        isOpen
         imageUrl={testImageUrl}
         altText={testAltText}
         onClose={mockOnClose}
@@ -71,7 +71,7 @@ describe('ImageModal Component', () => {
   it('renders close button', () => {
     renderWithTheme(
       <ImageModal
-        isOpen={true}
+        isOpen
         imageUrl={testImageUrl}
         altText={testAltText}
         onClose={mockOnClose}
@@ -83,7 +83,7 @@ describe('ImageModal Component', () => {
   it('calls onClose when Escape key is pressed', () => {
     renderWithTheme(
       <ImageModal
-        isOpen={true}
+        isOpen
         imageUrl={testImageUrl}
         altText={testAltText}
         onClose={mockOnClose}
@@ -96,7 +96,7 @@ describe('ImageModal Component', () => {
   it('calls onClose when overlay is clicked', () => {
     renderWithTheme(
       <ImageModal
-        isOpen={true}
+        isOpen
         imageUrl={testImageUrl}
         altText={testAltText}
         onClose={mockOnClose}
@@ -110,7 +110,7 @@ describe('ImageModal Component', () => {
   it('does not close when image is clicked', () => {
     renderWithTheme(
       <ImageModal
-        isOpen={true}
+        isOpen
         imageUrl={testImageUrl}
         altText={testAltText}
         onClose={mockOnClose}
@@ -126,14 +126,14 @@ describe('ImageModal Component', () => {
     const mockOnNext = vi.fn();
     renderWithTheme(
       <ImageModal
-        isOpen={true}
+        isOpen
         imageUrl={testImageUrl}
         altText={testAltText}
         onClose={mockOnClose}
         onPrevious={mockOnPrevious}
         onNext={mockOnNext}
-        hasPrevious={true}
-        hasNext={true}
+        hasPrevious
+        hasNext
       />,
     );
     const buttons = screen.getAllByRole('button');
@@ -144,12 +144,12 @@ describe('ImageModal Component', () => {
     const mockOnPrevious = vi.fn();
     renderWithTheme(
       <ImageModal
-        isOpen={true}
+        isOpen
         imageUrl={testImageUrl}
         altText={testAltText}
         onClose={mockOnClose}
         onPrevious={mockOnPrevious}
-        hasPrevious={true}
+        hasPrevious
       />,
     );
     fireEvent.keyDown(document, { key: 'ArrowLeft' });
@@ -160,12 +160,12 @@ describe('ImageModal Component', () => {
     const mockOnNext = vi.fn();
     renderWithTheme(
       <ImageModal
-        isOpen={true}
+        isOpen
         imageUrl={testImageUrl}
         altText={testAltText}
         onClose={mockOnClose}
         onNext={mockOnNext}
-        hasNext={true}
+        hasNext
       />,
     );
     fireEvent.keyDown(document, { key: 'ArrowRight' });
@@ -176,7 +176,7 @@ describe('ImageModal Component', () => {
     const mockOnPrevious = vi.fn();
     renderWithTheme(
       <ImageModal
-        isOpen={true}
+        isOpen
         imageUrl={testImageUrl}
         altText={testAltText}
         onClose={mockOnClose}
@@ -192,7 +192,7 @@ describe('ImageModal Component', () => {
     const mockOnNext = vi.fn();
     renderWithTheme(
       <ImageModal
-        isOpen={true}
+        isOpen
         imageUrl={testImageUrl}
         altText={testAltText}
         onClose={mockOnClose}
@@ -209,28 +209,32 @@ describe('ImageModal Component', () => {
     const mockOnNext = vi.fn();
     renderWithTheme(
       <ImageModal
-        isOpen={true}
+        isOpen
         imageUrl={testImageUrl}
         altText={testAltText}
         onClose={mockOnClose}
         onPrevious={mockOnPrevious}
         onNext={mockOnNext}
-        hasPrevious={true}
-        hasNext={true}
+        hasPrevious
+        hasNext
       />,
     );
     const buttons = screen.getAllByRole('button');
     // buttons[0] is close, buttons[1] is previous, buttons[2] is next
-    fireEvent.click(buttons[1]);
-    expect(mockOnPrevious).toHaveBeenCalledTimes(1);
-    fireEvent.click(buttons[2]);
-    expect(mockOnNext).toHaveBeenCalledTimes(1);
+    const previousButton = buttons[1];
+    const nextButton = buttons[2];
+    if (previousButton && nextButton) {
+      fireEvent.click(previousButton);
+      expect(mockOnPrevious).toHaveBeenCalledTimes(1);
+      fireEvent.click(nextButton);
+      expect(mockOnNext).toHaveBeenCalledTimes(1);
+    }
   });
 
   it('sets body overflow to hidden when opened', () => {
     renderWithTheme(
       <ImageModal
-        isOpen={true}
+        isOpen
         imageUrl={testImageUrl}
         altText={testAltText}
         onClose={mockOnClose}

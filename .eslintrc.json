@@ -10,11 +10,14 @@
     "sourceType": "module",
     "ecmaFeatures": {
       "jsx": true
-    }
+    },
+    "project": "./tsconfig.json"
   },
   "extends": [
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
+    "plugin:@typescript-eslint/recommended-requiring-type-checking",
+    "plugin:@typescript-eslint/strict",
     "plugin:react/recommended",
     "plugin:react-hooks/recommended",
     "plugin:prettier/recommended"
@@ -27,7 +30,7 @@
   },
   "rules": {
     "prettier/prettier": "error",
-    "no-console": "warn",
+    "no-console": "error",
     "no-debugger": "error",
     "no-var": "error",
     "prefer-const": "error",
@@ -40,6 +43,25 @@
     "no-useless-constructor": "error",
     "no-useless-escape": "error",
     "no-useless-catch": "error",
+    "no-duplicate-imports": "error",
+    "no-template-curly-in-string": "error",
+    "no-self-compare": "error",
+    "no-promise-executor-return": "error",
+    "require-atomic-updates": "error",
+    "eqeqeq": ["error", "always"],
+    "curly": ["error", "all"],
+    "default-case-last": "error",
+    "dot-notation": "off",
+    "no-else-return": "error",
+    "no-empty-function": "off",
+    "no-lonely-if": "error",
+    "no-nested-ternary": "error",
+    "no-unneeded-ternary": "error",
+    "prefer-template": "error",
+    "object-shorthand": "error",
+    "prefer-destructuring": ["error", { "array": false, "object": true }],
+    "prefer-rest-params": "error",
+    "prefer-spread": "error",
     "@typescript-eslint/no-unused-vars": [
       "error",
       {
@@ -57,9 +79,40 @@
     ],
     "@typescript-eslint/no-explicit-any": "error",
     "@typescript-eslint/no-non-null-assertion": "error",
+    "@typescript-eslint/no-floating-promises": "error",
+    "@typescript-eslint/no-misused-promises": "error",
+    "@typescript-eslint/await-thenable": "error",
+    "@typescript-eslint/no-unnecessary-condition": "error",
+    "@typescript-eslint/no-unnecessary-type-assertion": "error",
+    "@typescript-eslint/prefer-nullish-coalescing": "error",
+    "@typescript-eslint/prefer-optional-chain": "error",
+    "@typescript-eslint/switch-exhaustiveness-check": "error",
+    "@typescript-eslint/consistent-type-imports": ["error", { "prefer": "type-imports" }],
+    "@typescript-eslint/consistent-type-exports": "error",
+    "@typescript-eslint/no-empty-function": "error",
+    "@typescript-eslint/dot-notation": "error",
+    "@typescript-eslint/naming-convention": [
+      "error",
+      {
+        "selector": "variable",
+        "format": ["camelCase", "PascalCase", "UPPER_CASE"]
+      },
+      {
+        "selector": "function",
+        "format": ["camelCase", "PascalCase"]
+      },
+      {
+        "selector": "typeLike",
+        "format": ["PascalCase"]
+      }
+    ],
     "react/prop-types": "off",
     "react/react-in-jsx-scope": "off",
+    "react/jsx-no-useless-fragment": "error",
+    "react/jsx-curly-brace-presence": ["error", { "props": "never", "children": "never" }],
+    "react/self-closing-comp": "error",
+    "react/jsx-boolean-value": ["error", "never"],
     "react-hooks/rules-of-hooks": "error",
-    "react-hooks/exhaustive-deps": "warn"
+    "react-hooks/exhaustive-deps": "error"
   }
 }

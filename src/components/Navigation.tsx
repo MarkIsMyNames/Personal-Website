@@ -39,7 +39,7 @@ export const Navigation: React.FC = () => {
   const scrollToSection = (sectionId: string): void => {
     const element = document.getElementById(sectionId);
     const nav = document.querySelector('nav');
-    const navHeight = nav?.offsetHeight || 0;
+    const navHeight = nav?.offsetHeight ?? 0;
 
     if (element) {
       const elementPosition = element.getBoundingClientRect().top;
@@ -57,10 +57,21 @@ export const Navigation: React.FC = () => {
   };
 
   return (
-    <Nav $isVisible={isVisible} role="navigation" aria-label="Main navigation">
+    <Nav
+      $isVisible={isVisible}
+      role="navigation"
+      aria-label="Main navigation"
+    >
       <NavContainer>
-        <NavBrandContainer onClick={scrollToTop} role="button" aria-label="Scroll to top">
-          <NavProfileImage src={profile.image} alt={`${profile.name} profile picture`} />
+        <NavBrandContainer
+          onClick={scrollToTop}
+          role="button"
+          aria-label="Scroll to top"
+        >
+          <NavProfileImage
+            src={profile.image}
+            alt={`${profile.name} profile picture`}
+          />
           <NavBrand>{profile.name}</NavBrand>
         </NavBrandContainer>
         <NavLinks role="menu">

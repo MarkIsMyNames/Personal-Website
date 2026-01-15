@@ -27,6 +27,10 @@
     "strictPropertyInitialization": true,
     "alwaysStrict": true,
     "forceConsistentCasingInFileNames": true,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitOverride": true,
+    "exactOptionalPropertyTypes": true,
+    "noPropertyAccessFromIndexSignature": true,
 
     /* Testing */
     "types": ["node", "vitest/globals", "@testing-library/jest-dom"],

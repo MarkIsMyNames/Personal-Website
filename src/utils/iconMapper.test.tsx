@@ -78,19 +78,34 @@ describe('iconMapper', () => {
   });
 
   it('applies className to icon', () => {
-    const { container } = render(<Icon iconName="FaReact" className="test-class" />);
+    const { container } = render(
+      <Icon
+        iconName="FaReact"
+        className="test-class"
+      />,
+    );
     const svg = container.querySelector('svg');
     expect(svg).toHaveClass('test-class');
   });
 
   it('applies className to fallback', () => {
-    render(<Icon iconName="UnknownIcon" className="test-class" />);
+    render(
+      <Icon
+        iconName="UnknownIcon"
+        className="test-class"
+      />,
+    );
     const fallback = screen.getByText('?');
     expect(fallback).toHaveClass('test-class');
   });
 
   it('applies size to icon', () => {
-    const { container } = render(<Icon iconName="FaReact" size={24} />);
+    const { container } = render(
+      <Icon
+        iconName="FaReact"
+        size={24}
+      />,
+    );
     const svg = container.querySelector('svg');
     expect(svg).toBeInTheDocument();
   });

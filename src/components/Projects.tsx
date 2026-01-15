@@ -52,33 +52,46 @@ export const Projects: React.FC<ProjectsProps> = ({ projects }) => {
   const handlePreviousImage = (): void => {
     if (currentImageIndex > 0) {
       const newIndex = currentImageIndex - 1;
-      setCurrentImageIndex(newIndex);
-      setSelectedImage({
-        url: currentProjectImages[newIndex],
-        alt: `Image ${newIndex + 1}`,
-      });
+      const newUrl = currentProjectImages[newIndex];
+      if (newUrl !== undefined) {
+        setCurrentImageIndex(newIndex);
+        setSelectedImage({
+          url: newUrl,
+          alt: `Image ${newIndex + 1}`,
+        });
+      }
     }
   };
 
   const handleNextImage = (): void => {
     if (currentImageIndex < currentProjectImages.length - 1) {
       const newIndex = currentImageIndex + 1;
-      setCurrentImageIndex(newIndex);
-      setSelectedImage({
-        url: currentProjectImages[newIndex],
-        alt: `Image ${newIndex + 1}`,
-      });
+      const newUrl = currentProjectImages[newIndex];
+      if (newUrl !== undefined) {
+        setCurrentImageIndex(newIndex);
+        setSelectedImage({
+          url: newUrl,
+          alt: `Image ${newIndex + 1}`,
+        });
+      }
     }
   };
 
   return (
     <ProjectsSection aria-label="Projects and Experience section">
       <SectionTitle>Projects & Experience</SectionTitle>
-      <ProjectsContainer role="list" aria-label="List of projects">
+      <ProjectsContainer
+        role="list"
+        aria-label="List of projects"
+      >
         {projects.map((project) => {
           const isSingleImage = project.images.length === 1;
           return (
-            <ProjectCard key={project.id} role="listitem" aria-label={`${project.title} project`}>
+            <ProjectCard
+              key={project.id}
+              role="listitem"
+              aria-label={`${project.title} project`}
+            >
               <ProjectImages $isSingle={isSingleImage}>
                 {project.images.map((image, index) => (
                   <ProjectImage

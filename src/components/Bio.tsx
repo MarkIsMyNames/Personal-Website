@@ -20,10 +20,16 @@ export const Bio: React.FC<BioProps> = ({ profile }) => {
   return (
     <BioSection aria-label="About section">
       <BioContent>
-        <ProfileImage src={profile.image} alt={`${profile.name} - ${profile.title}`} />
+        <ProfileImage
+          src={profile.image}
+          alt={`${profile.name} - ${profile.title}`}
+        />
         <BioTitle>{profile.name}</BioTitle>
         <BioSubtitle>{profile.title}</BioSubtitle>
-        <BioText role="article" aria-label="Biography">
+        <BioText
+          role="article"
+          aria-label="Biography"
+        >
           {bioSentences.map((sentence, index) => (
             <React.Fragment key={index}>
               {sentence}

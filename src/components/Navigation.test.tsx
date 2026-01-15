@@ -138,7 +138,9 @@ describe('Navigation Component', () => {
 
     sections.forEach((sectionId) => {
       const element = document.getElementById(sectionId);
-      if (element) document.body.removeChild(element);
+      if (element) {
+        document.body.removeChild(element);
+      }
     });
   });
 
@@ -209,12 +211,13 @@ describe('Navigation Component', () => {
     document.body.appendChild(mockElement);
 
     // Mock querySelector to return null for nav
-    const originalQuerySelector = document.querySelector;
-    document.querySelector = vi.fn((selector) => {
+    const originalQuerySelector: typeof document.querySelector =
+      document.querySelector.bind(document);
+    document.querySelector = vi.fn((selector: string): Element | null => {
       if (selector === 'nav') {
         return null;
       }
-      return originalQuerySelector.call(document, selector);
+      return originalQuerySelector(selector);
     });
 
     renderWithTheme(<Navigation />);

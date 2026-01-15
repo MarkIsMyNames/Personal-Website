@@ -4,31 +4,32 @@ import { Projects } from './Projects';
 import { theme } from '../styles/theme';
 import type { Project } from '../types';
 
-const mockProjects: Project[] = [
-  {
-    id: '1',
-    title: 'Test Project 1',
-    role: 'Test Role 1',
-    description: 'This is a test project description.',
-    highlights: [
-      { id: '1', text: 'First highlight', orderIndex: 0 },
-      { id: '2', text: 'Second highlight', orderIndex: 1 },
-    ],
-    images: ['test1.jpg'],
-    tags: ['React', 'TypeScript'],
-    orderIndex: 0,
-  },
-  {
-    id: '2',
-    title: 'Test Project 2',
-    role: 'Test Role 2',
-    description: 'Another test project.',
-    highlights: [{ id: '3', text: 'Third highlight', orderIndex: 0 }],
-    images: ['test2.jpg', 'test3.jpg', 'test4.jpg'],
-    tags: ['Node.js', 'Express'],
-    orderIndex: 1,
-  },
-];
+const firstMockProject: Project = {
+  id: '1',
+  title: 'Test Project 1',
+  role: 'Test Role 1',
+  description: 'This is a test project description.',
+  highlights: [
+    { id: '1', text: 'First highlight', orderIndex: 0 },
+    { id: '2', text: 'Second highlight', orderIndex: 1 },
+  ],
+  images: ['test1.jpg'],
+  tags: ['React', 'TypeScript'],
+  orderIndex: 0,
+};
+
+const secondMockProject: Project = {
+  id: '2',
+  title: 'Test Project 2',
+  role: 'Test Role 2',
+  description: 'Another test project.',
+  highlights: [{ id: '3', text: 'Third highlight', orderIndex: 0 }],
+  images: ['test2.jpg', 'test3.jpg', 'test4.jpg'],
+  tags: ['Node.js', 'Express'],
+  orderIndex: 1,
+};
+
+const mockProjects: Project[] = [firstMockProject, secondMockProject];
 
 const renderWithTheme = (component: React.ReactElement): ReturnType<typeof render> => {
   return render(<ThemeProvider theme={theme}>{component}</ThemeProvider>);
@@ -82,7 +83,7 @@ describe('Projects Component', () => {
   });
 
   it('renders single image with correct styling', () => {
-    const singleImageProject: Project[] = [mockProjects[0]];
+    const singleImageProject: Project[] = [firstMockProject];
     renderWithTheme(<Projects projects={singleImageProject} />);
     const image = screen.getByAltText(/Test Project 1 screenshot 1 of 1/i);
     expect(image).toBeInTheDocument();
@@ -117,7 +118,7 @@ describe('Projects Component', () => {
   it('does not open modal for Intercom project images', () => {
     const intercomProject: Project[] = [
       {
-        ...mockProjects[0],
+        ...firstMockProject,
         title: 'Intercom',
         images: ['intercom.jpg'],
       },
@@ -156,7 +157,7 @@ describe('Projects Component', () => {
   it('handles project with no highlights', () => {
     const projectWithNoHighlights: Project[] = [
       {
-        ...mockProjects[0],
+        ...firstMockProject,
         highlights: [],
       },
     ];
@@ -167,7 +168,7 @@ describe('Projects Component', () => {
   it('handles project with no tags', () => {
     const projectWithNoTags: Project[] = [
       {
-        ...mockProjects[0],
+        ...firstMockProject,
         tags: [],
       },
     ];
@@ -212,7 +213,7 @@ describe('Projects Component', () => {
   it('does not open modal when pressing Enter on Intercom project image', () => {
     const intercomProject: Project[] = [
       {
-        ...mockProjects[0],
+        ...firstMockProject,
         title: 'Intercom',
         images: ['intercom.jpg'],
       },
