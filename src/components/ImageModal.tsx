@@ -65,20 +65,26 @@ export function ImageModal({
     };
   }, [isOpen, handleKeyDown]);
 
-  const handleOverlayClick = (e: MouseEvent<HTMLDivElement>) => {
-    if (e.target === e.currentTarget) {
-      onClose();
-    }
-  };
+  const handleOverlayClick = useCallback(
+    (e: MouseEvent<HTMLDivElement>) => {
+      if (e.target === e.currentTarget) {
+        onClose();
+      }
+    },
+    [onClose],
+  );
 
-  const handleImageClick = (e: MouseEvent<HTMLImageElement>) => {
+  const handleImageClick = useCallback((e: MouseEvent<HTMLImageElement>) => {
     e.stopPropagation();
-  };
+  }, []);
 
-  const handleNavigationClick = (e: MouseEvent<HTMLButtonElement>, callback: () => void) => {
-    e.stopPropagation();
-    callback();
-  };
+  const handleNavigationClick = useCallback(
+    (e: MouseEvent<HTMLButtonElement>, callback: () => void) => {
+      e.stopPropagation();
+      callback();
+    },
+    [],
+  );
 
   if (!isOpen) {
     return null;

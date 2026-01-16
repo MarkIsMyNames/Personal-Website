@@ -1,4 +1,4 @@
-import type { ComponentType } from 'react';
+import { useMemo, type ComponentType } from 'react';
 import { FaJava, FaPython, FaReact, FaLinux, FaServer, FaGithub, FaEnvelope } from 'react-icons/fa';
 import { DiRuby } from 'react-icons/di';
 import { SiCplusplus, SiEmberdotjs, SiTypescript } from 'react-icons/si';
@@ -33,11 +33,15 @@ type IconProps = {
 export function Icon({ iconName, className = '', size }: IconProps) {
   const IconComponent = iconMap[iconName];
 
+  const props = useMemo(
+    () => (size !== undefined ? { className, size } : { className }),
+    [className, size],
+  );
+
   if (!IconComponent) {
     return <span className={className}>?</span>;
   }
 
   const Component = IconComponent as ComponentType<{ className?: string; size?: number }>;
-  const props = size !== undefined ? { className, size } : { className };
   return <Component {...props} />;
 }
