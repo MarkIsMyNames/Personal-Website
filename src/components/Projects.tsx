@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import type { Project } from '../types';
 import { ImageModal } from './ImageModal';
 import {
@@ -28,23 +28,21 @@ export function Projects({ projects }: ProjectsProps) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [currentProjectImages, setCurrentProjectImages] = useState<string[]>([]);
 
-  const handleImageClick = (
-    imageUrl: string,
-    altText: string,
-    imageIndex: number,
-    allImages: string[],
-  ) => {
-    setSelectedImage({ url: imageUrl, alt: altText });
-    setCurrentImageIndex(imageIndex);
-    setCurrentProjectImages(allImages);
-    setModalOpen(true);
-  };
+  const handleImageClick = useCallback(
+    (imageUrl: string, altText: string, imageIndex: number, allImages: string[]) => {
+      setSelectedImage({ url: imageUrl, alt: altText });
+      setCurrentImageIndex(imageIndex);
+      setCurrentProjectImages(allImages);
+      setModalOpen(true);
+    },
+    [],
+  );
 
-  const handleCloseModal = (): void => {
+  const handleCloseModal = useCallback((): void => {
     setModalOpen(false);
-  };
+  }, []);
 
-  const handlePreviousImage = (): void => {
+  const handlePreviousImage = useCallback((): void => {
     if (currentImageIndex > 0) {
       const newIndex = currentImageIndex - 1;
       const newUrl = currentProjectImages[newIndex];
@@ -56,9 +54,9 @@ export function Projects({ projects }: ProjectsProps) {
         });
       }
     }
-  };
+  }, [currentImageIndex, currentProjectImages]);
 
-  const handleNextImage = (): void => {
+  const handleNextImage = useCallback((): void => {
     if (currentImageIndex < currentProjectImages.length - 1) {
       const newIndex = currentImageIndex + 1;
       const newUrl = currentProjectImages[newIndex];
@@ -70,7 +68,7 @@ export function Projects({ projects }: ProjectsProps) {
         });
       }
     }
-  };
+  }, [currentImageIndex, currentProjectImages]);
 
   return (
     <ProjectsSection aria-label="Projects and Experience section">

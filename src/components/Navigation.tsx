@@ -41,7 +41,7 @@ export function Navigation() {
     };
   }, [handleScroll]);
 
-  const scrollToSection = (sectionId: string): void => {
+  const scrollToSection = useCallback((sectionId: string): void => {
     const element = document.getElementById(sectionId);
 
     if (element) {
@@ -58,16 +58,16 @@ export function Navigation() {
         lastScrollYRef.current = window.scrollY;
       }, 1000);
     }
-  };
+  }, []);
 
-  const scrollToTop = (): void => {
+  const scrollToTop = useCallback((): void => {
     isNavClickScrollRef.current = true;
     window.scrollTo({ top: 0, behavior: 'smooth' });
     setTimeout(() => {
       isNavClickScrollRef.current = false;
       lastScrollYRef.current = window.scrollY;
     }, 1000);
-  };
+  }, []);
 
   return (
     <Nav
