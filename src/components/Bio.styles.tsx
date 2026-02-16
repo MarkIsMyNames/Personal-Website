@@ -4,6 +4,11 @@ export const BioSection = styled.section`
   padding-top: 4rem;
   padding-bottom: 3.5rem;
   text-align: center;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    padding-top: 0.3rem;
+    padding-bottom: 2.5rem;
+  }
 `;
 
 export const BioContent = styled.div`
@@ -43,6 +48,10 @@ export const BioTitle = styled.h1`
   @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
     font-size: 2rem;
   }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    font-size: 1.75rem;
+  }
 `;
 
 export const BioSubtitle = styled.h2`
@@ -54,17 +63,30 @@ export const BioSubtitle = styled.h2`
   @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
     font-size: 1.25rem;
   }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    font-size: 1.1rem;
+  }
 `;
 
 export const BioText = styled.p`
-  font-size: 1.125rem;
+  font-size: 1.25rem;
   color: ${({ theme }) => theme.colors.textSecondary};
   line-height: 1.8;
   margin-bottom: 1rem;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    font-size: 0.9rem;
+    line-height: 1.7;
+  }
 `;
 
 export const BioEducation = styled.p`
-  font-size: 1rem;
+  font-size: 1.1rem;
   color: ${({ theme }) => theme.colors.textSecondary};
   font-style: italic;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    font-size: 0.875rem;
+  }
 `;

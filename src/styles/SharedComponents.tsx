@@ -13,4 +13,9 @@ export const SectionTitle = styled.h2<{ $compact?: boolean }>`
   @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
     font-size: 2rem;
   }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    font-size: 1.75rem;
+    margin: ${({ $compact }) => ($compact ? '0 0 1rem' : '2.5rem 0 2rem')};
+  }
 `;
