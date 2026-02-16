@@ -48,7 +48,6 @@ export function ImageModal({
     hasNextRef.current = hasNext;
   });
 
-
   const handleTouchStart = useCallback((e: TouchEvent): void => {
     const touch = e.touches[0];
     if (touch) {
