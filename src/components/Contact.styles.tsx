@@ -7,6 +7,11 @@ export const ContactSection = styled.section`
   border-radius: 16px;
   margin-top: 4rem;
   box-shadow: ${({ theme }) => theme.shadows.large};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    padding: 2.5rem 1rem;
+    margin-top: 2rem;
+  }
 `;
 
 export const SectionTitle = styled.h2`
@@ -21,6 +26,10 @@ export const SectionTitle = styled.h2`
 
   @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
     font-size: 2rem;
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    font-size: 1.75rem;
   }
 `;
 

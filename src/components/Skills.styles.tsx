@@ -17,6 +17,10 @@ export const SectionTitle = styled.h2`
   @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
     font-size: 2rem;
   }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    font-size: 1.75rem;
+  }
 `;
 
 export const SkillsGrid = styled.div`
@@ -58,6 +62,11 @@ export const SkillCard = styled.div`
   @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
     padding: 1.5rem 1rem;
   }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    padding: 1.25rem 0.75rem;
+    gap: 0.75rem;
+  }
 `;
 
 export const SkillName = styled.span`
@@ -67,5 +76,9 @@ export const SkillName = styled.span`
 
   @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
     font-size: 1rem;
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    font-size: 0.9rem;
   }
 `;

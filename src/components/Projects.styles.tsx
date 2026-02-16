@@ -17,6 +17,11 @@ export const SectionTitle = styled.h2`
   @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
     font-size: 2rem;
   }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    font-size: 1.75rem;
+    margin-bottom: 1.5rem;
+  }
 `;
 
 export const ProjectsContainer = styled.div`
@@ -43,7 +48,15 @@ export const ProjectImages = styled.div<{ $isSingle?: boolean }>`
   overflow-x: auto;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
-    flex-direction: column;
+    justify-content: flex-start;
+    padding: 1.5rem 1rem;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
 `;
 
@@ -63,12 +76,22 @@ export const ProjectImage = styled.img<{ $isSingle?: boolean; $isClickable?: boo
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
-    max-width: 100%;
+    max-width: 80vw;
+    max-height: 250px;
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    max-width: 85vw;
+    max-height: 200px;
   }
 `;
 
 export const ProjectContent = styled.div`
   padding: 2rem;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    padding: 1.25rem;
+  }
 `;
 
 export const ProjectTitle = styled.h3`
@@ -80,6 +103,10 @@ export const ProjectTitle = styled.h3`
   @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
     font-size: 1.5rem;
   }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    font-size: 1.35rem;
+  }
 `;
 
 export const ProjectRole = styled.p`
@@ -87,6 +114,10 @@ export const ProjectRole = styled.p`
   color: ${({ theme }) => theme.colors.textSecondary};
   margin-bottom: 1rem;
   font-style: italic;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    font-size: 1rem;
+  }
 `;
 
 export const ProjectDescription = styled.p`
@@ -94,6 +125,11 @@ export const ProjectDescription = styled.p`
   line-height: 1.8;
   margin-bottom: 1.5rem;
   color: ${({ theme }) => theme.colors.textSecondary};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    font-size: 0.9rem;
+    line-height: 1.7;
+  }
 `;
 
 export const ProjectHighlights = styled.ul`
@@ -102,17 +138,21 @@ export const ProjectHighlights = styled.ul`
 `;
 
 export const HighlightItem = styled.li`
-  padding-left: 1.5rem;
+  display: flex;
   margin-bottom: 0.75rem;
-  position: relative;
   line-height: 1.6;
 
   &::before {
     content: '▹';
-    position: absolute;
-    left: 0;
+    margin-right: 0.5rem;
+    margin-top: -0.35rem;
     color: ${({ theme }) => theme.colors.accentPrimary};
     font-size: 1.25rem;
+    line-height: 1.6;
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    font-size: 0.9rem;
   }
 `;
 
@@ -120,6 +160,10 @@ export const ProjectTags = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 0.75rem;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    gap: 0.5rem;
+  }
 `;
 
 export const ProjectTag = styled.span`
@@ -134,5 +178,10 @@ export const ProjectTag = styled.span`
   &:hover {
     border-color: ${({ theme }) => theme.colors.accentPrimary};
     background: ${({ theme }) => theme.colors.bgPrimary};
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    font-size: 0.8rem;
+    padding: 0.375rem 0.75rem;
   }
 `;

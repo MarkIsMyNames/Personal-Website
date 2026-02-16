@@ -7,6 +7,8 @@ import {
   NavigationButtonRight,
 } from './ImageModal.styles';
 
+const SWIPE_THRESHOLD = 50;
+
 type ImageModalProps = {
   isOpen: boolean;
   imageUrl: string;
@@ -34,6 +36,9 @@ export function ImageModal({
   const hasPreviousRef = useRef(hasPrevious);
   const hasNextRef = useRef(hasNext);
 
+  const touchStartXRef = useRef(0);
+  const touchEndXRef = useRef(0);
+
   // Keep refs updated with latest values
   useEffect(() => {
     onCloseRef.current = onClose;
@@ -42,6 +47,35 @@ export function ImageModal({
     hasPreviousRef.current = hasPrevious;
     hasNextRef.current = hasNext;
   });
+
+  const handleTouchStart = useCallback((e: TouchEvent): void => {
+    const touch = e.touches[0];
+    if (touch) {
+      touchStartXRef.current = touch.clientX;
+      touchEndXRef.current = touch.clientX;
+    }
+  }, []);
+
+  const handleTouchMove = useCallback((e: TouchEvent): void => {
+    const touch = e.touches[0];
+    if (touch) {
+      touchEndXRef.current = touch.clientX;
+    }
+  }, []);
+
+  const handleTouchEnd = useCallback((): void => {
+    const deltaX = touchStartXRef.current - touchEndXRef.current;
+
+    if (Math.abs(deltaX) < SWIPE_THRESHOLD) {
+      return;
+    }
+
+    if (deltaX > 0 && hasNextRef.current && onNextRef.current) {
+      onNextRef.current();
+    } else if (deltaX < 0 && hasPreviousRef.current && onPreviousRef.current) {
+      onPreviousRef.current();
+    }
+  }, []);
 
   const handleKeyDown = useCallback((e: KeyboardEvent): void => {
     if (e.key === 'Escape') {
@@ -56,14 +90,20 @@ export function ImageModal({
   useEffect(() => {
     if (isOpen) {
       document.addEventListener('keydown', handleKeyDown);
+      document.addEventListener('touchstart', handleTouchStart, { passive: true });
+      document.addEventListener('touchmove', handleTouchMove, { passive: true });
+      document.addEventListener('touchend', handleTouchEnd);
       document.body.style.overflow = 'hidden';
     }
 
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
+      document.removeEventListener('touchstart', handleTouchStart);
+      document.removeEventListener('touchmove', handleTouchMove);
+      document.removeEventListener('touchend', handleTouchEnd);
       document.body.style.overflow = 'unset';
     };
-  }, [isOpen, handleKeyDown]);
+  }, [isOpen, handleKeyDown, handleTouchStart, handleTouchMove, handleTouchEnd]);
 
   const handleOverlayClick = useCallback(
     (e: MouseEvent<HTMLDivElement>) => {

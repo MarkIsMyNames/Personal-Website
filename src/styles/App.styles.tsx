@@ -7,6 +7,6 @@ export const AppContainer = styled.div`
   padding: 3rem 1rem 2rem;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    padding: 5rem 0.5rem 1rem;
+    padding: 5rem 1rem 1rem;
   }
 `;

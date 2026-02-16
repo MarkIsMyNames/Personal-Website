@@ -232,6 +232,102 @@ describe('ImageModal Component', () => {
     }
   });
 
+  it('calls onNext when swiped left', () => {
+    const mockOnNext = vi.fn();
+    renderWithTheme(
+      <ImageModal
+        isOpen
+        imageUrl={testImageUrl}
+        altText={testAltText}
+        onClose={mockOnClose}
+        onNext={mockOnNext}
+        hasNext
+      />,
+    );
+
+    fireEvent.touchStart(document, {
+      touches: [{ clientX: 300, clientY: 200 }],
+    });
+    fireEvent.touchMove(document, {
+      touches: [{ clientX: 100, clientY: 200 }],
+    });
+    fireEvent.touchEnd(document);
+
+    expect(mockOnNext).toHaveBeenCalledTimes(1);
+  });
+
+  it('calls onPrevious when swiped right', () => {
+    const mockOnPrevious = vi.fn();
+    renderWithTheme(
+      <ImageModal
+        isOpen
+        imageUrl={testImageUrl}
+        altText={testAltText}
+        onClose={mockOnClose}
+        onPrevious={mockOnPrevious}
+        hasPrevious
+      />,
+    );
+
+    fireEvent.touchStart(document, {
+      touches: [{ clientX: 100, clientY: 200 }],
+    });
+    fireEvent.touchMove(document, {
+      touches: [{ clientX: 300, clientY: 200 }],
+    });
+    fireEvent.touchEnd(document);
+
+    expect(mockOnPrevious).toHaveBeenCalledTimes(1);
+  });
+
+  it('does not trigger swipe for small movements', () => {
+    const mockOnNext = vi.fn();
+    renderWithTheme(
+      <ImageModal
+        isOpen
+        imageUrl={testImageUrl}
+        altText={testAltText}
+        onClose={mockOnClose}
+        onNext={mockOnNext}
+        hasNext
+      />,
+    );
+
+    fireEvent.touchStart(document, {
+      touches: [{ clientX: 200, clientY: 200 }],
+    });
+    fireEvent.touchMove(document, {
+      touches: [{ clientX: 180, clientY: 200 }],
+    });
+    fireEvent.touchEnd(document);
+
+    expect(mockOnNext).not.toHaveBeenCalled();
+  });
+
+  it('does not trigger swipe for vertical movements', () => {
+    const mockOnNext = vi.fn();
+    renderWithTheme(
+      <ImageModal
+        isOpen
+        imageUrl={testImageUrl}
+        altText={testAltText}
+        onClose={mockOnClose}
+        onNext={mockOnNext}
+        hasNext
+      />,
+    );
+
+    fireEvent.touchStart(document, {
+      touches: [{ clientX: 200, clientY: 100 }],
+    });
+    fireEvent.touchMove(document, {
+      touches: [{ clientX: 190, clientY: 400 }],
+    });
+    fireEvent.touchEnd(document);
+
+    expect(mockOnNext).not.toHaveBeenCalled();
+  });
+
   it('sets body overflow to hidden when opened', () => {
     renderWithTheme(
       <ImageModal
