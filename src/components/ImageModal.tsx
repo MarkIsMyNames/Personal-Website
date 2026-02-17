@@ -1,4 +1,4 @@
-import { useEffect, useRef, useCallback, type MouseEvent } from 'react';
+import { useEffect, useRef, type MouseEvent } from 'react';
 import {
   ModalOverlay,
   ModalImage,
@@ -6,6 +6,7 @@ import {
   NavigationButtonLeft,
   NavigationButtonRight,
 } from './ImageModal.styles';
+import { KeyboardKey } from '../types';
 
 const SWIPE_THRESHOLD = 50;
 
@@ -30,71 +31,58 @@ export function ImageModal({
   hasPrevious = false,
   hasNext = false,
 }: ImageModalProps) {
-  const onCloseRef = useRef(onClose);
-  const onPreviousRef = useRef(onPrevious);
-  const onNextRef = useRef(onNext);
-  const hasPreviousRef = useRef(hasPrevious);
-  const hasNextRef = useRef(hasNext);
-
   const touchStartXRef = useRef(0);
   const touchEndXRef = useRef(0);
 
-  // Keep refs updated with latest values
   useEffect(() => {
-    onCloseRef.current = onClose;
-    onPreviousRef.current = onPrevious;
-    onNextRef.current = onNext;
-    hasPreviousRef.current = hasPrevious;
-    hasNextRef.current = hasNext;
-  });
-
-  const handleTouchStart = useCallback((e: TouchEvent): void => {
-    const touch = e.touches[0];
-    if (touch) {
-      touchStartXRef.current = touch.clientX;
-      touchEndXRef.current = touch.clientX;
-    }
-  }, []);
-
-  const handleTouchMove = useCallback((e: TouchEvent): void => {
-    const touch = e.touches[0];
-    if (touch) {
-      touchEndXRef.current = touch.clientX;
-    }
-  }, []);
-
-  const handleTouchEnd = useCallback((): void => {
-    const deltaX = touchStartXRef.current - touchEndXRef.current;
-
-    if (Math.abs(deltaX) < SWIPE_THRESHOLD) {
+    if (!isOpen) {
       return;
     }
 
-    if (deltaX > 0 && hasNextRef.current && onNextRef.current) {
-      onNextRef.current();
-    } else if (deltaX < 0 && hasPreviousRef.current && onPreviousRef.current) {
-      onPreviousRef.current();
-    }
-  }, []);
+    const handleKeyDown = (e: KeyboardEvent): void => {
+      if (e.key === KeyboardKey.Escape) {
+        onClose();
+      } else if (e.key === KeyboardKey.ArrowLeft && hasPrevious && onPrevious) {
+        onPrevious();
+      } else if (e.key === KeyboardKey.ArrowRight && hasNext && onNext) {
+        onNext();
+      }
+    };
 
-  const handleKeyDown = useCallback((e: KeyboardEvent): void => {
-    if (e.key === 'Escape') {
-      onCloseRef.current();
-    } else if (e.key === 'ArrowLeft' && hasPreviousRef.current && onPreviousRef.current) {
-      onPreviousRef.current();
-    } else if (e.key === 'ArrowRight' && hasNextRef.current && onNextRef.current) {
-      onNextRef.current();
-    }
-  }, []);
+    const handleTouchStart = (e: TouchEvent): void => {
+      const touch = e.touches[0];
+      if (touch) {
+        touchStartXRef.current = touch.clientX;
+        touchEndXRef.current = touch.clientX;
+      }
+    };
 
-  useEffect(() => {
-    if (isOpen) {
-      document.addEventListener('keydown', handleKeyDown);
-      document.addEventListener('touchstart', handleTouchStart, { passive: true });
-      document.addEventListener('touchmove', handleTouchMove, { passive: true });
-      document.addEventListener('touchend', handleTouchEnd);
-      document.body.style.overflow = 'hidden';
-    }
+    const handleTouchMove = (e: TouchEvent): void => {
+      const touch = e.touches[0];
+      if (touch) {
+        touchEndXRef.current = touch.clientX;
+      }
+    };
+
+    const handleTouchEnd = (): void => {
+      const deltaX = touchStartXRef.current - touchEndXRef.current;
+
+      if (Math.abs(deltaX) < SWIPE_THRESHOLD) {
+        return;
+      }
+
+      if (deltaX > 0 && hasNext && onNext) {
+        onNext();
+      } else if (deltaX < 0 && hasPrevious && onPrevious) {
+        onPrevious();
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    document.addEventListener('touchstart', handleTouchStart, { passive: true });
+    document.addEventListener('touchmove', handleTouchMove, { passive: true });
+    document.addEventListener('touchend', handleTouchEnd);
+    document.body.style.overflow = 'hidden';
 
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
@@ -103,28 +91,7 @@ export function ImageModal({
       document.removeEventListener('touchend', handleTouchEnd);
       document.body.style.overflow = 'unset';
     };
-  }, [isOpen, handleKeyDown, handleTouchStart, handleTouchMove, handleTouchEnd]);
-
-  const handleOverlayClick = useCallback(
-    (e: MouseEvent<HTMLDivElement>) => {
-      if (e.target === e.currentTarget) {
-        onClose();
-      }
-    },
-    [onClose],
-  );
-
-  const handleImageClick = useCallback((e: MouseEvent<HTMLImageElement>) => {
-    e.stopPropagation();
-  }, []);
-
-  const handleNavigationClick = useCallback(
-    (e: MouseEvent<HTMLButtonElement>, callback: () => void) => {
-      e.stopPropagation();
-      callback();
-    },
-    [],
-  );
+  }, [isOpen, onClose, onPrevious, onNext, hasPrevious, hasNext]);
 
   if (!isOpen) {
     return null;
@@ -132,8 +99,11 @@ export function ImageModal({
 
   return (
     <ModalOverlay
-      $isOpen={isOpen}
-      onClick={handleOverlayClick}
+      onClick={(e: MouseEvent<HTMLDivElement>) => {
+        if (e.target === e.currentTarget) {
+          onClose();
+        }
+      }}
       role="dialog"
       aria-modal="true"
       aria-label="Image modal"
@@ -146,7 +116,10 @@ export function ImageModal({
       </CloseButton>
       {hasPrevious && onPrevious && (
         <NavigationButtonLeft
-          onClick={(e) => handleNavigationClick(e, onPrevious)}
+          onClick={(e) => {
+            e.stopPropagation();
+            onPrevious();
+          }}
           aria-label="Previous image"
         >
           ‹
@@ -154,7 +127,10 @@ export function ImageModal({
       )}
       {hasNext && onNext && (
         <NavigationButtonRight
-          onClick={(e) => handleNavigationClick(e, onNext)}
+          onClick={(e) => {
+            e.stopPropagation();
+            onNext();
+          }}
           aria-label="Next image"
         >
           ›
@@ -163,7 +139,6 @@ export function ImageModal({
       <ModalImage
         src={imageUrl}
         alt={altText}
-        onClick={handleImageClick}
       />
     </ModalOverlay>
   );

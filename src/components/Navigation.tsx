@@ -9,6 +9,7 @@ import {
   NavLink,
 } from './Navigation.styles';
 import { profile } from '../data/portfolioData';
+import { SectionId } from '../types';
 
 export function Navigation() {
   const [isVisible, setIsVisible] = useState(true);
@@ -21,15 +22,7 @@ export function Navigation() {
     }
 
     const currentScrollY = window.scrollY;
-
-    if (currentScrollY < 10) {
-      setIsVisible((prev) => (prev ? prev : true));
-    } else if (currentScrollY > lastScrollYRef.current) {
-      setIsVisible((prev) => (prev ? false : prev));
-    } else {
-      setIsVisible((prev) => (prev ? prev : true));
-    }
-
+    setIsVisible(currentScrollY < 10 || currentScrollY <= lastScrollYRef.current);
     lastScrollYRef.current = currentScrollY;
   }, []);
 
@@ -41,33 +34,28 @@ export function Navigation() {
     };
   }, [handleScroll]);
 
-  const scrollToSection = useCallback((sectionId: string): void => {
-    const element = document.getElementById(sectionId);
-
-    if (element) {
-      const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.scrollY;
-
-      isNavClickScrollRef.current = true;
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth',
-      });
-      setTimeout(() => {
-        isNavClickScrollRef.current = false;
-        lastScrollYRef.current = window.scrollY;
-      }, 1000);
-    }
-  }, []);
-
-  const scrollToTop = useCallback((): void => {
+  const smoothScrollTo = useCallback((sectionTop: number): void => {
     isNavClickScrollRef.current = true;
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: sectionTop, behavior: 'smooth' });
     setTimeout(() => {
       isNavClickScrollRef.current = false;
       lastScrollYRef.current = window.scrollY;
     }, 1000);
   }, []);
+
+  const scrollToSection = useCallback(
+    (sectionId: SectionId): void => {
+      const element = document.getElementById(sectionId);
+      if (element) {
+        smoothScrollTo(element.getBoundingClientRect().top + window.scrollY);
+      }
+    },
+    [smoothScrollTo],
+  );
+
+  const scrollToTop = useCallback((): void => {
+    smoothScrollTo(0);
+  }, [smoothScrollTo]);
 
   return (
     <Nav
@@ -96,21 +84,21 @@ export function Navigation() {
             About
           </NavLink>
           <NavLink
-            onClick={() => scrollToSection('skills')}
+            onClick={() => scrollToSection(SectionId.Skills)}
             role="menuitem"
             aria-label="Navigate to Skills section"
           >
             Skills
           </NavLink>
           <NavLink
-            onClick={() => scrollToSection('projects')}
+            onClick={() => scrollToSection(SectionId.Projects)}
             role="menuitem"
             aria-label="Navigate to Projects section"
           >
             Projects
           </NavLink>
           <NavLink
-            onClick={() => scrollToSection('contact')}
+            onClick={() => scrollToSection(SectionId.Contact)}
             role="menuitem"
             aria-label="Navigate to Contact section"
           >

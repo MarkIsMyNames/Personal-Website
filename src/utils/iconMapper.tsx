@@ -1,4 +1,4 @@
-import { useMemo, type ComponentType } from 'react';
+import type { ComponentType } from 'react';
 import {
   FaJava,
   FaPython,
@@ -48,15 +48,11 @@ type IconProps = {
 export function Icon({ iconName, className = '', size }: IconProps) {
   const IconComponent = iconMap[iconName];
 
-  const props = useMemo(
-    () => (size !== undefined ? { className, size } : { className }),
-    [className, size],
-  );
-
   if (!IconComponent) {
     return <span className={className}>?</span>;
   }
 
   const Component = IconComponent as ComponentType<{ className?: string; size?: number }>;
+  const props = size !== undefined ? { className, size } : { className };
   return <Component {...props} />;
 }

@@ -5,6 +5,21 @@ export enum SkillCategory {
   Technology = 'technology',
 }
 
+export enum SectionId {
+  About = 'about',
+  Skills = 'skills',
+  Projects = 'projects',
+  Contact = 'contact',
+}
+
+export const KeyboardKey = {
+  Enter: 'Enter',
+  Space: ' ',
+  Escape: 'Escape',
+  ArrowLeft: 'ArrowLeft',
+  ArrowRight: 'ArrowRight',
+} as const;
+
 export type Skill = {
   name: string;
   iconName: string;

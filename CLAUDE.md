@@ -141,10 +141,21 @@ index.tsx → App.tsx → ThemeProvider(theme)
 
 ### Data Model (src/types/index.ts)
 
+**Enums and constants:**
+
+| Name | Kind | Values | Purpose |
+|------|------|--------|---------|
+| `SkillCategory` | enum | `Language`, `Framework`, `Concept`, `Technology` | Categorises skills in the skills grid |
+| `SectionId` | enum | `About`, `Skills`, `Projects`, `Contact` | Anchor IDs used in App.tsx and Navigation.tsx |
+| `KeyboardKey` | const object | `Enter`, `Space`, `Escape`, `ArrowLeft`, `ArrowRight` | Keyboard event key values (const instead of enum because DOM `e.key` returns `string`) |
+
+**Use enums for categorical values where both producer and consumer are in our code** (e.g., `SkillCategory`, `SectionId`). Use `as const` objects for values compared against external APIs (e.g., `KeyboardKey` vs DOM `e.key`).
+
+**Types:**
+
 | Type | Fields | Used By |
 |------|--------|---------|
 | `Profile` | name, title, bio, image, email, github, university, graduationYear | Bio, Contact, Navigation |
-| `SkillCategory` (enum) | `Language`, `Framework`, `Concept`, `Technology` | Skill |
 | `Skill` | name, iconName, category (`SkillCategory`) | Skills |
 | `Project` | title, role, description, highlights[], images[], tags[] | Projects |
 | `ProjectHighlight` | text | Projects (nested in Project) |
