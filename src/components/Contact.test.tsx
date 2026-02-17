@@ -6,7 +6,6 @@ import type { Profile } from '../types';
 import React from 'react';
 
 const mockProfile: Profile = {
-  id: '1',
   name: 'Test User',
   title: 'Test Engineer',
   bio: 'Test bio',

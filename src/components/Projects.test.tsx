@@ -6,28 +6,21 @@ import type { Project } from '../types';
 import React from 'react';
 
 const firstMockProject: Project = {
-  id: '1',
   title: 'Test Project 1',
   role: 'Test Role 1',
   description: 'This is a test project description.',
-  highlights: [
-    { id: '1', text: 'First highlight', orderIndex: 0 },
-    { id: '2', text: 'Second highlight', orderIndex: 1 },
-  ],
+  highlights: [{ text: 'First highlight' }, { text: 'Second highlight' }],
   images: ['test1.jpg'],
   tags: ['React', 'TypeScript'],
-  orderIndex: 0,
 };
 
 const secondMockProject: Project = {
-  id: '2',
   title: 'Test Project 2',
   role: 'Test Role 2',
   description: 'Another test project.',
-  highlights: [{ id: '3', text: 'Third highlight', orderIndex: 0 }],
+  highlights: [{ text: 'Third highlight' }],
   images: ['test2.jpg', 'test3.jpg', 'test4.jpg'],
   tags: ['Node.js', 'Express'],
-  orderIndex: 1,
 };
 
 const mockProjects: Project[] = [firstMockProject, secondMockProject];
