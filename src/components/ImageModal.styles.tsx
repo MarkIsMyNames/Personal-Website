@@ -1,34 +1,22 @@
 import styled from 'styled-components';
 
-export const ModalOverlay = styled.div<{ $isOpen: boolean }>`
+export const ModalOverlay = styled.div`
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
   background: rgba(0, 0, 0, 0.9);
-  display: ${({ $isOpen }) => ($isOpen ? 'flex' : 'none')};
+  display: flex;
   justify-content: center;
   align-items: center;
   z-index: 1000;
-  cursor: pointer;
-  animation: ${({ $isOpen }) => ($isOpen ? 'fadeIn 0.3s ease' : 'none')};
-
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
-  }
 `;
 
 export const ModalImage = styled.img`
   max-width: 90%;
   max-height: 90%;
   object-fit: contain;
-  cursor: default;
   animation: zoomIn 0.3s ease;
 
   @keyframes zoomIn {
@@ -55,10 +43,6 @@ export const CloseButton = styled.button`
   border-radius: 50%;
   font-size: 1.5rem;
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s ease;
   z-index: 1001;
 
   &:hover {
@@ -88,41 +72,23 @@ export const NavigationButton = styled.button`
   border-radius: 50%;
   font-size: 2.5rem;
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   transition: all 0.3s ease;
-  z-index: 1001;
-  line-height: 0;
-  padding: 0;
   padding-bottom: 0.3rem;
-  animation: fadeInNav 0.3s ease;
-  opacity: 0;
-  animation-fill-mode: forwards;
   font-family: Arial, sans-serif;
   font-weight: 300;
-
-  @keyframes fadeInNav {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
-  }
+  z-index: 1001;
 
   &:hover {
     background: ${({ theme }) => theme.colors.accentPrimary};
     border-color: ${({ theme }) => theme.colors.accentPrimary};
     transform: translateY(-50%) scale(1.1);
-    padding-bottom: 0.3rem;
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     width: 3rem;
     height: 3rem;
     font-size: 2rem;
-    padding-bottom: 0.3rem;
+    padding-bottom: 0.15rem;
   }
 `;
 

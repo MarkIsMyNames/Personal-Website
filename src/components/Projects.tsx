@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import type { Project } from '../types';
+import { KeyboardKey, type Project } from '../types';
 import { ImageModal } from './ImageModal';
 import {
   ProjectsSection,
@@ -104,7 +104,7 @@ export function Projects({ projects }: ProjectsProps) {
                     aria-label={`View full size image ${index + 1} of ${project.title}`}
                     tabIndex={0}
                     onKeyDown={(e) => {
-                      if (e.key === 'Enter' || e.key === ' ') {
+                      if (e.key === KeyboardKey.Enter || e.key === KeyboardKey.Space) {
                         e.preventDefault();
                         handleImageClick(
                           image,

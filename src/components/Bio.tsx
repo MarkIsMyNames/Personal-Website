@@ -1,4 +1,4 @@
-import { Fragment, useMemo } from 'react';
+import { Fragment } from 'react';
 import type { Profile } from '../types';
 import {
   BioSection,
@@ -15,10 +15,7 @@ type BioProps = {
 };
 
 export function Bio({ profile }: BioProps) {
-  const bioSentences = useMemo(
-    () => profile.bio.split('. ').filter((sentence) => sentence.trim() !== ''),
-    [profile.bio],
-  );
+  const bioSentences = profile.bio.split('. ').filter((sentence) => sentence.trim() !== '');
 
   return (
     <BioSection aria-label="About section">

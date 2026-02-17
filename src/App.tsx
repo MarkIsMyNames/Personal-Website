@@ -10,6 +10,7 @@ import { Skills } from './components/Skills';
 import { Projects } from './components/Projects';
 import { Contact } from './components/Contact';
 import { profile, skills, projects } from './data/portfolioData';
+import { SectionId } from './types';
 
 export default function App() {
   return (
@@ -17,16 +18,16 @@ export default function App() {
       <GlobalStyles />
       <Navigation />
       <AppContainer>
-        <div id="about">
+        <div id={SectionId.About}>
           <Bio profile={profile} />
         </div>
-        <div id="skills">
+        <div id={SectionId.Skills}>
           <Skills skills={skills} />
         </div>
-        <div id="projects">
+        <div id={SectionId.Projects}>
           <Projects projects={projects} />
         </div>
-        <div id="contact">
+        <div id={SectionId.Contact}>
           <Contact profile={profile} />
         </div>
         <Analytics />

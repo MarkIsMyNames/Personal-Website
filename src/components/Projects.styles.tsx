@@ -60,19 +60,19 @@ export const ProjectImages = styled.div<{ $isSingle?: boolean }>`
   }
 `;
 
-export const ProjectImage = styled.img<{ $isSingle?: boolean; $isClickable?: boolean }>`
+export const ProjectImage = styled.img<{ $isSingle?: boolean }>`
   max-height: 300px;
   max-width: ${({ $isSingle }) => ($isSingle ? '100%' : '400px')};
   border-radius: 8px;
   object-fit: contain;
-  cursor: ${({ $isClickable }) => ($isClickable ? 'pointer' : 'default')};
+  cursor: pointer;
   transition:
     transform 0.3s ease,
     opacity 0.3s ease;
 
   &:hover {
-    transform: ${({ $isClickable }) => ($isClickable ? 'scale(1.02)' : 'none')};
-    opacity: ${({ $isClickable }) => ($isClickable ? '0.9' : '1')};
+    transform: scale(1.02);
+    opacity: 0.9;
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
