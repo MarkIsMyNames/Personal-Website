@@ -77,7 +77,16 @@ export const projects: Project[] = [
       },
     ],
     images: ['Ganzy.png'],
-    tags: ['Next.js', 'TypeScript', 'React', 'Tailwind CSS', 'AI/ML', 'EdTech', 'Startup', 'UI/UX Design'],
+    tags: [
+      'Next.js',
+      'TypeScript',
+      'React',
+      'Tailwind CSS',
+      'AI/ML',
+      'EdTech',
+      'Startup',
+      'UI/UX Design',
+    ],
   },
   {
     title: 'NASA Space Apps Challenge',
