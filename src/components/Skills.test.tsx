@@ -2,16 +2,16 @@ import { render, screen } from '@testing-library/react';
 import { ThemeProvider } from 'styled-components';
 import { Skills } from './Skills';
 import { theme } from '../styles/theme';
-import type { Skill } from '../types';
+import { SkillCategory, type Skill } from '../types';
 import React from 'react';
 
 const mockSkills: Skill[] = [
-  { id: '1', name: 'Java', iconName: 'FaJava', category: 'language' },
-  { id: '2', name: 'Python', iconName: 'FaPython', category: 'language' },
-  { id: '3', name: 'React', iconName: 'FaReact', category: 'framework' },
-  { id: '4', name: 'Ember', iconName: 'SiEmberdotjs', category: 'framework' },
-  { id: '5', name: 'Linux', iconName: 'FaLinux', category: 'tool' },
-  { id: '6', name: 'OOP', iconName: 'BiCodeBlock', category: 'tool' },
+  { name: 'Java', iconName: 'FaJava', category: SkillCategory.Language },
+  { name: 'Python', iconName: 'FaPython', category: SkillCategory.Language },
+  { name: 'React', iconName: 'FaReact', category: SkillCategory.Framework },
+  { name: 'Ember', iconName: 'SiEmberdotjs', category: SkillCategory.Framework },
+  { name: 'OOP', iconName: 'BiCodeBlock', category: SkillCategory.Concept },
+  { name: 'Linux', iconName: 'FaLinux', category: SkillCategory.Technology },
 ];
 
 const renderWithTheme = (component: React.ReactElement): ReturnType<typeof render> => {

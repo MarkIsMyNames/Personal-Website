@@ -1,31 +1,30 @@
-// Types designed for easy database migration
+export enum SkillCategory {
+  Language = 'language',
+  Framework = 'framework',
+  Concept = 'concept',
+  Technology = 'technology',
+}
 
 export type Skill = {
-  id: string;
   name: string;
   iconName: string;
-  category: 'language' | 'framework' | 'tool';
+  category: SkillCategory;
 };
 
 export type ProjectHighlight = {
-  id: string;
   text: string;
-  orderIndex: number;
 };
 
 export type Project = {
-  id: string;
   title: string;
   role: string;
   description: string;
   highlights: ProjectHighlight[];
   images: string[];
   tags: string[];
-  orderIndex: number;
 };
 
 export type Profile = {
-  id: string;
   name: string;
   title: string;
   bio: string;

@@ -16,7 +16,7 @@ export function Skills({ skills }: SkillsProps) {
       >
         {skills.map((skill) => (
           <SkillCard
-            key={skill.id}
+            key={skill.name}
             role="listitem"
             aria-label={`${skill.name} skill`}
           >

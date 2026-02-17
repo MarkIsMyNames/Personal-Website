@@ -1,7 +1,18 @@
 import { useMemo, type ComponentType } from 'react';
-import { FaJava, FaPython, FaReact, FaLinux, FaServer, FaGithub, FaEnvelope } from 'react-icons/fa';
+import {
+  FaJava,
+  FaPython,
+  FaReact,
+  FaLinux,
+  FaServer,
+  FaGithub,
+  FaEnvelope,
+  FaDatabase,
+  FaMobileAlt,
+  FaProjectDiagram,
+} from 'react-icons/fa';
 import { DiRuby } from 'react-icons/di';
-import { SiCplusplus, SiEmberdotjs, SiTypescript } from 'react-icons/si';
+import { SiCplusplus, SiEmberdotjs, SiTypescript, SiKotlin } from 'react-icons/si';
 import { IoLogoJavascript } from 'react-icons/io5';
 import { BiCodeBlock } from 'react-icons/bi';
 import { AiOutlineDatabase } from 'react-icons/ai';
@@ -22,6 +33,10 @@ const iconMap: Record<string, IconType> = {
   AiOutlineDatabase,
   FaGithub,
   FaEnvelope,
+  FaDatabase,
+  FaMobileAlt,
+  FaProjectDiagram,
+  SiKotlin,
 };
 
 type IconProps = {

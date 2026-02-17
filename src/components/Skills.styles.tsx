@@ -26,6 +26,7 @@ export const SectionTitle = styled.h2`
 export const SkillsGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: 1fr;
   gap: 2rem;
   max-width: 1000px;
   margin: 0 auto;

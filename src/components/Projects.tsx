@@ -81,7 +81,7 @@ export function Projects({ projects }: ProjectsProps) {
           const isSingleImage = project.images.length === 1;
           return (
             <ProjectCard
-              key={project.id}
+              key={project.title}
               role="listitem"
               aria-label={`${project.title} project`}
             >
@@ -123,7 +123,7 @@ export function Projects({ projects }: ProjectsProps) {
                 <ProjectDescription>{project.description}</ProjectDescription>
                 <ProjectHighlights>
                   {project.highlights.map((highlight) => (
-                    <HighlightItem key={highlight.id}>{highlight.text}</HighlightItem>
+                    <HighlightItem key={highlight.text}>{highlight.text}</HighlightItem>
                   ))}
                 </ProjectHighlights>
                 <ProjectTags>
