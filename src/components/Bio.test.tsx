@@ -3,7 +3,7 @@ import { ThemeProvider } from 'styled-components';
 import { Bio } from './Bio';
 import { theme } from '../styles/theme';
 import type { Profile } from '../types';
-import React from 'react';
+import type React from 'react';
 
 const mockProfile: Profile = {
   name: 'Test User',
