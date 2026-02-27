@@ -2,7 +2,7 @@ import { render } from '@testing-library/react';
 import { ThemeProvider } from 'styled-components';
 import { SectionTitle } from './SharedComponents';
 import { theme } from './theme';
-import React from 'react';
+import type React from 'react';
 
 const renderWithTheme = (component: React.ReactElement): ReturnType<typeof render> => {
   return render(<ThemeProvider theme={theme}>{component}</ThemeProvider>);

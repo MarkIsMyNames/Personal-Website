@@ -3,7 +3,7 @@ import { ThemeProvider } from 'styled-components';
 import { Projects } from './Projects';
 import { theme } from '../styles/theme';
 import type { Project } from '../types';
-import React from 'react';
+import type React from 'react';
 
 const firstMockProject: Project = {
   title: 'Test Project 1',

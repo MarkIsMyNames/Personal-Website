@@ -4,7 +4,7 @@ import { vi } from 'vitest';
 import { Navigation } from './Navigation';
 import { theme } from '../styles/theme';
 import { profile } from '../data/portfolioData';
-import React from 'react';
+import type React from 'react';
 
 const renderWithTheme = (component: React.ReactElement): ReturnType<typeof render> => {
   return render(<ThemeProvider theme={theme}>{component}</ThemeProvider>);

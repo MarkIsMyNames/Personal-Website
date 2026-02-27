@@ -23,6 +23,8 @@ export const skills: Skill[] = [
   { name: 'SQL', iconName: 'FaDatabase', category: SkillCategory.Language },
   { name: 'React', iconName: 'FaReact', category: SkillCategory.Framework },
   { name: 'Ember', iconName: 'SiEmberdotjs', category: SkillCategory.Framework },
+  { name: 'Flask', iconName: 'SiFlask', category: SkillCategory.Framework },
+  { name: 'Rails', iconName: 'SiRubyonrails', category: SkillCategory.Framework },
   { name: 'Object-Oriented Programming', iconName: 'BiCodeBlock', category: SkillCategory.Concept },
   { name: 'Data Structures', iconName: 'AiOutlineDatabase', category: SkillCategory.Concept },
   { name: 'Algorithmic Design', iconName: 'FaProjectDiagram', category: SkillCategory.Concept },
@@ -192,6 +194,31 @@ export const projects: Project[] = [
       'OSINT',
       'AWS',
       'Social Engineering',
+    ],
+  },
+  {
+    title: 'Hack Europe',
+    role: 'AI Security',
+    description:
+      'Built a prompt injection detector and sanitiser, targeting AI-integrated applications in domains such as autonomous vehicles, drones, and automated job application screening.',
+    highlights: [
+      {
+        text: 'Designed a hybrid AI and regex pipeline to identify and neutralise prompt injection payloads',
+      },
+      {
+        text: 'Built a safety analysis layer to classify model outputs as harmful, dangerous, or safe before allowing them to return to the user',
+      },
+      {
+        text: 'Tested the system against a range of inputs including jailbreaks, role overrides, and instruction smuggling to validate detection coverage',
+      },
+    ],
+    images: ['HackEurope1.jpg', 'HackEurope2.jpg', 'HackEurope3.jpg'],
+    tags: [
+      'Python',
+      'AI/ML',
+      'Cybersecurity',
+      'Prompt Injection',
+      'NLP',
     ],
   },
 ];

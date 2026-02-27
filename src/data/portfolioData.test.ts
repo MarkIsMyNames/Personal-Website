@@ -1,3 +1,5 @@
+import { statSync } from 'fs';
+import { resolve } from 'path';
 import { profile, skills, projects } from './portfolioData';
 import { SkillCategory } from '../types';
 
@@ -126,6 +128,18 @@ describe('Portfolio Data Structure', () => {
     it('has no duplicate images within a project', () => {
       projects.forEach((project) => {
         expect(new Set(project.images).size).toBe(project.images.length);
+      });
+    });
+
+    it('all public images are under 200 KiB', () => {
+      const publicDir = resolve(process.cwd(), 'public');
+      const allImages = [profile.image, ...projects.flatMap((p) => p.images)];
+      allImages.forEach((image) => {
+        const { size } = statSync(resolve(publicDir, image));
+        expect(
+          size,
+          `${image} is ${Math.round(size / 1024)} KiB — must be under 200 KiB`,
+        ).toBeLessThan(200 * 1024);
       });
     });
   });
