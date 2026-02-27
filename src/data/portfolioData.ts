@@ -213,12 +213,6 @@ export const projects: Project[] = [
       },
     ],
     images: ['HackEurope1.jpg', 'HackEurope2.jpg', 'HackEurope3.jpg'],
-    tags: [
-      'Python',
-      'AI/ML',
-      'Cybersecurity',
-      'Prompt Injection',
-      'NLP',
-    ],
+    tags: ['Python', 'AI/ML', 'Cybersecurity', 'Prompt Injection', 'NLP'],
   },
 ];
