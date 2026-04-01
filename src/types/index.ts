@@ -18,7 +18,7 @@ export const KeyboardKey = {
   Escape: 'Escape',
   ArrowLeft: 'ArrowLeft',
   ArrowRight: 'ArrowRight',
-} as const;
+};
 
 export type Skill = {
   name: string;

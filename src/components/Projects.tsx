@@ -22,6 +22,16 @@ type ProjectsProps = {
   projects: Project[];
 };
 
+const NO_THUMBNAIL = new Set(['Hult2.png', 'Intercom.png', 'Ganzy.png', 'AWSHACK2.png']);
+
+function getSmSrc(src: string): string {
+  if (src.endsWith('.svg') || NO_THUMBNAIL.has(src)) {
+    return src;
+  }
+  const dot = src.lastIndexOf('.');
+  return `${src.slice(0, dot)}_sm${src.slice(dot)}`;
+}
+
 export function Projects({ projects }: ProjectsProps) {
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState({ url: '', alt: '' });
@@ -86,36 +96,42 @@ export function Projects({ projects }: ProjectsProps) {
               aria-label={`${project.title} project`}
             >
               <ProjectImages $isSingle={isSingleImage}>
-                {project.images.map((image, index) => (
-                  <ProjectImage
-                    key={index}
-                    src={image}
-                    alt={`${project.title} screenshot ${index + 1} of ${project.images.length}`}
-                    $isSingle={isSingleImage}
-                    onClick={() =>
-                      handleImageClick(
-                        image,
-                        `${project.title} ${index + 1}`,
-                        index,
-                        project.images,
-                      )
-                    }
-                    role="button"
-                    aria-label={`View full size image ${index + 1} of ${project.title}`}
-                    tabIndex={0}
-                    onKeyDown={(e) => {
-                      if (e.key === KeyboardKey.Enter || e.key === KeyboardKey.Space) {
-                        e.preventDefault();
+                {project.images.map((image, index) => {
+                  const smSrc = getSmSrc(image);
+                  return (
+                    <ProjectImage
+                      key={index}
+                      src={image}
+                      srcSet={`${smSrc} 600w, ${image} 900w`}
+                      sizes="(max-width: 480px) 300px, (max-width: 768px) 400px, 450px"
+                      alt={`${project.title} screenshot ${index + 1} of ${project.images.length}`}
+                      height={300}
+                      $isSingle={isSingleImage}
+                      onClick={() =>
                         handleImageClick(
                           image,
                           `${project.title} ${index + 1}`,
                           index,
                           project.images,
-                        );
+                        )
                       }
-                    }}
-                  />
-                ))}
+                      role="button"
+                      aria-label={`View full size image ${index + 1} of ${project.title}`}
+                      tabIndex={0}
+                      onKeyDown={(e) => {
+                        if (e.key === KeyboardKey.Enter || e.key === KeyboardKey.Space) {
+                          e.preventDefault();
+                          handleImageClick(
+                            image,
+                            `${project.title} ${index + 1}`,
+                            index,
+                            project.images,
+                          );
+                        }
+                      }}
+                    />
+                  );
+                })}
               </ProjectImages>
               <ProjectContent>
                 <ProjectTitle>{project.title}</ProjectTitle>

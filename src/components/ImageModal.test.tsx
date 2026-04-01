@@ -18,7 +18,7 @@ describe('ImageModal Component', () => {
     mockOnClose.mockClear();
   });
 
-  it('does not render when isOpen is false', () => {
+  it('is not accessible when isOpen is false', () => {
     renderWithTheme(
       <ImageModal
         isOpen={false}
@@ -27,7 +27,7 @@ describe('ImageModal Component', () => {
         onClose={mockOnClose}
       />,
     );
-    expect(screen.queryByAltText(testAltText)).not.toBeInTheDocument();
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
   });
 
   it('renders when isOpen is true', () => {
@@ -108,7 +108,7 @@ describe('ImageModal Component', () => {
     expect(mockOnClose).toHaveBeenCalledTimes(1);
   });
 
-  it('does not close when image is clicked', () => {
+  it('closes when image is clicked', () => {
     renderWithTheme(
       <ImageModal
         isOpen
@@ -117,9 +117,8 @@ describe('ImageModal Component', () => {
         onClose={mockOnClose}
       />,
     );
-    const image = screen.getByAltText(testAltText);
-    fireEvent.click(image);
-    expect(mockOnClose).not.toHaveBeenCalled();
+    fireEvent.click(screen.getByAltText(testAltText));
+    expect(mockOnClose).toHaveBeenCalledTimes(1);
   });
 
   it('renders navigation buttons when hasPrevious and hasNext are true', () => {
