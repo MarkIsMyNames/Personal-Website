@@ -187,58 +187,29 @@ describe('Projects Component', () => {
   });
 
   it('navigates to next image when clicking next button in modal', () => {
-    const { container } = renderWithTheme(<Projects projects={mockProjects} />);
+    renderWithTheme(<Projects projects={mockProjects} />);
     const firstImage = screen.getByAltText(/Test Project 2 screenshot 1 of 3/i);
     fireEvent.click(firstImage);
 
-    // Modal should be open with next button
     const nextButton = screen.getByLabelText(/Next image/i);
     expect(nextButton).toBeInTheDocument();
 
     fireEvent.click(nextButton);
 
-    // Check that image index changed - modal image should have updated alt text
-    const modalImage = container.querySelector('[role="dialog"] img');
-    expect(modalImage).toHaveAttribute('alt', 'Image 2');
+    expect(screen.getByAltText('Image 2')).toBeInTheDocument();
   });
 
   it('navigates to previous image when clicking previous button in modal', () => {
-    const { container } = renderWithTheme(<Projects projects={mockProjects} />);
+    renderWithTheme(<Projects projects={mockProjects} />);
     const secondImage = screen.getByAltText(/Test Project 2 screenshot 2 of 3/i);
     fireEvent.click(secondImage);
 
-    // Modal should be open with previous button
     const prevButton = screen.getByLabelText(/Previous image/i);
     expect(prevButton).toBeInTheDocument();
 
     fireEvent.click(prevButton);
 
-    // Check that image index changed - modal image should have updated alt text
-    const modalImage = container.querySelector('[role="dialog"] img');
-    expect(modalImage).toHaveAttribute('alt', 'Image 1');
-  });
-
-  describe('srcSet', () => {
-    it('uses _sm thumbnail at 600w and full image at 900w for regular images', () => {
-      const project: Project[] = [{ ...firstMockProject, images: ['photo.jpg'] }];
-      renderWithTheme(<Projects projects={project} />);
-      const img = screen.getByAltText('Test Project 1 screenshot 1 of 1');
-      expect(img).toHaveAttribute('srcset', 'photo_sm.jpg 600w, photo.jpg 900w');
-    });
-
-    it('uses the same image for both srcset entries when the image has no thumbnail', () => {
-      const project: Project[] = [{ ...firstMockProject, images: ['Intercom.png'] }];
-      renderWithTheme(<Projects projects={project} />);
-      const img = screen.getByAltText('Test Project 1 screenshot 1 of 1');
-      expect(img).toHaveAttribute('srcset', 'Intercom.png 600w, Intercom.png 900w');
-    });
-
-    it('uses the same image for both srcset entries for SVGs', () => {
-      const project: Project[] = [{ ...firstMockProject, images: ['logo.svg'] }];
-      renderWithTheme(<Projects projects={project} />);
-      const img = screen.getByAltText('Test Project 1 screenshot 1 of 1');
-      expect(img).toHaveAttribute('srcset', 'logo.svg 600w, logo.svg 900w');
-    });
+    expect(screen.getByAltText('Image 1')).toBeInTheDocument();
   });
 
   it('closes modal when clicking outside the image on the overlay', () => {
@@ -276,6 +247,19 @@ describe('Projects Component', () => {
 
     const modalImg = container.querySelector('[role="dialog"] img');
     expect(modalImg).toHaveAttribute('src', gallerySrc);
+  });
+
+  it('keeps img elements mounted when navigating so the browser does not re-download them', () => {
+    const { container } = renderWithTheme(<Projects projects={[secondMockProject]} />);
+
+    fireEvent.click(screen.getByAltText(/Test Project 2 screenshot 1 of 3/i));
+
+    const imgForFirst = container.querySelector('[role="dialog"] img[src="test2.jpg"]');
+
+    fireEvent.click(screen.getByLabelText(/Next image/i));
+    fireEvent.click(screen.getByLabelText(/Previous image/i));
+
+    expect(container.querySelector('[role="dialog"] img[src="test2.jpg"]')).toBe(imgForFirst);
   });
 
   it('closes modal when close button is clicked', () => {

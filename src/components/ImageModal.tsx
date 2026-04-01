@@ -12,7 +12,9 @@ const SWIPE_THRESHOLD = 50;
 
 type ImageModalProps = {
   isOpen: boolean;
-  imageUrl: string;
+  images: string[];
+  currentIndex: number;
+  loadedIndices: Set<number>;
   altText: string;
   onClose: () => void;
   onPrevious?: () => void;
@@ -23,7 +25,9 @@ type ImageModalProps = {
 
 export function ImageModal({
   isOpen,
-  imageUrl,
+  images,
+  currentIndex,
+  loadedIndices,
   altText,
   onClose,
   onPrevious,
@@ -132,11 +136,15 @@ export function ImageModal({
           ›
         </NavigationButtonRight>
       )}
-      {imageUrl && (
-        <ModalImage
-          src={imageUrl}
-          alt={altText}
-        />
+      {images.map((src, i) =>
+        loadedIndices.has(i) ? (
+          <ModalImage
+            key={src}
+            src={src}
+            alt={i === currentIndex ? altText : ''}
+            $isActive={i === currentIndex}
+          />
+        ) : null,
       )}
     </ModalOverlay>
   );

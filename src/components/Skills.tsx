@@ -1,6 +1,6 @@
 import type { Skill } from '../types';
 import { Icon } from '../utils/iconMapper';
-import { SectionTitle } from '../styles/SharedComponents';
+import { SectionTitle } from '../styles/SharedComponents.styles';
 import { SkillsSection, SkillsGrid, SkillCard, SkillName } from './Skills.styles';
 
 type SkillsProps = {
