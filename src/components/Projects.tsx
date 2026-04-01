@@ -1,9 +1,9 @@
 import { useState, useCallback } from 'react';
 import { KeyboardKey, type Project } from '../types';
 import { ImageModal } from './ImageModal';
+import { SectionTitle } from '../styles/SharedComponents';
 import {
   ProjectsSection,
-  SectionTitle,
   ProjectsContainer,
   ProjectCard,
   ProjectImages,

@@ -17,14 +17,7 @@ describe('SharedComponents', () => {
       expect(title).toHaveTextContent('Test Title');
     });
 
-    it('renders with compact styling', () => {
-      const { container } = renderWithTheme(<SectionTitle $compact>Test Title</SectionTitle>);
-      const title = container.querySelector('h2');
-      expect(title).toBeInTheDocument();
-      expect(title).toHaveTextContent('Test Title');
-    });
-
-    it('renders without compact styling by default', () => {
+    it('renders as an h2 element', () => {
       const { container } = renderWithTheme(<SectionTitle>Test Title</SectionTitle>);
       const title = container.querySelector('h2');
       expect(title).toBeInTheDocument();
