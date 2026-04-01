@@ -188,27 +188,23 @@ describe('Projects Component', () => {
   });
 
   it('navigates to next image when clicking next button in modal', () => {
-    const { container } = renderWithTheme(<Projects projects={mockProjects} />);
+    renderWithTheme(<Projects projects={mockProjects} />);
     const firstImage = screen.getByAltText(/Test Project 2 screenshot 1 of 3/i);
     fireEvent.click(firstImage);
 
-    // Modal should be open with next button
     const nextButton = screen.getByLabelText(/Next image/i);
     expect(nextButton).toBeInTheDocument();
 
     fireEvent.click(nextButton);
 
-    // Check that image index changed - modal image should have updated alt text
-    const modalImage = container.querySelector('[role="dialog"] img');
-    expect(modalImage).toHaveAttribute('alt', 'Image 2');
+    expect(screen.getByAltText('Image 2')).toBeInTheDocument();
   });
 
   it('navigates to previous image when clicking previous button in modal', () => {
-    const { container } = renderWithTheme(<Projects projects={mockProjects} />);
+    renderWithTheme(<Projects projects={mockProjects} />);
     const secondImage = screen.getByAltText(/Test Project 2 screenshot 2 of 3/i);
     fireEvent.click(secondImage);
 
-    // Modal should be open with previous button
     const prevButton = screen.getByLabelText(/Previous image/i);
     expect(prevButton).toBeInTheDocument();
 

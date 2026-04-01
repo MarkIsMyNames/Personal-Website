@@ -1,7 +1,7 @@
 import { useState, useCallback } from 'react';
 import { KeyboardKey, type Project } from '../types';
 import { ImageModal } from './ImageModal';
-import { SectionTitle } from '../styles/SharedComponents';
+import { SectionTitle } from '../styles/SharedComponents.styles';
 import {
   ProjectsSection,
   ProjectsContainer,
@@ -27,12 +27,14 @@ export function Projects({ projects }: ProjectsProps) {
   const [selectedImage, setSelectedImage] = useState({ url: '', alt: '' });
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [currentProjectImages, setCurrentProjectImages] = useState<string[]>([]);
+  const [loadedIndices, setLoadedIndices] = useState<Set<number>>(new Set());
 
   const handleImageClick = useCallback(
     (imageUrl: string, altText: string, imageIndex: number, allImages: string[]) => {
       setSelectedImage({ url: imageUrl, alt: altText });
       setCurrentImageIndex(imageIndex);
       setCurrentProjectImages(allImages);
+      setLoadedIndices(new Set([imageIndex]));
       setModalOpen(true);
     },
     [],
@@ -48,6 +50,7 @@ export function Projects({ projects }: ProjectsProps) {
       const newUrl = currentProjectImages[newIndex];
       if (newUrl !== undefined) {
         setCurrentImageIndex(newIndex);
+        setLoadedIndices((prev) => new Set(prev).add(newIndex));
         setSelectedImage({
           url: newUrl,
           alt: `Image ${newIndex + 1}`,
@@ -62,6 +65,7 @@ export function Projects({ projects }: ProjectsProps) {
       const newUrl = currentProjectImages[newIndex];
       if (newUrl !== undefined) {
         setCurrentImageIndex(newIndex);
+        setLoadedIndices((prev) => new Set(prev).add(newIndex));
         setSelectedImage({
           url: newUrl,
           alt: `Image ${newIndex + 1}`,
@@ -138,7 +142,9 @@ export function Projects({ projects }: ProjectsProps) {
       </ProjectsContainer>
       <ImageModal
         isOpen={modalOpen}
-        imageUrl={selectedImage.url}
+        images={currentProjectImages}
+        currentIndex={currentImageIndex}
+        loadedIndices={loadedIndices}
         altText={selectedImage.alt}
         onClose={handleCloseModal}
         onPrevious={handlePreviousImage}

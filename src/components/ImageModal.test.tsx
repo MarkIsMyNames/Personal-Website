@@ -22,7 +22,9 @@ describe('ImageModal Component', () => {
     renderWithTheme(
       <ImageModal
         isOpen={false}
-        imageUrl={testImageUrl}
+        images={[testImageUrl]}
+        currentIndex={0}
+        loadedIndices={new Set([0])}
         altText={testAltText}
         onClose={mockOnClose}
       />,
@@ -34,7 +36,9 @@ describe('ImageModal Component', () => {
     renderWithTheme(
       <ImageModal
         isOpen
-        imageUrl={testImageUrl}
+        images={[testImageUrl]}
+        currentIndex={0}
+        loadedIndices={new Set([0])}
         altText={testAltText}
         onClose={mockOnClose}
       />,
@@ -46,7 +50,9 @@ describe('ImageModal Component', () => {
     renderWithTheme(
       <ImageModal
         isOpen
-        imageUrl={testImageUrl}
+        images={[testImageUrl]}
+        currentIndex={0}
+        loadedIndices={new Set([0])}
         altText={testAltText}
         onClose={mockOnClose}
       />,
@@ -59,7 +65,9 @@ describe('ImageModal Component', () => {
     renderWithTheme(
       <ImageModal
         isOpen
-        imageUrl={testImageUrl}
+        images={[testImageUrl]}
+        currentIndex={0}
+        loadedIndices={new Set([0])}
         altText={testAltText}
         onClose={mockOnClose}
       />,
@@ -73,7 +81,9 @@ describe('ImageModal Component', () => {
     renderWithTheme(
       <ImageModal
         isOpen
-        imageUrl={testImageUrl}
+        images={[testImageUrl]}
+        currentIndex={0}
+        loadedIndices={new Set([0])}
         altText={testAltText}
         onClose={mockOnClose}
       />,
@@ -85,7 +95,9 @@ describe('ImageModal Component', () => {
     renderWithTheme(
       <ImageModal
         isOpen
-        imageUrl={testImageUrl}
+        images={[testImageUrl]}
+        currentIndex={0}
+        loadedIndices={new Set([0])}
         altText={testAltText}
         onClose={mockOnClose}
       />,
@@ -98,7 +110,9 @@ describe('ImageModal Component', () => {
     renderWithTheme(
       <ImageModal
         isOpen
-        imageUrl={testImageUrl}
+        images={[testImageUrl]}
+        currentIndex={0}
+        loadedIndices={new Set([0])}
         altText={testAltText}
         onClose={mockOnClose}
       />,
@@ -112,7 +126,9 @@ describe('ImageModal Component', () => {
     renderWithTheme(
       <ImageModal
         isOpen
-        imageUrl={testImageUrl}
+        images={[testImageUrl]}
+        currentIndex={0}
+        loadedIndices={new Set([0])}
         altText={testAltText}
         onClose={mockOnClose}
       />,
@@ -128,7 +144,9 @@ describe('ImageModal Component', () => {
     renderWithTheme(
       <ImageModal
         isOpen
-        imageUrl={testImageUrl}
+        images={['img1.jpg', 'img2.jpg', 'img3.jpg']}
+        currentIndex={1}
+        loadedIndices={new Set([0, 1, 2])}
         altText={testAltText}
         onClose={mockOnClose}
         onPrevious={mockOnPrevious}
@@ -146,7 +164,9 @@ describe('ImageModal Component', () => {
     renderWithTheme(
       <ImageModal
         isOpen
-        imageUrl={testImageUrl}
+        images={['img1.jpg', 'img2.jpg']}
+        currentIndex={1}
+        loadedIndices={new Set([0, 1, 2])}
         altText={testAltText}
         onClose={mockOnClose}
         onPrevious={mockOnPrevious}
@@ -162,7 +182,9 @@ describe('ImageModal Component', () => {
     renderWithTheme(
       <ImageModal
         isOpen
-        imageUrl={testImageUrl}
+        images={['img1.jpg', 'img2.jpg']}
+        currentIndex={0}
+        loadedIndices={new Set([0])}
         altText={testAltText}
         onClose={mockOnClose}
         onNext={mockOnNext}
@@ -178,7 +200,9 @@ describe('ImageModal Component', () => {
     renderWithTheme(
       <ImageModal
         isOpen
-        imageUrl={testImageUrl}
+        images={[testImageUrl]}
+        currentIndex={0}
+        loadedIndices={new Set([0])}
         altText={testAltText}
         onClose={mockOnClose}
         onPrevious={mockOnPrevious}
@@ -194,7 +218,9 @@ describe('ImageModal Component', () => {
     renderWithTheme(
       <ImageModal
         isOpen
-        imageUrl={testImageUrl}
+        images={[testImageUrl]}
+        currentIndex={0}
+        loadedIndices={new Set([0])}
         altText={testAltText}
         onClose={mockOnClose}
         onNext={mockOnNext}
@@ -211,7 +237,9 @@ describe('ImageModal Component', () => {
     renderWithTheme(
       <ImageModal
         isOpen
-        imageUrl={testImageUrl}
+        images={['img1.jpg', 'img2.jpg', 'img3.jpg']}
+        currentIndex={1}
+        loadedIndices={new Set([0, 1, 2])}
         altText={testAltText}
         onClose={mockOnClose}
         onPrevious={mockOnPrevious}
@@ -237,7 +265,9 @@ describe('ImageModal Component', () => {
     renderWithTheme(
       <ImageModal
         isOpen
-        imageUrl={testImageUrl}
+        images={['img1.jpg', 'img2.jpg']}
+        currentIndex={0}
+        loadedIndices={new Set([0])}
         altText={testAltText}
         onClose={mockOnClose}
         onNext={mockOnNext}
@@ -261,7 +291,9 @@ describe('ImageModal Component', () => {
     renderWithTheme(
       <ImageModal
         isOpen
-        imageUrl={testImageUrl}
+        images={['img1.jpg', 'img2.jpg']}
+        currentIndex={1}
+        loadedIndices={new Set([0, 1, 2])}
         altText={testAltText}
         onClose={mockOnClose}
         onPrevious={mockOnPrevious}
@@ -285,7 +317,9 @@ describe('ImageModal Component', () => {
     renderWithTheme(
       <ImageModal
         isOpen
-        imageUrl={testImageUrl}
+        images={['img1.jpg', 'img2.jpg']}
+        currentIndex={0}
+        loadedIndices={new Set([0])}
         altText={testAltText}
         onClose={mockOnClose}
         onNext={mockOnNext}
@@ -309,7 +343,9 @@ describe('ImageModal Component', () => {
     renderWithTheme(
       <ImageModal
         isOpen
-        imageUrl={testImageUrl}
+        images={['img1.jpg', 'img2.jpg']}
+        currentIndex={0}
+        loadedIndices={new Set([0])}
         altText={testAltText}
         onClose={mockOnClose}
         onNext={mockOnNext}
@@ -332,11 +368,29 @@ describe('ImageModal Component', () => {
     renderWithTheme(
       <ImageModal
         isOpen
-        imageUrl={testImageUrl}
+        images={[testImageUrl]}
+        currentIndex={0}
+        loadedIndices={new Set([0])}
         altText={testAltText}
         onClose={mockOnClose}
       />,
     );
     expect(document.body.style.overflow).toBe('hidden');
+  });
+
+  it('only renders the initially viewed image, not all images upfront', () => {
+    const { container } = renderWithTheme(
+      <ImageModal
+        isOpen
+        images={['img1.jpg', 'img2.jpg', 'img3.jpg']}
+        currentIndex={0}
+        loadedIndices={new Set([0])}
+        altText={testAltText}
+        onClose={mockOnClose}
+      />,
+    );
+    const imgs = container.querySelectorAll('[role="dialog"] img');
+    expect(imgs).toHaveLength(1);
+    expect(imgs[0]).toHaveAttribute('src', 'img1.jpg');
   });
 });
