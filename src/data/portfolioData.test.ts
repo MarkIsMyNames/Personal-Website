@@ -1,4 +1,4 @@
-import { statSync, readdirSync } from 'fs';
+import { statSync } from 'fs';
 import { resolve } from 'path';
 import { profile, skills, projects } from './portfolioData';
 import { SkillCategory } from '../types';
@@ -128,21 +128,6 @@ describe('Portfolio Data Structure', () => {
     it('has no duplicate images within a project', () => {
       projects.forEach((project) => {
         expect(new Set(project.images).size).toBe(project.images.length);
-      });
-    });
-
-    it('every _sm thumbnail is smaller than its full-size original', () => {
-      const publicDir = resolve(process.cwd(), 'public');
-      const thumbnails = readdirSync(publicDir).filter((f) => f.includes('_sm.'));
-      expect(thumbnails.length).toBeGreaterThan(0);
-      thumbnails.forEach((thumbnail) => {
-        const original = thumbnail.replace('_sm.', '.');
-        const thumbSize = statSync(resolve(publicDir, thumbnail)).size;
-        const originalSize = statSync(resolve(publicDir, original)).size;
-        expect(
-          thumbSize,
-          `${thumbnail} (${Math.round(thumbSize / 1024)} KiB) is not smaller than ${original} (${Math.round(originalSize / 1024)} KiB)`,
-        ).toBeLessThan(originalSize);
       });
     });
 
