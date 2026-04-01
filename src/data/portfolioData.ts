@@ -212,7 +212,7 @@ export const projects: Project[] = [
         text: 'Tested the system against a range of inputs including jailbreaks, role overrides, and instruction smuggling to validate detection coverage',
       },
     ],
-    images: ['HackEurope1.jpg', 'HackEurope2.jpg', 'HackEurope3.jpg'],
-    tags: ['Python', 'AI/ML', 'Cybersecurity', 'Prompt Injection', 'NLP'],
+    images: ['HackEurope1.jpg', 'HackEurope2.svg', 'HackEurope3.jpg'],
+    tags: ['Ruby', 'Rails', 'AI/ML', 'Cybersecurity', 'Prompt Injection', 'NLP'],
   },
 ];
