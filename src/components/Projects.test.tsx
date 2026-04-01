@@ -176,15 +176,14 @@ describe('Projects Component', () => {
   });
 
   it('does not open modal when pressing other keys on project image', () => {
-    const { container } = renderWithTheme(<Projects projects={mockProjects} />);
+    renderWithTheme(<Projects projects={mockProjects} />);
     const image = screen.getByAltText(/Test Project 1 screenshot 1 of 1/i);
 
     // Simulate a different key press (e.g., 'a')
     fireEvent.keyDown(image, { key: 'a', code: 'KeyA' });
 
     // Modal should not be open
-    const modal = container.querySelector('[role="dialog"]');
-    expect(modal).not.toBeInTheDocument();
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
   });
 
   it('navigates to next image when clicking next button in modal', () => {
@@ -242,8 +241,45 @@ describe('Projects Component', () => {
     });
   });
 
+  it('closes modal when clicking outside the image on the overlay', () => {
+    renderWithTheme(<Projects projects={[firstMockProject]} />);
+    fireEvent.click(screen.getByAltText('Test Project 1 screenshot 1 of 1'));
+    expect(screen.getByRole('dialog')).toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole('dialog'));
+
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+  });
+
+  it('reuses the same img element when modal is reopened, preventing a re-download', () => {
+    const project: Project[] = [{ ...firstMockProject, images: ['photo.jpg'] }];
+    const { container } = renderWithTheme(<Projects projects={project} />);
+
+    fireEvent.click(screen.getByAltText('Test Project 1 screenshot 1 of 1'));
+    const imgOnFirstOpen = container.querySelector('[role="dialog"] img');
+
+    fireEvent.click(screen.getByLabelText(/Close modal/i));
+    fireEvent.click(screen.getByAltText('Test Project 1 screenshot 1 of 1'));
+    const imgOnSecondOpen = container.querySelector('[role="dialog"] img');
+
+    expect(imgOnFirstOpen).toBe(imgOnSecondOpen);
+  });
+
+  it('modal image src matches the gallery image src so the browser cache is reused', () => {
+    const project: Project[] = [{ ...firstMockProject, images: ['photo.jpg'] }];
+    const { container } = renderWithTheme(<Projects projects={project} />);
+
+    const galleryImg = screen.getByAltText('Test Project 1 screenshot 1 of 1');
+    const gallerySrc = galleryImg.getAttribute('src');
+
+    fireEvent.click(galleryImg);
+
+    const modalImg = container.querySelector('[role="dialog"] img');
+    expect(modalImg).toHaveAttribute('src', gallerySrc);
+  });
+
   it('closes modal when close button is clicked', () => {
-    const { container } = renderWithTheme(<Projects projects={mockProjects} />);
+    renderWithTheme(<Projects projects={mockProjects} />);
     const image = screen.getByAltText(/Test Project 1 screenshot 1 of 1/i);
     fireEvent.click(image);
 
@@ -255,7 +291,6 @@ describe('Projects Component', () => {
     fireEvent.click(closeButton);
 
     // Modal should be closed
-    const modal = container.querySelector('[role="dialog"]');
-    expect(modal).not.toBeInTheDocument();
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
   });
 });
