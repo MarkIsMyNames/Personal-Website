@@ -95,6 +95,7 @@ export function Projects({ projects }: ProjectsProps) {
                     key={index}
                     src={image}
                     alt={`${project.title} screenshot ${index + 1} of ${project.images.length}`}
+                    height={300}
                     $isSingle={isSingleImage}
                     onClick={() =>
                       handleImageClick(
