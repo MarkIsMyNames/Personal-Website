@@ -12,9 +12,7 @@ const SWIPE_THRESHOLD = 50;
 
 type ImageModalProps = {
   isOpen: boolean;
-  images: string[];
-  currentIndex: number;
-  loadedIndices: Set<number>;
+  imageUrl: string;
   altText: string;
   onClose: () => void;
   onPrevious?: () => void;
@@ -25,9 +23,7 @@ type ImageModalProps = {
 
 export function ImageModal({
   isOpen,
-  images,
-  currentIndex,
-  loadedIndices,
+  imageUrl,
   altText,
   onClose,
   onPrevious,
