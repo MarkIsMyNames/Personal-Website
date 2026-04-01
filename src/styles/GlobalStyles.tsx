@@ -17,7 +17,4 @@ export const GlobalStyles = createGlobalStyle`
     line-height: 1.6;
   }
 
-  code {
-    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
-  }
 `;

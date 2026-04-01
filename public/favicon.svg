@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00d9ff"/>
+      <stop offset="100%" stop-color="#7b2cbf"/>
+    </linearGradient>
+  </defs>
+  <!-- White background circle with black border -->
+  <circle cx="32" cy="32" r="30" fill="white" stroke="black" stroke-width="3"/>
+  <!-- Fancy italic serif M -->
+  <text
+    x="32"
+    y="47"
+    font-family="Didot, 'GFS Didot', 'Palatino Linotype', Palatino, 'Book Antiqua', Georgia, serif"
+    font-size="42"
+    font-weight="bold"
+    font-style="italic"
+    text-anchor="middle"
+    fill="url(#grad)"
+  >M</text>
+</svg>

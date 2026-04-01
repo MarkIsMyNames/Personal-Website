@@ -4,7 +4,6 @@ export const Nav = styled.nav<{ $isVisible: boolean }>`
   position: fixed;
   top: 0;
   width: 100%;
-  background: ${({ theme }) => theme.colors.bgPrimary};
   border-bottom: 2px solid ${({ theme }) => theme.colors.borderColor};
   padding: 1.25rem 2rem;
   z-index: 100;
@@ -55,11 +54,6 @@ export const NavProfileImage = styled.img`
   border-radius: 50%;
   object-fit: cover;
   border: 2px solid ${({ theme }) => theme.colors.accentPrimary};
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    width: 2rem;
-    height: 2rem;
-  }
 `;
 
 export const NavBrand = styled.div`
