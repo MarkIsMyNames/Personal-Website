@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const AppContainer = styled.div`
+export const AppContainer = styled.main`
   min-height: 100vh;
   max-width: 1240px;
   margin: auto;
