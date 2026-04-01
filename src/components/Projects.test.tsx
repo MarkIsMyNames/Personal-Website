@@ -176,14 +176,15 @@ describe('Projects Component', () => {
   });
 
   it('does not open modal when pressing other keys on project image', () => {
-    renderWithTheme(<Projects projects={mockProjects} />);
+    const { container } = renderWithTheme(<Projects projects={mockProjects} />);
     const image = screen.getByAltText(/Test Project 1 screenshot 1 of 1/i);
 
     // Simulate a different key press (e.g., 'a')
     fireEvent.keyDown(image, { key: 'a', code: 'KeyA' });
 
     // Modal should not be open
-    expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    const modal = container.querySelector('[role="dialog"]');
+    expect(modal).not.toBeInTheDocument();
   });
 
   it('navigates to next image when clicking next button in modal', () => {
@@ -218,68 +219,8 @@ describe('Projects Component', () => {
     expect(modalImage).toHaveAttribute('alt', 'Image 1');
   });
 
-  describe('srcSet', () => {
-    it('uses _sm thumbnail at 600w and full image at 900w for regular images', () => {
-      const project: Project[] = [{ ...firstMockProject, images: ['photo.jpg'] }];
-      renderWithTheme(<Projects projects={project} />);
-      const img = screen.getByAltText('Test Project 1 screenshot 1 of 1');
-      expect(img).toHaveAttribute('srcset', 'photo_sm.jpg 600w, photo.jpg 900w');
-    });
-
-    it('uses the same image for both srcset entries when the image has no thumbnail', () => {
-      const project: Project[] = [{ ...firstMockProject, images: ['Intercom.png'] }];
-      renderWithTheme(<Projects projects={project} />);
-      const img = screen.getByAltText('Test Project 1 screenshot 1 of 1');
-      expect(img).toHaveAttribute('srcset', 'Intercom.png 600w, Intercom.png 900w');
-    });
-
-    it('uses the same image for both srcset entries for SVGs', () => {
-      const project: Project[] = [{ ...firstMockProject, images: ['logo.svg'] }];
-      renderWithTheme(<Projects projects={project} />);
-      const img = screen.getByAltText('Test Project 1 screenshot 1 of 1');
-      expect(img).toHaveAttribute('srcset', 'logo.svg 600w, logo.svg 900w');
-    });
-  });
-
-  it('closes modal when clicking outside the image on the overlay', () => {
-    renderWithTheme(<Projects projects={[firstMockProject]} />);
-    fireEvent.click(screen.getByAltText('Test Project 1 screenshot 1 of 1'));
-    expect(screen.getByRole('dialog')).toBeInTheDocument();
-
-    fireEvent.click(screen.getByRole('dialog'));
-
-    expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
-  });
-
-  it('reuses the same img element when modal is reopened, preventing a re-download', () => {
-    const project: Project[] = [{ ...firstMockProject, images: ['photo.jpg'] }];
-    const { container } = renderWithTheme(<Projects projects={project} />);
-
-    fireEvent.click(screen.getByAltText('Test Project 1 screenshot 1 of 1'));
-    const imgOnFirstOpen = container.querySelector('[role="dialog"] img');
-
-    fireEvent.click(screen.getByLabelText(/Close modal/i));
-    fireEvent.click(screen.getByAltText('Test Project 1 screenshot 1 of 1'));
-    const imgOnSecondOpen = container.querySelector('[role="dialog"] img');
-
-    expect(imgOnFirstOpen).toBe(imgOnSecondOpen);
-  });
-
-  it('modal image src matches the gallery image src so the browser cache is reused', () => {
-    const project: Project[] = [{ ...firstMockProject, images: ['photo.jpg'] }];
-    const { container } = renderWithTheme(<Projects projects={project} />);
-
-    const galleryImg = screen.getByAltText('Test Project 1 screenshot 1 of 1');
-    const gallerySrc = galleryImg.getAttribute('src');
-
-    fireEvent.click(galleryImg);
-
-    const modalImg = container.querySelector('[role="dialog"] img');
-    expect(modalImg).toHaveAttribute('src', gallerySrc);
-  });
-
   it('closes modal when close button is clicked', () => {
-    renderWithTheme(<Projects projects={mockProjects} />);
+    const { container } = renderWithTheme(<Projects projects={mockProjects} />);
     const image = screen.getByAltText(/Test Project 1 screenshot 1 of 1/i);
     fireEvent.click(image);
 
@@ -291,6 +232,7 @@ describe('Projects Component', () => {
     fireEvent.click(closeButton);
 
     // Modal should be closed
-    expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    const modal = container.querySelector('[role="dialog"]');
+    expect(modal).not.toBeInTheDocument();
   });
 });

@@ -23,7 +23,6 @@ export function Bio({ profile }: BioProps) {
         <ProfileImage
           src={profile.image}
           alt={`${profile.name} - ${profile.title}`}
-          fetchPriority="high"
         />
         <BioTitle>{profile.name}</BioTitle>
         <BioSubtitle>{profile.title}</BioSubtitle>

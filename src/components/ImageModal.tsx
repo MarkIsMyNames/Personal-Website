@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, type MouseEvent } from 'react';
 import {
   ModalOverlay,
   ModalImage,
@@ -93,19 +93,23 @@ export function ImageModal({
     };
   }, [isOpen, onClose, onPrevious, onNext, hasPrevious, hasNext]);
 
+  if (!isOpen) {
+    return null;
+  }
+
   return (
     <ModalOverlay
-      $isOpen={isOpen}
-      onClick={onClose}
+      onClick={(e: MouseEvent<HTMLDivElement>) => {
+        if (e.target === e.currentTarget) {
+          onClose();
+        }
+      }}
       role="dialog"
       aria-modal="true"
       aria-label="Image modal"
     >
       <CloseButton
-        onClick={(e) => {
-          e.stopPropagation();
-          onClose();
-        }}
+        onClick={onClose}
         aria-label="Close modal"
       >
         ✕
@@ -132,12 +136,10 @@ export function ImageModal({
           ›
         </NavigationButtonRight>
       )}
-      {imageUrl && (
-        <ModalImage
-          src={imageUrl}
-          alt={altText}
-        />
-      )}
+      <ModalImage
+        src={imageUrl}
+        alt={altText}
+      />
     </ModalOverlay>
   );
 }
