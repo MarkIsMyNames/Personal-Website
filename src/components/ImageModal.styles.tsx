@@ -14,8 +14,8 @@ export const ModalOverlay = styled.div`
 `;
 
 export const ModalImage = styled.img`
-  max-width: 90%;
-  max-height: 90%;
+  width: 75vw;
+  height: 75vh;
   object-fit: contain;
   animation: zoomIn 0.3s ease;
 

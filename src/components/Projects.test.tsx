@@ -219,6 +219,29 @@ describe('Projects Component', () => {
     expect(modalImage).toHaveAttribute('alt', 'Image 1');
   });
 
+  describe('srcSet', () => {
+    it('uses _sm thumbnail at 600w and full image at 900w for regular images', () => {
+      const project: Project[] = [{ ...firstMockProject, images: ['photo.jpg'] }];
+      renderWithTheme(<Projects projects={project} />);
+      const img = screen.getByAltText('Test Project 1 screenshot 1 of 1');
+      expect(img).toHaveAttribute('srcset', 'photo_sm.jpg 600w, photo.jpg 900w');
+    });
+
+    it('uses the same image for both srcset entries when the image has no thumbnail', () => {
+      const project: Project[] = [{ ...firstMockProject, images: ['Intercom.png'] }];
+      renderWithTheme(<Projects projects={project} />);
+      const img = screen.getByAltText('Test Project 1 screenshot 1 of 1');
+      expect(img).toHaveAttribute('srcset', 'Intercom.png 600w, Intercom.png 900w');
+    });
+
+    it('uses the same image for both srcset entries for SVGs', () => {
+      const project: Project[] = [{ ...firstMockProject, images: ['logo.svg'] }];
+      renderWithTheme(<Projects projects={project} />);
+      const img = screen.getByAltText('Test Project 1 screenshot 1 of 1');
+      expect(img).toHaveAttribute('srcset', 'logo.svg 600w, logo.svg 900w');
+    });
+  });
+
   it('closes modal when close button is clicked', () => {
     const { container } = renderWithTheme(<Projects projects={mockProjects} />);
     const image = screen.getByAltText(/Test Project 1 screenshot 1 of 1/i);
