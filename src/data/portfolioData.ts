@@ -4,7 +4,7 @@ export const profile: Profile = {
   name: 'Mark Drohan',
   title: 'Software Engineer',
   bio: 'Immersive Software Engineering student at the University of Limerick, graduating in 2027. Interested in mathematics, AI, and algorithm design. Outside of coding, I like playing chess, hurling and archery.',
-  image: 'PersonalProfile.jpg',
+  image: 'Personal Profile.jpg',
   email: 'MarkDrohan@protonmail.com',
   github: 'MarkIsMyNames',
   graduationYear: 2027,
@@ -132,7 +132,7 @@ export const projects: Project[] = [
         text: 'Pitched our idea to the judges at Hult Prize competition, securing top 6 spot in Ireland',
       },
     ],
-    images: ['Hult1.jpg', 'Hult2.png', 'Hult3.jpg'],
+    images: ['Hult 1.jpg', 'Hult 2.png', 'Hult 3.jpg'],
     tags: [
       'Python',
       'AI/ML',

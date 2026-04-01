@@ -29,7 +29,7 @@ npm start          # Dev server at http://localhost:3000
 | `npm run lint:fix` | ESLint auto-fix |
 | `npm run format` | Prettier auto-format |
 | `npm run format:check` | Prettier check (CI) |
-| `npm run build` | Production build (tsc + vite build to `build/`) |
+| `npm run build` | Production build (prebuild manifest + tsc + vite build to `build/`) |
 | `npm run preview` | Preview production build locally |
 
 ### Before Completing Any Task
@@ -47,18 +47,18 @@ If any check fails, fix the issues (use `npm run format` for auto-fixing formatt
 ## Codebase Structure
 
 ```
-Personal-Website/
-├── CLAUDE.md                          # This file
+Mark.github.io/
+├── CLAUDE.md                          # This file - AI assistant guidance
 ├── package.json                       # Dependencies & scripts
 ├── tsconfig.json                      # TypeScript config (strict mode + extra flags)
 ├── vite.config.ts                     # Vite + Vitest config (port 3000, build → build/)
-├── eslint.config.mjs                  # ESLint rules (very strict, flat config)
+├── .eslintrc.json                     # ESLint rules (very strict)
 ├── .prettierrc.json                   # Prettier config (single quotes, 100 char width)
 │
 ├── src/
 │   ├── index.tsx                      # React entry point (StrictMode)
 │   ├── App.tsx                        # Root: ThemeProvider → GlobalStyles → Nav → Sections
-│   ├── App.test.tsx
+│   ├── App.test.tsx                   # App-level tests
 │   ├── setupTests.ts                  # Imports @testing-library/jest-dom
 │   ├── styled.d.ts                    # Augments DefaultTheme for styled-components typing
 │   │
@@ -70,40 +70,54 @@ Personal-Website/
 │   │   └── portfolioData.test.ts      # Data validation tests
 │   │
 │   ├── components/                    # Each component = .tsx + .styles.tsx + .test.tsx
-│   │   ├── Navigation.tsx/styles/test
-│   │   ├── Bio.tsx/styles/test
-│   │   ├── Skills.tsx/styles/test
-│   │   ├── Projects.tsx/styles/test
-│   │   ├── ImageModal.tsx/styles/test
-│   │   └── Contact.tsx/styles/test
+│   │   ├── Navigation.tsx             # Fixed nav bar, scroll-aware show/hide, smooth scroll
+│   │   ├── Navigation.styles.tsx
+│   │   ├── Navigation.test.tsx
+│   │   ├── Bio.tsx                    # Hero section: profile image, name, title, bio, education
+│   │   ├── Bio.styles.tsx
+│   │   ├── Bio.test.tsx
+│   │   ├── Skills.tsx                 # Responsive grid of skill cards with icons
+│   │   ├── Skills.styles.tsx
+│   │   ├── Skills.test.tsx
+│   │   ├── Projects.tsx               # Project cards with image gallery + lightbox trigger
+│   │   ├── Projects.styles.tsx
+│   │   ├── Projects.test.tsx
+│   │   ├── ImageModal.tsx             # Full-screen lightbox (keyboard + swipe navigation)
+│   │   ├── ImageModal.styles.tsx
+│   │   ├── ImageModal.test.tsx
+│   │   ├── Contact.tsx                # Email + GitHub contact links
+│   │   ├── Contact.styles.tsx
+│   │   └── Contact.test.tsx
 │   │
 │   ├── styles/
-│   │   ├── theme.ts                   # Design tokens: colors, gradients, shadows, breakpoints
+│   │   ├── theme.ts                   # Theme: colors, gradients, shadows, breakpoints
 │   │   ├── GlobalStyles.tsx           # CSS reset, body styles, system font stack
-│   │   ├── App.styles.tsx             # AppContainer styled.main (max-width: 1240px)
-│   │   ├── SharedComponents.tsx       # SectionTitle — shared gradient h2, used by Skills/Projects/Contact
+│   │   ├── App.styles.tsx             # AppContainer (max-width: 1240px, responsive padding)
+│   │   ├── SharedComponents.tsx       # Reusable SectionTitle styled component
 │   │   └── SharedComponents.test.tsx
 │   │
 │   └── utils/
 │       └── iconMapper.tsx             # Maps icon name strings → react-icons components
 │
-├── public/                            # Static assets (no spaces in filenames)
-│   ├── favicon.svg                    # Gradient M icon
-│   ├── robots.txt                     # Blocks AI crawlers, allows search engines
-│   ├── PersonalProfile.jpg            # Profile photo (300px, only used in Bio + nav)
-│   ├── Intercom.png, Ganzy.png        # Project images (full-size ~900px for lightbox)
-│   ├── NASA1-3.jpg
-│   ├── Hult1-3.jpg/png
-│   ├── HackJunction1-3.jpg
-│   ├── AWSHACK1-3.jpg/png
-│   ├── HackEurope1.jpg, HackEurope2.svg, HackEurope3.jpg
-│   └── *_sm.*                         # Responsive thumbnails (600px max, for gallery srcset)
+├── scripts/
+│   └── generateManifest.ts            # Prebuild: generates public/manifest.json from profile
+│
+├── public/                            # Static assets (served at root URL)
+│   ├── Personal Profile.jpg           # Profile photo
+│   ├── Intercom.png                   # Project images...
+│   ├── Ganzy.png
+│   ├── NASA1.jpg, NASA2.jpg, NASA3.jpg
+│   ├── Hult 1.jpg, Hult 2.png, Hult 3.jpg
+│   ├── HackJunction1.jpg, HackJunction2.jpg, HackJunction3.jpg
+│   ├── AWSHACK1.jpg, AWSHACK2.png, AWSHACK3.jpg
+│   ├── manifest.json                  # Auto-generated (do NOT edit manually)
+│   └── robots.txt
 │
 └── .github/workflows/                 # PR checks (all required for merge)
-    ├── frontend-tests.yml
-    ├── frontend-lint.yml
-    ├── frontend-format.yml
-    └── frontend-build.yml
+    ├── frontend-tests.yml             # npm test
+    ├── frontend-lint.yml              # npm run lint
+    ├── frontend-format.yml            # npm run format:check
+    └── frontend-build.yml             # npm run build
 ```
 
 ---
@@ -116,33 +130,37 @@ Personal-Website/
 index.tsx → App.tsx → ThemeProvider(theme)
                         ├── GlobalStyles (CSS reset)
                         ├── Navigation (fixed, full-width, outside AppContainer)
-                        └── AppContainer (styled.main, max-width: 1240px)
-                              ├── <div id="about">    → Bio(profile)
-                              ├── <div id="skills">   → Skills(skills)
+                        └── AppContainer (max-width: 1240px)
+                              ├── <div id="about">  → Bio(profile)
+                              ├── <div id="skills"> → Skills(skills)
                               ├── <div id="projects"> → Projects(projects)
-                              ├── <div id="contact">  → Contact(profile)
+                              ├── <div id="contact"> → Contact(profile)
                               ├── <Analytics />
                               └── <SpeedInsights />
 ```
 
 ### Data Model (src/types/index.ts)
 
+**Enums and constants:**
+
 | Name | Kind | Values | Purpose |
 |------|------|--------|---------|
-| `SkillCategory` | enum | `Language`, `Framework`, `Concept`, `Technology` | Skill grid categories |
-| `SectionId` | enum | `About`, `Skills`, `Projects`, `Contact` | Anchor IDs |
-| `KeyboardKey` | const object | `Enter`, `Space`, `Escape`, `ArrowLeft`, `ArrowRight` | DOM `e.key` values |
+| `SkillCategory` | enum | `Language`, `Framework`, `Concept`, `Technology` | Categorises skills in the skills grid |
+| `SectionId` | enum | `About`, `Skills`, `Projects`, `Contact` | Anchor IDs used in App.tsx and Navigation.tsx |
+| `KeyboardKey` | const object | `Enter`, `Space`, `Escape`, `ArrowLeft`, `ArrowRight` | Keyboard event key values (const instead of enum because DOM `e.key` returns `string`) |
 
-Use enums when both producer and consumer are our code. Use `as const` for values compared against external APIs (e.g., DOM `e.key`).
+**Use enums for categorical values where both producer and consumer are in our code** (e.g., `SkillCategory`, `SectionId`). Use `as const` objects for values compared against external APIs (e.g., `KeyboardKey` vs DOM `e.key`).
 
-| Type | Fields |
-|------|--------|
-| `Profile` | name, title, bio, image, email, github, university, graduationYear |
-| `Skill` | name, iconName, category |
-| `Project` | title, role, description, highlights[], images[], tags[] |
-| `ProjectHighlight` | text |
+**Types:**
 
-All content lives in `portfolioData.ts`. Data flows: `portfolioData.ts` → `App.tsx` → components via props. Navigation imports `profile` directly for the brand logo.
+| Type | Fields | Used By |
+|------|--------|---------|
+| `Profile` | name, title, bio, image, email, github, university, graduationYear | Bio, Contact, Navigation |
+| `Skill` | name, iconName, category (`SkillCategory`) | Skills |
+| `Project` | title, role, description, highlights[], images[], tags[] | Projects |
+| `ProjectHighlight` | text | Projects (nested in Project) |
+
+All content lives in `src/data/portfolioData.ts` as exported arrays/objects. Data flows: `portfolioData.ts` → `App.tsx` → components via props. Navigation also imports `profile` directly for the brand logo.
 
 ### Icon System (src/utils/iconMapper.tsx)
 
@@ -153,34 +171,9 @@ Maps string names to `react-icons` components via a lookup table. To add a new i
 
 Unknown icon names render a `?` fallback.
 
-### Image System
+### Image References
 
-**Filenames:** No spaces — use `CamelCase` or `PascalCase` (e.g., `NASA1.jpg`, `PersonalProfile.jpg`).
-
-**Two sizes per project image:**
-- `IMAGE.jpg` — full size (~900px), used by the lightbox (`ImageModal`)
-- `IMAGE_sm.jpg` — 600px max, used by the gallery via `srcset`
-
-The gallery `ProjectImage` uses:
-```tsx
-srcSet={`${smSrc} 600w, ${image} 900w`}
-sizes="(max-width: 480px) 300px, (max-width: 768px) 400px, 450px"
-```
-This serves 600px on mobile (adequate at 2× DPR) and 900px on desktop (cached for lightbox). Generate `_sm` files with: `magick IMAGE -resize 600x600\> -quality 82 IMAGE_sm.EXT`
-
-**Profile image** (`PersonalProfile.jpg`) is 300px — only used in Bio and nav, never in the lightbox.
-
-The `PROJECT_IMAGE_HEIGHT = 300` constant in `Projects.styles.tsx` is used for the CSS `max-height` at responsive breakpoints and the HTML `height` attribute (CLS prevention).
-
----
-
-## Performance & SEO
-
-- `index.html` has `<link rel="preload" as="image" href="/PersonalProfile.jpg">` for LCP
-- `ProfileImage` in `Bio.tsx` has `fetchPriority="high"` for LCP
-- `AppContainer` uses `styled.main` for the `<main>` landmark
-- `robots.txt` blocks AI training crawlers (GPTBot, CCBot, anthropic-ai, Claude-Web, Google-Extended, Amazonbot) while allowing search engines
-- `vite-plugin-html` injects `profile.name` and `profile.bio` into `<title>` and `<meta name="description">`
+Project images and profile photo are stored as filenames (e.g., `'NASA1.jpg'`) in `portfolioData.ts`. Files live in `public/` and are served at the root URL. Vite serves them in dev, copies to `build/` for production.
 
 ---
 
@@ -206,7 +199,7 @@ Strict mode is fully enabled in `tsconfig.json` with extra flags:
 
 Key rules beyond TypeScript:
 - `no-console: error` — no console.log
-- `curly: all` — always use braces
+- `curly: all` — always use braces for if/else/for/while
 - `eqeqeq: always` — use `===`/`!==`
 - `prefer-template` — template literals over concatenation
 - `object-shorthand` — `{ foo }` not `{ foo: foo }`
@@ -225,15 +218,18 @@ Config in `.prettierrc.json`: single quotes, 100 char print width, trailing comm
 
 All styling uses **styled-components** (CSS-in-JS). No separate CSS files.
 
+### File Pairing
+
 Every component has a paired `.styles.tsx` file:
 - `Component.tsx` — logic, state, event handlers, JSX
 - `Component.styles.tsx` — all styled-components for that component
 
-**Shared styles:** `SectionTitle` (gradient h2) lives in `SharedComponents.tsx` and is imported by Skills, Projects, and Contact. Do not redefine it locally.
-
 ### Theme (src/styles/theme.ts)
 
+Provided via `<ThemeProvider>` in App.tsx, typed via `src/styled.d.ts`.
+
 ```typescript
+// Access in styled-components:
 color: ${({ theme }) => theme.colors.accentPrimary};
 background: ${({ theme }) => theme.gradients.accent};
 ```
@@ -248,17 +244,13 @@ background: ${({ theme }) => theme.gradients.accent};
 
 ### Transient Props
 
-Use `$` prefix for props that should not forward to the DOM (e.g., `$isOpen`, `$isSingle`). This avoids React DOM warnings.
+Use `$` prefix for props that should not forward to the DOM (e.g., `$isOpen`, `$isSingle`, `$compact`). This avoids React DOM warnings.
 
-### Gradient text CSS (inline — no shared mixin)
+### Animations
 
-WebStorm's CSS-in-JS parser errors on multi-property `css` interpolations. Inline these 4 lines wherever needed:
-```css
-background: ${({ theme }) => theme.gradients.accent};
--webkit-background-clip: text;
--webkit-text-fill-color: transparent;
-background-clip: text;
-```
+- CSS transitions for hover states (transform, opacity, border-color) with `0.3s ease`
+- Keyframe animations for modal open (`fadeIn`, `zoomIn`) and nav button (`fadeInNav`)
+- Nav show/hide uses `transform: translateY()` with CSS transition
 
 ---
 
@@ -269,11 +261,17 @@ Three breakpoints defined in `theme.ts`:
 - **Tablet:** 768px
 - **Desktop:** 1200px
 
+```typescript
+@media (max-width: ${({ theme }) => theme.breakpoints.tablet}) { ... }
+@media (max-width: ${({ theme }) => theme.breakpoints.mobile}) { ... }
+```
+
 **Conventions:**
 - Font sizes MUST scale at both tablet AND mobile breakpoints
-- Image galleries: horizontal scroll with `scroll-snap` on mobile
-- Skills grid: 4 cols → 3 cols → 2 cols
-- Minimum touch target: 44×44px
+- Image galleries: horizontal scroll with `scroll-snap` on mobile (not vertical stacking)
+- Skills grid: 4 cols (desktop) → 3 cols (tablet) → 2 cols (mobile)
+- Minimum touch target: 44x44px
+- Hidden scrollbar on mobile galleries
 - Navigation hides brand logo on mobile, centers nav links
 
 ---
@@ -282,31 +280,32 @@ Three breakpoints defined in `theme.ts`:
 
 **Vitest** + **jsdom** + **React Testing Library**. Globals (`describe`, `it`, `expect`, `vi`) available without imports.
 
-- `renderWithTheme()` helper wraps components in `<ThemeProvider>`
+**Conventions:**
+- `renderWithTheme()` helper wraps components in `<ThemeProvider>` (all styled-components need theme)
 - Prefer accessible queries: `screen.getByRole`, `screen.getByText`, `screen.getByAltText`
 - Mock with `vi.fn()`, clear with `mockClear()` in `beforeEach`
 - DOM events: `fireEvent.click()`, `fireEvent.keyDown()`, `fireEvent.touchStart()`
 - Touch events dispatched on `document` (ImageModal attaches listeners there)
-- Tests co-located with components
+- Tests co-located with components (e.g., `Bio.test.tsx` next to `Bio.tsx`)
 
 ---
 
 ## Component Details
 
 ### Navigation
-Fixed nav bar with backdrop blur. Hides on scroll-down, shows on scroll-up (tracks `lastScrollY` via ref). Uses `isNavClickScrollRef` to pause hide behavior during smooth-scroll navigation (1-second delay). Brand logo hidden on mobile.
+Fixed nav bar with backdrop blur. Hides on scroll-down, shows on scroll-up (tracks `lastScrollY` via ref). Uses `isNavClickScrollRef` to pause hide behavior during smooth-scroll navigation (1-second delay). Brand logo hidden on mobile. Four links: About, Skills, Projects, Contact.
 
 ### Bio
-Hero section. Splits `profile.bio` by `. ` to render each sentence on its own line. Profile image has `fetchPriority="high"` (LCP optimisation).
+Hero section. Splits `profile.bio` by `. ` to render each sentence on its own line via `<Fragment>` with `<br />`. Shows circular profile image, gradient name, title, bio text, education.
 
 ### Skills
-CSS Grid of skill cards with icons via `iconMapper`. Responsive columns: 4 → 3 → 2.
+CSS Grid of skill cards. Each card renders an icon via the `iconMapper` `Icon` component. Responsive columns: 4 → 3 → 2.
 
 ### Projects
-Card layout with image galleries. `PROJECT_IMAGE_HEIGHT = 300` constant (defined in `Projects.styles.tsx`) drives both the CSS `max-height` at responsive breakpoints and the HTML `height` attribute for CLS prevention. Gallery uses `srcset` with `_sm` thumbnails for mobile performance; lightbox always receives the full-size `src`. Keyboard accessible (tabIndex, Enter/Space).
+Card layout with image galleries. Manages lightbox state (`modalOpen`, `selectedImage`, `currentImageIndex`, `currentProjectImages`). Multi-image projects use horizontal scrollable gallery with scroll-snap. Single-image projects centered. Click opens ImageModal. Keyboard accessible (tabIndex, Enter/Space).
 
 ### ImageModal
-Full-screen lightbox at `width: 75vw; height: 75vh; object-fit: contain`. Navigation: Escape to close, Arrow keys prev/next, touch swipe prev/next (50px threshold). Locks body scroll when open.
+Full-screen overlay lightbox. Navigation: Escape to close, Arrow keys prev/next, touch swipe prev/next (50px threshold, ignores vertical). Uses refs for callback props to avoid effect dependency churn. Locks body scroll when open.
 
 ### Contact
 Email and GitHub links using the `Icon` component.
@@ -315,37 +314,43 @@ Email and GitHub links using the `Icon` component.
 
 ## Accessibility
 
-- Semantic HTML: `<nav>`, `<section>`, `<main>`, `<ul>`/`<li>` with `role="list"`/`role="listitem"`
+- Semantic HTML: `<nav>`, `<section>`, `<ul>`/`<li>` with `role="list"`/`role="listitem"`
 - ARIA labels on all interactive elements and sections
-- ARIA roles: `role="dialog"` + `aria-modal="true"` on ImageModal
+- ARIA roles: `role="dialog"` + `aria-modal="true"` on ImageModal, `role="navigation"`, `role="menu"`/`role="menuitem"`
 - Keyboard: clickable images have `tabIndex={0}` + `onKeyDown` (Enter/Space)
 - Alt text with context (e.g., `"NASA Space Apps Challenge screenshot 1 of 3"`)
+- Modal supports keyboard (Escape, Arrows) and touch swipe
 
 ---
 
 ## Adding New Content
 
 ### New Skill
-1. Add entry to `skills[]` in `portfolioData.ts`
+1. Add entry to `skills[]` in `src/data/portfolioData.ts`
 2. If the icon doesn't exist in `iconMapper.tsx`, import from `react-icons` and add to `iconMap`
 
 ### New Project
-1. Add entry to `projects[]` in `portfolioData.ts`
-2. Place full-size image(s) in `public/` (no spaces in filename)
-3. Generate `_sm` thumbnails: `magick IMAGE -resize 600x600\> -quality 82 IMAGE_sm.EXT`
+1. Add entry to `projects[]` in `src/data/portfolioData.ts`
+2. Place image files in `public/`
 
 ### New Section
 1. Create `SectionName.tsx` + `SectionName.styles.tsx` + `SectionName.test.tsx` in `src/components/`
 2. Import and render in `App.tsx` wrapped in `<div id="sectionname">`
 3. Add nav link in `Navigation.tsx`
-4. Import `SectionTitle` from `../styles/SharedComponents` — do not create a new one
+
+### New Contact Method
+1. Add `<ContactLink>` in `Contact.tsx`
+2. Add any needed icon to `iconMapper.tsx`
 
 ---
 
 ## Build & Deployment
 
-**Build process:** `tsc` (type checking) → `vite build` (bundling to `build/` with sourcemaps). `vite-plugin-html` injects `profile.name` and `profile.bio` into the HTML template at build time.
+**Build process:**
+1. `prebuild`: `tsx scripts/generateManifest.ts` generates `public/manifest.json` from profile data
+2. `build`: `tsc` (type checking) then `vite build` (bundling to `build/` with sourcemaps)
+3. `vite-plugin-html` injects `profile.name` and `profile.title` into HTML meta tags
 
-**CI/CD:** Four GitHub Actions workflows run on PRs to `main` (Node.js 20, ubuntu-latest). They only trigger when relevant files change.
+**CI/CD:** Four GitHub Actions workflows run on PRs to `main` (Node.js 20, ubuntu-latest). They only trigger when relevant files change (src/, public/, package.json, config files).
 
 **Deployment:** Vercel auto-deploys on push to `main`. No manual deployment needed.

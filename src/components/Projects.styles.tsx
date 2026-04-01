@@ -41,6 +41,7 @@ export const ProjectImages = styled.div<{ $isSingle?: boolean }>`
 `;
 
 export const ProjectImage = styled.img<{ $isSingle?: boolean }>`
+  max-height: 300px;
   max-width: ${({ $isSingle }) => ($isSingle ? '100%' : '400px')};
   border-radius: 8px;
   object-fit: contain;
