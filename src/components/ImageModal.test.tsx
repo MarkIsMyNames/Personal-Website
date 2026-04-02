@@ -15,16 +15,14 @@ describe('ImageModal Component', () => {
   const testAltText = 'Test Image';
 
   beforeEach(() => {
-    mockOnClose.mockClear();
+    vi.clearAllMocks();
   });
 
   it('does not render when isOpen is false', () => {
     renderWithTheme(
       <ImageModal
         isOpen={false}
-        images={[testImageUrl]}
-        currentIndex={0}
-        loadedIndices={new Set([0])}
+        imageUrl={testImageUrl}
         altText={testAltText}
         onClose={mockOnClose}
       />,
@@ -36,9 +34,7 @@ describe('ImageModal Component', () => {
     renderWithTheme(
       <ImageModal
         isOpen
-        images={[testImageUrl]}
-        currentIndex={0}
-        loadedIndices={new Set([0])}
+        imageUrl={testImageUrl}
         altText={testAltText}
         onClose={mockOnClose}
       />,
@@ -50,9 +46,7 @@ describe('ImageModal Component', () => {
     renderWithTheme(
       <ImageModal
         isOpen
-        images={[testImageUrl]}
-        currentIndex={0}
-        loadedIndices={new Set([0])}
+        imageUrl={testImageUrl}
         altText={testAltText}
         onClose={mockOnClose}
       />,
@@ -65,14 +59,13 @@ describe('ImageModal Component', () => {
     renderWithTheme(
       <ImageModal
         isOpen
-        images={[testImageUrl]}
-        currentIndex={0}
-        loadedIndices={new Set([0])}
+        imageUrl={testImageUrl}
         altText={testAltText}
         onClose={mockOnClose}
       />,
     );
-    const closeButton = screen.getByRole('button');
+    // Use getByLabelText as it's more specific than getByRole('button') when multiple buttons exist
+    const closeButton = screen.getByLabelText(/Close modal/i);
     fireEvent.click(closeButton);
     expect(mockOnClose).toHaveBeenCalledTimes(1);
   });
@@ -81,23 +74,19 @@ describe('ImageModal Component', () => {
     renderWithTheme(
       <ImageModal
         isOpen
-        images={[testImageUrl]}
-        currentIndex={0}
-        loadedIndices={new Set([0])}
+        imageUrl={testImageUrl}
         altText={testAltText}
         onClose={mockOnClose}
       />,
     );
-    expect(screen.getByRole('button')).toBeInTheDocument();
+    expect(screen.getByLabelText(/Close modal/i)).toBeInTheDocument();
   });
 
   it('calls onClose when Escape key is pressed', () => {
     renderWithTheme(
       <ImageModal
         isOpen
-        images={[testImageUrl]}
-        currentIndex={0}
-        loadedIndices={new Set([0])}
+        imageUrl={testImageUrl}
         altText={testAltText}
         onClose={mockOnClose}
       />,
@@ -110,15 +99,13 @@ describe('ImageModal Component', () => {
     renderWithTheme(
       <ImageModal
         isOpen
-        images={[testImageUrl]}
-        currentIndex={0}
-        loadedIndices={new Set([0])}
+        imageUrl={testImageUrl}
         altText={testAltText}
         onClose={mockOnClose}
       />,
     );
-    const overlay = screen.getByAltText(testAltText).parentElement;
-    fireEvent.click(overlay as Element);
+    const overlay = screen.getByRole('dialog');
+    fireEvent.click(overlay);
     expect(mockOnClose).toHaveBeenCalledTimes(1);
   });
 
@@ -126,9 +113,7 @@ describe('ImageModal Component', () => {
     renderWithTheme(
       <ImageModal
         isOpen
-        images={[testImageUrl]}
-        currentIndex={0}
-        loadedIndices={new Set([0])}
+        imageUrl={testImageUrl}
         altText={testAltText}
         onClose={mockOnClose}
       />,
@@ -144,9 +129,7 @@ describe('ImageModal Component', () => {
     renderWithTheme(
       <ImageModal
         isOpen
-        images={['img1.jpg', 'img2.jpg', 'img3.jpg']}
-        currentIndex={1}
-        loadedIndices={new Set([0, 1, 2])}
+        imageUrl={testImageUrl}
         altText={testAltText}
         onClose={mockOnClose}
         onPrevious={mockOnPrevious}
@@ -155,8 +138,9 @@ describe('ImageModal Component', () => {
         hasNext
       />,
     );
-    const buttons = screen.getAllByRole('button');
-    expect(buttons).toHaveLength(3); // close + previous + next
+    expect(screen.getByLabelText(/Previous image/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/Next image/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/Close modal/i)).toBeInTheDocument();
   });
 
   it('calls onPrevious when left arrow key is pressed', () => {
@@ -164,9 +148,7 @@ describe('ImageModal Component', () => {
     renderWithTheme(
       <ImageModal
         isOpen
-        images={['img1.jpg', 'img2.jpg']}
-        currentIndex={1}
-        loadedIndices={new Set([0, 1, 2])}
+        imageUrl={testImageUrl}
         altText={testAltText}
         onClose={mockOnClose}
         onPrevious={mockOnPrevious}
@@ -182,9 +164,7 @@ describe('ImageModal Component', () => {
     renderWithTheme(
       <ImageModal
         isOpen
-        images={['img1.jpg', 'img2.jpg']}
-        currentIndex={0}
-        loadedIndices={new Set([0])}
+        imageUrl={testImageUrl}
         altText={testAltText}
         onClose={mockOnClose}
         onNext={mockOnNext}
@@ -200,9 +180,7 @@ describe('ImageModal Component', () => {
     renderWithTheme(
       <ImageModal
         isOpen
-        images={[testImageUrl]}
-        currentIndex={0}
-        loadedIndices={new Set([0])}
+        imageUrl={testImageUrl}
         altText={testAltText}
         onClose={mockOnClose}
         onPrevious={mockOnPrevious}
@@ -218,9 +196,7 @@ describe('ImageModal Component', () => {
     renderWithTheme(
       <ImageModal
         isOpen
-        images={[testImageUrl]}
-        currentIndex={0}
-        loadedIndices={new Set([0])}
+        imageUrl={testImageUrl}
         altText={testAltText}
         onClose={mockOnClose}
         onNext={mockOnNext}
@@ -237,9 +213,7 @@ describe('ImageModal Component', () => {
     renderWithTheme(
       <ImageModal
         isOpen
-        images={['img1.jpg', 'img2.jpg', 'img3.jpg']}
-        currentIndex={1}
-        loadedIndices={new Set([0, 1, 2])}
+        imageUrl={testImageUrl}
         altText={testAltText}
         onClose={mockOnClose}
         onPrevious={mockOnPrevious}
@@ -248,16 +222,14 @@ describe('ImageModal Component', () => {
         hasNext
       />,
     );
-    const buttons = screen.getAllByRole('button');
-    // buttons[0] is close, buttons[1] is previous, buttons[2] is next
-    const previousButton = buttons[1];
-    const nextButton = buttons[2];
-    if (previousButton && nextButton) {
-      fireEvent.click(previousButton);
-      expect(mockOnPrevious).toHaveBeenCalledTimes(1);
-      fireEvent.click(nextButton);
-      expect(mockOnNext).toHaveBeenCalledTimes(1);
-    }
+    const previousButton = screen.getByLabelText(/Previous image/i);
+    const nextButton = screen.getByLabelText(/Next image/i);
+
+    fireEvent.click(previousButton);
+    expect(mockOnPrevious).toHaveBeenCalledTimes(1);
+
+    fireEvent.click(nextButton);
+    expect(mockOnNext).toHaveBeenCalledTimes(1);
   });
 
   it('calls onNext when swiped left', () => {
@@ -265,9 +237,7 @@ describe('ImageModal Component', () => {
     renderWithTheme(
       <ImageModal
         isOpen
-        images={['img1.jpg', 'img2.jpg']}
-        currentIndex={0}
-        loadedIndices={new Set([0])}
+        imageUrl={testImageUrl}
         altText={testAltText}
         onClose={mockOnClose}
         onNext={mockOnNext}
@@ -291,9 +261,7 @@ describe('ImageModal Component', () => {
     renderWithTheme(
       <ImageModal
         isOpen
-        images={['img1.jpg', 'img2.jpg']}
-        currentIndex={1}
-        loadedIndices={new Set([0, 1, 2])}
+        imageUrl={testImageUrl}
         altText={testAltText}
         onClose={mockOnClose}
         onPrevious={mockOnPrevious}
@@ -317,9 +285,7 @@ describe('ImageModal Component', () => {
     renderWithTheme(
       <ImageModal
         isOpen
-        images={['img1.jpg', 'img2.jpg']}
-        currentIndex={0}
-        loadedIndices={new Set([0])}
+        imageUrl={testImageUrl}
         altText={testAltText}
         onClose={mockOnClose}
         onNext={mockOnNext}
@@ -343,9 +309,7 @@ describe('ImageModal Component', () => {
     renderWithTheme(
       <ImageModal
         isOpen
-        images={['img1.jpg', 'img2.jpg']}
-        currentIndex={0}
-        loadedIndices={new Set([0])}
+        imageUrl={testImageUrl}
         altText={testAltText}
         onClose={mockOnClose}
         onNext={mockOnNext}
@@ -368,9 +332,7 @@ describe('ImageModal Component', () => {
     renderWithTheme(
       <ImageModal
         isOpen
-        images={[testImageUrl]}
-        currentIndex={0}
-        loadedIndices={new Set([0])}
+        imageUrl={testImageUrl}
         altText={testAltText}
         onClose={mockOnClose}
       />,
@@ -378,19 +340,31 @@ describe('ImageModal Component', () => {
     expect(document.body.style.overflow).toBe('hidden');
   });
 
-  it('only renders the initially viewed image, not all images upfront', () => {
+  it('restores body overflow when closed', () => {
+    const { unmount } = renderWithTheme(
+      <ImageModal
+        isOpen
+        imageUrl={testImageUrl}
+        altText={testAltText}
+        onClose={mockOnClose}
+      />,
+    );
+    expect(document.body.style.overflow).toBe('hidden');
+    unmount();
+    expect(document.body.style.overflow).toBe('unset');
+  });
+
+  it('only renders the viewed image', () => {
     const { container } = renderWithTheme(
       <ImageModal
         isOpen
-        images={['img1.jpg', 'img2.jpg', 'img3.jpg']}
-        currentIndex={0}
-        loadedIndices={new Set([0])}
+        imageUrl={testImageUrl}
         altText={testAltText}
         onClose={mockOnClose}
       />,
     );
     const imgs = container.querySelectorAll('[role="dialog"] img');
     expect(imgs).toHaveLength(1);
-    expect(imgs[0]).toHaveAttribute('src', 'img1.jpg');
+    expect(imgs[0]).toHaveAttribute('src', testImageUrl);
   });
 });
