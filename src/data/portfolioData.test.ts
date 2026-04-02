@@ -75,20 +75,19 @@ describe('Portfolio Data Structure', () => {
     it('has no empty highlight text', () => {
       projects.forEach((project) => {
         project.highlights.forEach((highlight) => {
-          expect(highlight.text).toBeTruthy();
+          expect(highlight).toBeTruthy();
         });
       });
     });
 
     it('has no duplicate highlights within a project', () => {
       projects.forEach((project) => {
-        const texts = project.highlights.map((h) => h.text);
-        expect(new Set(texts).size).toBe(texts.length);
+        expect(new Set(project.highlights).size).toBe(project.highlights.length);
       });
     });
 
     it('has no duplicate highlights across all projects', () => {
-      const allTexts = projects.flatMap((p) => p.highlights.map((h) => h.text));
+      const allTexts = projects.flatMap((p) => p.highlights);
       expect(new Set(allTexts).size).toBe(allTexts.length);
     });
 

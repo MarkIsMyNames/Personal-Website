@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState } from 'react';
 import { KeyboardKey, type Project } from '../types';
 import { ImageModal } from './ImageModal';
 import { SectionTitle } from '../styles/SharedComponents.styles';
@@ -22,56 +22,19 @@ type ProjectsProps = {
   projects: Project[];
 };
 
+type ModalState = {
+  images: string[];
+  index: number;
+};
+
 export function Projects({ projects }: ProjectsProps) {
-  const [modalOpen, setModalOpen] = useState(false);
-  const [selectedImage, setSelectedImage] = useState({ url: '', alt: '' });
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [currentProjectImages, setCurrentProjectImages] = useState<string[]>([]);
+  const [modal, setModal] = useState<ModalState | null>(null);
 
-  const handleImageClick = useCallback(
-    (imageUrl: string, altText: string, imageIndex: number, allImages: string[]) => {
-      setSelectedImage({ url: imageUrl, alt: altText });
-      setCurrentImageIndex(imageIndex);
-      setCurrentProjectImages(allImages);
-
-      setModalOpen(true);
-    },
-    [],
-  );
-
-  const handleCloseModal = useCallback((): void => {
-    setModalOpen(false);
-  }, []);
-
-  const handlePreviousImage = useCallback((): void => {
-    if (currentImageIndex > 0) {
-      const newIndex = currentImageIndex - 1;
-      const newUrl = currentProjectImages[newIndex];
-      if (newUrl !== undefined) {
-        setCurrentImageIndex(newIndex);
-
-        setSelectedImage({
-          url: newUrl,
-          alt: `Image ${newIndex + 1}`,
-        });
-      }
-    }
-  }, [currentImageIndex, currentProjectImages]);
-
-  const handleNextImage = useCallback((): void => {
-    if (currentImageIndex < currentProjectImages.length - 1) {
-      const newIndex = currentImageIndex + 1;
-      const newUrl = currentProjectImages[newIndex];
-      if (newUrl !== undefined) {
-        setCurrentImageIndex(newIndex);
-
-        setSelectedImage({
-          url: newUrl,
-          alt: `Image ${newIndex + 1}`,
-        });
-      }
-    }
-  }, [currentImageIndex, currentProjectImages]);
+  const openModal = (images: string[], index: number) => setModal({ images, index });
+  const closeModal = () => setModal(null);
+  const prevImage = () => setModal((m) => (m && m.index > 0 ? { ...m, index: m.index - 1 } : m));
+  const nextImage = () =>
+    setModal((m) => (m && m.index < m.images.length - 1 ? { ...m, index: m.index + 1 } : m));
 
   return (
     <ProjectsSection aria-label="Projects and Experience section">
@@ -91,31 +54,19 @@ export function Projects({ projects }: ProjectsProps) {
               <ProjectImages $isSingle={isSingleImage}>
                 {project.images.map((image, index) => (
                   <ProjectImage
-                    key={index}
+                    key={image}
                     src={image}
                     alt={`${project.title} screenshot ${index + 1} of ${project.images.length}`}
                     height={300}
                     $isSingle={isSingleImage}
-                    onClick={() =>
-                      handleImageClick(
-                        image,
-                        `${project.title} ${index + 1}`,
-                        index,
-                        project.images,
-                      )
-                    }
+                    onClick={() => openModal(project.images, index)}
                     role="button"
                     aria-label={`View full size image ${index + 1} of ${project.title}`}
                     tabIndex={0}
                     onKeyDown={(e) => {
                       if (e.key === KeyboardKey.Enter || e.key === KeyboardKey.Space) {
                         e.preventDefault();
-                        handleImageClick(
-                          image,
-                          `${project.title} ${index + 1}`,
-                          index,
-                          project.images,
-                        );
+                        openModal(project.images, index);
                       }
                     }}
                   />
@@ -127,12 +78,12 @@ export function Projects({ projects }: ProjectsProps) {
                 <ProjectDescription>{project.description}</ProjectDescription>
                 <ProjectHighlights>
                   {project.highlights.map((highlight) => (
-                    <HighlightItem key={highlight.text}>{highlight.text}</HighlightItem>
+                    <HighlightItem key={highlight}>{highlight}</HighlightItem>
                   ))}
                 </ProjectHighlights>
                 <ProjectTags>
-                  {project.tags.map((tag, index) => (
-                    <ProjectTag key={index}>{tag}</ProjectTag>
+                  {project.tags.map((tag) => (
+                    <ProjectTag key={tag}>{tag}</ProjectTag>
                   ))}
                 </ProjectTags>
               </ProjectContent>
@@ -140,16 +91,17 @@ export function Projects({ projects }: ProjectsProps) {
           );
         })}
       </ProjectsContainer>
-      <ImageModal
-        isOpen={modalOpen}
-        imageUrl={selectedImage.url}
-        altText={selectedImage.alt}
-        onClose={handleCloseModal}
-        onPrevious={handlePreviousImage}
-        onNext={handleNextImage}
-        hasPrevious={currentImageIndex > 0}
-        hasNext={currentImageIndex < currentProjectImages.length - 1}
-      />
+      {modal !== null && (
+        <ImageModal
+          imageUrl={modal.images[modal.index] ?? ''}
+          altText={`Image ${modal.index}`}
+          onClose={closeModal}
+          onPrevious={prevImage}
+          onNext={nextImage}
+          hasPrevious={modal.index > 0}
+          hasNext={modal.index < modal.images.length - 1}
+        />
+      )}
     </ProjectsSection>
   );
 }

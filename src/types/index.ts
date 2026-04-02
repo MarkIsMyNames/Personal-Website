@@ -18,15 +18,11 @@ export type Skill = {
   iconName: string;
 };
 
-export type ProjectHighlight = {
-  text: string;
-};
-
 export type Project = {
   title: string;
   role: string;
   description: string;
-  highlights: ProjectHighlight[];
+  highlights: string[];
   images: string[];
   tags: string[];
 };
