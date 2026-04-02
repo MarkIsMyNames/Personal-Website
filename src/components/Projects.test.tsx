@@ -201,7 +201,7 @@ describe('Projects Component', () => {
   });
 
   it('navigates to previous image when clicking previous button in modal', () => {
-    renderWithTheme(<Projects projects={mockProjects} />);
+    const { container } = renderWithTheme(<Projects projects={mockProjects} />);
     const secondImage = screen.getByAltText(/Test Project 2 screenshot 2 of 3/i);
     fireEvent.click(secondImage);
 
