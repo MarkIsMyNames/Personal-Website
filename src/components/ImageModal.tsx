@@ -11,40 +11,34 @@ import { KeyboardKey } from '../types';
 const SWIPE_THRESHOLD = 50;
 
 type ImageModalProps = {
-  isOpen: boolean;
   imageUrl: string;
   altText: string;
   onClose: () => void;
-  onPrevious?: () => void;
-  onNext?: () => void;
-  hasPrevious?: boolean;
-  hasNext?: boolean;
+  onPrevious: () => void;
+  onNext: () => void;
+  hasPrevious: boolean;
+  hasNext: boolean;
 };
 
 export function ImageModal({
-  isOpen,
   imageUrl,
   altText,
   onClose,
   onPrevious,
   onNext,
-  hasPrevious = false,
-  hasNext = false,
+  hasPrevious,
+  hasNext,
 }: ImageModalProps) {
   const touchStartXRef = useRef(0);
   const touchEndXRef = useRef(0);
 
   useEffect(() => {
-    if (!isOpen) {
-      return;
-    }
-
     const handleKeyDown = (e: KeyboardEvent): void => {
       if (e.key === KeyboardKey.Escape) {
         onClose();
-      } else if (e.key === KeyboardKey.ArrowLeft && hasPrevious && onPrevious) {
+      } else if (e.key === KeyboardKey.ArrowLeft && hasPrevious) {
         onPrevious();
-      } else if (e.key === KeyboardKey.ArrowRight && hasNext && onNext) {
+      } else if (e.key === KeyboardKey.ArrowRight && hasNext) {
         onNext();
       }
     };
@@ -71,9 +65,9 @@ export function ImageModal({
         return;
       }
 
-      if (deltaX > 0 && hasNext && onNext) {
+      if (deltaX > 0 && hasNext) {
         onNext();
-      } else if (deltaX < 0 && hasPrevious && onPrevious) {
+      } else if (deltaX < 0 && hasPrevious) {
         onPrevious();
       }
     };
@@ -91,11 +85,10 @@ export function ImageModal({
       document.removeEventListener('touchend', handleTouchEnd);
       document.body.style.overflow = 'unset';
     };
-  }, [isOpen, onClose, onPrevious, onNext, hasPrevious, hasNext]);
+  }, [onClose, onPrevious, onNext, hasPrevious, hasNext]);
 
   return (
     <ModalOverlay
-      $isOpen={isOpen}
       onClick={onClose}
       role="dialog"
       aria-modal="true"
@@ -110,7 +103,7 @@ export function ImageModal({
       >
         ✕
       </CloseButton>
-      {hasPrevious && onPrevious && (
+      {hasPrevious && (
         <NavigationButtonLeft
           onClick={(e) => {
             e.stopPropagation();
@@ -121,7 +114,7 @@ export function ImageModal({
           ‹
         </NavigationButtonLeft>
       )}
-      {hasNext && onNext && (
+      {hasNext && (
         <NavigationButtonRight
           onClick={(e) => {
             e.stopPropagation();
@@ -132,12 +125,10 @@ export function ImageModal({
           ›
         </NavigationButtonRight>
       )}
-      {imageUrl && (
-        <ModalImage
-          src={imageUrl}
-          alt={altText}
-        />
-      )}
+      <ModalImage
+        src={imageUrl}
+        alt={altText}
+      />
     </ModalOverlay>
   );
 }

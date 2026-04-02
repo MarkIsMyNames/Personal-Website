@@ -14,11 +14,9 @@ describe('Navigation Component', () => {
   let scrollToMock: ReturnType<typeof vi.fn>;
 
   beforeEach(() => {
-    // Mock window.scrollTo
     scrollToMock = vi.fn();
     window.scrollTo = scrollToMock as typeof window.scrollTo;
 
-    // Mock getBoundingClientRect
     Element.prototype.getBoundingClientRect = vi.fn(() => ({
       top: 100,
       left: 0,
@@ -59,18 +57,6 @@ describe('Navigation Component', () => {
     document.body.removeChild(mockElement);
   });
 
-  it('navigation links have correct hover behavior', () => {
-    renderWithTheme(<Navigation />);
-    const aboutLink = screen.getByText(/About/i);
-    expect(aboutLink).toBeInTheDocument();
-  });
-
-  it('renders all four navigation sections', () => {
-    renderWithTheme(<Navigation />);
-    const links = screen.getAllByRole('generic');
-    expect(links.length).toBeGreaterThan(0);
-  });
-
   it('scrolls to top when brand is clicked', () => {
     renderWithTheme(<Navigation />);
     const brand = screen.getByText(new RegExp(profile.name, 'i'));
@@ -79,38 +65,34 @@ describe('Navigation Component', () => {
   });
 
   it('hides navigation when scrolling down', () => {
-    const { container } = renderWithTheme(<Navigation />);
+    renderWithTheme(<Navigation />);
 
-    // Simulate scroll down
     Object.defineProperty(window, 'scrollY', { value: 100, writable: true });
     fireEvent.scroll(window);
-
     Object.defineProperty(window, 'scrollY', { value: 200, writable: true });
     fireEvent.scroll(window);
 
-    expect(container.querySelector('nav')).toBeInTheDocument();
+    expect(screen.getByRole('navigation')).toHaveStyle('transform: translateY(-100%)');
   });
 
   it('shows navigation when scrolling up', () => {
-    const { container } = renderWithTheme(<Navigation />);
+    renderWithTheme(<Navigation />);
 
-    // Simulate scroll down then up
     Object.defineProperty(window, 'scrollY', { value: 200, writable: true });
     fireEvent.scroll(window);
-
     Object.defineProperty(window, 'scrollY', { value: 100, writable: true });
     fireEvent.scroll(window);
 
-    expect(container.querySelector('nav')).toBeInTheDocument();
+    expect(screen.getByRole('navigation')).toHaveStyle('transform: translateY(0)');
   });
 
   it('shows navigation when scroll position is less than 10', () => {
-    const { container } = renderWithTheme(<Navigation />);
+    renderWithTheme(<Navigation />);
 
     Object.defineProperty(window, 'scrollY', { value: 5, writable: true });
     fireEvent.scroll(window);
 
-    expect(container.querySelector('nav')).toBeInTheDocument();
+    expect(screen.getByRole('navigation')).toHaveStyle('transform: translateY(0)');
   });
 
   it('renders profile image', () => {
@@ -177,22 +159,17 @@ describe('Navigation Component', () => {
 
     const initialAddCalls = addEventListenerSpy.mock.calls.length;
 
-    // Simulate multiple scroll events
     Object.defineProperty(window, 'scrollY', { value: 100, writable: true });
     fireEvent.scroll(window);
-
     Object.defineProperty(window, 'scrollY', { value: 200, writable: true });
     fireEvent.scroll(window);
-
     Object.defineProperty(window, 'scrollY', { value: 300, writable: true });
     fireEvent.scroll(window);
 
-    // addEventListener should only be called once during mount, not after each scroll
     expect(addEventListenerSpy).toHaveBeenCalledTimes(initialAddCalls);
 
     unmount();
 
-    // removeEventListener should be called once during unmount
     expect(removeEventListenerSpy).toHaveBeenCalled();
 
     addEventListenerSpy.mockRestore();
@@ -203,69 +180,32 @@ describe('Navigation Component', () => {
     renderWithTheme(<Navigation />);
     const skillsLink = screen.getByText(/Skills/i);
 
-    // Don't add the section to DOM
     fireEvent.click(skillsLink);
 
-    // Should not throw error and should not scroll since element doesn't exist
     expect(scrollToMock).not.toHaveBeenCalled();
   });
 
-  it('handles case when nav element height is unavailable', () => {
-    const mockElement = document.createElement('div');
-    mockElement.id = 'about';
-    document.body.appendChild(mockElement);
-
-    // Mock querySelector to return null for nav
-    const originalQuerySelector: typeof document.querySelector =
-      document.querySelector.bind(document);
-    document.querySelector = vi.fn((selector: string): Element | null => {
-      if (selector === 'nav') {
-        return null;
-      }
-      return originalQuerySelector(selector);
-    });
-
+  it('maintains visibility when scrolling within top 10px', () => {
     renderWithTheme(<Navigation />);
-    const aboutLink = screen.getByText(/About/i);
-    fireEvent.click(aboutLink);
 
-    // Should still call scrollTo with navHeight = 0
-    expect(scrollToMock).toHaveBeenCalled();
-
-    document.body.removeChild(mockElement);
-    document.querySelector = originalQuerySelector;
-  });
-
-  it('maintains visibility state when already visible and scrolling to top', () => {
-    const { container } = renderWithTheme(<Navigation />);
-
-    // Start at top (visible = true)
     Object.defineProperty(window, 'scrollY', { value: 5, writable: true });
     fireEvent.scroll(window);
-
-    // Scroll down slightly but still < 10
     Object.defineProperty(window, 'scrollY', { value: 8, writable: true });
     fireEvent.scroll(window);
 
-    // Nav should still be visible
-    expect(container.querySelector('nav')).toBeInTheDocument();
+    expect(screen.getByRole('navigation')).toHaveStyle('transform: translateY(0)');
   });
 
-  it('maintains visibility state when already visible and scrolling up', () => {
-    const { container } = renderWithTheme(<Navigation />);
+  it('maintains visibility when scrolling up multiple times', () => {
+    renderWithTheme(<Navigation />);
 
-    // Start scrolled down
     Object.defineProperty(window, 'scrollY', { value: 300, writable: true });
     fireEvent.scroll(window);
-
-    // Scroll up to make visible
     Object.defineProperty(window, 'scrollY', { value: 200, writable: true });
     fireEvent.scroll(window);
-
-    // Scroll up again (already visible)
     Object.defineProperty(window, 'scrollY', { value: 100, writable: true });
     fireEvent.scroll(window);
 
-    expect(container.querySelector('nav')).toBeInTheDocument();
+    expect(screen.getByRole('navigation')).toHaveStyle('transform: translateY(0)');
   });
 });

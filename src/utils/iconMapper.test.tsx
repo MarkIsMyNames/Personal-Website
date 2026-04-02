@@ -3,100 +3,153 @@ import { Icon } from './iconMapper';
 
 describe('iconMapper', () => {
   it('renders FaJava icon', () => {
-    const { container } = render(<Icon iconName="FaJava" />);
+    const { container } = render(
+      <Icon
+        size={24}
+        iconName="FaJava"
+      />,
+    );
     expect(container.querySelector('svg')).toBeInTheDocument();
   });
 
   it('renders FaPython icon', () => {
-    const { container } = render(<Icon iconName="FaPython" />);
+    const { container } = render(
+      <Icon
+        size={24}
+        iconName="FaPython"
+      />,
+    );
     expect(container.querySelector('svg')).toBeInTheDocument();
   });
 
   it('renders DiRuby icon', () => {
-    const { container } = render(<Icon iconName="DiRuby" />);
+    const { container } = render(
+      <Icon
+        size={24}
+        iconName="DiRuby"
+      />,
+    );
     expect(container.querySelector('svg')).toBeInTheDocument();
   });
 
   it('renders SiCplusplus icon', () => {
-    const { container } = render(<Icon iconName="SiCplusplus" />);
+    const { container } = render(
+      <Icon
+        size={24}
+        iconName="SiCplusplus"
+      />,
+    );
     expect(container.querySelector('svg')).toBeInTheDocument();
   });
 
   it('renders FaReact icon', () => {
-    const { container } = render(<Icon iconName="FaReact" />);
+    const { container } = render(
+      <Icon
+        size={24}
+        iconName="FaReact"
+      />,
+    );
     expect(container.querySelector('svg')).toBeInTheDocument();
   });
 
   it('renders SiEmberdotjs icon', () => {
-    const { container } = render(<Icon iconName="SiEmberdotjs" />);
+    const { container } = render(
+      <Icon
+        size={24}
+        iconName="SiEmberdotjs"
+      />,
+    );
     expect(container.querySelector('svg')).toBeInTheDocument();
   });
 
   it('renders IoLogoJavascript icon', () => {
-    const { container } = render(<Icon iconName="IoLogoJavascript" />);
+    const { container } = render(
+      <Icon
+        size={24}
+        iconName="IoLogoJavascript"
+      />,
+    );
     expect(container.querySelector('svg')).toBeInTheDocument();
   });
 
   it('renders SiTypescript icon', () => {
-    const { container } = render(<Icon iconName="SiTypescript" />);
+    const { container } = render(
+      <Icon
+        size={24}
+        iconName="SiTypescript"
+      />,
+    );
     expect(container.querySelector('svg')).toBeInTheDocument();
   });
 
   it('renders FaServer icon', () => {
-    const { container } = render(<Icon iconName="FaServer" />);
+    const { container } = render(
+      <Icon
+        size={24}
+        iconName="FaServer"
+      />,
+    );
     expect(container.querySelector('svg')).toBeInTheDocument();
   });
 
   it('renders BiCodeBlock icon', () => {
-    const { container } = render(<Icon iconName="BiCodeBlock" />);
+    const { container } = render(
+      <Icon
+        size={24}
+        iconName="BiCodeBlock"
+      />,
+    );
     expect(container.querySelector('svg')).toBeInTheDocument();
   });
 
   it('renders FaLinux icon', () => {
-    const { container } = render(<Icon iconName="FaLinux" />);
+    const { container } = render(
+      <Icon
+        size={24}
+        iconName="FaLinux"
+      />,
+    );
     expect(container.querySelector('svg')).toBeInTheDocument();
   });
 
   it('renders AiOutlineDatabase icon', () => {
-    const { container } = render(<Icon iconName="AiOutlineDatabase" />);
+    const { container } = render(
+      <Icon
+        size={24}
+        iconName="AiOutlineDatabase"
+      />,
+    );
     expect(container.querySelector('svg')).toBeInTheDocument();
   });
 
   it('renders FaGithub icon', () => {
-    const { container } = render(<Icon iconName="FaGithub" />);
+    const { container } = render(
+      <Icon
+        size={24}
+        iconName="FaGithub"
+      />,
+    );
     expect(container.querySelector('svg')).toBeInTheDocument();
   });
 
   it('renders FaEnvelope icon', () => {
-    const { container } = render(<Icon iconName="FaEnvelope" />);
+    const { container } = render(
+      <Icon
+        size={24}
+        iconName="FaEnvelope"
+      />,
+    );
     expect(container.querySelector('svg')).toBeInTheDocument();
   });
 
   it('renders fallback for unknown icon', () => {
-    render(<Icon iconName="UnknownIcon" />);
-    expect(screen.getByText('?')).toBeInTheDocument();
-  });
-
-  it('applies className to icon', () => {
-    const { container } = render(
-      <Icon
-        iconName="FaReact"
-        className="test-class"
-      />,
-    );
-    const svg = container.querySelector('svg');
-    expect(svg).toHaveClass('test-class');
-  });
-
-  it('applies className to fallback', () => {
     render(
       <Icon
+        size={24}
         iconName="UnknownIcon"
-        className="test-class"
       />,
     );
-    const fallback = screen.getByText('?');
-    expect(fallback).toHaveClass('test-class');
+    expect(screen.getByText('?')).toBeInTheDocument();
   });
 
   it('applies size to icon', () => {

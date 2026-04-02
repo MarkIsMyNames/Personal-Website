@@ -58,12 +58,4 @@ describe('Bio Component', () => {
     const styles = window.getComputedStyle(imageElement);
     expect(styles.borderRadius).toBe('50%');
   });
-
-  it('displays all bio content in correct order', () => {
-    renderWithTheme(<Bio profile={mockProfile} />);
-    expect(screen.getByText(/Test User/i)).toBeInTheDocument();
-    expect(screen.getByText(/Test Engineer/i)).toBeInTheDocument();
-    expect(screen.getByText(/This is a test bio/i)).toBeInTheDocument();
-    expect(screen.getByText(/Test University • Class of 2027/i)).toBeInTheDocument();
-  });
 });

@@ -11,6 +11,8 @@ const renderWithTheme = (component: React.ReactElement): ReturnType<typeof rende
 
 describe('ImageModal Component', () => {
   const mockOnClose = vi.fn();
+  const mockOnPrevious = vi.fn();
+  const mockOnNext = vi.fn();
   const testImageUrl = 'test-image.jpg';
   const testAltText = 'Test Image';
 
@@ -18,25 +20,16 @@ describe('ImageModal Component', () => {
     vi.clearAllMocks();
   });
 
-  it('does not render when isOpen is false', () => {
+  it('renders the image', () => {
     renderWithTheme(
       <ImageModal
-        isOpen={false}
         imageUrl={testImageUrl}
         altText={testAltText}
         onClose={mockOnClose}
-      />,
-    );
-    expect(screen.getByRole('dialog', { hidden: true })).not.toBeVisible();
-  });
-
-  it('renders when isOpen is true', () => {
-    renderWithTheme(
-      <ImageModal
-        isOpen
-        imageUrl={testImageUrl}
-        altText={testAltText}
-        onClose={mockOnClose}
+        onPrevious={mockOnPrevious}
+        onNext={mockOnNext}
+        hasPrevious={false}
+        hasNext={false}
       />,
     );
     expect(screen.getByAltText(testAltText)).toBeInTheDocument();
@@ -45,38 +38,44 @@ describe('ImageModal Component', () => {
   it('displays the correct image', () => {
     renderWithTheme(
       <ImageModal
-        isOpen
         imageUrl={testImageUrl}
         altText={testAltText}
         onClose={mockOnClose}
+        onPrevious={mockOnPrevious}
+        onNext={mockOnNext}
+        hasPrevious={false}
+        hasNext={false}
       />,
     );
-    const image = screen.getByAltText(testAltText);
-    expect(image).toHaveAttribute('src', testImageUrl);
+    expect(screen.getByAltText(testAltText)).toHaveAttribute('src', testImageUrl);
   });
 
   it('calls onClose when close button is clicked', () => {
     renderWithTheme(
       <ImageModal
-        isOpen
         imageUrl={testImageUrl}
         altText={testAltText}
         onClose={mockOnClose}
+        onPrevious={mockOnPrevious}
+        onNext={mockOnNext}
+        hasPrevious={false}
+        hasNext={false}
       />,
     );
-    // Use getByLabelText as it's more specific than getByRole('button') when multiple buttons exist
-    const closeButton = screen.getByLabelText(/Close modal/i);
-    fireEvent.click(closeButton);
+    fireEvent.click(screen.getByLabelText(/Close modal/i));
     expect(mockOnClose).toHaveBeenCalledTimes(1);
   });
 
   it('renders close button', () => {
     renderWithTheme(
       <ImageModal
-        isOpen
         imageUrl={testImageUrl}
         altText={testAltText}
         onClose={mockOnClose}
+        onPrevious={mockOnPrevious}
+        onNext={mockOnNext}
+        hasPrevious={false}
+        hasNext={false}
       />,
     );
     expect(screen.getByLabelText(/Close modal/i)).toBeInTheDocument();
@@ -85,10 +84,13 @@ describe('ImageModal Component', () => {
   it('calls onClose when Escape key is pressed', () => {
     renderWithTheme(
       <ImageModal
-        isOpen
         imageUrl={testImageUrl}
         altText={testAltText}
         onClose={mockOnClose}
+        onPrevious={mockOnPrevious}
+        onNext={mockOnNext}
+        hasPrevious={false}
+        hasNext={false}
       />,
     );
     fireEvent.keyDown(document, { key: 'Escape' });
@@ -98,37 +100,38 @@ describe('ImageModal Component', () => {
   it('calls onClose when overlay is clicked', () => {
     renderWithTheme(
       <ImageModal
-        isOpen
         imageUrl={testImageUrl}
         altText={testAltText}
         onClose={mockOnClose}
+        onPrevious={mockOnPrevious}
+        onNext={mockOnNext}
+        hasPrevious={false}
+        hasNext={false}
       />,
     );
-    const overlay = screen.getByRole('dialog');
-    fireEvent.click(overlay);
+    fireEvent.click(screen.getByRole('dialog'));
     expect(mockOnClose).toHaveBeenCalledTimes(1);
   });
 
   it('calls onClose when image is clicked', () => {
     renderWithTheme(
       <ImageModal
-        isOpen
         imageUrl={testImageUrl}
         altText={testAltText}
         onClose={mockOnClose}
+        onPrevious={mockOnPrevious}
+        onNext={mockOnNext}
+        hasPrevious={false}
+        hasNext={false}
       />,
     );
-    const image = screen.getByAltText(testAltText);
-    fireEvent.click(image);
+    fireEvent.click(screen.getByAltText(testAltText));
     expect(mockOnClose).toHaveBeenCalledTimes(1);
   });
 
   it('renders navigation buttons when hasPrevious and hasNext are true', () => {
-    const mockOnPrevious = vi.fn();
-    const mockOnNext = vi.fn();
     renderWithTheme(
       <ImageModal
-        isOpen
         imageUrl={testImageUrl}
         altText={testAltText}
         onClose={mockOnClose}
@@ -144,15 +147,15 @@ describe('ImageModal Component', () => {
   });
 
   it('calls onPrevious when left arrow key is pressed', () => {
-    const mockOnPrevious = vi.fn();
     renderWithTheme(
       <ImageModal
-        isOpen
         imageUrl={testImageUrl}
         altText={testAltText}
         onClose={mockOnClose}
         onPrevious={mockOnPrevious}
+        onNext={mockOnNext}
         hasPrevious
+        hasNext={false}
       />,
     );
     fireEvent.keyDown(document, { key: 'ArrowLeft' });
@@ -160,14 +163,14 @@ describe('ImageModal Component', () => {
   });
 
   it('calls onNext when right arrow key is pressed', () => {
-    const mockOnNext = vi.fn();
     renderWithTheme(
       <ImageModal
-        isOpen
         imageUrl={testImageUrl}
         altText={testAltText}
         onClose={mockOnClose}
+        onPrevious={mockOnPrevious}
         onNext={mockOnNext}
+        hasPrevious={false}
         hasNext
       />,
     );
@@ -176,15 +179,15 @@ describe('ImageModal Component', () => {
   });
 
   it('does not call onPrevious when hasPrevious is false', () => {
-    const mockOnPrevious = vi.fn();
     renderWithTheme(
       <ImageModal
-        isOpen
         imageUrl={testImageUrl}
         altText={testAltText}
         onClose={mockOnClose}
         onPrevious={mockOnPrevious}
+        onNext={mockOnNext}
         hasPrevious={false}
+        hasNext={false}
       />,
     );
     fireEvent.keyDown(document, { key: 'ArrowLeft' });
@@ -192,14 +195,14 @@ describe('ImageModal Component', () => {
   });
 
   it('does not call onNext when hasNext is false', () => {
-    const mockOnNext = vi.fn();
     renderWithTheme(
       <ImageModal
-        isOpen
         imageUrl={testImageUrl}
         altText={testAltText}
         onClose={mockOnClose}
+        onPrevious={mockOnPrevious}
         onNext={mockOnNext}
+        hasPrevious={false}
         hasNext={false}
       />,
     );
@@ -208,11 +211,8 @@ describe('ImageModal Component', () => {
   });
 
   it('calls navigation callbacks when navigation buttons are clicked', () => {
-    const mockOnPrevious = vi.fn();
-    const mockOnNext = vi.fn();
     renderWithTheme(
       <ImageModal
-        isOpen
         imageUrl={testImageUrl}
         altText={testAltText}
         onClose={mockOnClose}
@@ -222,131 +222,109 @@ describe('ImageModal Component', () => {
         hasNext
       />,
     );
-    const previousButton = screen.getByLabelText(/Previous image/i);
-    const nextButton = screen.getByLabelText(/Next image/i);
-
-    fireEvent.click(previousButton);
+    fireEvent.click(screen.getByLabelText(/Previous image/i));
     expect(mockOnPrevious).toHaveBeenCalledTimes(1);
-
-    fireEvent.click(nextButton);
+    fireEvent.click(screen.getByLabelText(/Next image/i));
     expect(mockOnNext).toHaveBeenCalledTimes(1);
   });
 
   it('calls onNext when swiped left', () => {
-    const mockOnNext = vi.fn();
     renderWithTheme(
       <ImageModal
-        isOpen
-        imageUrl={testImageUrl}
-        altText={testAltText}
-        onClose={mockOnClose}
-        onNext={mockOnNext}
-        hasNext
-      />,
-    );
-
-    fireEvent.touchStart(document, {
-      touches: [{ clientX: 300, clientY: 200 }],
-    });
-    fireEvent.touchMove(document, {
-      touches: [{ clientX: 100, clientY: 200 }],
-    });
-    fireEvent.touchEnd(document);
-
-    expect(mockOnNext).toHaveBeenCalledTimes(1);
-  });
-
-  it('calls onPrevious when swiped right', () => {
-    const mockOnPrevious = vi.fn();
-    renderWithTheme(
-      <ImageModal
-        isOpen
         imageUrl={testImageUrl}
         altText={testAltText}
         onClose={mockOnClose}
         onPrevious={mockOnPrevious}
-        hasPrevious
+        onNext={mockOnNext}
+        hasPrevious={false}
+        hasNext
       />,
     );
-
-    fireEvent.touchStart(document, {
-      touches: [{ clientX: 100, clientY: 200 }],
-    });
-    fireEvent.touchMove(document, {
-      touches: [{ clientX: 300, clientY: 200 }],
-    });
+    fireEvent.touchStart(document, { touches: [{ clientX: 300, clientY: 200 }] });
+    fireEvent.touchMove(document, { touches: [{ clientX: 100, clientY: 200 }] });
     fireEvent.touchEnd(document);
+    expect(mockOnNext).toHaveBeenCalledTimes(1);
+  });
 
+  it('calls onPrevious when swiped right', () => {
+    renderWithTheme(
+      <ImageModal
+        imageUrl={testImageUrl}
+        altText={testAltText}
+        onClose={mockOnClose}
+        onPrevious={mockOnPrevious}
+        onNext={mockOnNext}
+        hasPrevious
+        hasNext={false}
+      />,
+    );
+    fireEvent.touchStart(document, { touches: [{ clientX: 100, clientY: 200 }] });
+    fireEvent.touchMove(document, { touches: [{ clientX: 300, clientY: 200 }] });
+    fireEvent.touchEnd(document);
     expect(mockOnPrevious).toHaveBeenCalledTimes(1);
   });
 
   it('does not trigger swipe for small movements', () => {
-    const mockOnNext = vi.fn();
     renderWithTheme(
       <ImageModal
-        isOpen
         imageUrl={testImageUrl}
         altText={testAltText}
         onClose={mockOnClose}
+        onPrevious={mockOnPrevious}
         onNext={mockOnNext}
+        hasPrevious={false}
         hasNext
       />,
     );
-
-    fireEvent.touchStart(document, {
-      touches: [{ clientX: 200, clientY: 200 }],
-    });
-    fireEvent.touchMove(document, {
-      touches: [{ clientX: 180, clientY: 200 }],
-    });
+    fireEvent.touchStart(document, { touches: [{ clientX: 200, clientY: 200 }] });
+    fireEvent.touchMove(document, { touches: [{ clientX: 180, clientY: 200 }] });
     fireEvent.touchEnd(document);
-
     expect(mockOnNext).not.toHaveBeenCalled();
   });
 
   it('does not trigger swipe for vertical movements', () => {
-    const mockOnNext = vi.fn();
     renderWithTheme(
       <ImageModal
-        isOpen
         imageUrl={testImageUrl}
         altText={testAltText}
         onClose={mockOnClose}
+        onPrevious={mockOnPrevious}
         onNext={mockOnNext}
+        hasPrevious={false}
         hasNext
       />,
     );
-
-    fireEvent.touchStart(document, {
-      touches: [{ clientX: 200, clientY: 100 }],
-    });
-    fireEvent.touchMove(document, {
-      touches: [{ clientX: 190, clientY: 400 }],
-    });
+    fireEvent.touchStart(document, { touches: [{ clientX: 200, clientY: 100 }] });
+    fireEvent.touchMove(document, { touches: [{ clientX: 190, clientY: 400 }] });
     fireEvent.touchEnd(document);
-
     expect(mockOnNext).not.toHaveBeenCalled();
   });
 
-  it('sets body overflow to hidden when opened', () => {
+  it('sets body overflow to hidden when rendered', () => {
     renderWithTheme(
       <ImageModal
-        isOpen
         imageUrl={testImageUrl}
         altText={testAltText}
         onClose={mockOnClose}
+        onPrevious={mockOnPrevious}
+        onNext={mockOnNext}
+        hasPrevious={false}
+        hasNext={false}
       />,
     );
     expect(document.body.style.overflow).toBe('hidden');
   });
 
-  it('restores body overflow when closed', () => {
+  it('restores body overflow when unmounted', () => {
     const { unmount } = renderWithTheme(
       <ImageModal
-        isOpen
         imageUrl={testImageUrl}
         altText={testAltText}
         onClose={mockOnClose}
+        onPrevious={mockOnPrevious}
+        onNext={mockOnNext}
+        hasPrevious={false}
+        hasNext={false}
       />,
     );
     expect(document.body.style.overflow).toBe('hidden');
@@ -357,10 +335,13 @@ describe('ImageModal Component', () => {
   it('only renders the viewed image', () => {
     const { container } = renderWithTheme(
       <ImageModal
-        isOpen
         imageUrl={testImageUrl}
         altText={testAltText}
         onClose={mockOnClose}
+        onPrevious={mockOnPrevious}
+        onNext={mockOnNext}
+        hasPrevious={false}
+        hasNext={false}
       />,
     );
     const imgs = container.querySelectorAll('[role="dialog"] img');

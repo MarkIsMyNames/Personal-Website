@@ -20,7 +20,6 @@ export function Navigation() {
     if (isNavClickScrollRef.current) {
       return;
     }
-
     const currentScrollY = window.scrollY;
     setIsVisible(currentScrollY < 10 || currentScrollY <= lastScrollYRef.current);
     lastScrollYRef.current = currentScrollY;
@@ -34,28 +33,22 @@ export function Navigation() {
     };
   }, [handleScroll]);
 
-  const smoothScrollTo = useCallback((sectionTop: number): void => {
+  const scrollTo = (sectionId?: SectionId): void => {
+    const element = sectionId ? document.getElementById(sectionId) : null;
+    if (sectionId && !element) {
+      return;
+    }
+
     isNavClickScrollRef.current = true;
-    window.scrollTo({ top: sectionTop, behavior: 'smooth' });
+    window.scrollTo({
+      top: element ? element.getBoundingClientRect().top + window.scrollY : 0,
+      behavior: 'smooth',
+    });
     setTimeout(() => {
       isNavClickScrollRef.current = false;
       lastScrollYRef.current = window.scrollY;
     }, 1000);
-  }, []);
-
-  const scrollToSection = useCallback(
-    (sectionId: SectionId): void => {
-      const element = document.getElementById(sectionId);
-      if (element) {
-        smoothScrollTo(element.getBoundingClientRect().top + window.scrollY);
-      }
-    },
-    [smoothScrollTo],
-  );
-
-  const scrollToTop = useCallback((): void => {
-    smoothScrollTo(0);
-  }, [smoothScrollTo]);
+  };
 
   return (
     <Nav
@@ -65,7 +58,7 @@ export function Navigation() {
     >
       <NavContainer>
         <NavBrandContainer
-          onClick={scrollToTop}
+          onClick={() => scrollTo()}
           role="button"
           aria-label="Navigate to About section"
         >
@@ -77,28 +70,28 @@ export function Navigation() {
         </NavBrandContainer>
         <NavLinks role="menu">
           <NavLink
-            onClick={scrollToTop}
+            onClick={() => scrollTo()}
             role="menuitem"
             aria-label="Navigate to About section"
           >
             About
           </NavLink>
           <NavLink
-            onClick={() => scrollToSection(SectionId.Skills)}
+            onClick={() => scrollTo(SectionId.Skills)}
             role="menuitem"
             aria-label="Navigate to Skills section"
           >
             Skills
           </NavLink>
           <NavLink
-            onClick={() => scrollToSection(SectionId.Projects)}
+            onClick={() => scrollTo(SectionId.Projects)}
             role="menuitem"
             aria-label="Navigate to Projects section"
           >
             Projects
           </NavLink>
           <NavLink
-            onClick={() => scrollToSection(SectionId.Contact)}
+            onClick={() => scrollTo(SectionId.Contact)}
             role="menuitem"
             aria-label="Navigate to Contact section"
           >
