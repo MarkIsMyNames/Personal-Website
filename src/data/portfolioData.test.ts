@@ -1,7 +1,6 @@
 import { statSync } from 'fs';
 import { resolve } from 'path';
 import { profile, skills, projects } from './portfolioData';
-import { SkillCategory } from '../types';
 
 describe('Portfolio Data Structure', () => {
   describe('Profile', () => {
@@ -32,27 +31,6 @@ describe('Portfolio Data Structure', () => {
       skills.forEach((skill) => {
         expect(skill.name).toBeTruthy();
         expect(skill.iconName).toBeTruthy();
-      });
-    });
-
-    it('groups skills by category: languages, frameworks, concepts, technologies', () => {
-      const categories = skills.map((s) => s.category);
-      const firstFramework = categories.indexOf(SkillCategory.Framework);
-      const firstConcept = categories.indexOf(SkillCategory.Concept);
-      const firstTechnology = categories.indexOf(SkillCategory.Technology);
-      const lastLanguage = categories.lastIndexOf(SkillCategory.Language);
-      const lastFramework = categories.lastIndexOf(SkillCategory.Framework);
-      const lastConcept = categories.lastIndexOf(SkillCategory.Concept);
-
-      expect(lastLanguage).toBeLessThan(firstFramework);
-      expect(lastFramework).toBeLessThan(firstConcept);
-      expect(lastConcept).toBeLessThan(firstTechnology);
-    });
-
-    it('only uses valid categories', () => {
-      const validCategories = new Set(Object.values(SkillCategory));
-      skills.forEach((skill) => {
-        expect(validCategories.has(skill.category)).toBe(true);
       });
     });
   });

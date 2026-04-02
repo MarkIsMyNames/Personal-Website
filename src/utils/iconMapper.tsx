@@ -50,18 +50,16 @@ const iconMap: Record<string, IconType> = {
 
 type IconProps = {
   iconName: string;
-  className?: string;
-  size?: number;
+  size: number;
 };
 
-export function Icon({ iconName, className = '', size }: IconProps) {
+export function Icon({ iconName, size }: IconProps) {
   const IconComponent = iconMap[iconName];
 
   if (!IconComponent) {
-    return <span className={className}>?</span>;
+    return <span>?</span>;
   }
 
-  const Component = IconComponent as ComponentType<{ className?: string; size?: number }>;
-  const props = size !== undefined ? { className, size } : { className };
-  return <Component {...props} />;
+  const Component = IconComponent as ComponentType<{ size: number }>;
+  return <Component size={size} />;
 }

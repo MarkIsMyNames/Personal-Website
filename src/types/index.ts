@@ -1,10 +1,3 @@
-export enum SkillCategory {
-  Language = 'language',
-  Framework = 'framework',
-  Concept = 'concept',
-  Technology = 'technology',
-}
-
 export enum SectionId {
   About = 'about',
   Skills = 'skills',
@@ -23,7 +16,6 @@ export const KeyboardKey = {
 export type Skill = {
   name: string;
   iconName: string;
-  category: SkillCategory;
 };
 
 export type ProjectHighlight = {

@@ -1,4 +1,4 @@
-import { SkillCategory, type Skill, type Project, type Profile } from '../types';
+import type { Skill, Project, Profile } from '../types';
 
 export const profile: Profile = {
   name: 'Mark Drohan',
@@ -11,26 +11,25 @@ export const profile: Profile = {
   university: 'University of Limerick',
 };
 
-// Ordered by category: languages, frameworks, concepts, technologies
 export const skills: Skill[] = [
-  { name: 'Java', iconName: 'FaJava', category: SkillCategory.Language },
-  { name: 'Kotlin', iconName: 'SiKotlin', category: SkillCategory.Language },
-  { name: 'JavaScript', iconName: 'IoLogoJavascript', category: SkillCategory.Language },
-  { name: 'TypeScript', iconName: 'SiTypescript', category: SkillCategory.Language },
-  { name: 'Python', iconName: 'FaPython', category: SkillCategory.Language },
-  { name: 'C/C++', iconName: 'SiCplusplus', category: SkillCategory.Language },
-  { name: 'Ruby', iconName: 'DiRuby', category: SkillCategory.Language },
-  { name: 'SQL', iconName: 'FaDatabase', category: SkillCategory.Language },
-  { name: 'React', iconName: 'FaReact', category: SkillCategory.Framework },
-  { name: 'Ember', iconName: 'SiEmberdotjs', category: SkillCategory.Framework },
-  { name: 'Flask', iconName: 'SiFlask', category: SkillCategory.Framework },
-  { name: 'Rails', iconName: 'SiRubyonrails', category: SkillCategory.Framework },
-  { name: 'Object-Oriented Programming', iconName: 'BiCodeBlock', category: SkillCategory.Concept },
-  { name: 'Data Structures', iconName: 'AiOutlineDatabase', category: SkillCategory.Concept },
-  { name: 'Algorithmic Design', iconName: 'FaProjectDiagram', category: SkillCategory.Concept },
-  { name: 'Mobile Development', iconName: 'FaMobileAlt', category: SkillCategory.Technology },
-  { name: 'MCP Servers', iconName: 'FaServer', category: SkillCategory.Technology },
-  { name: 'Linux', iconName: 'FaLinux', category: SkillCategory.Technology },
+  { name: 'Java', iconName: 'FaJava' },
+  { name: 'Kotlin', iconName: 'SiKotlin' },
+  { name: 'JavaScript', iconName: 'IoLogoJavascript' },
+  { name: 'TypeScript', iconName: 'SiTypescript' },
+  { name: 'Python', iconName: 'FaPython' },
+  { name: 'C/C++', iconName: 'SiCplusplus' },
+  { name: 'Ruby', iconName: 'DiRuby' },
+  { name: 'SQL', iconName: 'FaDatabase' },
+  { name: 'React', iconName: 'FaReact' },
+  { name: 'Ember', iconName: 'SiEmberdotjs' },
+  { name: 'Flask', iconName: 'SiFlask' },
+  { name: 'Rails', iconName: 'SiRubyonrails' },
+  { name: 'Object-Oriented Programming', iconName: 'BiCodeBlock' },
+  { name: 'Data Structures', iconName: 'AiOutlineDatabase' },
+  { name: 'Algorithmic Design', iconName: 'FaProjectDiagram' },
+  { name: 'Mobile Development', iconName: 'FaMobileAlt' },
+  { name: 'MCP Servers', iconName: 'FaServer' },
+  { name: 'Linux', iconName: 'FaLinux' },
 ];
 
 // Projects data with embedded highlights
