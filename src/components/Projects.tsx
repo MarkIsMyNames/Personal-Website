@@ -94,7 +94,7 @@ export function Projects({ projects }: ProjectsProps) {
       {modal !== null && (
         <ImageModal
           imageUrl={modal.images[modal.index] ?? ''}
-          altText={`Image ${modal.index}`}
+          altText={`Image ${modal.index + 1}`}
           onClose={closeModal}
           onPrevious={prevImage}
           onNext={nextImage}
