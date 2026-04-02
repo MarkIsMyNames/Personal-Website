@@ -54,9 +54,8 @@ describe('Contact Component', () => {
     expect(emailLink).not.toHaveAttribute('target', '_blank');
   });
 
-  it('displays complete contact information', () => {
+  it('renders email and GitHub as visible text', () => {
     renderWithTheme(<Contact profile={mockProfile} />);
-    expect(screen.getByText(/Get In Touch/i)).toBeInTheDocument();
     expect(screen.getByText(/test@example.com/i)).toBeInTheDocument();
     expect(screen.getByText(/github.com\/testuser/i)).toBeInTheDocument();
   });

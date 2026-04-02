@@ -31,7 +31,7 @@ export function Navigation() {
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, []);
+  }, [handleScroll]);
 
   const scrollTo = (sectionId?: SectionId): void => {
     const element = sectionId ? document.getElementById(sectionId) : null;
