@@ -32,10 +32,14 @@ export function Bio({ profile }: BioProps) {
           aria-label="Biography"
         >
           {bioSentences.map((sentence, index) => (
-            <Fragment key={index}>
+            <Fragment key={sentence}>
               {sentence}
-              {index < bioSentences.length - 1 && '.'}
-              {index < bioSentences.length - 1 && <br />}
+              {index < bioSentences.length - 1 && (
+                <>
+                  .
+                  <br />
+                </>
+              )}
             </Fragment>
           ))}
         </BioText>

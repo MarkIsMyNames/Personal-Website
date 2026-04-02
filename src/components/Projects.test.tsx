@@ -128,14 +128,14 @@ describe('Projects Component', () => {
     renderWithTheme(<Projects projects={mockProjects} />);
     fireEvent.click(screen.getByAltText(/Test Project 2 screenshot 1 of 3/i));
     fireEvent.click(screen.getByLabelText(/Next image/i));
-    expect(screen.getByAltText('Image 1')).toBeInTheDocument();
+    expect(screen.getByAltText('Image 2')).toBeInTheDocument();
   });
 
   it('navigates to previous image in modal', () => {
     const { container } = renderWithTheme(<Projects projects={mockProjects} />);
     fireEvent.click(screen.getByAltText(/Test Project 2 screenshot 2 of 3/i));
     fireEvent.click(screen.getByLabelText(/Previous image/i));
-    expect(container.querySelector('[role="dialog"] img')).toHaveAttribute('alt', 'Image 0');
+    expect(container.querySelector('[role="dialog"] img')).toHaveAttribute('alt', 'Image 1');
   });
 
   it('closes modal when close button is clicked', () => {
