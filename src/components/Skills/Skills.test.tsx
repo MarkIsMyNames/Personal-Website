@@ -1,8 +1,8 @@
 import { render, screen } from '@testing-library/react';
 import { ThemeProvider } from 'styled-components';
 import { Skills } from './Skills';
-import { theme } from '../styles/theme';
-import type { Skill } from '../types';
+import { theme } from '../../styles/theme';
+import type { Skill } from '../../types';
 import type React from 'react';
 
 const mockSkills: Skill[] = [

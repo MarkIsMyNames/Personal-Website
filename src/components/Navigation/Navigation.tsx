@@ -8,8 +8,8 @@ import {
   NavLinks,
   NavLink,
 } from './Navigation.styles';
-import { profile } from '../data/portfolioData';
-import { SectionId } from '../types';
+import { profile } from '../../data/portfolioData';
+import { SectionId } from '../../types';
 
 export function Navigation() {
   const [isVisible, setIsVisible] = useState(true);

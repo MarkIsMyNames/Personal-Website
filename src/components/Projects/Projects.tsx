@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { KeyboardKey, type Project } from '../types';
-import { ImageModal } from './ImageModal';
-import { SectionTitle } from '../styles/SharedComponents.styles';
+import { KeyboardKey, type Project } from '../../types';
+import { ImageModal } from '../ImageModal/ImageModal';
+import { SectionTitle } from '../../styles/Shared.styles';
 import {
   ProjectsSection,
   ProjectsContainer,

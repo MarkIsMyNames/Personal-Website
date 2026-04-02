@@ -18,7 +18,7 @@ export const ProjectCard = styled.div`
   box-shadow: ${({ theme }) => theme.shadows.large};
 `;
 
-export const ProjectImages = styled.div<{ $isSingle?: boolean }>`
+export const ProjectImages = styled.div<{ $isSingle: boolean }>`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -40,7 +40,7 @@ export const ProjectImages = styled.div<{ $isSingle?: boolean }>`
   }
 `;
 
-export const ProjectImage = styled.img<{ $isSingle?: boolean }>`
+export const ProjectImage = styled.img<{ $isSingle: boolean }>`
   max-width: ${({ $isSingle }) => ($isSingle ? '100%' : '400px')};
   border-radius: 8px;
   object-fit: contain;
