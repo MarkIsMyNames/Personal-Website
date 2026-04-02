@@ -184,7 +184,7 @@ describe('Projects Component', () => {
 
     // Modal should not be open
     const modal = container.querySelector('[role="dialog"]');
-    expect(modal).not.toBeInTheDocument();
+    expect(modal).not.toBeVisible();
   });
 
   it('navigates to next image when clicking next button in modal', () => {
@@ -229,6 +229,6 @@ describe('Projects Component', () => {
 
     // Modal should be closed
     const modal = container.querySelector('[role="dialog"]');
-    expect(modal).not.toBeInTheDocument();
+    expect(modal).not.toBeVisible();
   });
 });
