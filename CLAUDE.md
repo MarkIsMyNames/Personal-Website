@@ -14,14 +14,14 @@ Personal portfolio website for Mark Drohan, built with React + TypeScript. Stati
 
 ```bash
 npm install
-npm start          # Dev server at http://localhost:3000
+npm start          # Dev server at http://localhost:5173
 ```
 
 ## Development Commands
 
 | Command | Purpose |
 |---------|---------|
-| `npm start` | Dev server (Vite, port 3000, auto-opens browser) |
+| `npm start` | Dev server (Vite, port 5173) |
 | `npm test` | Run all tests (vitest run) |
 | `npm run test:watch` | Watch mode for tests |
 | `npm run test:ui` | Vitest browser UI |
@@ -51,7 +51,7 @@ Mark.github.io/
 ├── CLAUDE.md                          # This file - AI assistant guidance
 ├── package.json                       # Dependencies & scripts
 ├── tsconfig.json                      # TypeScript config (strict mode + extra flags)
-├── vite.config.ts                     # Vite + Vitest config (port 3000, build → build/)
+├── vite.config.ts                     # Vite + Vitest config (build → build/)
 ├── .eslintrc.json                     # ESLint rules (very strict)
 ├── .prettierrc.json                   # Prettier config (single quotes, 100 char width)
 │
@@ -61,40 +61,43 @@ Mark.github.io/
 │   ├── App.test.tsx                   # App-level tests
 │   ├── setupTests.ts                  # Imports @testing-library/jest-dom
 │   ├── styled.d.ts                    # Augments DefaultTheme for styled-components typing
-│   │
-│   ├── types/
-│   │   └── index.ts                   # Shared types: Profile, Skill, Project, ProjectHighlight
+│   ├── types.ts                       # Shared types: Profile, Skill, Project, SectionId, KeyboardKey
 │   │
 │   ├── data/
 │   │   ├── portfolioData.ts           # ALL site content: profile, skills[], projects[]
 │   │   └── portfolioData.test.ts      # Data validation tests
 │   │
-│   ├── components/                    # Each component = .tsx + .styles.tsx + .test.tsx
-│   │   ├── Navigation.tsx             # Fixed nav bar, scroll-aware show/hide, smooth scroll
-│   │   ├── Navigation.styles.tsx
-│   │   ├── Navigation.test.tsx
-│   │   ├── Bio.tsx                    # Hero section: profile image, name, title, bio, education
-│   │   ├── Bio.styles.tsx
-│   │   ├── Bio.test.tsx
-│   │   ├── Skills.tsx                 # Responsive grid of skill cards with icons
-│   │   ├── Skills.styles.tsx
-│   │   ├── Skills.test.tsx
-│   │   ├── Projects.tsx               # Project cards with image gallery + lightbox trigger
-│   │   ├── Projects.styles.tsx
-│   │   ├── Projects.test.tsx
-│   │   ├── ImageModal.tsx             # Full-screen lightbox (keyboard + swipe navigation)
-│   │   ├── ImageModal.styles.tsx
-│   │   ├── ImageModal.test.tsx
-│   │   ├── Contact.tsx                # Email + GitHub contact links
-│   │   ├── Contact.styles.tsx
-│   │   └── Contact.test.tsx
+│   ├── components/                    # Each component has its own folder: Component.tsx + Component.styles.tsx + Component.test.tsx
+│   │   ├── Bio/
+│   │   │   ├── Bio.tsx                # Hero section: profile image, name, title, bio, education
+│   │   │   ├── Bio.styles.tsx         # CSS only
+│   │   │   └── Bio.test.tsx
+│   │   ├── Contact/
+│   │   │   ├── Contact.tsx            # Email + GitHub contact links
+│   │   │   ├── Contact.styles.tsx     # CSS only
+│   │   │   └── Contact.test.tsx
+│   │   ├── ImageModal/
+│   │   │   ├── ImageModal.tsx         # Full-screen lightbox (keyboard + swipe navigation)
+│   │   │   ├── ImageModal.styles.tsx  # CSS only
+│   │   │   └── ImageModal.test.tsx
+│   │   ├── Navigation/
+│   │   │   ├── Navigation.tsx         # Fixed nav bar, scroll-aware show/hide, smooth scroll
+│   │   │   ├── Navigation.styles.tsx  # CSS only
+│   │   │   └── Navigation.test.tsx
+│   │   ├── Projects/
+│   │   │   ├── Projects.tsx           # Project cards with image gallery + lightbox trigger
+│   │   │   ├── Projects.styles.tsx    # CSS only
+│   │   │   └── Projects.test.tsx
+│   │   └── Skills/
+│   │       ├── Skills.tsx             # Responsive grid of skill cards with icons
+│   │       ├── Skills.styles.tsx      # CSS only
+│   │       └── Skills.test.tsx
 │   │
 │   ├── styles/
 │   │   ├── theme.ts                   # Theme: colors, gradients, shadows, breakpoints
-│   │   ├── GlobalStyles.tsx           # CSS reset, body styles, system font stack
-│   │   ├── App.styles.tsx             # AppContainer (max-width: 1240px, responsive padding)
-│   │   ├── SharedComponents.tsx       # Reusable SectionTitle styled component
-│   │   └── SharedComponents.test.tsx
+│   │   ├── Global.styles.tsx          # CSS only — CSS reset, body styles, system font stack
+│   │   ├── App.styles.tsx             # CSS only — AppContainer (max-width: 1240px, responsive padding)
+│   │   └── Shared.styles.tsx          # CSS only — Reusable styled components (SectionTitle)
 │   │
 │   └── utils/
 │       └── iconMapper.tsx             # Maps icon name strings → react-icons components
@@ -139,26 +142,24 @@ index.tsx → App.tsx → ThemeProvider(theme)
                               └── <SpeedInsights />
 ```
 
-### Data Model (src/types/index.ts)
+### Data Model (src/types.ts)
 
 **Enums and constants:**
 
 | Name | Kind | Values | Purpose |
 |------|------|--------|---------|
-| `SkillCategory` | enum | `Language`, `Framework`, `Concept`, `Technology` | Categorises skills in the skills grid |
 | `SectionId` | enum | `About`, `Skills`, `Projects`, `Contact` | Anchor IDs used in App.tsx and Navigation.tsx |
 | `KeyboardKey` | const object | `Enter`, `Space`, `Escape`, `ArrowLeft`, `ArrowRight` | Keyboard event key values (const instead of enum because DOM `e.key` returns `string`) |
 
-**Use enums for categorical values where both producer and consumer are in our code** (e.g., `SkillCategory`, `SectionId`). Use `as const` objects for values compared against external APIs (e.g., `KeyboardKey` vs DOM `e.key`).
+**Use enums for categorical values where both producer and consumer are in our code** (e.g., `SectionId`). Use `as const` objects for values compared against external APIs (e.g., `KeyboardKey` vs DOM `e.key`).
 
 **Types:**
 
 | Type | Fields | Used By |
 |------|--------|---------|
 | `Profile` | name, title, bio, image, email, github, university, graduationYear | Bio, Contact, Navigation |
-| `Skill` | name, iconName, category (`SkillCategory`) | Skills |
+| `Skill` | name, iconName | Skills |
 | `Project` | title, role, description, highlights[], images[], tags[] | Projects |
-| `ProjectHighlight` | text | Projects (nested in Project) |
 
 All content lives in `src/data/portfolioData.ts` as exported arrays/objects. Data flows: `portfolioData.ts` → `App.tsx` → components via props. Navigation also imports `profile` directly for the brand logo.
 
@@ -218,11 +219,14 @@ Config in `.prettierrc.json`: single quotes, 100 char print width, trailing comm
 
 All styling uses **styled-components** (CSS-in-JS). No separate CSS files.
 
-### File Pairing
+### File Convention
 
-Every component has a paired `.styles.tsx` file:
+Every component lives in its own folder under `src/components/ComponentName/` with three files:
 - `Component.tsx` — logic, state, event handlers, JSX
-- `Component.styles.tsx` — all styled-components for that component
+- `Component.styles.tsx` — CSS only (styled-components). Any file containing only CSS must use the `.styles.tsx` suffix.
+- `Component.test.tsx` — tests
+
+Only mark props as optional (`?`) if they are genuinely optional — i.e., the component has a meaningful behaviour when the prop is absent. If a prop is always provided at every call site, it must be required.
 
 ### Theme (src/styles/theme.ts)
 
@@ -302,7 +306,7 @@ Hero section. Splits `profile.bio` by `. ` to render each sentence on its own li
 CSS Grid of skill cards. Each card renders an icon via the `iconMapper` `Icon` component. Responsive columns: 4 → 3 → 2.
 
 ### Projects
-Card layout with image galleries. Manages lightbox state (`modalOpen`, `selectedImage`, `currentImageIndex`, `currentProjectImages`). Multi-image projects use horizontal scrollable gallery with scroll-snap. Single-image projects centered. Click opens ImageModal. Keyboard accessible (tabIndex, Enter/Space).
+Card layout with image galleries. Manages lightbox state (`modal: ModalState | null` with `images` and `index`). Multi-image projects use horizontal scrollable gallery with scroll-snap. Single-image projects centered. Click opens ImageModal. Keyboard accessible (tabIndex, Enter/Space).
 
 ### ImageModal
 Full-screen overlay lightbox. Navigation: Escape to close, Arrow keys prev/next, touch swipe prev/next (50px threshold, ignores vertical). Uses refs for callback props to avoid effect dependency churn. Locks body scroll when open.
@@ -334,9 +338,9 @@ Email and GitHub links using the `Icon` component.
 2. Place image files in `public/`
 
 ### New Section
-1. Create `SectionName.tsx` + `SectionName.styles.tsx` + `SectionName.test.tsx` in `src/components/`
+1. Create `src/components/SectionName/` with `SectionName.tsx`, `SectionName.styles.tsx`, `SectionName.test.tsx`
 2. Import and render in `App.tsx` wrapped in `<div id="sectionname">`
-3. Add nav link in `Navigation.tsx`
+3. Add nav link in `Navigation/Navigation.tsx`
 
 ### New Contact Method
 1. Add `<ContactLink>` in `Contact.tsx`

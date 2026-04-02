@@ -1,5 +1,5 @@
 import { Fragment } from 'react';
-import type { Profile } from '../types';
+import type { Profile } from '../../types';
 import {
   BioSection,
   BioContent,

@@ -1,8 +1,8 @@
 import { render, screen } from '@testing-library/react';
 import { ThemeProvider } from 'styled-components';
 import { Contact } from './Contact';
-import { theme } from '../styles/theme';
-import type { Profile } from '../types';
+import { theme } from '../../styles/theme';
+import type { Profile } from '../../types';
 import type React from 'react';
 
 const mockProfile: Profile = {

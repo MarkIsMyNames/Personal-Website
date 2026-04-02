@@ -1,6 +1,6 @@
-import type { Profile } from '../types';
-import { Icon } from '../utils/iconMapper';
-import { SectionTitle } from '../styles/SharedComponents.styles';
+import type { Profile } from '../../types';
+import { Icon } from '../../utils/iconMapper';
+import { SectionTitle } from '../../styles/Shared.styles';
 import { ContactSection, ContactLinks, ContactLink } from './Contact.styles';
 
 type ContactProps = {

@@ -1,8 +1,8 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { ThemeProvider } from 'styled-components';
 import { Projects } from './Projects';
-import { theme } from '../styles/theme';
-import type { Project } from '../types';
+import { theme } from '../../styles/theme';
+import type { Project } from '../../types';
 import type React from 'react';
 
 const firstMockProject: Project = {

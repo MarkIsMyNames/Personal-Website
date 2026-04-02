@@ -2,7 +2,7 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import { ThemeProvider } from 'styled-components';
 import { vi } from 'vitest';
 import { ImageModal } from './ImageModal';
-import { theme } from '../styles/theme';
+import { theme } from '../../styles/theme';
 import type React from 'react';
 
 const renderWithTheme = (component: React.ReactElement): ReturnType<typeof render> => {

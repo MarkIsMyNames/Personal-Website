@@ -6,7 +6,7 @@ import {
   NavigationButtonLeft,
   NavigationButtonRight,
 } from './ImageModal.styles';
-import { KeyboardKey } from '../types';
+import { KeyboardKey } from '../../types';
 
 const SWIPE_THRESHOLD = 50;
 

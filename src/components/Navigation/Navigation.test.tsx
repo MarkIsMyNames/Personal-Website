@@ -2,8 +2,8 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import { ThemeProvider } from 'styled-components';
 import { vi } from 'vitest';
 import { Navigation } from './Navigation';
-import { theme } from '../styles/theme';
-import { profile } from '../data/portfolioData';
+import { theme } from '../../styles/theme';
+import { profile } from '../../data/portfolioData';
 import type React from 'react';
 
 const renderWithTheme = (component: React.ReactElement): ReturnType<typeof render> => {
