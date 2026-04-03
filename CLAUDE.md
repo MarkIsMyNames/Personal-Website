@@ -29,7 +29,7 @@ npm start          # Dev server at http://localhost:5173
 | `npm run lint:fix` | ESLint auto-fix |
 | `npm run format` | Prettier auto-format |
 | `npm run format:check` | Prettier check (CI) |
-| `npm run build` | Production build (prebuild manifest + tsc + vite build to `build/`) |
+| `npm run build` | Production build (tsc + vite build to `build/`) |
 | `npm run preview` | Preview production build locally |
 
 ### Before Completing Any Task
@@ -47,27 +47,31 @@ If any check fails, fix the issues (use `npm run format` for auto-fixing formatt
 ## Codebase Structure
 
 ```
-Mark.github.io/
+Personal-Website/
 ├── CLAUDE.md                          # This file - AI assistant guidance
 ├── package.json                       # Dependencies & scripts
 ├── tsconfig.json                      # TypeScript config (strict mode + extra flags)
 ├── vite.config.ts                     # Vite + Vitest config (build → build/)
-├── .eslintrc.json                     # ESLint rules (very strict)
+├── eslint.config.mjs                  # ESLint flat config (very strict)
 ├── .prettierrc.json                   # Prettier config (single quotes, 100 char width)
 │
 ├── src/
-│   ├── index.tsx                      # React entry point (StrictMode)
+│   ├── index.tsx                      # React entry point (StrictMode) — imports i18n first
 │   ├── App.tsx                        # Root: ThemeProvider → GlobalStyles → Nav → Sections
-│   ├── App.test.tsx                   # App-level tests
-│   ├── setupTests.ts                  # Imports @testing-library/jest-dom
+│   ├── App.test.tsx                   # App-level integration tests
+│   ├── setupTests.ts                  # jest-dom + global react-i18next mock
 │   ├── styled.d.ts                    # Augments DefaultTheme for styled-components typing
 │   ├── types.ts                       # Shared types: Profile, Skill, Project, SectionId, KeyboardKey
 │   │
-│   ├── data/
-│   │   ├── portfolioData.ts           # ALL site content: profile, skills[], projects[]
-│   │   └── portfolioData.test.ts      # Data validation tests
+│   ├── i18n/
+│   │   ├── i18n.ts                    # i18next init — LanguageDetector, fallback to en
+│   │   ├── i18n.test.ts               # i18next initialisation + language switching tests
+│   │   └── locales/
+│   │       ├── en.json                # Single source of truth for ALL content + UI strings
+│   │       ├── en.test.ts             # Structural validation + data integrity tests
+│   │       └── locales.test.ts        # Completeness check for any future locale files
 │   │
-│   ├── components/                    # Each component has its own folder: Component.tsx + Component.styles.tsx + Component.test.tsx
+│   ├── components/                    # Each component: Component.tsx + Component.styles.tsx + Component.test.tsx
 │   │   ├── Bio/
 │   │   │   ├── Bio.tsx                # Hero section: profile image, name, title, bio, education
 │   │   │   ├── Bio.styles.tsx         # CSS only
@@ -103,16 +107,17 @@ Mark.github.io/
 │       └── iconMapper.tsx             # Maps icon name strings → react-icons components
 │
 ├── scripts/
-│   └── generateManifest.ts            # Prebuild: generates public/manifest.json from profile
+│   └── generateManifest.ts            # Prebuild: generates public/manifest.json from en.json profile data
 │
 ├── public/                            # Static assets (served at root URL)
-│   ├── Personal Profile.jpg           # Profile photo
+│   ├── PersonalProfile.jpg            # Profile photo
 │   ├── Intercom.png                   # Project images...
 │   ├── Ganzy.png
 │   ├── NASA1.jpg, NASA2.jpg, NASA3.jpg
-│   ├── Hult 1.jpg, Hult 2.png, Hult 3.jpg
-│   ├── HackJunction1.jpg, HackJunction2.jpg, HackJunction3.jpg
+│   ├── Hult1.jpg, Hult2.png, Hult3.jpg
+│   ├── Junction1.jpg, Junction2.jpg, Junction3.jpg
 │   ├── AWSHACK1.jpg, AWSHACK2.png, AWSHACK3.jpg
+│   ├── HackEurope1.jpg, HackEurope2.svg, HackEurope3.jpg
 │   ├── manifest.json                  # Auto-generated (do NOT edit manually)
 │   └── robots.txt
 │
@@ -130,17 +135,26 @@ Mark.github.io/
 ### How the App Renders
 
 ```
-index.tsx → App.tsx → ThemeProvider(theme)
-                        ├── GlobalStyles (CSS reset)
-                        ├── Navigation (fixed, full-width, outside AppContainer)
-                        └── AppContainer (max-width: 1240px)
-                              ├── <div id="about">  → Bio(profile)
-                              ├── <div id="skills"> → Skills(skills)
-                              ├── <div id="projects"> → Projects(projects)
-                              ├── <div id="contact"> → Contact(profile)
-                              ├── <Analytics />
-                              └── <SpeedInsights />
+index.tsx (imports i18n first)
+  → App.tsx → ThemeProvider(theme)
+                ├── GlobalStyles (CSS reset)
+                ├── Navigation (fixed, full-width — reads profile via t())
+                └── AppContainer (max-width: 1240px)
+                      ├── <div id="about">    → Bio(profile)
+                      ├── <div id="skills">   → Skills(skills)
+                      ├── <div id="projects"> → Projects(projects)
+                      ├── <div id="contact">  → Contact(profile)
+                      ├── <Analytics />
+                      └── <SpeedInsights />
 ```
+
+`App.tsx` uses `useTranslation()` to fetch `profile`, `skills`, and `projects` from i18next via `t('profile', { returnObjects: true })` etc., passing them as props to components. Navigation fetches profile the same way independently.
+
+### Single Source of Truth: en.json
+
+**All content lives in `src/i18n/locales/en.json`** — portfolio text (names, bios, project descriptions), non-translatable data (images, iconNames, email, github, graduationYear), and UI strings (aria-labels, section titles). There is no separate `portfolioData.ts`.
+
+When adding a new language, copy `en.json` and translate only the human-readable strings. Leave images, `iconName`, `email`, `github`, and `graduationYear` unchanged.
 
 ### Data Model (src/types.ts)
 
@@ -161,20 +175,18 @@ index.tsx → App.tsx → ThemeProvider(theme)
 | `Skill` | name, iconName | Skills |
 | `Project` | title, role, description, highlights[], images[], tags[] | Projects |
 
-All content lives in `src/data/portfolioData.ts` as exported arrays/objects. Data flows: `portfolioData.ts` → `App.tsx` → components via props. Navigation also imports `profile` directly for the brand logo.
-
 ### Icon System (src/utils/iconMapper.tsx)
 
-Maps string names to `react-icons` components via a lookup table. To add a new icon:
+Maps icon name strings to `react-icons` components via a lookup table. To add a new icon:
 1. Import from `react-icons` (e.g., `import { FaDocker } from 'react-icons/fa'`)
 2. Add to `iconMap`: `FaDocker,`
-3. Use in `portfolioData.ts`: `iconName: 'FaDocker'`
+3. Set `iconName: 'FaDocker'` on the skill entry in `en.json`
 
-Unknown icon names render a `?` fallback.
+Unknown icon names render a `?` fallback. `IconName` is exported as a utility type for hardcoding icon names directly in TypeScript.
 
 ### Image References
 
-Project images and profile photo are stored as filenames (e.g., `'NASA1.jpg'`) in `portfolioData.ts`. Files live in `public/` and are served at the root URL. Vite serves them in dev, copies to `build/` for production.
+Image filenames (e.g., `'NASA1.jpg'`) are stored in `en.json` under each project's `images` array, and the profile photo under `profile.image`. Files live in `public/` and are served at the root URL.
 
 ---
 
@@ -190,11 +202,19 @@ Strict mode is fully enabled in `tsconfig.json` with extra flags:
 - `noPropertyAccessFromIndexSignature` — must use bracket notation for index signatures
 
 **Rules:**
-- No `any` types, no non-null assertions (`!`)
+- No `any` types, no non-null assertions (`!`), no `as` casts
 - Unused variables must be prefixed with `_`
 - Use `import type { ... }` for type-only imports
 - Use function declarations for components: `export function Component() {}`
 - Naming: `camelCase`/`PascalCase`/`UPPER_CASE` for variables, `camelCase`/`PascalCase` for functions, `PascalCase` for types
+
+**Avoiding type casts:**
+- Replace `as HTMLElement` (and similar DOM casts) with a null check: `if (!el) throw new Error('...')` — this narrows the type and fails loudly if the assumption is wrong
+- Replace non-null assertions (`!`) in tests with `if (!value) throw new Error('...')` — same benefit: narrows type, gives a clear failure message
+- For dynamic object traversal (e.g., JSON lookup by key path), a single `as Record<string, unknown>` is acceptable at the entry point only — avoid double casts (`as unknown as T`)
+- Prefer `toHaveProperty('[0].field', value)` in tests over casting the result of `i18n.t()` with `returnObjects` — i18next types `t()` as `string` regardless, so casting the return value is misleading
+- Replace `require()` with `readFileSync` + `JSON.parse` to avoid the `no-require-imports` lint rule and the cast that comes with it
+- When assigning a mock to a browser global in tests, use `vi.stubGlobal('name', vi.fn())` instead of `mock as typeof window.name`
 
 ### ESLint (Strict)
 
@@ -208,6 +228,7 @@ Key rules beyond TypeScript:
 - `no-nested-ternary` — no chained ternaries
 - `react-hooks/exhaustive-deps: error` — hook deps must be complete
 - `@typescript-eslint/no-unnecessary-condition` — no redundant boolean checks
+- `i18next/no-literal-string` — no hardcoded strings in JSX or aria/alt/title attributes
 
 ### Prettier
 
@@ -291,13 +312,67 @@ Three breakpoints defined in `theme.ts`:
 - DOM events: `fireEvent.click()`, `fireEvent.keyDown()`, `fireEvent.touchStart()`
 - Touch events dispatched on `document` (ImageModal attaches listeners there)
 - Tests co-located with components (e.g., `Bio.test.tsx` next to `Bio.tsx`)
+- i18next is mocked globally in `setupTests.ts` — component tests do not initialise i18next. Import `en.json` directly in test files to reference expected values (e.g., `en.profile.name`, `en.navigation.sections.about`)
+- Use `window.getComputedStyle(element).property` to assert CSS properties set by styled-components (e.g., `objectFit`, `borderRadius`, `width`). Only test CSS that encodes a meaningful product decision (e.g., `object-fit: contain` to prevent cropping, `border-radius: 50%` for circular avatars) — do not write tests for purely aesthetic choices like colours or font sizes
+- **Do not write tests for CSS-only files** (`*.styles.tsx`). Styling logic lives in component tests via `getComputedStyle` where it matters
+
+---
+
+## i18n
+
+**Library:** react-i18next + i18next. Initialised synchronously in `src/i18n/i18n.ts`, imported at the very top of `src/index.tsx` before React so translation resources are ready on first render.
+
+### Structure
+
+```
+src/i18n/
+├── i18n.ts              # i18next init — LanguageDetector, initReactI18next, fallback to en
+├── i18n.test.ts         # Init, interpolation, language switching, fallback behaviour
+└── locales/
+    ├── en.json          # Single source of truth for all content and UI strings
+    ├── en.test.ts       # Structural validation, placeholder checks, data integrity
+    └── locales.test.ts  # Completeness check — any added locale must have all en.json keys
+```
+
+### Rules
+
+- **All user-facing strings must go through `t()`** — no hardcoded text in JSX or aria/alt attributes
+- All content lives in `en.json`: portfolio text, aria-labels, section titles, and non-translatable data (images, iconName, email, github, graduationYear)
+- Use `useTranslation` from `react-i18next` directly — no wrapper hook
+- ARIA role values (e.g., `role="dialog"`) are spec constants, not user-facing text — do not translate them
+- Structured data (profile, skills, projects) is fetched via `t('key', { returnObjects: true })` in `App.tsx` and `Navigation.tsx`
+
+### Key Naming Convention
+
+| Pattern | Used for |
+|---------|----------|
+| `section.fieldName` | Content strings (e.g., `profile.title`, `bio.education`) |
+| `section.ariaLabels.descriptor` | ARIA label strings (e.g., `imageModal.ariaLabels.close`) |
+| `common.ariaLabels.section` | Shared `"{{title}} section"` template used by all section components |
+| `navigation.sections.X` | Section names used for both nav link text and aria-label interpolation |
+| `contact.githubUrl` | Display text for the GitHub link (`"github.com/{{username}}"`) — interpolated with `profile.github` |
+
+### Adding a New Language
+
+1. Copy `src/i18n/locales/en.json` → `src/i18n/locales/<locale>.json`
+2. Translate all human-readable values — leave `images`, `iconName`, `email`, `github`, and `graduationYear` unchanged
+3. Import the new locale file in `src/i18n/i18n.ts` and add it to the `resources` object
+4. The `locales.test.ts` completeness test will fail if any keys are missing or extra
+
+### Language Fallback
+
+i18next is configured with `fallbackLng: 'en'`. If the browser language is unsupported, or if a key is missing from the active language's bundle, i18next automatically returns the English string.
+
+### Testing with i18n
+
+Component tests use the global mock in `setupTests.ts` which reads actual values from `en.json` (including interpolation and `returnObjects`). Import `en.json` in test files to build expected strings — never hardcode English text in assertions.
 
 ---
 
 ## Component Details
 
 ### Navigation
-Fixed nav bar with backdrop blur. Hides on scroll-down, shows on scroll-up (tracks `lastScrollY` via ref). Uses `isNavClickScrollRef` to pause hide behavior during smooth-scroll navigation (1-second delay). Brand logo hidden on mobile. Four links: About, Skills, Projects, Contact.
+Fixed nav bar with backdrop blur. Hides on scroll-down, shows on scroll-up (tracks `lastScrollY` via ref). Uses `isNavClickScrollRef` to pause hide behavior during smooth-scroll navigation (1-second delay). Brand logo hidden on mobile. Fetches `profile` via `t('profile', { returnObjects: true })`. Four links using `navigation.sections.*` for text and `navigation.ariaLabels.link` template for aria-labels.
 
 ### Bio
 Hero section. Splits `profile.bio` by `. ` to render each sentence on its own line via `<Fragment>` with `<br />`. Shows circular profile image, gradient name, title, bio text, education.
@@ -330,17 +405,23 @@ Email and GitHub links using the `Icon` component.
 ## Adding New Content
 
 ### New Skill
-1. Add entry to `skills[]` in `src/data/portfolioData.ts`
+1. Add an entry to `skillsData` in `src/i18n/locales/en.json` with `name` and `iconName`
 2. If the icon doesn't exist in `iconMapper.tsx`, import from `react-icons` and add to `iconMap`
 
 ### New Project
-1. Add entry to `projects[]` in `src/data/portfolioData.ts`
+1. Add an entry to `projectsData` in `src/i18n/locales/en.json` with all fields including `images`
 2. Place image files in `public/`
+
+### New Language
+1. Copy `en.json` → `src/i18n/locales/<locale>.json`, translate human-readable strings
+2. Add to `resources` in `src/i18n/i18n.ts`
 
 ### New Section
 1. Create `src/components/SectionName/` with `SectionName.tsx`, `SectionName.styles.tsx`, `SectionName.test.tsx`
-2. Import and render in `App.tsx` wrapped in `<div id="sectionname">`
-3. Add nav link in `Navigation/Navigation.tsx`
+2. Add a `SectionId` enum value in `src/types.ts`
+3. Add the section name to `navigation.sections` in `en.json`
+4. Import and render in `App.tsx` wrapped in `<div id={SectionId.X}>`
+5. Add a nav link in `Navigation/Navigation.tsx`
 
 ### New Contact Method
 1. Add `<ContactLink>` in `Contact.tsx`
@@ -351,9 +432,8 @@ Email and GitHub links using the `Icon` component.
 ## Build & Deployment
 
 **Build process:**
-1. `prebuild`: `tsx scripts/generateManifest.ts` generates `public/manifest.json` from profile data
-2. `build`: `tsc` (type checking) then `vite build` (bundling to `build/` with sourcemaps)
-3. `vite-plugin-html` injects `profile.name` and `profile.title` into HTML meta tags
+1. `build`: `tsc` (type checking) then `vite build` (bundling to `build/` with sourcemaps)
+2. `vite-plugin-html` injects `profile.name` and `profile.bio` into HTML meta tags (reads directly from `en.json` at build time)
 
 **CI/CD:** Four GitHub Actions workflows run on PRs to `main` (Node.js 20, ubuntu-latest). They only trigger when relevant files change (src/, public/, package.json, config files).
 

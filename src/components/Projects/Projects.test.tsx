@@ -3,6 +3,7 @@ import { ThemeProvider } from 'styled-components';
 import { Projects } from './Projects';
 import { theme } from '../../styles/theme';
 import type { Project } from '../../types';
+import en from '../../i18n/locales/en.json';
 import type React from 'react';
 
 const firstMockProject: Project = {
@@ -32,74 +33,90 @@ const renderWithTheme = (component: React.ReactElement): ReturnType<typeof rende
 describe('Projects Component', () => {
   it('renders section title', () => {
     renderWithTheme(<Projects projects={mockProjects} />);
-    expect(screen.getByText(/Projects & Experience/i)).toBeInTheDocument();
+    expect(screen.getByText(en.projects.sectionTitle)).toBeInTheDocument();
   });
 
-  it('renders all project titles', () => {
+  it('renders all project titles from props', () => {
     renderWithTheme(<Projects projects={mockProjects} />);
-    expect(screen.getByText(/Test Project 1/i)).toBeInTheDocument();
-    expect(screen.getByText(/Test Project 2/i)).toBeInTheDocument();
+    expect(screen.getByText(firstMockProject.title)).toBeInTheDocument();
+    expect(screen.getByText(secondMockProject.title)).toBeInTheDocument();
   });
 
-  it('renders project roles', () => {
+  it('renders project roles from props', () => {
     renderWithTheme(<Projects projects={mockProjects} />);
-    expect(screen.getByText(/Test Role 1/i)).toBeInTheDocument();
-    expect(screen.getByText(/Test Role 2/i)).toBeInTheDocument();
+    expect(screen.getByText(firstMockProject.role)).toBeInTheDocument();
+    expect(screen.getByText(secondMockProject.role)).toBeInTheDocument();
   });
 
-  it('renders project descriptions', () => {
+  it('renders project descriptions from props', () => {
     renderWithTheme(<Projects projects={mockProjects} />);
-    expect(screen.getByText(/This is a test project description/i)).toBeInTheDocument();
-    expect(screen.getByText(/Another test project/i)).toBeInTheDocument();
+    expect(screen.getByText(firstMockProject.description)).toBeInTheDocument();
+    expect(screen.getByText(secondMockProject.description)).toBeInTheDocument();
   });
 
-  it('renders project highlights', () => {
+  it('renders project highlights from props', () => {
     renderWithTheme(<Projects projects={mockProjects} />);
-    expect(screen.getByText(/First highlight/i)).toBeInTheDocument();
-    expect(screen.getByText(/Second highlight/i)).toBeInTheDocument();
-    expect(screen.getByText(/Third highlight/i)).toBeInTheDocument();
+    expect(screen.getByText('First highlight')).toBeInTheDocument();
+    expect(screen.getByText('Second highlight')).toBeInTheDocument();
+    expect(screen.getByText('Third highlight')).toBeInTheDocument();
   });
 
-  it('renders project tags', () => {
+  it('renders project tags from props', () => {
     renderWithTheme(<Projects projects={mockProjects} />);
-    expect(screen.getByText(/React/i)).toBeInTheDocument();
-    expect(screen.getByText(/TypeScript/i)).toBeInTheDocument();
-    expect(screen.getByText(/Node.js/i)).toBeInTheDocument();
-    expect(screen.getByText(/Express/i)).toBeInTheDocument();
+    expect(screen.getByText('React')).toBeInTheDocument();
+    expect(screen.getByText('TypeScript')).toBeInTheDocument();
+    expect(screen.getByText('Node.js')).toBeInTheDocument();
+    expect(screen.getByText('Express')).toBeInTheDocument();
   });
 
-  it('renders project images with correct alt text', () => {
+  it('renders project images with translated screenshot alt text', () => {
     renderWithTheme(<Projects projects={mockProjects} />);
-    expect(screen.getByAltText(/Test Project 1 screenshot 1 of 1/i)).toBeInTheDocument();
-    expect(screen.getByAltText(/Test Project 2 screenshot 1 of 3/i)).toBeInTheDocument();
-    expect(screen.getByAltText(/Test Project 2 screenshot 2 of 3/i)).toBeInTheDocument();
-    expect(screen.getByAltText(/Test Project 2 screenshot 3 of 3/i)).toBeInTheDocument();
+    expect(screen.getByAltText(`${firstMockProject.title} screenshot 1 of 1`)).toBeInTheDocument();
+    expect(screen.getByAltText(`${secondMockProject.title} screenshot 1 of 3`)).toBeInTheDocument();
   });
 
   it('renders empty project list', () => {
     renderWithTheme(<Projects projects={[]} />);
-    expect(screen.getByText(/Projects & Experience/i)).toBeInTheDocument();
+    expect(screen.getByText(en.projects.sectionTitle)).toBeInTheDocument();
+  });
+
+  it('renders section with correct aria-label', () => {
+    renderWithTheme(<Projects projects={mockProjects} />);
+    expect(
+      screen.getByLabelText(
+        en.common.ariaLabels.section.replace('{{title}}', en.navigation.sections.projects),
+      ),
+    ).toBeInTheDocument();
+  });
+
+  it('renders project cards with translated aria-labels', () => {
+    renderWithTheme(<Projects projects={mockProjects} />);
+    expect(
+      screen.getByLabelText(
+        en.projects.ariaLabels.card.replace('{{title}}', firstMockProject.title),
+      ),
+    ).toBeInTheDocument();
   });
 
   it('handles project with no highlights', () => {
     renderWithTheme(<Projects projects={[{ ...firstMockProject, highlights: [] }]} />);
-    expect(screen.getByText(/Test Project 1/i)).toBeInTheDocument();
+    expect(screen.getByText(firstMockProject.title)).toBeInTheDocument();
   });
 
   it('handles project with no tags', () => {
     renderWithTheme(<Projects projects={[{ ...firstMockProject, tags: [] }]} />);
-    expect(screen.getByText(/Test Project 1/i)).toBeInTheDocument();
+    expect(screen.getByText(firstMockProject.title)).toBeInTheDocument();
   });
 
   it('opens modal when clicking a project image', () => {
     renderWithTheme(<Projects projects={mockProjects} />);
-    fireEvent.click(screen.getByAltText(/Test Project 1 screenshot 1 of 1/i));
+    fireEvent.click(screen.getByAltText(`${firstMockProject.title} screenshot 1 of 1`));
     expect(screen.getByRole('dialog')).toBeVisible();
   });
 
   it('opens modal when pressing Enter on a project image', () => {
     renderWithTheme(<Projects projects={mockProjects} />);
-    fireEvent.keyDown(screen.getByAltText(/Test Project 1 screenshot 1 of 1/i), {
+    fireEvent.keyDown(screen.getByAltText(`${firstMockProject.title} screenshot 1 of 1`), {
       key: 'Enter',
       code: 'Enter',
     });
@@ -108,16 +125,16 @@ describe('Projects Component', () => {
 
   it('opens modal when pressing Space on a project image', () => {
     renderWithTheme(<Projects projects={mockProjects} />);
-    fireEvent.keyDown(screen.getByAltText(/Test Project 1 screenshot 1 of 1/i), {
+    fireEvent.keyDown(screen.getByAltText(`${firstMockProject.title} screenshot 1 of 1`), {
       key: ' ',
       code: 'Space',
     });
     expect(screen.getByRole('dialog')).toBeVisible();
   });
 
-  it('does not open modal when pressing other keys on a project image', () => {
+  it('does not open modal when pressing other keys', () => {
     renderWithTheme(<Projects projects={mockProjects} />);
-    fireEvent.keyDown(screen.getByAltText(/Test Project 1 screenshot 1 of 1/i), {
+    fireEvent.keyDown(screen.getByAltText(`${firstMockProject.title} screenshot 1 of 1`), {
       key: 'a',
       code: 'KeyA',
     });
@@ -126,23 +143,27 @@ describe('Projects Component', () => {
 
   it('navigates to next image in modal', () => {
     renderWithTheme(<Projects projects={mockProjects} />);
-    fireEvent.click(screen.getByAltText(/Test Project 2 screenshot 1 of 3/i));
-    fireEvent.click(screen.getByLabelText(/Next image/i));
-    expect(screen.getByAltText('Image 2')).toBeInTheDocument();
+    fireEvent.click(screen.getByAltText(`${secondMockProject.title} screenshot 1 of 3`));
+    fireEvent.click(screen.getByLabelText(en.imageModal.ariaLabels.next));
+    expect(
+      screen.getByAltText(en.imageModal.ariaLabels.image.replace('{{index}}', '2')),
+    ).toBeInTheDocument();
   });
 
   it('navigates to previous image in modal', () => {
     const { container } = renderWithTheme(<Projects projects={mockProjects} />);
-    fireEvent.click(screen.getByAltText(/Test Project 2 screenshot 2 of 3/i));
-    fireEvent.click(screen.getByLabelText(/Previous image/i));
-    expect(container.querySelector('[role="dialog"] img')).toHaveAttribute('alt', 'Image 1');
+    fireEvent.click(screen.getByAltText(`${secondMockProject.title} screenshot 2 of 3`));
+    fireEvent.click(screen.getByLabelText(en.imageModal.ariaLabels.previous));
+    expect(container.querySelector('[role="dialog"] img')).toHaveAttribute(
+      'alt',
+      en.imageModal.ariaLabels.image.replace('{{index}}', '1'),
+    );
   });
 
   it('closes modal when close button is clicked', () => {
     renderWithTheme(<Projects projects={mockProjects} />);
-    fireEvent.click(screen.getByAltText(/Test Project 1 screenshot 1 of 1/i));
-    expect(screen.getByRole('dialog')).toBeVisible();
-    fireEvent.click(screen.getByLabelText(/Close modal/i));
+    fireEvent.click(screen.getByAltText(`${firstMockProject.title} screenshot 1 of 1`));
+    fireEvent.click(screen.getByLabelText(en.imageModal.ariaLabels.close));
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
   });
 });

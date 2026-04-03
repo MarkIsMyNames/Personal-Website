@@ -9,10 +9,15 @@ import { Bio } from './components/Bio/Bio';
 import { Skills } from './components/Skills/Skills';
 import { Projects } from './components/Projects/Projects';
 import { Contact } from './components/Contact/Contact';
-import { profile, skills, projects } from './data/portfolioData';
 import { SectionId } from './types';
+import { useTranslation } from 'react-i18next';
 
 export default function App() {
+  const { t } = useTranslation();
+  const profile = t('profile', { returnObjects: true });
+  const skills = t('skillsData', { returnObjects: true });
+  const projects = t('projectsData', { returnObjects: true });
+
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyles />

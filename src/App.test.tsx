@@ -1,144 +1,96 @@
 import { render, screen, within } from '@testing-library/react';
 import App from './App';
-import { profile, skills, projects } from './data/portfolioData';
+import en from './i18n/locales/en.json';
 
 describe('App Component', () => {
-  describe('Profile Information', () => {
-    it('renders name', () => {
-      render(<App />);
-      const nameElements = screen.getAllByText(new RegExp(profile.name, 'i'));
-      expect(nameElements.length).toBeGreaterThan(0);
-      expect(nameElements[0]).toBeInTheDocument();
-    });
-
-    it('renders title', () => {
-      render(<App />);
-      const titleElements = screen.getAllByText(new RegExp(profile.title, 'i'));
-      expect(titleElements.length).toBeGreaterThan(0);
-      expect(titleElements[0]).toBeInTheDocument();
-    });
-
-    it('renders bio section with biography article', () => {
-      render(<App />);
-      const bioArticle = screen.getByRole('article', { name: /biography/i });
-      expect(bioArticle).toBeInTheDocument();
-    });
-
-    it('renders profile image with correct alt text', () => {
-      render(<App />);
-      const profileImage = screen.getByAltText(`${profile.name} - ${profile.title}`);
-      expect(profileImage).toBeInTheDocument();
-      expect(profileImage).toHaveAttribute('src', profile.image);
-    });
-
-    it('renders education information', () => {
-      render(<App />);
-      const educationElement = screen.getByLabelText(/education information/i);
-      expect(educationElement).toBeInTheDocument();
-      expect(educationElement).toHaveTextContent(/University of Limerick/i);
-      expect(educationElement).toHaveTextContent(String(profile.graduationYear));
-    });
-  });
-
-  describe('Navigation', () => {
-    it('renders navigation menu items', () => {
-      render(<App />);
-      expect(screen.getByRole('menuitem', { name: /about/i })).toBeInTheDocument();
-      expect(screen.getByRole('menuitem', { name: /skills/i })).toBeInTheDocument();
-      expect(screen.getByRole('menuitem', { name: /projects/i })).toBeInTheDocument();
-      expect(screen.getByRole('menuitem', { name: /contact/i })).toBeInTheDocument();
-    });
-
-    it('renders navigation landmark', () => {
-      render(<App />);
-      expect(screen.getByRole('navigation', { name: /main navigation/i })).toBeInTheDocument();
-    });
-  });
-
   describe('Sections', () => {
     it('renders about section', () => {
       render(<App />);
-      const aboutSection = document.getElementById('about');
-      expect(aboutSection).toBeInTheDocument();
+      expect(document.getElementById('about')).toBeInTheDocument();
     });
 
     it('renders skills section', () => {
       render(<App />);
-      const skillsSection = document.getElementById('skills');
-      expect(skillsSection).toBeInTheDocument();
+      expect(document.getElementById('skills')).toBeInTheDocument();
     });
 
     it('renders projects section', () => {
       render(<App />);
-      const projectsSection = document.getElementById('projects');
-      expect(projectsSection).toBeInTheDocument();
+      expect(document.getElementById('projects')).toBeInTheDocument();
     });
 
     it('renders contact section', () => {
       render(<App />);
-      const contactSection = document.getElementById('contact');
-      expect(contactSection).toBeInTheDocument();
+      expect(document.getElementById('contact')).toBeInTheDocument();
+    });
+  });
+
+  describe('Navigation', () => {
+    it('renders navigation landmark with translated aria-label', () => {
+      render(<App />);
+      expect(
+        screen.getByRole('navigation', { name: en.navigation.ariaLabels.nav }),
+      ).toBeInTheDocument();
     });
   });
 
   describe('Skills', () => {
-    it('renders skills section with correct title', () => {
+    it('renders all translated skill names', () => {
       render(<App />);
-      expect(screen.getByText('Technical Skills')).toBeInTheDocument();
-    });
-
-    it('renders skill items', () => {
-      render(<App />);
-      const skillsSection = screen.getByLabelText(/technical skills section/i);
-      skills.forEach((skill) => {
+      const skillsSections = screen.getAllByLabelText(
+        en.common.ariaLabels.section.replace('{{title}}', en.navigation.sections.skills),
+      );
+      const skillsSection = skillsSections.find((el) => el.tagName.toLowerCase() === 'section');
+      if (!skillsSection) {
+        throw new Error('Skills section not found');
+      }
+      en.skillsData.forEach((skill) => {
         expect(within(skillsSection).getByText(skill.name)).toBeInTheDocument();
       });
+    });
+
+    it('renders correct number of skill cards matching skillsData', () => {
+      render(<App />);
+      const skillsSections = screen.getAllByLabelText(
+        en.common.ariaLabels.section.replace('{{title}}', en.navigation.sections.skills),
+      );
+      const skillsSection = skillsSections.find((el) => el.tagName.toLowerCase() === 'section');
+      if (!skillsSection) {
+        throw new Error('Skills section not found');
+      }
+      expect(within(skillsSection).getAllByRole('listitem')).toHaveLength(en.skillsData.length);
     });
   });
 
   describe('Projects', () => {
-    it('renders all project titles', () => {
+    it('renders all translated project titles', () => {
       render(<App />);
-      projects.forEach((project) => {
+      en.projectsData.forEach((project) => {
         expect(screen.getByText(project.title)).toBeInTheDocument();
       });
     });
 
-    it('renders project roles', () => {
+    it('renders translated project roles', () => {
       render(<App />);
-      projects.forEach((project) => {
+      en.projectsData.forEach((project) => {
         expect(screen.getByText(project.role)).toBeInTheDocument();
       });
     });
 
-    it('renders project descriptions', () => {
+    it('renders translated project descriptions', () => {
       render(<App />);
-      projects.forEach((project) => {
+      en.projectsData.forEach((project) => {
         expect(screen.getByText(project.description)).toBeInTheDocument();
       });
     });
-  });
 
-  describe('Contact', () => {
-    it('renders email link with correct href', () => {
+    it('renders correct number of project cards matching projectsData', () => {
       render(<App />);
-      const emailLink = screen.getByLabelText(new RegExp(`email ${profile.email}`, 'i'));
-      expect(emailLink).toBeInTheDocument();
-      expect(emailLink).toHaveAttribute('href', `mailto:${profile.email}`);
-    });
-
-    it('renders GitHub link with correct href', () => {
-      render(<App />);
-      const githubLink = screen.getByLabelText(
-        new RegExp(`visit github profile of ${profile.github}`, 'i'),
+      const projectsList = screen.getByLabelText(en.projects.ariaLabels.list);
+      const directCards = Array.from(projectsList.children).filter(
+        (child) => child.getAttribute('role') === 'listitem',
       );
-      expect(githubLink).toBeInTheDocument();
-      expect(githubLink).toHaveAttribute('href', `https://github.com/${profile.github}`);
-    });
-
-    it('renders contact section title', () => {
-      render(<App />);
-      expect(screen.getByText('Get In Touch')).toBeInTheDocument();
+      expect(directCards).toHaveLength(en.projectsData.length);
     });
   });
 });

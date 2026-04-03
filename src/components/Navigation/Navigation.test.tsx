@@ -3,7 +3,7 @@ import { ThemeProvider } from 'styled-components';
 import { vi } from 'vitest';
 import { Navigation } from './Navigation';
 import { theme } from '../../styles/theme';
-import { profile } from '../../data/portfolioData';
+import en from '../../i18n/locales/en.json';
 import type React from 'react';
 
 const renderWithTheme = (component: React.ReactElement): ReturnType<typeof render> => {
@@ -15,7 +15,7 @@ describe('Navigation Component', () => {
 
   beforeEach(() => {
     scrollToMock = vi.fn();
-    window.scrollTo = scrollToMock as typeof window.scrollTo;
+    vi.stubGlobal('scrollTo', scrollToMock);
 
     Element.prototype.getBoundingClientRect = vi.fn(() => ({
       top: 100,
@@ -30,17 +30,17 @@ describe('Navigation Component', () => {
     }));
   });
 
-  it('renders brand name', () => {
+  it('renders brand name from translation', () => {
     renderWithTheme(<Navigation />);
-    expect(screen.getByText(new RegExp(profile.name, 'i'))).toBeInTheDocument();
+    expect(screen.getByText(en.profile.name)).toBeInTheDocument();
   });
 
-  it('renders all navigation links', () => {
+  it('renders all navigation links from translation', () => {
     renderWithTheme(<Navigation />);
-    expect(screen.getByText(/About/i)).toBeInTheDocument();
-    expect(screen.getByText(/Skills/i)).toBeInTheDocument();
-    expect(screen.getByText(/Projects/i)).toBeInTheDocument();
-    expect(screen.getByText(/Contact/i)).toBeInTheDocument();
+    expect(screen.getByText(en.navigation.sections.about)).toBeInTheDocument();
+    expect(screen.getByText(en.navigation.sections.skills)).toBeInTheDocument();
+    expect(screen.getByText(en.navigation.sections.projects)).toBeInTheDocument();
+    expect(screen.getByText(en.navigation.sections.contact)).toBeInTheDocument();
   });
 
   it('calls scrollTo when clicking About link', () => {
@@ -49,7 +49,7 @@ describe('Navigation Component', () => {
     document.body.appendChild(mockElement);
 
     renderWithTheme(<Navigation />);
-    const aboutLink = screen.getByText(/About/i);
+    const aboutLink = screen.getByText(en.navigation.sections.about);
     fireEvent.click(aboutLink);
 
     expect(scrollToMock).toHaveBeenCalled();
@@ -59,7 +59,7 @@ describe('Navigation Component', () => {
 
   it('scrolls to top when brand is clicked', () => {
     renderWithTheme(<Navigation />);
-    const brand = screen.getByText(new RegExp(profile.name, 'i'));
+    const brand = screen.getByText(en.profile.name);
     fireEvent.click(brand);
     expect(scrollToMock).toHaveBeenCalledWith({ top: 0, behavior: 'smooth' });
   });
@@ -95,11 +95,11 @@ describe('Navigation Component', () => {
     expect(screen.getByRole('navigation')).toHaveStyle('transform: translateY(0)');
   });
 
-  it('renders profile image', () => {
+  it('renders profile image with src from portfolioData', () => {
     renderWithTheme(<Navigation />);
-    const image = screen.getByAltText(`${profile.name} profile picture`);
+    const image = screen.getByAltText(`${en.profile.name} profile picture`);
     expect(image).toBeInTheDocument();
-    expect(image).toHaveAttribute('src', profile.image);
+    expect(image).toHaveAttribute('src', en.profile.image);
   });
 
   it('scrolls to correct section when clicking each link', () => {
@@ -127,24 +127,18 @@ describe('Navigation Component', () => {
     });
   });
 
-  it('renders name section with profile image and text', () => {
+  it('renders brand button with correct aria-label', () => {
     renderWithTheme(<Navigation />);
     const nameButton = screen.getByRole('button', {
-      name: /Navigate to About section/i,
+      name: en.navigation.ariaLabels.link.replace('{{section}}', en.navigation.sections.about),
     });
     expect(nameButton).toBeInTheDocument();
-
-    const profileImage = screen.getByAltText(`${profile.name} profile picture`);
-    const nameText = screen.getByText(profile.name);
-
-    expect(profileImage).toBeInTheDocument();
-    expect(nameText).toBeInTheDocument();
   });
 
-  it('name section is clickable and scrolls to top', () => {
+  it('brand button is clickable and scrolls to top', () => {
     renderWithTheme(<Navigation />);
     const nameButton = screen.getByRole('button', {
-      name: /Navigate to About section/i,
+      name: en.navigation.ariaLabels.link.replace('{{section}}', en.navigation.sections.about),
     });
 
     fireEvent.click(nameButton);
@@ -178,7 +172,7 @@ describe('Navigation Component', () => {
 
   it('handles clicking link when section does not exist', () => {
     renderWithTheme(<Navigation />);
-    const skillsLink = screen.getByText(/Skills/i);
+    const skillsLink = screen.getByText(en.navigation.sections.skills);
 
     fireEvent.click(skillsLink);
 

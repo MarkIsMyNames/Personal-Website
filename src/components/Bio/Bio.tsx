@@ -9,27 +9,31 @@ import {
   BioText,
   BioEducation,
 } from './Bio.styles';
+import { useTranslation } from 'react-i18next';
 
 type BioProps = {
   profile: Profile;
 };
 
 export function Bio({ profile }: BioProps) {
+  const { t } = useTranslation();
   const bioSentences = profile.bio.split('. ').filter((sentence) => sentence.trim() !== '');
 
   return (
-    <BioSection aria-label="About section">
+    <BioSection
+      aria-label={t('common.ariaLabels.section', { title: t('navigation.sections.about') })}
+    >
       <BioContent>
         <ProfileImage
           src={profile.image}
-          alt={`${profile.name} - ${profile.title}`}
+          alt={t('bio.ariaLabels.image', { name: profile.name, title: profile.title })}
           fetchPriority="high"
         />
         <BioTitle>{profile.name}</BioTitle>
         <BioSubtitle>{profile.title}</BioSubtitle>
         <BioText
           role="article"
-          aria-label="Biography"
+          aria-label={t('bio.ariaLabels.biography')}
         >
           {bioSentences.map((sentence, index) => (
             <Fragment key={sentence}>
@@ -43,8 +47,11 @@ export function Bio({ profile }: BioProps) {
             </Fragment>
           ))}
         </BioText>
-        <BioEducation aria-label="Education information">
-          {profile.university} • Class of {profile.graduationYear}
+        <BioEducation aria-label={t('bio.ariaLabels.education')}>
+          {t('bio.education', {
+            university: profile.university,
+            year: profile.graduationYear,
+          })}
         </BioEducation>
       </BioContent>
     </BioSection>
