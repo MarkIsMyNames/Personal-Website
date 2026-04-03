@@ -29,6 +29,7 @@ export const OVERFLOW_RESTORED = 'unset';
 export const FOCUSABLE_TAB_INDEX = 0;
 export const DISPLAY_INDEX_OFFSET = 1;
 export const FIRST_INDEX = 0;
+export const PATH_LANG_SEGMENT = 1;
 export const SINGLE_ITEM_COUNT = 1;
 export const NO_MOVEMENT = 0;
 
@@ -36,6 +37,9 @@ export const NO_MOVEMENT = 0;
 export const GITHUB_BASE_URL = 'https://github.com/';
 export const MAILTO_PREFIX = 'mailto:';
 export const EXTERNAL_LINK_REL = 'noopener noreferrer';
+
+// SEO
+export const PRODUCTION_BASE_URL = 'https://markdrohan.vercel.app';
 
 // Test constants
 export const SINGLE_CALL = 1;

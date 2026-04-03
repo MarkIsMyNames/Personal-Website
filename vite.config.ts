@@ -11,7 +11,6 @@ export default defineConfig({
       inject: {
         data: {
           name: en.profile.name,
-          bio: en.profile.bio,
         },
       },
     }),
