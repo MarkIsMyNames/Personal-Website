@@ -59,7 +59,7 @@ describe('i18n initialisation', () => {
   });
 
   it('falls back to English for unsupported language', () => {
-    expect(i18n.t('navigation.sections.skills', { lng: 'fr' })).toBe('Skills');
+    expect(i18n.t('navigation.sections.skills', { lng: 'ja' })).toBe('Skills');
   });
 
   it('uses French translations when language is set to French', async () => {

@@ -1,0 +1,233 @@
+{
+  "common": {
+    "ariaLabels": {
+      "section": "Section {{title}}"
+    }
+  },
+  "navigation": {
+    "ariaLabels": {
+      "nav": "Navigation principale",
+      "link": "Naviguer vers la section {{section}}"
+    },
+    "sections": {
+      "about": "À propos",
+      "skills": "Compétences",
+      "projects": "Projets",
+      "contact": "Contact"
+    }
+  },
+  "bio": {
+    "ariaLabels": {
+      "biography": "Biographie",
+      "education": "Informations sur la formation",
+      "image": "{{name}} - {{title}}"
+    },
+    "education": "{{university}} • Promotion {{year}}"
+  },
+  "skills": {
+    "sectionTitle": "Compétences Techniques",
+    "ariaLabels": {
+      "list": "Liste des compétences techniques",
+      "card": "Compétence {{name}}"
+    }
+  },
+  "projects": {
+    "sectionTitle": "Projets & Expérience",
+    "ariaLabels": {
+      "list": "Liste des projets",
+      "card": "Projet {{title}}",
+      "viewImage": "Voir l'image en taille réelle {{index}} de {{title}}"
+    }
+  },
+  "imageModal": {
+    "ariaLabels": {
+      "modal": "Fenêtre modale d'image",
+      "close": "Fermer la fenêtre",
+      "previous": "Image précédente",
+      "next": "Image suivante",
+      "image": "Image {{index}}"
+    }
+  },
+  "contact": {
+    "sectionTitle": "Me Contacter",
+    "githubUrl": "github.com/{{username}}",
+    "ariaLabels": {
+      "list": "Informations de contact",
+      "email": "Envoyer un email à {{email}}",
+      "github": "Visiter le profil GitHub de {{username}}"
+    }
+  },
+  "profile": {
+    "name": "Mark Drohan",
+    "title": "Ingénieur Logiciel",
+    "bio": "Étudiant en génie logiciel immersif à l'Université de Limerick, diplômé en 2027. Passionné par les mathématiques, l'IA et la conception d'algorithmes. En dehors du code, j'aime jouer aux échecs, au hurling et au tir à l'arc.",
+    "image": "PersonalProfile.jpg",
+    "email": "MarkDrohan@protonmail.com",
+    "github": "MarkIsMyNames",
+    "university": "Université de Limerick",
+    "graduationYear": 2027
+  },
+  "skillsData": [
+    { "name": "Java", "iconName": "FaJava" },
+    { "name": "Kotlin", "iconName": "SiKotlin" },
+    { "name": "JavaScript", "iconName": "IoLogoJavascript" },
+    { "name": "TypeScript", "iconName": "SiTypescript" },
+    { "name": "Python", "iconName": "FaPython" },
+    { "name": "C/C++", "iconName": "SiCplusplus" },
+    { "name": "Ruby", "iconName": "DiRuby" },
+    { "name": "SQL", "iconName": "FaDatabase" },
+    { "name": "React", "iconName": "FaReact" },
+    { "name": "Ember", "iconName": "SiEmberdotjs" },
+    { "name": "Flask", "iconName": "SiFlask" },
+    { "name": "Rails", "iconName": "SiRubyonrails" },
+    { "name": "Programmation Orientée Objet", "iconName": "BiCodeBlock" },
+    { "name": "Structures de Données", "iconName": "AiOutlineDatabase" },
+    { "name": "Conception Algorithmique", "iconName": "FaProjectDiagram" },
+    { "name": "Développement Mobile", "iconName": "FaMobileAlt" },
+    { "name": "Serveurs MCP", "iconName": "FaServer" },
+    { "name": "Linux", "iconName": "FaLinux" }
+  ],
+  "projectsData": [
+    {
+      "title": "Intercom",
+      "role": "Ingénieur Logiciel - Équipe Messenger",
+      "description": "Travail au sein de l'équipe Messenger d'Intercom, en maintenant une plateforme utilisée quotidiennement par des milliers d'entreprises. Contribution au développement backend et frontend tout en remportant plusieurs hackathons internes avec des outils innovants alimentés par l'IA.",
+      "highlights": [
+        "Implémentation du support des emojis personnalisés sur les systèmes backend et frontend",
+        "Contribution à la refactorisation du code et résolution de plusieurs incidents de production P1",
+        "Victoire au hackathon en développant un résolveur d'incidents alimenté par l'IA utilisant GitHub Actions, Honeycomb et Sentry MCP pour déboguer et corriger automatiquement les problèmes de production",
+        "Victoire au deuxième hackathon en développant une fonctionnalité de transcription vocale en temps réel pour notre messagerie web"
+      ],
+      "tags": [
+        "Ember.js",
+        "JavaScript",
+        "TypeScript",
+        "Ruby",
+        "IA/ML",
+        "Serveurs MCP",
+        "GitHub Actions",
+        "Reconnaissance Vocale"
+      ],
+      "images": ["Intercom.png"]
+    },
+    {
+      "title": "Ganzy",
+      "role": "Développeur Principal Senior",
+      "description": "Construction du frontend de Ganzy, une startup de planification d'études alimentée par l'IA pour les étudiants irlandais du Leaving Cert. La plateforme décompose les matières en microcompétences et utilise l'IA pour créer des programmes d'études personnalisés, aidant les étudiants à se concentrer sur les domaines qui leur rapporteront le plus de points.",
+      "highlights": [
+        "Direction d'une équipe dans la conception et la construction des pages frontend",
+        "Construction d'une interface de planification d'études interactive qui visualise des plans d'études personnalisés générés par l'IA",
+        "Conception avec une évolutivité à l'esprit car la plateforme prévoit de s'étendre au-delà de l'Irlande vers le marché américain"
+      ],
+      "tags": [
+        "Next.js",
+        "TypeScript",
+        "React",
+        "Tailwind CSS",
+        "IA/ML",
+        "EdTech",
+        "Startup",
+        "Design UI/UX"
+      ],
+      "images": ["Ganzy.png"]
+    },
+    {
+      "title": "NASA Space Apps Challenge",
+      "role": "Chef d'Équipe - 3ème Place",
+      "description": "Direction d'une équipe vers la 3ème place au NASA Space Apps Challenge à Athlone. Développement d'une solution pour afficher et naviguer des images de plusieurs gigaoctets/téraoctets en ligne, permettant une exploration simplifiée des images de la surface de Mars et des photographies de l'espace lointain.",
+      "highlights": [
+        "Obtention de la 3ème place parmi plus de 300 participants",
+        "Direction de l'orientation technique et maintien du cap de l'équipe",
+        "Résolution du rendu d'images multi-gigaoctets avec un panoramique fluide et sans délai de chargement",
+        "Construction d'un extracteur web pour générer des images de test à grande échelle pour la validation des performances",
+        "Optimisation du rendu pour minimiser la charge serveur et l'utilisation de la mémoire du navigateur"
+      ],
+      "tags": [
+        "TypeScript",
+        "Python",
+        "Traitement d'Images",
+        "Développement Web",
+        "Optimisation des Performances",
+        "Leadership d'Équipe",
+        "Conception d'Algorithmes"
+      ],
+      "images": ["NASA1.jpg", "NASA2.jpg", "NASA3.jpg"]
+    },
+    {
+      "title": "Kepler",
+      "role": "PDG & Co-Fondateur - Hult Prize",
+      "description": "Co-fondation de Kepler, une startup de technologie climatique axée sur le développement de systèmes autonomes d'aquaculture océanique. Direction de la conception de robots sous-marins autonomes alimentés par l'IA pour la plantation et la récolte de varech pour l'alimentation et les compléments nutritionnels, puis présentation de ce projet au concours Hult Prize.",
+      "highlights": [
+        "Co-fondation et direction de l'entreprise en tant que PDG",
+        "Conception de robots sous-marins autonomes avec navigation alimentée par l'IA",
+        "Développement d'une stratégie de mise sur le marché et création d'un modèle financier avec des projections de revenus",
+        "Présentation de notre idée aux juges du concours Hult Prize, obtenant une place dans le top 6 en Irlande"
+      ],
+      "tags": [
+        "Python",
+        "IA/ML",
+        "Robotique",
+        "Entrepreneuriat",
+        "Tech Climatique",
+        "Stratégie d'Entreprise",
+        "Durabilité"
+      ],
+      "images": ["Hult1.jpg", "Hult2.png", "Hult3.jpg"]
+    },
+    {
+      "title": "HackJunction - Finlande",
+      "role": "Participant Hackathon IA",
+      "description": "Participation à HackJunction, le plus grand hackathon IA au monde, organisé à Helsinki, en Finlande. Développement d'un outil de gestion des finances personnelles qui utilise l'apprentissage automatique pour analyser les habitudes de dépenses et générer des recommandations financières personnalisées basées sur le comportement individuel de l'utilisateur.",
+      "highlights": [
+        "Participation au hackathon IA international avec plus de 1500 participants",
+        "Construction d'un outil de finances personnelles alimenté par l'IA pour gérer les dépenses",
+        "Implémentation de modèles d'apprentissage automatique pour identifier les habitudes de dépenses et prédire les dépenses futures",
+        "Création d'un système de recommandation personnalisé pour aider les utilisateurs à améliorer leurs décisions financières"
+      ],
+      "tags": [
+        "Python",
+        "IA/ML",
+        "Analyse de Données",
+        "FinTech",
+        "Apprentissage Automatique",
+        "Finance Personnelle",
+        "Reconnaissance de Motifs"
+      ],
+      "images": ["Junction1.jpg", "Junction2.jpg", "Junction3.jpg"]
+    },
+    {
+      "title": "Hackathon Breaking Barriers",
+      "role": "Recherche en Sécurité & Développement IA",
+      "description": "Développement d'un outil de test d'intrusion alimenté par l'IA au hackathon AWS Telco (Breaking Barriers). Le système utilisait des serveurs MCP pour collecter des renseignements depuis LinkedIn, Instagram et Facebook, puis appliquait l'IA pour générer des scénarios de phishing.",
+      "highlights": [
+        "Construction d'un outil de test d'intrusion automatisé pour démontrer les techniques d'évaluation de sécurité alimentées par l'IA",
+        "Intégration de serveurs MCP pour collecter des données OSINT (données collectées à partir de sources publiques) depuis plusieurs plateformes de médias sociaux",
+        "Développement d'un outil de simulation de phishing alimenté par l'IA pour la formation à la sensibilisation à la sécurité",
+        "Entraînement d'une IA à créer des emails de phishing très sophistiqués"
+      ],
+      "tags": [
+        "Python",
+        "IA/ML",
+        "Serveurs MCP",
+        "Cybersécurité",
+        "Test d'Intrusion",
+        "OSINT",
+        "AWS",
+        "Ingénierie Sociale"
+      ],
+      "images": ["AWSHACK1.jpg", "AWSHACK2.png", "AWSHACK3.jpg"]
+    },
+    {
+      "title": "Hack Europe",
+      "role": "Sécurité IA",
+      "description": "Construction d'un détecteur et assainisseur d'injection de prompts, ciblant les applications intégrées à l'IA dans des domaines tels que les véhicules autonomes, les drones et le filtrage automatisé des candidatures d'emploi.",
+      "highlights": [
+        "Conception d'un pipeline hybride IA et regex pour identifier et neutraliser les charges utiles d'injection de prompts",
+        "Construction d'une couche d'analyse de sécurité pour classifier les sorties du modèle comme nuisibles, dangereuses ou sûres avant de les renvoyer à l'utilisateur",
+        "Test du système contre une gamme d'entrées incluant des jailbreaks, des remplacements de rôles et de la contrebande d'instructions pour valider la couverture de détection"
+      ],
+      "tags": ["Ruby", "Rails", "IA/ML", "Cybersécurité", "Injection de Prompts", "TALN"],
+      "images": ["HackEurope1.jpg", "HackEurope2.svg", "HackEurope3.jpg"]
+    }
+  ]
+}

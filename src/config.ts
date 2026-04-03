@@ -37,6 +37,9 @@ export const GITHUB_BASE_URL = 'https://github.com/';
 export const MAILTO_PREFIX = 'mailto:';
 export const EXTERNAL_LINK_REL = 'noopener noreferrer';
 
+// SEO
+export const PRODUCTION_BASE_URL = 'https://markdrohan.vercel.app';
+
 // Test constants
 export const SINGLE_CALL = 1;
 export const EMPTY_LENGTH = 0;
