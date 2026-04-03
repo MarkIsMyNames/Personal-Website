@@ -151,16 +151,14 @@ describe('en.json structure', () => {
     expect(new Set(allImages).size).toBe(allImages.length);
   });
 
-  it('all public images are under 120 KiB', () => {
-    const publicDir = resolve(process.cwd(), 'public');
-    const allImages = [en.profile.image, ...en.projectsData.flatMap((p) => p.images)];
-    allImages.forEach((image) => {
-      const { size } = statSync(resolve(publicDir, image));
-      expect(
-        size,
-        `${image} is ${Math.round(size / 1024)} KiB — must be under 120 KiB`,
-      ).toBeLessThan(120 * 1024);
-    });
+  const allImages = [en.profile.image, ...en.projectsData.flatMap((p) => p.images)];
+  const publicDir = resolve(process.cwd(), 'public');
+
+  it.each(allImages)('%s is under 120 KiB', (image) => {
+    const { size } = statSync(resolve(publicDir, image));
+    expect(size, `${image} is ${Math.round(size / 1024)} KiB — must be under 120 KiB`).toBeLessThan(
+      120 * 1024,
+    );
   });
 
   it('has all keys used by components', () => {
@@ -192,11 +190,12 @@ describe('en.json structure', () => {
     expect(en.imageModal.ariaLabels.close).toBeTruthy();
     expect(en.imageModal.ariaLabels.previous).toBeTruthy();
     expect(en.imageModal.ariaLabels.next).toBeTruthy();
-    expect(en.imageModal.ariaLabels.image).toBeTruthy();
+    expect(en.imageModal.ariaLabels.image).toContain('{{index}}');
     // Contact
     expect(en.contact.sectionTitle).toBeTruthy();
     expect(en.contact.ariaLabels.list).toBeTruthy();
     expect(en.contact.ariaLabels.email).toBeTruthy();
     expect(en.contact.ariaLabels.github).toBeTruthy();
+    expect(en.contact.githubUrl).toContain('{{username}}');
   });
 });

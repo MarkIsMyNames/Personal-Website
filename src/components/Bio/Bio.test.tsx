@@ -59,37 +59,6 @@ describe('Bio Component', () => {
     expect(imageElement).toHaveAttribute('src', mockProfile.image);
   });
 
-  it('renders profile image with rounded style', () => {
-    renderWithTheme(<Bio profile={mockProfile} />);
-    const imageElement = screen.getByAltText(
-      en.bio.ariaLabels.image
-        .replace('{{name}}', mockProfile.name)
-        .replace('{{title}}', en.profile.title),
-    );
-    expect(window.getComputedStyle(imageElement).borderRadius).toBe('50%');
-  });
-
-  it('renders profile image with correct dimensions', () => {
-    renderWithTheme(<Bio profile={mockProfile} />);
-    const imageElement = screen.getByAltText(
-      en.bio.ariaLabels.image
-        .replace('{{name}}', mockProfile.name)
-        .replace('{{title}}', en.profile.title),
-    );
-    expect(window.getComputedStyle(imageElement).width).toBe('300px');
-    expect(window.getComputedStyle(imageElement).height).toBe('300px');
-  });
-
-  it('renders profile image with object-fit cover to prevent distortion', () => {
-    renderWithTheme(<Bio profile={mockProfile} />);
-    const imageElement = screen.getByAltText(
-      en.bio.ariaLabels.image
-        .replace('{{name}}', mockProfile.name)
-        .replace('{{title}}', en.profile.title),
-    );
-    expect(window.getComputedStyle(imageElement).objectFit).toBe('cover');
-  });
-
   it('renders profile image with high fetch priority for LCP', () => {
     renderWithTheme(<Bio profile={mockProfile} />);
     const imageElement = screen.getByAltText(

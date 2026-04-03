@@ -347,54 +347,6 @@ describe('ImageModal Component', () => {
     expect(document.body.style.overflow).toBe('unset');
   });
 
-  it('renders modal image with width filling the viewport', () => {
-    renderWithTheme(
-      <ImageModal
-        imageUrl={testImageUrl}
-        altText={testAltText}
-        onClose={mockOnClose}
-        onPrevious={mockOnPrevious}
-        onNext={mockOnNext}
-        hasPrevious={false}
-        hasNext={false}
-      />,
-    );
-    const image = screen.getByAltText(testAltText);
-    expect(window.getComputedStyle(image).width).toBe('75vw');
-  });
-
-  it('renders modal image with height filling the viewport', () => {
-    renderWithTheme(
-      <ImageModal
-        imageUrl={testImageUrl}
-        altText={testAltText}
-        onClose={mockOnClose}
-        onPrevious={mockOnPrevious}
-        onNext={mockOnNext}
-        hasPrevious={false}
-        hasNext={false}
-      />,
-    );
-    const image = screen.getByAltText(testAltText);
-    expect(window.getComputedStyle(image).height).toBe('75vh');
-  });
-
-  it('renders modal image with object-fit contain to show full image without cropping', () => {
-    renderWithTheme(
-      <ImageModal
-        imageUrl={testImageUrl}
-        altText={testAltText}
-        onClose={mockOnClose}
-        onPrevious={mockOnPrevious}
-        onNext={mockOnNext}
-        hasPrevious={false}
-        hasNext={false}
-      />,
-    );
-    const image = screen.getByAltText(testAltText);
-    expect(window.getComputedStyle(image).objectFit).toBe('contain');
-  });
-
   it('only renders the viewed image', () => {
     const { container } = renderWithTheme(
       <ImageModal

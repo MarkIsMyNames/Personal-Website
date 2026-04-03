@@ -23,6 +23,6 @@ export default defineConfig({
     globals: true,
     environment: 'jsdom',
     setupFiles: './src/setupTests.ts',
-    css: true,
+    exclude: ['**/*.styles.test.{ts,tsx}', 'node_modules/**'],
   },
 });

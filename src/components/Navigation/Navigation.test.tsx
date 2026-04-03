@@ -102,25 +102,6 @@ describe('Navigation Component', () => {
     expect(image).toHaveAttribute('src', en.profile.image);
   });
 
-  it('renders nav profile image as a circle', () => {
-    renderWithTheme(<Navigation />);
-    const image = screen.getByAltText(`${en.profile.name} profile picture`);
-    expect(window.getComputedStyle(image).borderRadius).toBe('50%');
-  });
-
-  it('renders nav profile image with equal width and height', () => {
-    renderWithTheme(<Navigation />);
-    const image = screen.getByAltText(`${en.profile.name} profile picture`);
-    expect(window.getComputedStyle(image).width).toBe('2.5rem');
-    expect(window.getComputedStyle(image).height).toBe('2.5rem');
-  });
-
-  it('renders nav profile image with object-fit cover to prevent distortion', () => {
-    renderWithTheme(<Navigation />);
-    const image = screen.getByAltText(`${en.profile.name} profile picture`);
-    expect(window.getComputedStyle(image).objectFit).toBe('cover');
-  });
-
   it('scrolls to correct section when clicking each link', () => {
     const sections = ['about', 'skills', 'projects', 'contact'];
     sections.forEach((sectionId) => {

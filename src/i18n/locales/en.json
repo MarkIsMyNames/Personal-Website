@@ -50,6 +50,7 @@
   },
   "contact": {
     "sectionTitle": "Get In Touch",
+    "githubUrl": "github.com/{{username}}",
     "ariaLabels": {
       "list": "Contact information",
       "email": "Email {{email}}",

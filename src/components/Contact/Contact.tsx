@@ -41,7 +41,7 @@ export function Contact({ profile }: ContactProps) {
             iconName="FaGithub"
             size={24}
           />
-          <span>github.com/{profile.github}</span>
+          <span>{t('contact.githubUrl', { username: profile.github })}</span>
         </ContactLink>
       </ContactLinks>
     </ContactSection>

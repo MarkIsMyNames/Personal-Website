@@ -75,30 +75,6 @@ describe('Projects Component', () => {
     expect(screen.getByAltText(`${secondMockProject.title} screenshot 1 of 3`)).toBeInTheDocument();
   });
 
-  it('renders single project image with 100% max-width', () => {
-    renderWithTheme(<Projects projects={[firstMockProject]} />);
-    const image = screen.getByAltText(`${firstMockProject.title} screenshot 1 of 1`);
-    expect(window.getComputedStyle(image).maxWidth).toBe('100%');
-  });
-
-  it('renders multi-image project images with 400px max-width', () => {
-    renderWithTheme(<Projects projects={[secondMockProject]} />);
-    const image = screen.getByAltText(`${secondMockProject.title} screenshot 1 of 3`);
-    expect(window.getComputedStyle(image).maxWidth).toBe('400px');
-  });
-
-  it('renders project images with object-fit contain to show full image', () => {
-    renderWithTheme(<Projects projects={[firstMockProject]} />);
-    const image = screen.getByAltText(`${firstMockProject.title} screenshot 1 of 1`);
-    expect(window.getComputedStyle(image).objectFit).toBe('contain');
-  });
-
-  it('renders project images with rounded corners', () => {
-    renderWithTheme(<Projects projects={[firstMockProject]} />);
-    const image = screen.getByAltText(`${firstMockProject.title} screenshot 1 of 1`);
-    expect(window.getComputedStyle(image).borderRadius).toBe('8px');
-  });
-
   it('renders empty project list', () => {
     renderWithTheme(<Projects projects={[]} />);
     expect(screen.getByText(en.projects.sectionTitle)).toBeInTheDocument();

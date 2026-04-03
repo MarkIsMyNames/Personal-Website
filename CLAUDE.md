@@ -208,6 +208,14 @@ Strict mode is fully enabled in `tsconfig.json` with extra flags:
 - Use function declarations for components: `export function Component() {}`
 - Naming: `camelCase`/`PascalCase`/`UPPER_CASE` for variables, `camelCase`/`PascalCase` for functions, `PascalCase` for types
 
+**Avoiding type casts:**
+- Replace `as HTMLElement` (and similar DOM casts) with a null check: `if (!el) throw new Error('...')` — this narrows the type and fails loudly if the assumption is wrong
+- Replace non-null assertions (`!`) in tests with `if (!value) throw new Error('...')` — same benefit: narrows type, gives a clear failure message
+- For dynamic object traversal (e.g., JSON lookup by key path), a single `as Record<string, unknown>` is acceptable at the entry point only — avoid double casts (`as unknown as T`)
+- Prefer `toHaveProperty('[0].field', value)` in tests over casting the result of `i18n.t()` with `returnObjects` — i18next types `t()` as `string` regardless, so casting the return value is misleading
+- Replace `require()` with `readFileSync` + `JSON.parse` to avoid the `no-require-imports` lint rule and the cast that comes with it
+- When assigning a mock to a browser global in tests, use `vi.stubGlobal('name', vi.fn())` instead of `mock as typeof window.name`
+
 ### ESLint (Strict)
 
 Key rules beyond TypeScript:
@@ -342,6 +350,7 @@ src/i18n/
 | `section.ariaLabels.descriptor` | ARIA label strings (e.g., `imageModal.ariaLabels.close`) |
 | `common.ariaLabels.section` | Shared `"{{title}} section"` template used by all section components |
 | `navigation.sections.X` | Section names used for both nav link text and aria-label interpolation |
+| `contact.githubUrl` | Display text for the GitHub link (`"github.com/{{username}}"`) — interpolated with `profile.github` |
 
 ### Adding a New Language
 
