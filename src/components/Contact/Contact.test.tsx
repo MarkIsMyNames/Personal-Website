@@ -4,6 +4,7 @@ import { Contact } from './Contact';
 import { theme } from '../../styles/theme';
 import type { Profile } from '../../types';
 import en from '../../i18n/locales/en.json';
+import { EXPECTED_CONTACT_METHODS } from '../../config';
 import type React from 'react';
 
 const mockProfile: Profile = {
@@ -77,8 +78,8 @@ describe('Contact Component', () => {
     ).toBeInTheDocument();
   });
 
-  it('renders both email and GitHub contact methods', () => {
+  it('renders all configured contact methods', () => {
     renderWithTheme(<Contact profile={mockProfile} />);
-    expect(screen.getAllByRole('listitem')).toHaveLength(2);
+    expect(screen.getAllByRole('listitem')).toHaveLength(EXPECTED_CONTACT_METHODS);
   });
 });

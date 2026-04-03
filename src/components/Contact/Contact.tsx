@@ -3,6 +3,7 @@ import { Icon } from '../../utils/iconMapper';
 import { SectionTitle } from '../../styles/Shared.styles';
 import { ContactSection, ContactLinks, ContactLink } from './Contact.styles';
 import { useTranslation } from 'react-i18next';
+import { CONTACT_ICON_SIZE, GITHUB_BASE_URL, MAILTO_PREFIX, EXTERNAL_LINK_REL } from '../../config';
 
 type ContactProps = {
   profile: Profile;
@@ -20,26 +21,26 @@ export function Contact({ profile }: ContactProps) {
         aria-label={t('contact.ariaLabels.list')}
       >
         <ContactLink
-          href={`mailto:${profile.email}`}
+          href={`${MAILTO_PREFIX}${profile.email}`}
           aria-label={t('contact.ariaLabels.email', { email: profile.email })}
           role="listitem"
         >
           <Icon
             iconName="FaEnvelope"
-            size={24}
+            size={CONTACT_ICON_SIZE}
           />
           <span>{profile.email}</span>
         </ContactLink>
         <ContactLink
-          href={`https://github.com/${profile.github}`}
+          href={`${GITHUB_BASE_URL}${profile.github}`}
           target="_blank"
-          rel="noopener noreferrer"
+          rel={EXTERNAL_LINK_REL}
           aria-label={t('contact.ariaLabels.github', { username: profile.github })}
           role="listitem"
         >
           <Icon
             iconName="FaGithub"
-            size={24}
+            size={CONTACT_ICON_SIZE}
           />
           <span>{t('contact.githubUrl', { username: profile.github })}</span>
         </ContactLink>

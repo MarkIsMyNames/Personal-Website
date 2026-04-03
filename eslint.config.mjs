@@ -9,7 +9,7 @@ import i18nextPlugin from 'eslint-plugin-i18next';
 import globals from 'globals';
 
 export default [
-  { ignores: ['build/**', 'public/**'] },
+  { ignores: ['build/**', 'public/**', 'src/config.ts'] },
   js.configs.recommended,
   // TypeScript preset configs — spread directly into the array (avoids tseslint.config()
   // InfiniteDepthConfigWithExtends constraint which is incompatible with CompatibleConfig[])
@@ -117,6 +117,20 @@ export default [
       // React Hooks overrides
       'react-hooks/rules-of-hooks': 'error',
       'react-hooks/exhaustive-deps': 'error',
+      // Magic values — all non-trivial numbers must be named constants in config.ts
+      '@typescript-eslint/no-magic-numbers': 'error',
+      // Magic strings — catch raw URL/protocol literals that belong in config.ts
+      'no-restricted-syntax': [
+        'error',
+        {
+          selector: 'Literal[value=/^https?:\\/\\//]',
+          message: 'URL strings must be defined as named constants in src/config.ts',
+        },
+        {
+          selector: 'Literal[value=/^mailto:/]',
+          message: 'Protocol strings must be defined as named constants in src/config.ts',
+        },
+      ],
       // i18n — no hardcoded user-facing strings in JSX
       'i18next/no-literal-string': [
         'error',

@@ -10,26 +10,35 @@ import {
 } from './Navigation.styles';
 import { SectionId } from '../../types';
 import { useTranslation } from 'react-i18next';
+import {
+  NAV_SCROLL_TOP_THRESHOLD,
+  NAV_CLICK_SCROLL_LOCK_MS,
+  SCROLL_BEHAVIOR,
+  FIRST_INDEX,
+  SCROLL_TOP_ZERO,
+} from '../../config';
 
 export function Navigation() {
   const { t } = useTranslation();
   const profile = t('profile', { returnObjects: true });
   const [isVisible, setIsVisible] = useState(true);
-  const lastScrollYRef = useRef(0);
+  const lastScrollYRef = useRef(FIRST_INDEX);
   const isNavClickScrollRef = useRef(false);
 
   const handleScroll = useCallback((): void => {
     if (isNavClickScrollRef.current) {
       return;
     }
+
     const currentScrollY = window.scrollY;
-    setIsVisible(currentScrollY < 10 || currentScrollY <= lastScrollYRef.current);
+    setIsVisible(
+      currentScrollY < NAV_SCROLL_TOP_THRESHOLD || currentScrollY <= lastScrollYRef.current,
+    );
     lastScrollYRef.current = currentScrollY;
   }, []);
 
   useEffect(() => {
     window.addEventListener('scroll', handleScroll, { passive: true });
-
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
@@ -43,13 +52,13 @@ export function Navigation() {
 
     isNavClickScrollRef.current = true;
     window.scrollTo({
-      top: element ? element.getBoundingClientRect().top + window.scrollY : 0,
-      behavior: 'smooth',
+      top: element ? element.getBoundingClientRect().top + window.scrollY : SCROLL_TOP_ZERO,
+      behavior: SCROLL_BEHAVIOR,
     });
     setTimeout(() => {
       isNavClickScrollRef.current = false;
       lastScrollYRef.current = window.scrollY;
-    }, 1000);
+    }, NAV_CLICK_SCROLL_LOCK_MS);
   };
 
   return (

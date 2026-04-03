@@ -4,6 +4,7 @@ import { Bio } from './Bio';
 import { theme } from '../../styles/theme';
 import type { Profile } from '../../types';
 import en from '../../i18n/locales/en.json';
+import { FIRST_INDEX, BIO_SENTENCE_DELIMITER } from '../../config';
 import type React from 'react';
 
 const mockProfile: Profile = {
@@ -34,7 +35,7 @@ describe('Bio Component', () => {
 
   it('renders bio sentences from translation', () => {
     renderWithTheme(<Bio profile={mockProfile} />);
-    const firstSentence = en.profile.bio.split('. ')[0];
+    const firstSentence = en.profile.bio.split(BIO_SENTENCE_DELIMITER)[FIRST_INDEX];
     expect(firstSentence).toBeDefined();
     expect(screen.getByText(new RegExp(firstSentence ?? '', 'i'))).toBeInTheDocument();
   });

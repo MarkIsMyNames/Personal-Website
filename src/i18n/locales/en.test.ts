@@ -1,6 +1,7 @@
 import { statSync } from 'fs';
 import { resolve } from 'path';
 import en from './en.json';
+import { MAX_IMAGE_SIZE_BYTES, EMPTY_LENGTH, KIB_CONVERSION_FACTOR } from '../../config';
 
 describe('en.json structure', () => {
   it('has all required top-level keys', () => {
@@ -31,11 +32,15 @@ describe('en.json structure', () => {
       expect(
         project.highlights.length,
         `project ${i} highlights must be non-empty`,
-      ).toBeGreaterThan(0);
+      ).toBeGreaterThan(EMPTY_LENGTH);
       expect(project.tags, `project ${i} tags`).toBeInstanceOf(Array);
-      expect(project.tags.length, `project ${i} tags must be non-empty`).toBeGreaterThan(0);
+      expect(project.tags.length, `project ${i} tags must be non-empty`).toBeGreaterThan(
+        EMPTY_LENGTH,
+      );
       expect(project.images, `project ${i} images`).toBeInstanceOf(Array);
-      expect(project.images.length, `project ${i} images must be non-empty`).toBeGreaterThan(0);
+      expect(project.images.length, `project ${i} images must be non-empty`).toBeGreaterThan(
+        EMPTY_LENGTH,
+      );
     });
   });
 
@@ -47,7 +52,7 @@ describe('en.json structure', () => {
     expect(en.profile.email).toBeTruthy();
     expect(en.profile.github).toBeTruthy();
     expect(en.profile.university).toBeTruthy();
-    expect(en.profile.graduationYear).toBeGreaterThan(0);
+    expect(en.profile.graduationYear).toBeGreaterThan(EMPTY_LENGTH);
   });
 
   it('all navigation section names are non-empty', () => {
@@ -156,9 +161,10 @@ describe('en.json structure', () => {
 
   it.each(allImages)('%s is under 120 KiB', (image) => {
     const { size } = statSync(resolve(publicDir, image));
-    expect(size, `${image} is ${Math.round(size / 1024)} KiB — must be under 120 KiB`).toBeLessThan(
-      120 * 1024,
-    );
+    expect(
+      size,
+      `${image} is ${Math.round(size / KIB_CONVERSION_FACTOR)} KiB — must be under 120 KiB`,
+    ).toBeLessThan(MAX_IMAGE_SIZE_BYTES);
   });
 
   it('has all keys used by components', () => {
