@@ -11,13 +11,23 @@ export default defineConfig({
       inject: {
         data: {
           name: en.profile.name,
-          bio: en.profile.bio,
         },
       },
     }),
   ],
   build: {
     outDir: 'build',
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          router: ['react-router-dom'],
+          i18n: ['i18next', 'react-i18next'],
+          icons: ['react-icons'],
+          helmet: ['react-helmet-async'],
+          styling: ['styled-components'],
+        },
+      },
+    },
   },
   test: {
     globals: true,

@@ -17,6 +17,7 @@ function getNestedValue(key: string): unknown {
 
 vi.mock('react-i18next', () => ({
   useTranslation: () => ({
+    i18n: { language: 'en' },
     t: (key: string, options?: Record<string, unknown>) => {
       const value = getNestedValue(key);
       if (typeof value !== 'string') {

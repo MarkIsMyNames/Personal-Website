@@ -13,7 +13,7 @@ function renderLocaleApp(lang: string) {
         <MemoryRouter initialEntries={[`/${lang}`]}>
           <Routes>
             <Route
-              path="/:lang"
+              path={`/${lang}`}
               element={<LocaleApp />}
             />
           </Routes>
@@ -24,6 +24,10 @@ function renderLocaleApp(lang: string) {
 }
 
 describe('LocaleApp', () => {
+  beforeEach(() => {
+    void i18n.changeLanguage('en');
+  });
+
   it('calls i18n.changeLanguage with the lang param', () => {
     const spy = vi.spyOn(i18n, 'changeLanguage');
     renderLocaleApp('fr');
@@ -31,10 +35,10 @@ describe('LocaleApp', () => {
     spy.mockRestore();
   });
 
-  it('calls i18n.changeLanguage with en for the en route', () => {
+  it('does not call i18n.changeLanguage when already on the en route', () => {
     const spy = vi.spyOn(i18n, 'changeLanguage');
     renderLocaleApp('en');
-    expect(spy).toHaveBeenCalledWith('en');
+    expect(spy).not.toHaveBeenCalled();
     spy.mockRestore();
   });
 

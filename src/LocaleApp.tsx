@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { ThemeProvider } from 'styled-components';
 import { Analytics } from '@vercel/analytics/react';
@@ -15,18 +15,20 @@ import { Skills } from './components/Skills/Skills';
 import { Projects } from './components/Projects/Projects';
 import { Contact } from './components/Contact/Contact';
 import { SectionId } from './types';
-import { PRODUCTION_BASE_URL } from './config';
-import { SUPPORTED_LANGS, DEFAULT_LANG, type SupportedLang } from './i18n/locales/localeConfig';
+import { PRODUCTION_BASE_URL, PATH_LANG_SEGMENT } from './config';
+import { SUPPORTED_LANGS, DEFAULT_LANG, isSupportedLang, type SupportedLang } from './i18n/locales/localeConfig';
 
 export function LocaleApp() {
-  const { lang } = useParams<{ lang: SupportedLang }>();
-  const { t } = useTranslation();
+  const location = useLocation();
+  const { t, i18n: i18nInstance } = useTranslation();
+  const lang: SupportedLang = isSupportedLang(i18nInstance.language) ? i18nInstance.language : DEFAULT_LANG;
 
   useEffect(() => {
-    if (lang) {
-      void i18n.changeLanguage(lang);
+    const pathLang = location.pathname.split('/')[PATH_LANG_SEGMENT];
+    if (pathLang && isSupportedLang(pathLang) && i18n.language !== pathLang) {
+      void i18n.changeLanguage(pathLang);
     }
-  }, [lang]);
+  }, [location.pathname]);
 
   const profile = t('profile', { returnObjects: true });
   const skills = t('skillsData', { returnObjects: true });
@@ -34,7 +36,7 @@ export function LocaleApp() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Helmet htmlAttributes={{ lang }}>
+      <Helmet htmlAttributes={{ lang: lang ?? DEFAULT_LANG }}>
         <meta
           name="description"
           content={profile.bio}
