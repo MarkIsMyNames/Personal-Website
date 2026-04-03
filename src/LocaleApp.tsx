@@ -16,12 +16,19 @@ import { Projects } from './components/Projects/Projects';
 import { Contact } from './components/Contact/Contact';
 import { SectionId } from './types';
 import { PRODUCTION_BASE_URL, PATH_LANG_SEGMENT } from './config';
-import { SUPPORTED_LANGS, DEFAULT_LANG, isSupportedLang, type SupportedLang } from './i18n/locales/localeConfig';
+import {
+  SUPPORTED_LANGS,
+  DEFAULT_LANG,
+  isSupportedLang,
+  type SupportedLang,
+} from './i18n/locales/localeConfig';
 
 export function LocaleApp() {
   const location = useLocation();
   const { t, i18n: i18nInstance } = useTranslation();
-  const lang: SupportedLang = isSupportedLang(i18nInstance.language) ? i18nInstance.language : DEFAULT_LANG;
+  const lang: SupportedLang = isSupportedLang(i18nInstance.language)
+    ? i18nInstance.language
+    : DEFAULT_LANG;
 
   useEffect(() => {
     const pathLang = location.pathname.split('/')[PATH_LANG_SEGMENT];
