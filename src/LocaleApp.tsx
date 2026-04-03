@@ -43,7 +43,7 @@ export function LocaleApp() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Helmet htmlAttributes={{ lang: lang ?? DEFAULT_LANG }}>
+      <Helmet htmlAttributes={{ lang }}>
         <meta
           name="description"
           content={profile.bio}
