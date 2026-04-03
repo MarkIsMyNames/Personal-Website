@@ -17,6 +17,7 @@ import {
   ProjectTags,
   ProjectTag,
 } from './Projects.styles';
+import { useTranslation } from 'react-i18next';
 
 type ProjectsProps = {
   projects: Project[];
@@ -28,6 +29,7 @@ type ModalState = {
 };
 
 export function Projects({ projects }: ProjectsProps) {
+  const { t } = useTranslation();
   const [modal, setModal] = useState<ModalState | null>(null);
 
   const openModal = (images: string[], index: number) => setModal({ images, index });
@@ -37,11 +39,13 @@ export function Projects({ projects }: ProjectsProps) {
     setModal((m) => (m && m.index < m.images.length - 1 ? { ...m, index: m.index + 1 } : m));
 
   return (
-    <ProjectsSection aria-label="Projects and Experience section">
-      <SectionTitle>Projects & Experience</SectionTitle>
+    <ProjectsSection
+      aria-label={t('common.ariaLabels.section', { title: t('navigation.sections.projects') })}
+    >
+      <SectionTitle>{t('projects.sectionTitle')}</SectionTitle>
       <ProjectsContainer
         role="list"
-        aria-label="List of projects"
+        aria-label={t('projects.ariaLabels.list')}
       >
         {projects.map((project) => {
           const isSingleImage = project.images.length === 1;
@@ -49,7 +53,7 @@ export function Projects({ projects }: ProjectsProps) {
             <ProjectCard
               key={project.title}
               role="listitem"
-              aria-label={`${project.title} project`}
+              aria-label={t('projects.ariaLabels.card', { title: project.title })}
             >
               <ProjectImages $isSingle={isSingleImage}>
                 {project.images.map((image, index) => (
@@ -61,7 +65,10 @@ export function Projects({ projects }: ProjectsProps) {
                     $isSingle={isSingleImage}
                     onClick={() => openModal(project.images, index)}
                     role="button"
-                    aria-label={`View full size image ${index + 1} of ${project.title}`}
+                    aria-label={t('projects.ariaLabels.viewImage', {
+                      index: index + 1,
+                      title: project.title,
+                    })}
                     tabIndex={0}
                     onKeyDown={(e) => {
                       if (e.key === KeyboardKey.Enter || e.key === KeyboardKey.Space) {
@@ -94,7 +101,7 @@ export function Projects({ projects }: ProjectsProps) {
       {modal !== null && (
         <ImageModal
           imageUrl={modal.images[modal.index] ?? ''}
-          altText={`Image ${modal.index + 1}`}
+          altText={t('imageModal.ariaLabels.image', { index: modal.index + 1 })}
           onClose={closeModal}
           onPrevious={prevImage}
           onNext={nextImage}

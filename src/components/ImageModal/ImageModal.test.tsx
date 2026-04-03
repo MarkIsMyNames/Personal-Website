@@ -3,6 +3,7 @@ import { ThemeProvider } from 'styled-components';
 import { vi } from 'vitest';
 import { ImageModal } from './ImageModal';
 import { theme } from '../../styles/theme';
+import en from '../../i18n/locales/en.json';
 import type React from 'react';
 
 const renderWithTheme = (component: React.ReactElement): ReturnType<typeof render> => {
@@ -35,7 +36,7 @@ describe('ImageModal Component', () => {
     expect(screen.getByAltText(testAltText)).toBeInTheDocument();
   });
 
-  it('displays the correct image', () => {
+  it('displays the correct image src', () => {
     renderWithTheme(
       <ImageModal
         imageUrl={testImageUrl}
@@ -62,11 +63,11 @@ describe('ImageModal Component', () => {
         hasNext={false}
       />,
     );
-    fireEvent.click(screen.getByLabelText(/Close modal/i));
+    fireEvent.click(screen.getByLabelText(en.imageModal.ariaLabels.close));
     expect(mockOnClose).toHaveBeenCalledTimes(1);
   });
 
-  it('renders close button', () => {
+  it('renders close button with translated aria-label', () => {
     renderWithTheme(
       <ImageModal
         imageUrl={testImageUrl}
@@ -78,7 +79,7 @@ describe('ImageModal Component', () => {
         hasNext={false}
       />,
     );
-    expect(screen.getByLabelText(/Close modal/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(en.imageModal.ariaLabels.close)).toBeInTheDocument();
   });
 
   it('calls onClose when Escape key is pressed', () => {
@@ -129,7 +130,22 @@ describe('ImageModal Component', () => {
     expect(mockOnClose).toHaveBeenCalledTimes(1);
   });
 
-  it('renders navigation buttons when hasPrevious and hasNext are true', () => {
+  it('renders modal with correct aria-label', () => {
+    renderWithTheme(
+      <ImageModal
+        imageUrl={testImageUrl}
+        altText={testAltText}
+        onClose={mockOnClose}
+        onPrevious={mockOnPrevious}
+        onNext={mockOnNext}
+        hasPrevious={false}
+        hasNext={false}
+      />,
+    );
+    expect(screen.getByLabelText(en.imageModal.ariaLabels.modal)).toBeInTheDocument();
+  });
+
+  it('renders navigation buttons with translated aria-labels when hasPrevious and hasNext are true', () => {
     renderWithTheme(
       <ImageModal
         imageUrl={testImageUrl}
@@ -141,9 +157,9 @@ describe('ImageModal Component', () => {
         hasNext
       />,
     );
-    expect(screen.getByLabelText(/Previous image/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/Next image/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/Close modal/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(en.imageModal.ariaLabels.previous)).toBeInTheDocument();
+    expect(screen.getByLabelText(en.imageModal.ariaLabels.next)).toBeInTheDocument();
+    expect(screen.getByLabelText(en.imageModal.ariaLabels.close)).toBeInTheDocument();
   });
 
   it('calls onPrevious when left arrow key is pressed', () => {
@@ -222,9 +238,9 @@ describe('ImageModal Component', () => {
         hasNext
       />,
     );
-    fireEvent.click(screen.getByLabelText(/Previous image/i));
+    fireEvent.click(screen.getByLabelText(en.imageModal.ariaLabels.previous));
     expect(mockOnPrevious).toHaveBeenCalledTimes(1);
-    fireEvent.click(screen.getByLabelText(/Next image/i));
+    fireEvent.click(screen.getByLabelText(en.imageModal.ariaLabels.next));
     expect(mockOnNext).toHaveBeenCalledTimes(1);
   });
 
@@ -327,9 +343,56 @@ describe('ImageModal Component', () => {
         hasNext={false}
       />,
     );
-    expect(document.body.style.overflow).toBe('hidden');
     unmount();
     expect(document.body.style.overflow).toBe('unset');
+  });
+
+  it('renders modal image with width filling the viewport', () => {
+    renderWithTheme(
+      <ImageModal
+        imageUrl={testImageUrl}
+        altText={testAltText}
+        onClose={mockOnClose}
+        onPrevious={mockOnPrevious}
+        onNext={mockOnNext}
+        hasPrevious={false}
+        hasNext={false}
+      />,
+    );
+    const image = screen.getByAltText(testAltText);
+    expect(window.getComputedStyle(image).width).toBe('75vw');
+  });
+
+  it('renders modal image with height filling the viewport', () => {
+    renderWithTheme(
+      <ImageModal
+        imageUrl={testImageUrl}
+        altText={testAltText}
+        onClose={mockOnClose}
+        onPrevious={mockOnPrevious}
+        onNext={mockOnNext}
+        hasPrevious={false}
+        hasNext={false}
+      />,
+    );
+    const image = screen.getByAltText(testAltText);
+    expect(window.getComputedStyle(image).height).toBe('75vh');
+  });
+
+  it('renders modal image with object-fit contain to show full image without cropping', () => {
+    renderWithTheme(
+      <ImageModal
+        imageUrl={testImageUrl}
+        altText={testAltText}
+        onClose={mockOnClose}
+        onPrevious={mockOnPrevious}
+        onNext={mockOnNext}
+        hasPrevious={false}
+        hasNext={false}
+      />,
+    );
+    const image = screen.getByAltText(testAltText);
+    expect(window.getComputedStyle(image).objectFit).toBe('contain');
   });
 
   it('only renders the viewed image', () => {

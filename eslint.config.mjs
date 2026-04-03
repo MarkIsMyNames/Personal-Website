@@ -5,6 +5,7 @@ import reactPlugin from 'eslint-plugin-react';
 import reactHooksPlugin from 'eslint-plugin-react-hooks';
 import prettierPlugin from 'eslint-plugin-prettier';
 import prettierConfig from 'eslint-config-prettier';
+import i18nextPlugin from 'eslint-plugin-i18next';
 import globals from 'globals';
 
 export default [
@@ -32,6 +33,7 @@ export default [
       // conflicts with the Plugin type expected by ESLint flat config
       'react-hooks': { meta: reactHooksPlugin.meta, rules: reactHooksPlugin.rules },
       prettier: prettierPlugin,
+      i18next: fixupPluginRules(i18nextPlugin),
     },
     settings: {
       react: { version: 'detect' },
@@ -115,6 +117,19 @@ export default [
       // React Hooks overrides
       'react-hooks/rules-of-hooks': 'error',
       'react-hooks/exhaustive-deps': 'error',
+      // i18n — no hardcoded user-facing strings in JSX
+      'i18next/no-literal-string': [
+        'error',
+        {
+          mode: 'jsx-only',
+          'jsx-attributes': {
+            include: ['aria-label', 'alt', 'title', 'placeholder'],
+          },
+          words: {
+            exclude: ['^[^a-zA-Z]*$'],
+          },
+        },
+      ],
     },
   },
 ];

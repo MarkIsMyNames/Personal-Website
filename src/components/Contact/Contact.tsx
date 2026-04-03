@@ -2,22 +2,26 @@ import type { Profile } from '../../types';
 import { Icon } from '../../utils/iconMapper';
 import { SectionTitle } from '../../styles/Shared.styles';
 import { ContactSection, ContactLinks, ContactLink } from './Contact.styles';
+import { useTranslation } from 'react-i18next';
 
 type ContactProps = {
   profile: Profile;
 };
 
 export function Contact({ profile }: ContactProps) {
+  const { t } = useTranslation();
   return (
-    <ContactSection aria-label="Contact section">
-      <SectionTitle>Get In Touch</SectionTitle>
+    <ContactSection
+      aria-label={t('common.ariaLabels.section', { title: t('navigation.sections.contact') })}
+    >
+      <SectionTitle>{t('contact.sectionTitle')}</SectionTitle>
       <ContactLinks
         role="list"
-        aria-label="Contact information"
+        aria-label={t('contact.ariaLabels.list')}
       >
         <ContactLink
           href={`mailto:${profile.email}`}
-          aria-label={`Email ${profile.email}`}
+          aria-label={t('contact.ariaLabels.email', { email: profile.email })}
           role="listitem"
         >
           <Icon
@@ -30,7 +34,7 @@ export function Contact({ profile }: ContactProps) {
           href={`https://github.com/${profile.github}`}
           target="_blank"
           rel="noopener noreferrer"
-          aria-label={`Visit GitHub profile of ${profile.github}`}
+          aria-label={t('contact.ariaLabels.github', { username: profile.github })}
           role="listitem"
         >
           <Icon

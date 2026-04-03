@@ -1,7 +1,7 @@
 import { defineConfig } from 'vitest/config';
 import react from '@vitejs/plugin-react';
 import { createHtmlPlugin } from 'vite-plugin-html';
-import { profile } from './src/data/portfolioData';
+import en from './src/i18n/locales/en.json';
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -10,8 +10,8 @@ export default defineConfig({
     createHtmlPlugin({
       inject: {
         data: {
-          name: profile.name,
-          bio: profile.bio,
+          name: en.profile.name,
+          bio: en.profile.bio,
         },
       },
     }),

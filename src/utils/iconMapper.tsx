@@ -1,4 +1,3 @@
-import type { ComponentType } from 'react';
 import {
   FaJava,
   FaPython,
@@ -60,6 +59,5 @@ export function Icon({ iconName, size }: IconProps) {
     return <span>?</span>;
   }
 
-  const Component = IconComponent as ComponentType<{ size: number }>;
-  return <Component size={size} />;
+  return <IconComponent size={size} />;
 }

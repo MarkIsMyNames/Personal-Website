@@ -7,6 +7,7 @@ import {
   NavigationButtonRight,
 } from './ImageModal.styles';
 import { KeyboardKey } from '../../types';
+import { useTranslation } from 'react-i18next';
 
 const SWIPE_THRESHOLD = 50;
 
@@ -29,6 +30,7 @@ export function ImageModal({
   hasPrevious,
   hasNext,
 }: ImageModalProps) {
+  const { t } = useTranslation();
   const touchStartXRef = useRef(0);
   const touchEndXRef = useRef(0);
 
@@ -92,14 +94,14 @@ export function ImageModal({
       onClick={onClose}
       role="dialog"
       aria-modal="true"
-      aria-label="Image modal"
+      aria-label={t('imageModal.ariaLabels.modal')}
     >
       <CloseButton
         onClick={(e) => {
           e.stopPropagation();
           onClose();
         }}
-        aria-label="Close modal"
+        aria-label={t('imageModal.ariaLabels.close')}
       >
         ✕
       </CloseButton>
@@ -109,7 +111,7 @@ export function ImageModal({
             e.stopPropagation();
             onPrevious();
           }}
-          aria-label="Previous image"
+          aria-label={t('imageModal.ariaLabels.previous')}
         >
           ‹
         </NavigationButtonLeft>
@@ -120,7 +122,7 @@ export function ImageModal({
             e.stopPropagation();
             onNext();
           }}
-          aria-label="Next image"
+          aria-label={t('imageModal.ariaLabels.next')}
         >
           ›
         </NavigationButtonRight>
