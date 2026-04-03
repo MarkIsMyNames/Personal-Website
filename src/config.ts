@@ -38,6 +38,7 @@ export const MAILTO_PREFIX = 'mailto:';
 export const EXTERNAL_LINK_REL = 'noopener noreferrer';
 
 // Test constants
-export const EXPECTED_CONTACT_METHODS = 2;
 export const SINGLE_CALL = 1;
 export const EMPTY_LENGTH = 0;
+export const CONTACT_METHODS = ['email', 'github'];
+export const EXPECTED_CONTACT_METHODS = CONTACT_METHODS.length;

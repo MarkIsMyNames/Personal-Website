@@ -217,14 +217,17 @@ Strict mode is fully enabled in `tsconfig.json` with extra flags:
 - When assigning a mock to a browser global in tests, use `vi.stubGlobal('name', vi.fn())` instead of `mock as typeof window.name`
 
 **Avoiding magic values:**
-- All numeric literals must be named constants in `src/config.ts`. The `@typescript-eslint/no-magic-numbers` lint rule enforces this for all source files
+- All numeric literals must be named constants in `src/config.ts`. The `@typescript-eslint/no-magic-numbers` lint rule enforces this for all source files, including test files (`*.test.tsx`, `*.test.ts`)
+- `KIB_CONVERSION_FACTOR = 1024` must be used for all byte-to-KiB conversions and size limits
 - URL strings (`https://...`, `mailto:...`) and other non-obvious string literals used in logic must also live in `src/config.ts`. The `no-restricted-syntax` rule enforces URL/protocol literals specifically
 - `src/config.ts` is excluded from ESLint entirely — literal values are intentional there
 - Group constants in `config.ts` by purpose with a comment header (e.g. `// Navigation`, `// External links`)
+- Constants explicitly for test files must be placed at the bottom of the file under a `// Test constants` header
 
 ### ESLint (Strict)
 
 Key rules beyond TypeScript:
+- Linting applies to ALL `.ts` and `.tsx` files in `src/`, including all tests
 - `no-console: error` — no console.log
 - `curly: all` — always use braces for if/else/for/while
 - `eqeqeq: always` — use `===`/`!==`

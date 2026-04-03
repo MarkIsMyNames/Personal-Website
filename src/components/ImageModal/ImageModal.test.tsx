@@ -4,6 +4,7 @@ import { vi } from 'vitest';
 import { ImageModal } from './ImageModal';
 import { theme } from '../../styles/theme';
 import en from '../../i18n/locales/en.json';
+import { SINGLE_CALL, SINGLE_ITEM_COUNT, FIRST_INDEX } from '../../config';
 import type React from 'react';
 
 const renderWithTheme = (component: React.ReactElement): ReturnType<typeof render> => {
@@ -64,7 +65,7 @@ describe('ImageModal Component', () => {
       />,
     );
     fireEvent.click(screen.getByLabelText(en.imageModal.ariaLabels.close));
-    expect(mockOnClose).toHaveBeenCalledTimes(1);
+    expect(mockOnClose).toHaveBeenCalledTimes(SINGLE_CALL);
   });
 
   it('renders close button with translated aria-label', () => {
@@ -95,7 +96,7 @@ describe('ImageModal Component', () => {
       />,
     );
     fireEvent.keyDown(document, { key: 'Escape' });
-    expect(mockOnClose).toHaveBeenCalledTimes(1);
+    expect(mockOnClose).toHaveBeenCalledTimes(SINGLE_CALL);
   });
 
   it('calls onClose when overlay is clicked', () => {
@@ -111,7 +112,7 @@ describe('ImageModal Component', () => {
       />,
     );
     fireEvent.click(screen.getByRole('dialog'));
-    expect(mockOnClose).toHaveBeenCalledTimes(1);
+    expect(mockOnClose).toHaveBeenCalledTimes(SINGLE_CALL);
   });
 
   it('calls onClose when image is clicked', () => {
@@ -127,7 +128,7 @@ describe('ImageModal Component', () => {
       />,
     );
     fireEvent.click(screen.getByAltText(testAltText));
-    expect(mockOnClose).toHaveBeenCalledTimes(1);
+    expect(mockOnClose).toHaveBeenCalledTimes(SINGLE_CALL);
   });
 
   it('renders modal with correct aria-label', () => {
@@ -175,7 +176,7 @@ describe('ImageModal Component', () => {
       />,
     );
     fireEvent.keyDown(document, { key: 'ArrowLeft' });
-    expect(mockOnPrevious).toHaveBeenCalledTimes(1);
+    expect(mockOnPrevious).toHaveBeenCalledTimes(SINGLE_CALL);
   });
 
   it('calls onNext when right arrow key is pressed', () => {
@@ -191,7 +192,7 @@ describe('ImageModal Component', () => {
       />,
     );
     fireEvent.keyDown(document, { key: 'ArrowRight' });
-    expect(mockOnNext).toHaveBeenCalledTimes(1);
+    expect(mockOnNext).toHaveBeenCalledTimes(SINGLE_CALL);
   });
 
   it('does not call onPrevious when hasPrevious is false', () => {
@@ -239,9 +240,9 @@ describe('ImageModal Component', () => {
       />,
     );
     fireEvent.click(screen.getByLabelText(en.imageModal.ariaLabels.previous));
-    expect(mockOnPrevious).toHaveBeenCalledTimes(1);
+    expect(mockOnPrevious).toHaveBeenCalledTimes(SINGLE_CALL);
     fireEvent.click(screen.getByLabelText(en.imageModal.ariaLabels.next));
-    expect(mockOnNext).toHaveBeenCalledTimes(1);
+    expect(mockOnNext).toHaveBeenCalledTimes(SINGLE_CALL);
   });
 
   it('calls onNext when swiped left', () => {
@@ -258,7 +259,7 @@ describe('ImageModal Component', () => {
     );
     fireEvent.touchStart(document, { touches: [{ clientX: 300, clientY: 200 }] });
     fireEvent.touchEnd(document, { changedTouches: [{ clientX: 100, clientY: 200 }] });
-    expect(mockOnNext).toHaveBeenCalledTimes(1);
+    expect(mockOnNext).toHaveBeenCalledTimes(SINGLE_CALL);
   });
 
   it('calls onPrevious when swiped right', () => {
@@ -275,7 +276,7 @@ describe('ImageModal Component', () => {
     );
     fireEvent.touchStart(document, { touches: [{ clientX: 100, clientY: 200 }] });
     fireEvent.touchEnd(document, { changedTouches: [{ clientX: 300, clientY: 200 }] });
-    expect(mockOnPrevious).toHaveBeenCalledTimes(1);
+    expect(mockOnPrevious).toHaveBeenCalledTimes(SINGLE_CALL);
   });
 
   it('does not trigger swipe for small movements', () => {
@@ -356,7 +357,7 @@ describe('ImageModal Component', () => {
       />,
     );
     const imgs = container.querySelectorAll('[role="dialog"] img');
-    expect(imgs).toHaveLength(1);
-    expect(imgs[0]).toHaveAttribute('src', testImageUrl);
+    expect(imgs).toHaveLength(SINGLE_ITEM_COUNT);
+    expect(imgs[FIRST_INDEX]).toHaveAttribute('src', testImageUrl);
   });
 });

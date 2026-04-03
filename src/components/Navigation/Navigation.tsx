@@ -15,6 +15,7 @@ import {
   NAV_CLICK_SCROLL_LOCK_MS,
   SCROLL_BEHAVIOR,
   FIRST_INDEX,
+  SCROLL_TOP_ZERO,
 } from '../../config';
 
 export function Navigation() {
@@ -28,6 +29,7 @@ export function Navigation() {
     if (isNavClickScrollRef.current) {
       return;
     }
+
     const currentScrollY = window.scrollY;
     setIsVisible(
       currentScrollY < NAV_SCROLL_TOP_THRESHOLD || currentScrollY <= lastScrollYRef.current,
@@ -37,7 +39,6 @@ export function Navigation() {
 
   useEffect(() => {
     window.addEventListener('scroll', handleScroll, { passive: true });
-
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
@@ -51,7 +52,7 @@ export function Navigation() {
 
     isNavClickScrollRef.current = true;
     window.scrollTo({
-      top: element ? element.getBoundingClientRect().top + window.scrollY : 0,
+      top: element ? element.getBoundingClientRect().top + window.scrollY : SCROLL_TOP_ZERO,
       behavior: SCROLL_BEHAVIOR,
     });
     setTimeout(() => {
