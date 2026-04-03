@@ -3,6 +3,7 @@ import { Icon } from '../../utils/iconMapper';
 import { SectionTitle } from '../../styles/Shared.styles';
 import { SkillsSection, SkillsGrid, SkillCard, SkillName } from './Skills.styles';
 import { useTranslation } from 'react-i18next';
+import { SKILL_ICON_SIZE } from '../../config';
 
 type SkillsProps = {
   skills: Skill[];
@@ -28,7 +29,7 @@ export function Skills({ skills }: SkillsProps) {
           >
             <Icon
               iconName={skill.iconName}
-              size={50}
+              size={SKILL_ICON_SIZE}
             />
             <SkillName>{skill.name}</SkillName>
           </SkillCard>

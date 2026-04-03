@@ -257,8 +257,7 @@ describe('ImageModal Component', () => {
       />,
     );
     fireEvent.touchStart(document, { touches: [{ clientX: 300, clientY: 200 }] });
-    fireEvent.touchMove(document, { touches: [{ clientX: 100, clientY: 200 }] });
-    fireEvent.touchEnd(document);
+    fireEvent.touchEnd(document, { changedTouches: [{ clientX: 100, clientY: 200 }] });
     expect(mockOnNext).toHaveBeenCalledTimes(1);
   });
 
@@ -275,8 +274,7 @@ describe('ImageModal Component', () => {
       />,
     );
     fireEvent.touchStart(document, { touches: [{ clientX: 100, clientY: 200 }] });
-    fireEvent.touchMove(document, { touches: [{ clientX: 300, clientY: 200 }] });
-    fireEvent.touchEnd(document);
+    fireEvent.touchEnd(document, { changedTouches: [{ clientX: 300, clientY: 200 }] });
     expect(mockOnPrevious).toHaveBeenCalledTimes(1);
   });
 
@@ -293,8 +291,7 @@ describe('ImageModal Component', () => {
       />,
     );
     fireEvent.touchStart(document, { touches: [{ clientX: 200, clientY: 200 }] });
-    fireEvent.touchMove(document, { touches: [{ clientX: 180, clientY: 200 }] });
-    fireEvent.touchEnd(document);
+    fireEvent.touchEnd(document, { changedTouches: [{ clientX: 180, clientY: 200 }] });
     expect(mockOnNext).not.toHaveBeenCalled();
   });
 
@@ -311,8 +308,7 @@ describe('ImageModal Component', () => {
       />,
     );
     fireEvent.touchStart(document, { touches: [{ clientX: 200, clientY: 100 }] });
-    fireEvent.touchMove(document, { touches: [{ clientX: 190, clientY: 400 }] });
-    fireEvent.touchEnd(document);
+    fireEvent.touchEnd(document, { changedTouches: [{ clientX: 190, clientY: 400 }] });
     expect(mockOnNext).not.toHaveBeenCalled();
   });
 

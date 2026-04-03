@@ -216,6 +216,12 @@ Strict mode is fully enabled in `tsconfig.json` with extra flags:
 - Replace `require()` with `readFileSync` + `JSON.parse` to avoid the `no-require-imports` lint rule and the cast that comes with it
 - When assigning a mock to a browser global in tests, use `vi.stubGlobal('name', vi.fn())` instead of `mock as typeof window.name`
 
+**Avoiding magic values:**
+- All numeric literals must be named constants in `src/config.ts`. The `@typescript-eslint/no-magic-numbers` lint rule enforces this for all source files
+- URL strings (`https://...`, `mailto:...`) and other non-obvious string literals used in logic must also live in `src/config.ts`. The `no-restricted-syntax` rule enforces URL/protocol literals specifically
+- `src/config.ts` is excluded from ESLint entirely — literal values are intentional there
+- Group constants in `config.ts` by purpose with a comment header (e.g. `// Navigation`, `// External links`)
+
 ### ESLint (Strict)
 
 Key rules beyond TypeScript:
@@ -313,8 +319,9 @@ Three breakpoints defined in `theme.ts`:
 - Touch events dispatched on `document` (ImageModal attaches listeners there)
 - Tests co-located with components (e.g., `Bio.test.tsx` next to `Bio.tsx`)
 - i18next is mocked globally in `setupTests.ts` — component tests do not initialise i18next. Import `en.json` directly in test files to reference expected values (e.g., `en.profile.name`, `en.navigation.sections.about`)
-- Use `window.getComputedStyle(element).property` to assert CSS properties set by styled-components (e.g., `objectFit`, `borderRadius`, `width`). Only test CSS that encodes a meaningful product decision (e.g., `object-fit: contain` to prevent cropping, `border-radius: 50%` for circular avatars) — do not write tests for purely aesthetic choices like colours or font sizes
-- **Do not write tests for CSS-only files** (`*.styles.tsx`). Styling logic lives in component tests via `getComputedStyle` where it matters
+- **Do not write tests for CSS-only files** (`*.styles.tsx`). Vitest is configured to exclude `*.styles.test.*` files — do not test styling
+- **Do not duplicate tests.** Before adding a test, check whether the same behaviour is already covered elsewhere. Component tests cover unit behaviour; `App.test.tsx` covers integration concerns only. A behaviour tested in `Bio.test.tsx` must not be re-tested in `App.test.tsx`
+- **Do not test things TypeScript already enforces** (e.g. that a constant has type `number`) or things that are tautological (e.g. that a constant equals its own definition). Test structural constraints that aren't statically checkable — for example, that a URL ends with `/` for safe concatenation, or that a security header contains two required words
 
 ---
 

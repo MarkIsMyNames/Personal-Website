@@ -10,6 +10,7 @@ import {
   BioEducation,
 } from './Bio.styles';
 import { useTranslation } from 'react-i18next';
+import { BIO_SENTENCE_DELIMITER, DISPLAY_INDEX_OFFSET } from '../../config';
 
 type BioProps = {
   profile: Profile;
@@ -17,7 +18,9 @@ type BioProps = {
 
 export function Bio({ profile }: BioProps) {
   const { t } = useTranslation();
-  const bioSentences = profile.bio.split('. ').filter((sentence) => sentence.trim() !== '');
+  const bioSentences = profile.bio
+    .split(BIO_SENTENCE_DELIMITER)
+    .filter((sentence) => sentence.trim() !== '');
 
   return (
     <BioSection
@@ -38,7 +41,7 @@ export function Bio({ profile }: BioProps) {
           {bioSentences.map((sentence, index) => (
             <Fragment key={sentence}>
               {sentence}
-              {index < bioSentences.length - 1 && (
+              {index < bioSentences.length - DISPLAY_INDEX_OFFSET && (
                 <>
                   .
                   <br />

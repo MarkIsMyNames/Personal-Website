@@ -18,6 +18,13 @@ import {
   ProjectTag,
 } from './Projects.styles';
 import { useTranslation } from 'react-i18next';
+import {
+  PROJECT_IMAGE_HEIGHT,
+  FOCUSABLE_TAB_INDEX,
+  DISPLAY_INDEX_OFFSET,
+  FIRST_INDEX,
+  SINGLE_ITEM_COUNT,
+} from '../../config';
 
 type ProjectsProps = {
   projects: Project[];
@@ -34,9 +41,16 @@ export function Projects({ projects }: ProjectsProps) {
 
   const openModal = (images: string[], index: number) => setModal({ images, index });
   const closeModal = () => setModal(null);
-  const prevImage = () => setModal((m) => (m && m.index > 0 ? { ...m, index: m.index - 1 } : m));
+  const prevImage = () =>
+    setModal((m) =>
+      m && m.index > FIRST_INDEX ? { ...m, index: m.index - DISPLAY_INDEX_OFFSET } : m,
+    );
   const nextImage = () =>
-    setModal((m) => (m && m.index < m.images.length - 1 ? { ...m, index: m.index + 1 } : m));
+    setModal((m) =>
+      m && m.index < m.images.length - DISPLAY_INDEX_OFFSET
+        ? { ...m, index: m.index + DISPLAY_INDEX_OFFSET }
+        : m,
+    );
 
   return (
     <ProjectsSection
@@ -48,7 +62,7 @@ export function Projects({ projects }: ProjectsProps) {
         aria-label={t('projects.ariaLabels.list')}
       >
         {projects.map((project) => {
-          const isSingleImage = project.images.length === 1;
+          const isSingleImage = project.images.length === SINGLE_ITEM_COUNT;
           return (
             <ProjectCard
               key={project.title}
@@ -60,16 +74,16 @@ export function Projects({ projects }: ProjectsProps) {
                   <ProjectImage
                     key={image}
                     src={image}
-                    alt={`${project.title} screenshot ${index + 1} of ${project.images.length}`}
-                    height={300}
+                    alt={`${project.title} screenshot ${index + DISPLAY_INDEX_OFFSET} of ${project.images.length}`}
+                    height={PROJECT_IMAGE_HEIGHT}
                     $isSingle={isSingleImage}
                     onClick={() => openModal(project.images, index)}
                     role="button"
                     aria-label={t('projects.ariaLabels.viewImage', {
-                      index: index + 1,
+                      index: index + DISPLAY_INDEX_OFFSET,
                       title: project.title,
                     })}
-                    tabIndex={0}
+                    tabIndex={FOCUSABLE_TAB_INDEX}
                     onKeyDown={(e) => {
                       if (e.key === KeyboardKey.Enter || e.key === KeyboardKey.Space) {
                         e.preventDefault();
@@ -101,12 +115,12 @@ export function Projects({ projects }: ProjectsProps) {
       {modal !== null && (
         <ImageModal
           imageUrl={modal.images[modal.index] ?? ''}
-          altText={t('imageModal.ariaLabels.image', { index: modal.index + 1 })}
+          altText={t('imageModal.ariaLabels.image', { index: modal.index + DISPLAY_INDEX_OFFSET })}
           onClose={closeModal}
           onPrevious={prevImage}
           onNext={nextImage}
-          hasPrevious={modal.index > 0}
-          hasNext={modal.index < modal.images.length - 1}
+          hasPrevious={modal.index > FIRST_INDEX}
+          hasNext={modal.index < modal.images.length - DISPLAY_INDEX_OFFSET}
         />
       )}
     </ProjectsSection>

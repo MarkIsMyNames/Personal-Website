@@ -1,6 +1,7 @@
 import { statSync } from 'fs';
 import { resolve } from 'path';
 import en from './en.json';
+import { MAX_IMAGE_SIZE_BYTES } from '../../config';
 
 describe('en.json structure', () => {
   it('has all required top-level keys', () => {
@@ -157,7 +158,7 @@ describe('en.json structure', () => {
   it.each(allImages)('%s is under 120 KiB', (image) => {
     const { size } = statSync(resolve(publicDir, image));
     expect(size, `${image} is ${Math.round(size / 1024)} KiB — must be under 120 KiB`).toBeLessThan(
-      120 * 1024,
+      MAX_IMAGE_SIZE_BYTES,
     );
   });
 
