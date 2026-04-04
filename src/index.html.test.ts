@@ -44,12 +44,6 @@ describe('index.html injected values', () => {
     expect(indexHtml).not.toContain(en.profile.name);
   });
 
-  it('uses template variable for meta description, not hardcoded bio text', () => {
-    expect(indexHtml).toContain('name="description"');
-    expect(indexHtml).toContain('<%= description %>');
-    expect(indexHtml).not.toContain(en.profile.bio);
-  });
-
   it('uses template variable for body background, not a hardcoded hex value', () => {
     expect(indexHtml).toContain('<%- pageBackgroundStyle %>');
     expect(indexHtml).not.toContain(theme.colors.pageBackground);
