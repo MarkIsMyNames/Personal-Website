@@ -35,9 +35,9 @@ export const CloseButton = styled.button`
   position: absolute;
   top: 2rem;
   right: 2rem;
-  background: ${({ theme }) => theme.colors.bgCard};
-  border: 2px solid ${({ theme }) => theme.colors.borderColor};
-  color: ${({ theme }) => theme.colors.textPrimary};
+  background: ${({ theme }) => theme.colors.cardBackground};
+  border: 2px solid ${({ theme }) => theme.colors.border};
+  color: ${({ theme }) => theme.colors.headingText};
   width: 3rem;
   height: 3rem;
   border-radius: 50%;
@@ -46,8 +46,8 @@ export const CloseButton = styled.button`
   z-index: 1001;
 
   &:hover {
-    background: ${({ theme }) => theme.colors.accentPrimary};
-    border-color: ${({ theme }) => theme.colors.accentPrimary};
+    background: ${({ theme }) => theme.colors.accentHighlight};
+    border-color: ${({ theme }) => theme.colors.accentHighlight};
     transform: rotate(90deg);
   }
 
@@ -64,9 +64,9 @@ export const NavigationButton = styled.button`
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background: ${({ theme }) => theme.colors.bgCard};
-  border: 2px solid ${({ theme }) => theme.colors.borderColor};
-  color: ${({ theme }) => theme.colors.textPrimary};
+  background: ${({ theme }) => theme.colors.cardBackground};
+  border: 2px solid ${({ theme }) => theme.colors.border};
+  color: ${({ theme }) => theme.colors.headingText};
   width: 3.5rem;
   height: 3.5rem;
   border-radius: 50%;
@@ -79,8 +79,8 @@ export const NavigationButton = styled.button`
   z-index: 1001;
 
   &:hover {
-    background: ${({ theme }) => theme.colors.accentPrimary};
-    border-color: ${({ theme }) => theme.colors.accentPrimary};
+    background: ${({ theme }) => theme.colors.accentHighlight};
+    border-color: ${({ theme }) => theme.colors.accentHighlight};
     transform: translateY(-50%) scale(1.1);
   }
 

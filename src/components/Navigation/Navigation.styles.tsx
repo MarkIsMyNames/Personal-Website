@@ -4,11 +4,11 @@ export const Nav = styled.nav<{ $isVisible: boolean }>`
   position: fixed;
   top: 0;
   width: 100%;
-  border-bottom: 2px solid ${({ theme }) => theme.colors.borderColor};
+  border-bottom: 2px solid ${({ theme }) => theme.colors.border};
   padding: 1.25rem 2rem;
   z-index: 100;
   backdrop-filter: blur(12px);
-  background: ${({ theme }) => theme.colors.bgPrimary}f0;
+  background: ${({ theme }) => theme.colors.pageBackground}f0;
   box-shadow: ${({ theme }) => theme.shadows.small};
   transform: translateY(${({ $isVisible }) => ($isVisible ? '0' : '-100%')});
   transition: transform 0.3s ease-in-out;
@@ -53,7 +53,7 @@ export const NavProfileImage = styled.img`
   height: 2.5rem;
   border-radius: 50%;
   object-fit: cover;
-  border: 2px solid ${({ theme }) => theme.colors.accentPrimary};
+  border: 2px solid ${({ theme }) => theme.colors.accentHighlight};
 `;
 
 export const NavBrand = styled.div`
@@ -87,7 +87,7 @@ export const NavLinks = styled.div`
 `;
 
 export const NavLink = styled.a`
-  color: ${({ theme }) => theme.colors.textPrimary};
+  color: ${({ theme }) => theme.colors.headingText};
   text-decoration: none;
   font-size: 1.15rem;
   font-weight: 600;
@@ -109,7 +109,7 @@ export const NavLink = styled.a`
   }
 
   &:hover {
-    color: ${({ theme }) => theme.colors.accentPrimary};
+    color: ${({ theme }) => theme.colors.accentHighlight};
 
     &::after {
       width: 100%;

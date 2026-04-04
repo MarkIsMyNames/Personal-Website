@@ -119,18 +119,6 @@ export default [
       'react-hooks/exhaustive-deps': 'error',
       // Magic values — all non-trivial numbers must be named constants in config.ts
       '@typescript-eslint/no-magic-numbers': 'error',
-      // Magic strings — catch raw URL/protocol literals that belong in config.ts
-      'no-restricted-syntax': [
-        'error',
-        {
-          selector: 'Literal[value=/^https?:\\/\\//]',
-          message: 'URL strings must be defined as named constants in src/config.ts',
-        },
-        {
-          selector: 'Literal[value=/^mailto:/]',
-          message: 'Protocol strings must be defined as named constants in src/config.ts',
-        },
-      ],
       // i18n — no hardcoded user-facing strings in JSX
       'i18next/no-literal-string': [
         'error',
@@ -142,6 +130,27 @@ export default [
           words: {
             exclude: ['^[^a-zA-Z]*$'],
           },
+        },
+      ],
+    },
+  },
+  {
+    files: ['src/**/*.{ts,tsx}'],
+    ignores: ['src/styles/theme.ts'],
+    rules: {
+      'no-restricted-syntax': [
+        'error',
+        {
+          selector: 'Literal[value=/^https?:\\/\\//]',
+          message: 'URL strings must be defined as named constants in src/config.ts',
+        },
+        {
+          selector: 'Literal[value=/^mailto:/]',
+          message: 'Protocol strings must be defined as named constants in src/config.ts',
+        },
+        {
+          selector: 'Literal[value=/^#[0-9a-fA-F]{3,8}$/]',
+          message: 'Raw hex colour values must be defined in src/styles/theme.ts',
         },
       ],
     },

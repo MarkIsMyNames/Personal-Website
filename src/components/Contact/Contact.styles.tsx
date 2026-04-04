@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const ContactSection = styled.section`
   padding: 4rem 1rem;
   text-align: center;
-  background: ${({ theme }) => theme.colors.bgSecondary};
+  background: ${({ theme }) => theme.colors.sectionBackground};
   border-radius: 16px;
   margin-top: 4rem;
   box-shadow: ${({ theme }) => theme.shadows.large};
@@ -26,19 +26,19 @@ export const ContactLink = styled.a`
   align-items: center;
   gap: 1rem;
   padding: 1rem 2rem;
-  background: ${({ theme }) => theme.colors.bgCard};
-  border: 1px solid ${({ theme }) => theme.colors.borderColor};
+  background: ${({ theme }) => theme.colors.cardBackground};
+  border: 1px solid ${({ theme }) => theme.colors.border};
   border-radius: 12px;
   text-decoration: none;
-  color: ${({ theme }) => theme.colors.textPrimary};
+  color: ${({ theme }) => theme.colors.headingText};
   font-size: 1.125rem;
   transition: all 0.3s ease;
   min-width: 300px;
   justify-content: center;
 
   &:hover {
-    border-color: ${({ theme }) => theme.colors.accentPrimary};
-    background: ${({ theme }) => theme.colors.bgPrimary};
+    border-color: ${({ theme }) => theme.colors.accentHighlight};
+    background: ${({ theme }) => theme.colors.pageBackground};
     transform: translateY(-2px);
     box-shadow: ${({ theme }) => theme.shadows.large};
   }

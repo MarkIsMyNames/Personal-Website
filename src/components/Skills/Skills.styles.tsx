@@ -24,8 +24,8 @@ export const SkillsGrid = styled.div`
 `;
 
 export const SkillCard = styled.div`
-  background: ${({ theme }) => theme.colors.bgCard};
-  border: 1px solid ${({ theme }) => theme.colors.borderColor};
+  background: ${({ theme }) => theme.colors.cardBackground};
+  border: 1px solid ${({ theme }) => theme.colors.border};
   border-radius: 16px;
   padding: 2rem 1.5rem;
   display: flex;
@@ -37,7 +37,7 @@ export const SkillCard = styled.div`
 
   &:hover {
     transform: translateY(-5px);
-    border-color: ${({ theme }) => theme.colors.accentPrimary};
+    border-color: ${({ theme }) => theme.colors.accentHighlight};
     box-shadow: ${({ theme }) => theme.shadows.large};
   }
 
