@@ -21,7 +21,7 @@ export const ProfileImage = styled.img`
   height: 300px;
   border-radius: 50%;
   object-fit: cover;
-  border: 4px solid ${({ theme }) => theme.colors.accentPrimary};
+  border: 4px solid ${({ theme }) => theme.colors.accentHighlight};
   box-shadow: ${({ theme }) => theme.shadows.large};
   margin-bottom: 1rem;
 
@@ -56,7 +56,7 @@ export const BioTitle = styled.h1`
 
 export const BioSubtitle = styled.h2`
   font-size: 1.5rem;
-  color: ${({ theme }) => theme.colors.accentPrimary};
+  color: ${({ theme }) => theme.colors.accentHighlight};
   margin-bottom: 1.5rem;
   font-weight: 500;
 
@@ -71,7 +71,7 @@ export const BioSubtitle = styled.h2`
 
 export const BioText = styled.p`
   font-size: 1.25rem;
-  color: ${({ theme }) => theme.colors.textSecondary};
+  color: ${({ theme }) => theme.colors.bodyText};
   line-height: 1.8;
   margin-bottom: 1rem;
 
@@ -83,7 +83,7 @@ export const BioText = styled.p`
 
 export const BioEducation = styled.p`
   font-size: 1.1rem;
-  color: ${({ theme }) => theme.colors.textSecondary};
+  color: ${({ theme }) => theme.colors.bodyText};
   font-style: italic;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {

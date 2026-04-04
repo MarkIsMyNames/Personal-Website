@@ -11,8 +11,8 @@ export const ProjectsContainer = styled.div`
 `;
 
 export const ProjectCard = styled.div`
-  background: ${({ theme }) => theme.colors.bgSecondary};
-  border: 1px solid ${({ theme }) => theme.colors.borderColor};
+  background: ${({ theme }) => theme.colors.sectionBackground};
+  border: 1px solid ${({ theme }) => theme.colors.border};
   border-radius: 16px;
   overflow: hidden;
   box-shadow: ${({ theme }) => theme.shadows.large};
@@ -24,7 +24,7 @@ export const ProjectImages = styled.div<{ $isSingle: boolean }>`
   align-items: center;
   gap: 1rem;
   padding: ${({ $isSingle }) => ($isSingle ? '3rem 2rem' : '2rem')};
-  background: ${({ theme }) => theme.colors.bgCard};
+  background: ${({ theme }) => theme.colors.cardBackground};
   overflow-x: auto;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
@@ -77,7 +77,7 @@ export const ProjectTitle = styled.h3`
   font-size: 2rem;
   font-weight: 700;
   margin-bottom: 0.5rem;
-  color: ${({ theme }) => theme.colors.accentPrimary};
+  color: ${({ theme }) => theme.colors.accentHighlight};
 
   @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
     font-size: 1.5rem;
@@ -90,7 +90,7 @@ export const ProjectTitle = styled.h3`
 
 export const ProjectRole = styled.p`
   font-size: 1.125rem;
-  color: ${({ theme }) => theme.colors.textSecondary};
+  color: ${({ theme }) => theme.colors.bodyText};
   margin-bottom: 1rem;
   font-style: italic;
 
@@ -103,7 +103,7 @@ export const ProjectDescription = styled.p`
   font-size: 1.125rem;
   line-height: 1.8;
   margin-bottom: 1.5rem;
-  color: ${({ theme }) => theme.colors.textSecondary};
+  color: ${({ theme }) => theme.colors.bodyText};
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     font-size: 0.9rem;
@@ -125,7 +125,7 @@ export const HighlightItem = styled.li`
     content: '▹';
     margin-right: 0.5rem;
     margin-top: -0.35rem;
-    color: ${({ theme }) => theme.colors.accentPrimary};
+    color: ${({ theme }) => theme.colors.accentHighlight};
     font-size: 1.25rem;
     line-height: 1.6;
   }
@@ -146,17 +146,17 @@ export const ProjectTags = styled.div`
 `;
 
 export const ProjectTag = styled.span`
-  background: ${({ theme }) => theme.colors.bgCard};
-  color: ${({ theme }) => theme.colors.accentPrimary};
+  background: ${({ theme }) => theme.colors.cardBackground};
+  color: ${({ theme }) => theme.colors.accentHighlight};
   padding: 0.5rem 1rem;
   border-radius: 20px;
   font-size: 0.875rem;
-  border: 1px solid ${({ theme }) => theme.colors.borderColor};
+  border: 1px solid ${({ theme }) => theme.colors.border};
   transition: all 0.3s ease;
 
   &:hover {
-    border-color: ${({ theme }) => theme.colors.accentPrimary};
-    background: ${({ theme }) => theme.colors.bgPrimary};
+    border-color: ${({ theme }) => theme.colors.accentHighlight};
+    background: ${({ theme }) => theme.colors.pageBackground};
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {

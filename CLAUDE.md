@@ -264,16 +264,19 @@ Provided via `<ThemeProvider>` in App.tsx, typed via `src/styled.d.ts`.
 
 ```typescript
 // Access in styled-components:
-color: ${({ theme }) => theme.colors.accentPrimary};
+color: ${({ theme }) => theme.colors.accentHighlight};
 background: ${({ theme }) => theme.gradients.accent};
 ```
 
+**Colour naming convention:** Token names describe *purpose*, not the colour value (e.g. `accentHighlight`, not `accentCyan`). This ensures names remain meaningful if the palette changes. All hex values must live in `theme.ts`; an ESLint `no-restricted-syntax` rule enforces this across all other source files.
+
 **Design tokens:**
 - **Dark theme** — cyan (`#00d9ff`) to purple (`#7b2cbf`) gradient accents
-- **Backgrounds:** `bgPrimary` (#0a0e27) > `bgSecondary` (#151934) > `bgCard` (#1a1f3a)
-- **Text:** `textPrimary` (#e4e6eb) for headings, `textSecondary` (#b0b3b8) for body
-- **Border:** `borderColor` (#2a2f4a)
-- **Gradient:** `linear-gradient(135deg, #00d9ff 0%, #7b2cbf 100%)` — used on section titles via `background-clip: text`
+- **Backgrounds:** `pageBackground` (#0a0e27) > `sectionBackground` (#151934) > `cardBackground` (#1a1f3a)
+- **Text:** `headingText` (#e4e6eb) for headings, `bodyText` (#b0b3b8) for body
+- **Border:** `border` (#2a2f4a)
+- **Accent:** `accentHighlight` (cyan, gradient start), `accentGradientEnd` (purple, gradient end)
+- **Gradient:** built from named constants — `linear-gradient(135deg, ${accentHighlight} 0%, ${accentGradientEnd} 100%)` — used on section titles via `background-clip: text`
 - **Shadows:** `small` (cards), `large` (elevated), `hover` (interactive states)
 
 ### Transient Props
