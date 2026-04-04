@@ -156,6 +156,8 @@ index.tsx (imports i18n first)
 
 When adding a new language, copy `en.json` and translate only the human-readable strings. Leave images, `iconName`, `email`, `github`, and `graduationYear` unchanged.
 
+**Supported languages:** English (`en`), French (`fr`), German (`de`), Spanish (`es`), Irish/Gaelic (`ga`)
+
 ### Data Model (src/types.ts)
 
 **Enums and constants:**
@@ -369,7 +371,7 @@ src/i18n/
 
 1. Copy `src/i18n/locales/en.json` → `src/i18n/locales/<locale>.json`
 2. Translate all human-readable values — leave `images`, `iconName`, `email`, `github`, and `graduationYear` unchanged
-3. Import the new locale file in `src/i18n/i18n.ts` and add it to the `resources` object
+3. Import the new locale file in `src/i18n/locales/localeConfig.ts` and add it to the `LOCALES` object
 4. The `locales.test.ts` completeness test will fail if any keys are missing or extra
 
 ### Language Fallback
