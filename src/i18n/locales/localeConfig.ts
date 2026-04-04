@@ -1,8 +1,11 @@
 import en from './en.json';
 import fr from './fr.json';
+import de from './de.json';
+import es from './es.json';
+import ga from './ga.json';
 import { FIRST_INDEX } from '../../config';
 
-export const LOCALES = { en, fr };
+export const LOCALES = { en, fr, de, es, ga };
 export type SupportedLang = keyof typeof LOCALES;
 export const SUPPORTED_LANGS = Object.keys(LOCALES).filter(
   (localeKey): localeKey is SupportedLang => localeKey in LOCALES,

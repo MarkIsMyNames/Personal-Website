@@ -1,0 +1,233 @@
+{
+  "common": {
+    "ariaLabels": {
+      "section": "{{title}} Abschnitt"
+    }
+  },
+  "navigation": {
+    "ariaLabels": {
+      "nav": "Hauptnavigation",
+      "link": "Zum Abschnitt {{section}} navigieren"
+    },
+    "sections": {
+      "about": "Über mich",
+      "skills": "Fähigkeiten",
+      "projects": "Projekte",
+      "contact": "Kontakt"
+    }
+  },
+  "bio": {
+    "ariaLabels": {
+      "biography": "Biografie",
+      "education": "Ausbildungsinformationen",
+      "image": "{{name}} - {{title}}"
+    },
+    "education": "{{university}} • Abschlussjahrgang {{year}}"
+  },
+  "skills": {
+    "sectionTitle": "Technische Fähigkeiten",
+    "ariaLabels": {
+      "list": "Liste der technischen Fähigkeiten",
+      "card": "Fähigkeit {{name}}"
+    }
+  },
+  "projects": {
+    "sectionTitle": "Projekte & Erfahrung",
+    "ariaLabels": {
+      "list": "Liste der Projekte",
+      "card": "Projekt {{title}}",
+      "viewImage": "Bild {{index}} von {{title}} in voller Größe anzeigen"
+    }
+  },
+  "imageModal": {
+    "ariaLabels": {
+      "modal": "Bild-Modal",
+      "close": "Modal schließen",
+      "previous": "Vorheriges Bild",
+      "next": "Nächstes Bild",
+      "image": "Bild {{index}}"
+    }
+  },
+  "contact": {
+    "sectionTitle": "Kontakt aufnehmen",
+    "githubUrl": "github.com/{{username}}",
+    "ariaLabels": {
+      "list": "Kontaktinformationen",
+      "email": "E-Mail an {{email}}",
+      "github": "GitHub-Profil von {{username}} besuchen"
+    }
+  },
+  "profile": {
+    "name": "Mark Drohan",
+    "title": "Softwareentwickler",
+    "bio": "Student für immersive Softwareentwicklung an der University of Limerick, Abschluss 2027. Interessiert an Mathematik, KI und Algorithmendesign. Außerhalb des Programmierens spiele ich gerne Schach, Hurling und Bogenschießen.",
+    "image": "PersonalProfile.jpg",
+    "email": "MarkDrohan@protonmail.com",
+    "github": "MarkIsMyNames",
+    "university": "Universität Limerick",
+    "graduationYear": 2027
+  },
+  "skillsData": [
+    { "name": "Java", "iconName": "FaJava" },
+    { "name": "Kotlin", "iconName": "SiKotlin" },
+    { "name": "JavaScript", "iconName": "IoLogoJavascript" },
+    { "name": "TypeScript", "iconName": "SiTypescript" },
+    { "name": "Python", "iconName": "FaPython" },
+    { "name": "C/C++", "iconName": "SiCplusplus" },
+    { "name": "Ruby", "iconName": "DiRuby" },
+    { "name": "SQL", "iconName": "FaDatabase" },
+    { "name": "React", "iconName": "FaReact" },
+    { "name": "Ember", "iconName": "SiEmberdotjs" },
+    { "name": "Flask", "iconName": "SiFlask" },
+    { "name": "Rails", "iconName": "SiRubyonrails" },
+    { "name": "Objektorientierte Programmierung", "iconName": "BiCodeBlock" },
+    { "name": "Datenstrukturen", "iconName": "AiOutlineDatabase" },
+    { "name": "Algorithmendesign", "iconName": "FaProjectDiagram" },
+    { "name": "Mobile Entwicklung", "iconName": "FaMobileAlt" },
+    { "name": "MCP-Server", "iconName": "FaServer" },
+    { "name": "Linux", "iconName": "FaLinux" }
+  ],
+  "projectsData": [
+    {
+      "title": "Intercom",
+      "role": "Softwareentwickler – Messenger-Team",
+      "description": "Arbeit im Messenger-Team bei Intercom, Pflege einer Plattform, die täglich von Tausenden von Unternehmen genutzt wird. Beiträge zur Backend- und Frontend-Entwicklung, während mehrere interne Hackathons mit innovativen KI-gestützten Tools gewonnen wurden.",
+      "highlights": [
+        "Implementierung von benutzerdefinierter Emoji-Unterstützung in Backend- und Frontend-Systemen",
+        "Beiträge zur Code-Refaktorierung und Behebung mehrerer P1-Produktionsvorfälle",
+        "Hackathon gewonnen durch Entwicklung eines KI-gestützten Incident-Resolvers mit GitHub Actions, Honeycomb und Sentry MCPs zur automatischen Fehlerbehebung in der Produktion",
+        "Zweiten Hackathon gewonnen durch Entwicklung einer Echtzeit-Sprachtranskriptionsfunktion für unseren Web-Messenger"
+      ],
+      "tags": [
+        "Ember.js",
+        "JavaScript",
+        "TypeScript",
+        "Ruby",
+        "KI/ML",
+        "MCP-Server",
+        "GitHub Actions",
+        "Spracherkennung"
+      ],
+      "images": ["Intercom.png"]
+    },
+    {
+      "title": "Ganzy",
+      "role": "Leitender Entwickler",
+      "description": "Entwicklung des Frontends für Ganzy, ein KI-gestütztes Lernplaner-Startup für irische Leaving-Cert-Studierende. Die Plattform zerlegt Fächer in Mikrofähigkeiten und nutzt KI zur Erstellung personalisierter Lernpläne, um Studierenden zu helfen, sich auf die Bereiche zu konzentrieren, die ihnen die meisten Punkte einbringen.",
+      "highlights": [
+        "Leitung eines Teams bei der Architektur und dem Aufbau der Frontend-Seiten",
+        "Entwicklung einer interaktiven Lernplanungsschnittstelle zur Visualisierung KI-generierter personalisierter Lernpläne",
+        "Skalierbar konzipiert, da die Plattform plant, über Irland hinaus auf den US-Markt zu expandieren"
+      ],
+      "tags": [
+        "Next.js",
+        "TypeScript",
+        "React",
+        "Tailwind CSS",
+        "KI/ML",
+        "EdTech",
+        "Startup",
+        "UI/UX-Design"
+      ],
+      "images": ["Ganzy.png"]
+    },
+    {
+      "title": "NASA Space Apps Challenge",
+      "role": "Teamleiter – 3. Platz",
+      "description": "Führung eines Teams zum 3. Platz bei der NASA Space Apps Challenge in Athlone. Entwicklung einer Lösung zur Anzeige und Navigation von Multi-Gigabyte/Terabyte-Bildern online, die eine vereinfachte Erkundung von Mars-Oberflächenbildern und Weltraumfotografien ermöglicht.",
+      "highlights": [
+        "3. Platz unter über 300 Teilnehmenden erreicht",
+        "Technische Ausrichtung geleitet und Team auf Kurs gehalten",
+        "Lösung für das Rendering von Multi-Gigabyte-Bildern mit flüssigem Schwenken ohne Ladezeiten entwickelt",
+        "Web-Scraper zum Generieren großformatiger Testbilder für die Leistungsvalidierung gebaut",
+        "Rendering optimiert, um Server-Last und Browser-Speichernutzung zu minimieren"
+      ],
+      "tags": [
+        "TypeScript",
+        "Python",
+        "Bildverarbeitung",
+        "Webentwicklung",
+        "Leistungsoptimierung",
+        "Teamführung",
+        "Algorithmendesign"
+      ],
+      "images": ["NASA1.jpg", "NASA2.jpg", "NASA3.jpg"]
+    },
+    {
+      "title": "Kepler",
+      "role": "CEO & Mitgründer – Hult Prize",
+      "description": "Mitgründung von Kepler, einem Klima-Tech-Startup für autonome Ozean-Aquakultur-Systeme. Leitung der Entwicklung KI-gesteuerter autonomer Unterwasserroboter zum Pflanzen und Ernten von Kelp für Lebensmittel und Nahrungsergänzungsmittel, anschließend Präsentation bei der Hult-Prize-Konkurrenz.",
+      "highlights": [
+        "Mitgründung und Leitung des Unternehmens als CEO",
+        "Entwicklung autonomer Unterwasserroboter mit KI-gesteuerter Navigation",
+        "Markteinführungsstrategie entwickelt und Finanzmodell mit Umsatzprognosen erstellt",
+        "Idee den Juroren des Hult Prize präsentiert und einen Platz unter den Top 6 in Irland gesichert"
+      ],
+      "tags": [
+        "Python",
+        "KI/ML",
+        "Robotik",
+        "Unternehmertum",
+        "Klimatechnologie",
+        "Unternehmensstrategie",
+        "Nachhaltigkeit"
+      ],
+      "images": ["Hult1.jpg", "Hult2.png", "Hult3.jpg"]
+    },
+    {
+      "title": "HackJunction – Finnland",
+      "role": "KI-Hackathon-Teilnehmer",
+      "description": "Teilnahme an HackJunction, dem weltweit größten KI-Hackathon, in Helsinki, Finnland. Entwicklung eines persönlichen Finanzmanagement-Tools, das maschinelles Lernen nutzt, um Ausgabemuster zu analysieren und personalisierte Finanzempfehlungen basierend auf individuellem Nutzerverhalten zu generieren.",
+      "highlights": [
+        "Teilnahme am internationalen KI-Hackathon mit über 1500 Teilnehmenden",
+        "KI-gestütztes persönliches Finanztool zur Ausgabenverwaltung entwickelt",
+        "Maschinelle Lernmodelle implementiert, um Ausgabemuster zu erkennen und zukünftige Ausgaben vorherzusagen",
+        "Personalisiertes Empfehlungssystem entwickelt, um Nutzern bei besseren Finanzentscheidungen zu helfen"
+      ],
+      "tags": [
+        "Python",
+        "KI/ML",
+        "Datenanalyse",
+        "FinTech",
+        "Maschinelles Lernen",
+        "Persönliche Finanzen",
+        "Mustererkennung"
+      ],
+      "images": ["Junction1.jpg", "Junction2.jpg", "Junction3.jpg"]
+    },
+    {
+      "title": "Breaking Barriers Hackathon",
+      "role": "Sicherheitsforschung & KI-Entwicklung",
+      "description": "Entwicklung eines KI-gestützten Penetrationstest-Tools beim AWS Telco Hackathon (Breaking Barriers). Das System nutzte MCP-Server zur Informationssammlung von LinkedIn, Instagram und Facebook und wendete dann KI an, um Phishing-Szenarien zu generieren.",
+      "highlights": [
+        "Automatisiertes Penetrationstest-Tool zur Demonstration KI-gestützter Sicherheitsbewertungstechniken entwickelt",
+        "MCP-Server integriert, um OSINT-Daten (aus öffentlichen Quellen) von mehreren Social-Media-Plattformen zu sammeln",
+        "KI-gestütztes Phishing-Simulationstool für Security-Awareness-Training entwickelt",
+        "KI trainiert, um hochsophistizierte Phishing-E-Mails zu erstellen"
+      ],
+      "tags": [
+        "Python",
+        "KI/ML",
+        "MCP-Server",
+        "Cybersicherheit",
+        "Penetrationstests",
+        "OSINT",
+        "AWS",
+        "Social Engineering"
+      ],
+      "images": ["AWSHACK1.jpg", "AWSHACK2.png", "AWSHACK3.jpg"]
+    },
+    {
+      "title": "Hack Europe",
+      "role": "KI-Sicherheit",
+      "description": "Entwicklung eines Prompt-Injection-Detektors und -Bereinigungssystems für KI-integrierte Anwendungen in Bereichen wie autonome Fahrzeuge, Drohnen und automatisiertes Bewerberscreening.",
+      "highlights": [
+        "Hybride KI- und Regex-Pipeline zur Erkennung und Neutralisierung von Prompt-Injection-Payloads entwickelt",
+        "Sicherheitsanalyse-Schicht entwickelt, um Modellausgaben vor der Rückgabe an den Nutzer als schädlich, gefährlich oder sicher zu klassifizieren",
+        "System gegen eine Reihe von Eingaben getestet, einschließlich Jailbreaks, Rollenüberschreibungen und Instruction-Smuggling, um die Erkennungsabdeckung zu validieren"
+      ],
+      "tags": ["Ruby", "Rails", "KI/ML", "Cybersicherheit", "Prompt Injection", "NLP"],
+      "images": ["HackEurope1.jpg", "HackEurope2.svg", "HackEurope3.jpg"]
+    }
+  ]
+}

@@ -1,0 +1,233 @@
+{
+  "common": {
+    "ariaLabels": {
+      "section": "Alt {{title}}"
+    }
+  },
+  "navigation": {
+    "ariaLabels": {
+      "nav": "Príomh-nascleanúint",
+      "link": "Téigh go dtí alt {{section}}"
+    },
+    "sections": {
+      "about": "Fúm",
+      "skills": "Scileanna",
+      "projects": "Tionscadail",
+      "contact": "Teagmháil"
+    }
+  },
+  "bio": {
+    "ariaLabels": {
+      "biography": "Beathaisnéis",
+      "education": "Faisnéis oideachais",
+      "image": "{{name}} - {{title}}"
+    },
+    "education": "{{university}} • Aicme {{year}}"
+  },
+  "skills": {
+    "sectionTitle": "Scileanna Teicniúla",
+    "ariaLabels": {
+      "list": "Liosta de scileanna teicniúla",
+      "card": "Scil {{name}}"
+    }
+  },
+  "projects": {
+    "sectionTitle": "Tionscadail & Taithí",
+    "ariaLabels": {
+      "list": "Liosta de thionscadail",
+      "card": "Tionscadal {{title}}",
+      "viewImage": "Féach ar íomhá {{index}} de {{title}} i méid iomlán"
+    }
+  },
+  "imageModal": {
+    "ariaLabels": {
+      "modal": "Modal íomhá",
+      "close": "Dún an modal",
+      "previous": "Íomhá roimhe",
+      "next": "An chéad íomhá eile",
+      "image": "Íomhá {{index}}"
+    }
+  },
+  "contact": {
+    "sectionTitle": "Déan Teagmháil",
+    "githubUrl": "github.com/{{username}}",
+    "ariaLabels": {
+      "list": "Faisnéis teagmhála",
+      "email": "Seol ríomhphost chuig {{email}}",
+      "github": "Tabhair cuairt ar phróifíl GitHub {{username}}"
+    }
+  },
+  "profile": {
+    "name": "Mark Drohan",
+    "title": "Innealtóir Bogearraí",
+    "bio": "Mac léinn Innealtóireachta Bogearraí Tumtha in Ollscoil Luimnigh, ag céimniú in 2027. Spéis agam i matamaitic, AI, agus dearadh algartam. Lasmuigh den chódú, is maith liom ficheall, iománaíocht agus boghdóireacht a imirt.",
+    "image": "PersonalProfile.jpg",
+    "email": "MarkDrohan@protonmail.com",
+    "github": "MarkIsMyNames",
+    "university": "Ollscoil Luimnigh",
+    "graduationYear": 2027
+  },
+  "skillsData": [
+    { "name": "Java", "iconName": "FaJava" },
+    { "name": "Kotlin", "iconName": "SiKotlin" },
+    { "name": "JavaScript", "iconName": "IoLogoJavascript" },
+    { "name": "TypeScript", "iconName": "SiTypescript" },
+    { "name": "Python", "iconName": "FaPython" },
+    { "name": "C/C++", "iconName": "SiCplusplus" },
+    { "name": "Ruby", "iconName": "DiRuby" },
+    { "name": "SQL", "iconName": "FaDatabase" },
+    { "name": "React", "iconName": "FaReact" },
+    { "name": "Ember", "iconName": "SiEmberdotjs" },
+    { "name": "Flask", "iconName": "SiFlask" },
+    { "name": "Rails", "iconName": "SiRubyonrails" },
+    { "name": "Ríomhchlárú Réad-Dhírithe", "iconName": "BiCodeBlock" },
+    { "name": "Struchtúir Sonraí", "iconName": "AiOutlineDatabase" },
+    { "name": "Dearadh Algartam", "iconName": "FaProjectDiagram" },
+    { "name": "Forbairt Mhóibíleach", "iconName": "FaMobileAlt" },
+    { "name": "Freastalaithe MCP", "iconName": "FaServer" },
+    { "name": "Linux", "iconName": "FaLinux" }
+  ],
+  "projectsData": [
+    {
+      "title": "Intercom",
+      "role": "Innealtóir Bogearraí – Foireann Messenger",
+      "description": "D'oibrigh mé ar fhoireann Messenger ag Intercom, ag cothabháil ardáin a úsáideann na mílte gnólacht gach lá. Chuir mé le forbairt backend agus frontend agus bhuaigh mé hackathons inmheánacha le huirlisí nuálacha faoi thiomáint AI.",
+      "highlights": [
+        "Chuir mé tacaíocht emoji saincheaptha i bhfeidhm ar chórais backend agus frontend",
+        "Chuir mé le hath-struchtúrú cód agus réitigh mé roinnt teagmhas táirgthe P1",
+        "Bhuaigh mé hackathon trí réiteoir teagmhas faoi thiomáint AI a thógáil ag úsáid GitHub Actions, Honeycomb, agus Sentry MCPs chun fadhbanna táirgthe a dheisigh go huathoibríoch",
+        "Bhuaigh mé an dara hackathon trí ghné traschríochnaithe gutha fíor-ama a fhorbairt dár messenger gréasáin"
+      ],
+      "tags": [
+        "Ember.js",
+        "JavaScript",
+        "TypeScript",
+        "Ruby",
+        "AI/ML",
+        "Freastalaithe MCP",
+        "GitHub Actions",
+        "Aithint Gutha"
+      ],
+      "images": ["Intercom.png"]
+    },
+    {
+      "title": "Ganzy",
+      "role": "Príomhfhorbróir Sinsearach",
+      "description": "Thóg mé an frontend do Ganzy, gnólacht nua pleanálaí staidéir faoi thiomáint AI do dhaltaí Ardteistiméireachta na hÉireann. Briseann an t-ardán ábhair ina mhicrscileanna agus úsáideann sé AI chun sceidil staidéir pearsantaithe a chruthú, ag cabhrú le daltaí díriú ar na réimsí a thabharfaidh an líon pointí is mó dóibh.",
+      "highlights": [
+        "Stiúir foireann i gcomhailtíocht agus tógáil leathanaigh frontend",
+        "Thóg comhéadan pleanála staidéir idirghníomhach a léiríonn pleananna staidéir pearsantaithe ginte ag AI",
+        "Deartha le inscálaitheacht san áireamh de réir mar a phleanann an t-ardán leathnú thar Éirinn go dtí margadh na SA"
+      ],
+      "tags": [
+        "Next.js",
+        "TypeScript",
+        "React",
+        "Tailwind CSS",
+        "AI/ML",
+        "EdTech",
+        "Gnólacht Nua",
+        "Dearadh UI/UX"
+      ],
+      "images": ["Ganzy.png"]
+    },
+    {
+      "title": "NASA Space Apps Challenge",
+      "role": "Ceannaire Foirne – 3ú Háit",
+      "description": "Threoir mé foireann go dtí an 3ú háit sa NASA Space Apps Challenge in Ath Luain. D'fhorbair mé réiteach chun íomhánna il-ghigibheart/terabyte a thaispeáint agus a nascleanúint ar líne, ag cumasú iniúchadh simplithe de íomhánna dromchla Mars agus grianghraif spáis domhain.",
+      "highlights": [
+        "3ú háit bainte amach as níos mó ná 300 rannpháirtí",
+        "Threoir an treo teicniúil agus choinnigh mé an fhoireann ar an gcúrsa",
+        "Fuair mé amach conas íomhánna il-ghigibheart a rindreáil le panning réidh agus gan moilleanna luchtaithe",
+        "Thóg mé scríobaire gréasáin chun íomhánna tástála mórscála a ghiniúint le haghaidh bailíochtaithe feidhmíochta",
+        "Optamaíodh rindreáil chun ualach freastalaí agus úsáid cuimhne brabhsálaí a íoslaghdú"
+      ],
+      "tags": [
+        "TypeScript",
+        "Python",
+        "Próiseáil Íomhánna",
+        "Forbairt Ghréasáin",
+        "Optamú Feidhmíochta",
+        "Ceannaireacht Foirne",
+        "Dearadh Algartam"
+      ],
+      "images": ["NASA1.jpg", "NASA2.jpg", "NASA3.jpg"]
+    },
+    {
+      "title": "Kepler",
+      "role": "POF & Comhbhunaitheoir – Hult Prize",
+      "description": "Chomhbhunaigh mé Kepler, gnólacht nua teicneolaíochta aeráide dírithe ar chórais uathrialaithe feirmeoireachta aigéin a fhorbairt. Stiúir mé dearadh róbóiti fo-uisce uathrialaithe faoi thiomáint AI chun feamainn a phlandáil agus a fhómhar le haghaidh bia agus forlíonta cothaithe, ansin an fiontar seo a chur i láthair ag comórtas Hult Prize.",
+      "highlights": [
+        "Chomhbhunaigh agus stiúir an gnólacht mar POF",
+        "Dhear róbóiti fo-uisce uathrialaithe le nascleanúint faoi thiomáint AI",
+        "D'fhorbair straitéis dul chun margaidh agus chruthaigh múnla airgeadais le réamh-mheastacháin ioncaim",
+        "Chuir ár smaoineamh i láthair do na moltóirí ag comórtas Hult Prize, ag áirithiú áit sa bun 6 in Éirinn"
+      ],
+      "tags": [
+        "Python",
+        "AI/ML",
+        "Róbataic",
+        "Fiontraíocht",
+        "Teicneolaíocht Aeráime",
+        "Straitéis Ghnó",
+        "Inbhuanaitheacht"
+      ],
+      "images": ["Hult1.jpg", "Hult2.png", "Hult3.jpg"]
+    },
+    {
+      "title": "HackJunction – An Fhionlainn",
+      "role": "Rannpháirtí Hackathon AI",
+      "description": "Ghlac mé páirt in HackJunction, an hackathon AI is mó ar domhan, i Heilsinciú, An Fhionlainn. D'fhorbair mé uirlis bainistíochta airgeadais pearsanta a úsáideann foghlaim meaisín chun patrúin caiteachais a anailísiú agus moltaí airgeadais pearsantaithe a ghiniúint bunaithe ar iompar aonair úsáideora.",
+      "highlights": [
+        "Iomaíocht i hackathon AI idirnáisiúnta le níos mó ná 1500 rannpháirtí",
+        "Thóg uirlis airgeadais phearsanta faoi thiomáint AI chun caiteachas a bhainistiú",
+        "Chuir múnlaí foghlama meaisín i bhfeidhm chun patrúin caiteachais a aithint agus caiteachas amach anseo a thuar",
+        "Chruthaigh córas moltaí pearsantaithe chun cabhrú le húsáideoirí a gcinntí airgeadais a fheabhsú"
+      ],
+      "tags": [
+        "Python",
+        "AI/ML",
+        "Anailís Sonraí",
+        "FinTech",
+        "Foghlaim Meaisín",
+        "Airgeadas Pearsanta",
+        "Aithint Patrún"
+      ],
+      "images": ["Junction1.jpg", "Junction2.jpg", "Junction3.jpg"]
+    },
+    {
+      "title": "Breaking Barriers Hackathon",
+      "role": "Taighde Slándála & Forbairt AI",
+      "description": "D'fhorbair mé uirlis tástála treá faoi thiomáint AI ag an AWS Telco Hackathon (Breaking Barriers). D'úsáid an córas freastalaithe MCP chun faisnéis a bhailiú ó LinkedIn, Instagram, agus Facebook, ansin chuir sé AI i bhfeidhm chun cásanna fioscaireachta a ghiniúint.",
+      "highlights": [
+        "Thóg uirlis tástála treá uathoibríoch chun teicnící measúnachta slándála faoi thiomáint AI a léiriú",
+        "Chomhtháthaigh freastalaithe MCP chun sonraí OSINT (sonraí ó fhoinsí poiblí) a bhailiú ó ardáin meáin shóisialta iolracha",
+        "D'fhorbair uirlis ionsamhlúcháin fioscaireachta faoi thiomáint AI le haghaidh oiliúint feasachta slándála",
+        "Thraenáil AI chun ríomhphoist fioscaireachta an-sophisticated a chruthú"
+      ],
+      "tags": [
+        "Python",
+        "AI/ML",
+        "Freastalaithe MCP",
+        "Cibearshlándáil",
+        "Tástáil Treá",
+        "OSINT",
+        "AWS",
+        "Innealtóireacht Shóisialta"
+      ],
+      "images": ["AWSHACK1.jpg", "AWSHACK2.png", "AWSHACK3.jpg"]
+    },
+    {
+      "title": "Hack Europe",
+      "role": "Slándáil AI",
+      "description": "Thóg mé braiteoir agus glantóir instealladh pras, ag díriú ar fheidhmchláir chomhtháite AI i réimsí ar nós feithiclí uathrialaithe, dróin, agus scagadh uathoibríoch iarratas post.",
+      "highlights": [
+        "Dhear píblíne hibrideach AI agus regex chun pálasta instealladh pras a aithint agus a neodrú",
+        "Thóg sraith anailíse slándála chun aschuir mhúnlaí a aicmiú mar dhíobhálach, contúirteach, nó sábháilte sula gceadaítear dóibh filleadh chuig an úsáideoir",
+        "Thástáil an córas i gcoinne raon ionchuir lena n-áirítear jailbreaks, sáruithe róil, agus smuigleáil treorach chun cumhdach braite a bhailíochtú"
+      ],
+      "tags": ["Ruby", "Rails", "AI/ML", "Cibearshlándáil", "Instealladh Pras", "NLP"],
+      "images": ["HackEurope1.jpg", "HackEurope2.svg", "HackEurope3.jpg"]
+    }
+  ]
+}

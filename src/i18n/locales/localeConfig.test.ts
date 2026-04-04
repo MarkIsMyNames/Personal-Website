@@ -1,20 +1,32 @@
-import { detectLang, isSupportedLang, DEFAULT_LANG, SUPPORTED_LANGS } from './localeConfig';
+import { detectLang, isSupportedLang } from './localeConfig';
 
 describe('detectLang', () => {
-  it('returns fr for fr-FR', () => {
-    expect(detectLang('fr-FR')).toBe('fr');
-  });
-
-  it('returns fr for fr', () => {
-    expect(detectLang('fr')).toBe('fr');
-  });
-
   it('returns en for en-US', () => {
     expect(detectLang('en-US')).toBe('en');
   });
 
-  it('returns DEFAULT_LANG for unsupported de-DE', () => {
-    expect(detectLang('de-DE')).toBe(DEFAULT_LANG);
+  it('returns fr for fr-FR', () => {
+    expect(detectLang('fr-FR')).toBe('fr');
+  });
+
+  it('returns de for de-DE', () => {
+    expect(detectLang('de-DE')).toBe('de');
+  });
+
+  it('returns es for es-ES', () => {
+    expect(detectLang('es-ES')).toBe('es');
+  });
+
+  it('returns ga for ga-IE', () => {
+    expect(detectLang('ga-IE')).toBe('ga');
+  });
+
+  it('falls back to en for an unsupported language', () => {
+    expect(detectLang('ja-JP')).toBe('en');
+  });
+
+  it('falls back to en for an empty string', () => {
+    expect(detectLang('')).toBe('en');
   });
 });
 
@@ -27,17 +39,19 @@ describe('isSupportedLang', () => {
     expect(isSupportedLang('fr')).toBe(true);
   });
 
-  it('returns false for de', () => {
-    expect(isSupportedLang('de')).toBe(false);
-  });
-});
-
-describe('SUPPORTED_LANGS', () => {
-  it('contains en', () => {
-    expect(SUPPORTED_LANGS).toContain('en');
+  it('returns true for de', () => {
+    expect(isSupportedLang('de')).toBe(true);
   });
 
-  it('contains fr', () => {
-    expect(SUPPORTED_LANGS).toContain('fr');
+  it('returns true for es', () => {
+    expect(isSupportedLang('es')).toBe(true);
+  });
+
+  it('returns true for ga', () => {
+    expect(isSupportedLang('ga')).toBe(true);
+  });
+
+  it('returns false for an unsupported language', () => {
+    expect(isSupportedLang('ja')).toBe(false);
   });
 });
