@@ -2,6 +2,7 @@ import { defineConfig } from 'vitest/config';
 import react from '@vitejs/plugin-react';
 import { createHtmlPlugin } from 'vite-plugin-html';
 import en from './src/i18n/locales/en.json';
+import { theme } from './src/styles/theme';
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -11,6 +12,7 @@ export default defineConfig({
       inject: {
         data: {
           name: en.profile.name,
+          pageBackgroundStyle: `<style>body{background-color:${theme.colors.pageBackground}}</style>`,
         },
       },
     }),
