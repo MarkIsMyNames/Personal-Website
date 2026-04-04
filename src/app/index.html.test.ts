@@ -1,9 +1,9 @@
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
-import { theme } from './styles/theme.ts';
-import en from '../src/i18n/locales/en.json';
+import { theme } from '../styles/theme.ts';
+import en from '../i18n/locales/en.json';
 
-const indexHtml = readFileSync(resolve(__dirname, '../index.html'), 'utf-8');
+const indexHtml = readFileSync(resolve(__dirname, '../../index.html'), 'utf-8');
 
 describe('index.html structure', () => {
   it('declares utf-8 charset', () => {

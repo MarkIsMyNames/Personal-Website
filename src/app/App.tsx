@@ -1,8 +1,8 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
-import { LangRedirect } from './LangRedirect';
-import { LocaleApp } from './LocaleApp';
-import { SUPPORTED_LANGS, DEFAULT_LANG } from './i18n/locales/localeConfig';
+import { LangRedirect } from './LangRedirect/LangRedirect';
+import { LocaleApp } from './LocaleApp/LocaleApp';
+import { SUPPORTED_LANGS, DEFAULT_LANG } from '../i18n/localeConfig';
 
 export default function App() {
   return (

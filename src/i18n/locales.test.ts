@@ -1,9 +1,9 @@
 import { readdirSync, readFileSync } from 'fs';
 import { resolve } from 'path';
-import en from './en.json';
-import { EMPTY_LENGTH } from '../../config';
+import en from './locales/en.json';
+import { EMPTY_LENGTH } from '../config';
 
-const localesDir = resolve(__dirname);
+const localesDir = resolve(__dirname, 'locales');
 
 function getAllKeys(obj: unknown, prefix = ''): string[] {
   if (typeof obj !== 'object' || obj === null || Array.isArray(obj)) {

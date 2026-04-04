@@ -1,7 +1,7 @@
 import { statSync } from 'fs';
 import { resolve } from 'path';
-import en from './en.json';
-import { MAX_IMAGE_SIZE_BYTES, EMPTY_LENGTH, KIB_CONVERSION_FACTOR } from '../../config';
+import en from './locales/en.json';
+import { MAX_IMAGE_SIZE_BYTES, EMPTY_LENGTH, KIB_CONVERSION_FACTOR } from '../config';
 
 describe('en.json structure', () => {
   it('has all required top-level keys', () => {

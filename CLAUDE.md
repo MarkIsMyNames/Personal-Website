@@ -57,44 +57,60 @@ Personal-Website/
 │
 ├── src/
 │   ├── index.tsx                      # React entry point (StrictMode) — imports i18n first
-│   ├── App.tsx                        # Root: ThemeProvider → GlobalStyles → Nav → Sections
-│   ├── App.test.tsx                   # App-level integration tests
+│   ├── config.ts                      # Named constants (no magic values)
+│   ├── types.ts                       # Shared types: Profile, Skill, Project, SectionId, KeyboardKey
 │   ├── setupTests.ts                  # jest-dom + global react-i18next mock
 │   ├── styled.d.ts                    # Augments DefaultTheme for styled-components typing
-│   ├── types.ts                       # Shared types: Profile, Skill, Project, SectionId, KeyboardKey
+│   │
+│   ├── app/                           # App shell — routing, top-level composition
+│   │   ├── App.tsx                    # Root router: HelmetProvider → BrowserRouter → Routes
+│   │   ├── App.test.tsx
+│   │   ├── index.html.test.ts         # Validates index.html meta tags and theme tokens
+│   │   ├── LangRedirect/
+│   │   │   ├── LangRedirect.tsx       # Redirects bare / to /<lang> based on browser locale
+│   │   │   └── LangRedirect.test.tsx
+│   │   └── LocaleApp/
+│   │       ├── LocaleApp.tsx          # Per-locale app shell: ThemeProvider → GlobalStyles → Nav → Sections
+│   │       └── LocaleApp.test.tsx
 │   │
 │   ├── i18n/
 │   │   ├── i18n.ts                    # i18next init — LanguageDetector, fallback to en
-│   │   ├── i18n.test.ts               # i18next initialisation + language switching tests
-│   │   └── locales/
+│   │   ├── i18n.test.ts               # Init, interpolation, language switching, fallback behaviour
+│   │   ├── localeConfig.ts            # LOCALES map, DEFAULT_LANG, detectLang, isSupportedLang
+│   │   ├── localeConfig.test.ts
+│   │   ├── en.test.ts                 # Structural validation + data integrity tests for en.json
+│   │   ├── locales.test.ts            # Completeness check for all locale files
+│   │   └── locales/                   # Translation data only (no logic, no tests)
 │   │       ├── en.json                # Single source of truth for ALL content + UI strings
-│   │       ├── en.test.ts             # Structural validation + data integrity tests
-│   │       └── locales.test.ts        # Completeness check for any future locale files
+│   │       ├── fr.json
+│   │       ├── de.json
+│   │       ├── es.json
+│   │       └── ga.json
 │   │
 │   ├── components/                    # Each component: Component.tsx + Component.styles.tsx + Component.test.tsx
 │   │   ├── Bio/
-│   │   │   ├── Bio.tsx                # Hero section: profile image, name, title, bio, education
-│   │   │   ├── Bio.styles.tsx         # CSS only
+│   │   │   ├── Bio.tsx
+│   │   │   ├── Bio.styles.tsx
 │   │   │   └── Bio.test.tsx
 │   │   ├── Contact/
-│   │   │   ├── Contact.tsx            # Email + GitHub contact links
-│   │   │   ├── Contact.styles.tsx     # CSS only
+│   │   │   ├── Contact.tsx
+│   │   │   ├── Contact.styles.tsx
 │   │   │   └── Contact.test.tsx
 │   │   ├── ImageModal/
-│   │   │   ├── ImageModal.tsx         # Full-screen lightbox (keyboard + swipe navigation)
-│   │   │   ├── ImageModal.styles.tsx  # CSS only
+│   │   │   ├── ImageModal.tsx
+│   │   │   ├── ImageModal.styles.tsx
 │   │   │   └── ImageModal.test.tsx
 │   │   ├── Navigation/
-│   │   │   ├── Navigation.tsx         # Fixed nav bar, scroll-aware show/hide, smooth scroll
-│   │   │   ├── Navigation.styles.tsx  # CSS only
+│   │   │   ├── Navigation.tsx
+│   │   │   ├── Navigation.styles.tsx
 │   │   │   └── Navigation.test.tsx
 │   │   ├── Projects/
-│   │   │   ├── Projects.tsx           # Project cards with image gallery + lightbox trigger
-│   │   │   ├── Projects.styles.tsx    # CSS only
+│   │   │   ├── Projects.tsx
+│   │   │   ├── Projects.styles.tsx
 │   │   │   └── Projects.test.tsx
 │   │   └── Skills/
-│   │       ├── Skills.tsx             # Responsive grid of skill cards with icons
-│   │       ├── Skills.styles.tsx      # CSS only
+│   │       ├── Skills.tsx
+│   │       ├── Skills.styles.tsx
 │   │       └── Skills.test.tsx
 │   │
 │   ├── styles/
@@ -104,7 +120,14 @@ Personal-Website/
 │   │   └── Shared.styles.tsx          # CSS only — Reusable styled components (SectionTitle)
 │   │
 │   └── utils/
-│       └── iconMapper.tsx             # Maps icon name strings → react-icons components
+│       ├── iconMapper.tsx             # Maps icon name strings → react-icons components
+│       └── iconMapper.test.tsx
+│
+├── vercel.json                        # Vercel routing config (language URL rewrites)
+├── docs/
+│   └── superpowers/
+│       ├── plans/                     # Implementation plans
+│       └── specs/                     # Design specs
 │
 ├── scripts/
 │   └── generateManifest.ts            # Prebuild: generates public/manifest.json from en.json profile data
@@ -136,19 +159,21 @@ Personal-Website/
 
 ```
 index.tsx (imports i18n first)
-  → App.tsx → ThemeProvider(theme)
-                ├── GlobalStyles (CSS reset)
-                ├── Navigation (fixed, full-width — reads profile via t())
-                └── AppContainer (max-width: 1240px)
-                      ├── <div id="about">    → Bio(profile)
-                      ├── <div id="skills">   → Skills(skills)
-                      ├── <div id="projects"> → Projects(projects)
-                      ├── <div id="contact">  → Contact(profile)
-                      ├── <Analytics />
-                      └── <SpeedInsights />
+  → App.tsx (BrowserRouter + Routes)
+        ├── / → LangRedirect (redirects to /<detected-lang>)
+        └── /:lang → LocaleApp → ThemeProvider(theme)
+                          ├── GlobalStyles (CSS reset)
+                          ├── Navigation (fixed, full-width — reads profile via t())
+                          └── AppContainer (max-width: 1240px)
+                                ├── <div id="about">    → Bio(profile)
+                                ├── <div id="skills">   → Skills(skills)
+                                ├── <div id="projects"> → Projects(projects)
+                                ├── <div id="contact">  → Contact(profile)
+                                ├── <Analytics />
+                                └── <SpeedInsights />
 ```
 
-`App.tsx` uses `useTranslation()` to fetch `profile`, `skills`, and `projects` from i18next via `t('profile', { returnObjects: true })` etc., passing them as props to components. Navigation fetches profile the same way independently.
+`LocaleApp.tsx` uses `useTranslation()` to fetch `profile`, `skills`, and `projects` from i18next via `t('profile', { returnObjects: true })` etc., passing them as props to components. Navigation fetches profile the same way independently.
 
 ### Single Source of Truth: en.json
 
@@ -164,7 +189,7 @@ When adding a new language, copy `en.json` and translate only the human-readable
 
 | Name | Kind | Values | Purpose |
 |------|------|--------|---------|
-| `SectionId` | enum | `About`, `Skills`, `Projects`, `Contact` | Anchor IDs used in App.tsx and Navigation.tsx |
+| `SectionId` | enum | `About`, `Skills`, `Projects`, `Contact` | Anchor IDs used in LocaleApp.tsx and Navigation.tsx |
 | `KeyboardKey` | const object | `Enter`, `Space`, `Escape`, `ArrowLeft`, `ArrowRight` | Keyboard event key values (const instead of enum because DOM `e.key` returns `string`) |
 
 **Use enums for categorical values where both producer and consumer are in our code** (e.g., `SectionId`). Use `as const` objects for values compared against external APIs (e.g., `KeyboardKey` vs DOM `e.key`).
@@ -262,7 +287,7 @@ Only mark props as optional (`?`) if they are genuinely optional — i.e., the c
 
 ### Theme (src/styles/theme.ts)
 
-Provided via `<ThemeProvider>` in App.tsx, typed via `src/styled.d.ts`.
+Provided via `<ThemeProvider>` in LocaleApp.tsx, typed via `src/styled.d.ts`.
 
 ```typescript
 // Access in styled-components:
@@ -343,10 +368,16 @@ Three breakpoints defined in `theme.ts`:
 src/i18n/
 ├── i18n.ts              # i18next init — LanguageDetector, initReactI18next, fallback to en
 ├── i18n.test.ts         # Init, interpolation, language switching, fallback behaviour
-└── locales/
+├── localeConfig.ts      # LOCALES map, DEFAULT_LANG, detectLang, isSupportedLang
+├── localeConfig.test.ts
+├── en.test.ts           # Structural validation, placeholder checks, data integrity
+├── locales.test.ts      # Completeness check — any added locale must have all en.json keys
+└── locales/             # Translation data only (no logic, no tests)
     ├── en.json          # Single source of truth for all content and UI strings
-    ├── en.test.ts       # Structural validation, placeholder checks, data integrity
-    └── locales.test.ts  # Completeness check — any added locale must have all en.json keys
+    ├── fr.json
+    ├── de.json
+    ├── es.json
+    └── ga.json
 ```
 
 ### Rules
@@ -355,7 +386,7 @@ src/i18n/
 - All content lives in `en.json`: portfolio text, aria-labels, section titles, and non-translatable data (images, iconName, email, github, graduationYear)
 - Use `useTranslation` from `react-i18next` directly — no wrapper hook
 - ARIA role values (e.g., `role="dialog"`) are spec constants, not user-facing text — do not translate them
-- Structured data (profile, skills, projects) is fetched via `t('key', { returnObjects: true })` in `App.tsx` and `Navigation.tsx`
+- Structured data (profile, skills, projects) is fetched via `t('key', { returnObjects: true })` in `LocaleApp.tsx` and `Navigation.tsx`
 
 ### Key Naming Convention
 
@@ -371,7 +402,7 @@ src/i18n/
 
 1. Copy `src/i18n/locales/en.json` → `src/i18n/locales/<locale>.json`
 2. Translate all human-readable values — leave `images`, `iconName`, `email`, `github`, and `graduationYear` unchanged
-3. Import the new locale file in `src/i18n/locales/localeConfig.ts` and add it to the `LOCALES` object
+3. Import the new locale file in `src/i18n/localeConfig.ts` and add it to the `LOCALES` object
 4. The `locales.test.ts` completeness test will fail if any keys are missing or extra
 
 ### Language Fallback
@@ -429,13 +460,13 @@ Email and GitHub links using the `Icon` component.
 
 ### New Language
 1. Copy `en.json` → `src/i18n/locales/<locale>.json`, translate human-readable strings
-2. Add to `resources` in `src/i18n/i18n.ts`
+2. Import the new locale file in `src/i18n/localeConfig.ts` and add it to the `LOCALES` object
 
 ### New Section
 1. Create `src/components/SectionName/` with `SectionName.tsx`, `SectionName.styles.tsx`, `SectionName.test.tsx`
 2. Add a `SectionId` enum value in `src/types.ts`
 3. Add the section name to `navigation.sections` in `en.json`
-4. Import and render in `App.tsx` wrapped in `<div id={SectionId.X}>`
+4. Import and render in `LocaleApp.tsx` wrapped in `<div id={SectionId.X}>`
 5. Add a nav link in `Navigation/Navigation.tsx`
 
 ### New Contact Method

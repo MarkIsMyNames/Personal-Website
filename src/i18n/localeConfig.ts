@@ -1,9 +1,9 @@
-import en from './en.json';
-import fr from './fr.json';
-import de from './de.json';
-import es from './es.json';
-import ga from './ga.json';
-import { FIRST_INDEX } from '../../config';
+import en from './locales/en.json';
+import fr from './locales/fr.json';
+import de from './locales/de.json';
+import es from './locales/es.json';
+import ga from './locales/ga.json';
+import { FIRST_INDEX } from '../config';
 
 export const LOCALES = { en, fr, de, es, ga };
 export type SupportedLang = keyof typeof LOCALES;
