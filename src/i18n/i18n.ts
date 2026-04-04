@@ -1,7 +1,7 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import type en from './locales/en.json';
-import { LOCALES, DEFAULT_LANG, isSupportedLang } from './locales/localeConfig';
+import { LOCALES, DEFAULT_LANG, isSupportedLang } from './localeConfig';
 import { PATH_LANG_SEGMENT } from '../config';
 
 declare module 'i18next' {

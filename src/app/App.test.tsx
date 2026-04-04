@@ -1,6 +1,6 @@
 import { render, screen, within } from '@testing-library/react';
 import App from './App';
-import en from './i18n/locales/en.json';
+import en from '../i18n/locales/en.json';
 
 describe('App Component', () => {
   describe('Sections', () => {

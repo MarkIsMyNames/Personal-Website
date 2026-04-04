@@ -2,9 +2,9 @@ import { render } from '@testing-library/react';
 import { MemoryRouter, Routes, Route } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import { ThemeProvider } from 'styled-components';
-import { theme } from './styles/theme';
+import { theme } from '../../styles/theme';
 import { LocaleApp } from './LocaleApp';
-import i18n from './i18n/i18n';
+import i18n from '../../i18n/i18n';
 
 function renderLocaleApp(lang: string) {
   render(
