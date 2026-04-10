@@ -34,7 +34,7 @@ export const SkillCard = styled.div`
   gap: 1rem;
   transition: all 0.3s ease;
   box-shadow: ${({ theme }) => theme.shadows.small};
-  color: ${({ theme }) => theme.colors.headingText};
+  color: ${({ theme }) => theme.colors.textDefault};
 
   &:hover {
     transform: translateY(-5px);

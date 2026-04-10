@@ -20,13 +20,8 @@ export const ContactLinks = styled.ul`
   gap: 1.5rem;
   align-items: center;
   list-style: none;
-  padding: 0;
-  margin: 0;
 `;
 
-export const ContactItem = styled.li`
-  display: contents;
-`;
 
 export const ContactLink = styled.a`
   display: flex;
@@ -37,7 +32,7 @@ export const ContactLink = styled.a`
   border: 1px solid ${({ theme }) => theme.colors.border};
   border-radius: 12px;
   text-decoration: none;
-  color: ${({ theme }) => theme.colors.headingText};
+  color: ${({ theme }) => theme.colors.textDefault};
   font-size: 1.125rem;
   transition: all 0.3s ease;
   min-width: 300px;

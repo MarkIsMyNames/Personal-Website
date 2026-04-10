@@ -90,7 +90,7 @@ export const ProjectTitle = styled.h3`
 
 export const ProjectRole = styled.p`
   font-size: 1.125rem;
-  color: ${({ theme }) => theme.colors.bodyText};
+  color: ${({ theme }) => theme.colors.textMuted};
   margin-bottom: 1rem;
   font-style: italic;
 
@@ -103,7 +103,7 @@ export const ProjectDescription = styled.p`
   font-size: 1.125rem;
   line-height: 1.8;
   margin-bottom: 1.5rem;
-  color: ${({ theme }) => theme.colors.bodyText};
+  color: ${({ theme }) => theme.colors.textMuted};
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     font-size: 0.9rem;
@@ -120,7 +120,7 @@ export const HighlightItem = styled.li`
   display: flex;
   margin-bottom: 0.75rem;
   line-height: 1.6;
-  color: ${({ theme }) => theme.colors.bodyText};
+  color: ${({ theme }) => theme.colors.textDefault};
 
   &::before {
     content: '▹';

@@ -87,7 +87,7 @@ export const NavLinks = styled.div`
 `;
 
 export const NavLink = styled.a`
-  color: ${({ theme }) => theme.colors.headingText};
+  color: ${({ theme }) => theme.colors.textDefault};
   text-decoration: none;
   font-size: 1.15rem;
   font-weight: 600;
