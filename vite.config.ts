@@ -41,7 +41,6 @@ export default defineConfig({
         },
         test: {
           name: 'storybook',
-          setupFiles: ['.storybook/vitest.setup.ts'],
           browser: {
             enabled: true,
             headless: true,
