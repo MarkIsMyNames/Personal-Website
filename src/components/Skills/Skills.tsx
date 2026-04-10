@@ -1,4 +1,4 @@
-import type { Skill } from '../../types';
+import { AriaRole, type Skill } from '../../types';
 import { Icon } from '../../utils/iconMapper';
 import { SectionTitle } from '../../styles/Shared.styles';
 import { SkillsSection, SkillsGrid, SkillCard, SkillName } from './Skills.styles';
@@ -18,13 +18,13 @@ export function Skills({ skills }: SkillsProps) {
     >
       <SectionTitle>{t('skills.sectionTitle')}</SectionTitle>
       <SkillsGrid
-        role="list"
+        role={AriaRole.List}
         aria-label={t('skills.ariaLabels.list')}
       >
         {skills.map((skill) => (
           <SkillCard
             key={skill.name}
-            role="listitem"
+            role={AriaRole.ListItem}
             aria-label={t('skills.ariaLabels.card', { name: skill.name })}
           >
             <Icon

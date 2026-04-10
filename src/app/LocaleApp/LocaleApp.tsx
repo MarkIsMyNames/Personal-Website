@@ -15,7 +15,14 @@ import { Skills } from '../../components/Skills/Skills';
 import { Projects } from '../../components/Projects/Projects';
 import { Contact } from '../../components/Contact/Contact';
 import { SectionId } from '../../types';
-import { PRODUCTION_BASE_URL, PATH_LANG_SEGMENT } from '../../config';
+import {
+  PRODUCTION_BASE_URL,
+  PATH_LANG_SEGMENT,
+  HREFLANG_REL,
+  HREFLANG_X_DEFAULT,
+  META_DESCRIPTION,
+  SLASH_PATH_SPLIT,
+} from '../../config';
 import {
   SUPPORTED_LANGS,
   DEFAULT_LANG,
@@ -31,7 +38,7 @@ export function LocaleApp() {
     : DEFAULT_LANG;
 
   useEffect(() => {
-    const pathLang = location.pathname.split('/')[PATH_LANG_SEGMENT];
+    const pathLang = location.pathname.split(SLASH_PATH_SPLIT)[PATH_LANG_SEGMENT];
     if (pathLang && isSupportedLang(pathLang) && i18n.language !== pathLang) {
       void i18n.changeLanguage(pathLang);
     }
@@ -45,21 +52,21 @@ export function LocaleApp() {
     <ThemeProvider theme={theme}>
       <Helmet htmlAttributes={{ lang }}>
         <meta
-          name="description"
+          name={META_DESCRIPTION}
           content={profile.bio}
         />
         {SUPPORTED_LANGS.map((supportedLang) => (
           <link
             key={supportedLang}
-            rel="alternate"
+            rel={HREFLANG_REL}
             hrefLang={supportedLang}
-            href={`${PRODUCTION_BASE_URL}/${supportedLang}`}
+            href={`${PRODUCTION_BASE_URL}${SLASH_PATH_SPLIT}${supportedLang}`}
           />
         ))}
         <link
-          rel="alternate"
-          hrefLang="x-default"
-          href={`${PRODUCTION_BASE_URL}/${DEFAULT_LANG}`}
+          rel={HREFLANG_REL}
+          hrefLang={HREFLANG_X_DEFAULT}
+          href={`${PRODUCTION_BASE_URL}${SLASH_PATH_SPLIT}${DEFAULT_LANG}`}
         />
       </Helmet>
       <GlobalStyles />

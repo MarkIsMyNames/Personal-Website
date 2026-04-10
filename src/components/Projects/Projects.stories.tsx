@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { Projects } from './Projects';
 import en from '../../i18n/locales/en.json';
 import { SINGLE_ITEM_COUNT } from '../../config';
+import { AriaRole } from '../../types';
 
 const allProjects = en.projectsData;
 
@@ -33,6 +34,6 @@ export const EmptyProjects: Story = {
 export const HoverProjectImage: Story = {
   args: { projects: allProjects },
   parameters: {
-    pseudo: { hover: '[role="button"]' },
+    pseudo: { hover: `[role="${AriaRole.Button}"]` },
   },
 };

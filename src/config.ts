@@ -37,6 +37,23 @@ export const NO_MOVEMENT = 0;
 export const GITHUB_BASE_URL = 'https://github.com/';
 export const MAILTO_PREFIX = 'mailto:';
 export const EXTERNAL_LINK_REL = 'noopener noreferrer';
+export const EXTERNAL_LINK_TARGET = '_blank';
+
+// Routing
+export const SLASH_PATH_SPLIT = '/';
+export const STAR_PATH = '*';
+
+// SEO / hreflang
+export const HREFLANG_REL = 'alternate';
+export const HREFLANG_X_DEFAULT = 'x-default';
+export const META_DESCRIPTION = 'description';
+
+// Image loading
+export const FETCH_PRIORITY_HIGH = 'high';
+
+// Icon names (Contact)
+export const ICON_EMAIL = 'FaEnvelope';
+export const ICON_GITHUB = 'FaGithub';
 
 // SEO
 export const PRODUCTION_BASE_URL = 'https://markdrohan.vercel.app';
@@ -46,3 +63,4 @@ export const SINGLE_CALL = 1;
 export const EMPTY_LENGTH = 0;
 export const CONTACT_METHODS = ['email', 'github'];
 export const EXPECTED_CONTACT_METHODS = CONTACT_METHODS.length;
+export const UNKNOWN_ICON_NAME = 'UnknownIcon';

@@ -6,7 +6,7 @@ import {
   NavigationButtonLeft,
   NavigationButtonRight,
 } from './ImageModal.styles';
-import { KeyboardKey } from '../../types';
+import { AriaRole, KeyboardKey } from '../../types';
 import { useTranslation } from 'react-i18next';
 import {
   SWIPE_THRESHOLD_PX,
@@ -88,8 +88,8 @@ export function ImageModal({
   return (
     <ModalOverlay
       onClick={onClose}
-      role="dialog"
-      aria-modal="true"
+      role={AriaRole.Dialog}
+      aria-modal
       aria-label={t('imageModal.ariaLabels.modal')}
     >
       <CloseButton

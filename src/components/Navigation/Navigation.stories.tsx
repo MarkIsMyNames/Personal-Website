@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Navigation } from './Navigation';
 import en from '../../i18n/locales/en.json';
+import { AriaRole } from '../../types';
 
 export default { component: Navigation } satisfies Meta<typeof Navigation>;
 type Story = StoryObj<typeof Navigation>;
@@ -9,13 +10,15 @@ export const Default: Story = {};
 
 export const HoverBrand: Story = {
   parameters: {
-    pseudo: { hover: '[role="button"]' },
+    pseudo: { hover: `[role="${AriaRole.Button}"]` },
   },
 };
 
 export const HoverAbout: Story = {
   parameters: {
-    pseudo: { hover: `[aria-label*="${en.navigation.sections.about}"][role="menuitem"]` },
+    pseudo: {
+      hover: `[aria-label*="${en.navigation.sections.about}"][role="${AriaRole.MenuItem}"]`,
+    },
   },
 };
 

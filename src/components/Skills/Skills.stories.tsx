@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Skills } from './Skills';
 import en from '../../i18n/locales/en.json';
+import { AriaRole } from '../../types';
 
 export default { component: Skills } satisfies Meta<typeof Skills>;
 type Story = StoryObj<typeof Skills>;
@@ -28,6 +29,6 @@ export const HoverSkillCard: Story = {
     skills: [{ name: 'TypeScript', iconName: 'SiTypescript' }],
   },
   parameters: {
-    pseudo: { hover: '[role="listitem"]' },
+    pseudo: { hover: `[role="${AriaRole.ListItem}"]` },
   },
 };

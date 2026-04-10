@@ -1,4 +1,5 @@
 import { render } from '@testing-library/react';
+import { UNKNOWN_ICON_NAME, CONTACT_ICON_SIZE } from '../config';
 import { Icon } from './iconMapper';
 
 const knownIconNames = [
@@ -28,7 +29,7 @@ describe('iconMapper', () => {
   it.each(knownIconNames)('renders %s icon', (iconName) => {
     const { container } = render(
       <Icon
-        size={24}
+        size={CONTACT_ICON_SIZE}
         iconName={iconName}
       />,
     );
@@ -38,8 +39,8 @@ describe('iconMapper', () => {
   it('renders fallback icon for unknown icon name', () => {
     const { container } = render(
       <Icon
-        size={24}
-        iconName="UnknownIcon"
+        size={CONTACT_ICON_SIZE}
+        iconName={UNKNOWN_ICON_NAME}
       />,
     );
     expect(container.querySelector('svg')).toBeInTheDocument();

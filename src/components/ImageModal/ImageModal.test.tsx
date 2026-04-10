@@ -4,7 +4,8 @@ import { vi } from 'vitest';
 import { ImageModal } from './ImageModal';
 import { theme } from '../../styles/theme';
 import en from '../../i18n/locales/en.json';
-import { SINGLE_CALL, SINGLE_ITEM_COUNT, FIRST_INDEX } from '../../config';
+import { SINGLE_CALL, SINGLE_ITEM_COUNT, FIRST_INDEX, OVERFLOW_LOCKED } from '../../config';
+import { AriaRole } from '../../types';
 import type React from 'react';
 
 const renderWithTheme = (component: React.ReactElement): ReturnType<typeof render> => {
@@ -325,7 +326,7 @@ describe('ImageModal Component', () => {
         hasNext={false}
       />,
     );
-    expect(document.body.style.overflow).toBe('hidden');
+    expect(document.body.style.overflow).toBe(OVERFLOW_LOCKED);
   });
 
   it('restores body overflow when unmounted', () => {
@@ -356,7 +357,7 @@ describe('ImageModal Component', () => {
         hasNext={false}
       />,
     );
-    const imgs = container.querySelectorAll('[role="dialog"] img');
+    const imgs = container.querySelectorAll(`[role="${AriaRole.Dialog}"] img`);
     expect(imgs).toHaveLength(SINGLE_ITEM_COUNT);
     expect(imgs[FIRST_INDEX]).toHaveAttribute('src', testImageUrl);
   });

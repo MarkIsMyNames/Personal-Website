@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { KeyboardKey, type Project } from '../../types';
+import { AriaRole, KeyboardKey, type Project } from '../../types';
 import { ImageModal } from '../ImageModal/ImageModal';
 import { SectionTitle } from '../../styles/Shared.styles';
 import {
@@ -60,7 +60,7 @@ export function Projects({ projects }: ProjectsProps) {
       <SectionTitle>{t('projects.sectionTitle')}</SectionTitle>
       {projects.length > EMPTY_LENGTH && (
         <ProjectsContainer
-          role="list"
+          role={AriaRole.List}
           aria-label={t('projects.ariaLabels.list')}
         >
           {projects.map((project) => {
@@ -68,7 +68,7 @@ export function Projects({ projects }: ProjectsProps) {
             return (
               <ProjectCard
                 key={project.title}
-                role="listitem"
+                role={AriaRole.ListItem}
                 aria-label={t('projects.ariaLabels.card', { title: project.title })}
               >
                 <ProjectImages $isSingle={isSingleImage}>
@@ -80,7 +80,7 @@ export function Projects({ projects }: ProjectsProps) {
                       height={PROJECT_IMAGE_HEIGHT}
                       $isSingle={isSingleImage}
                       onClick={() => openModal(project.images, index)}
-                      role="button"
+                      role={AriaRole.Button}
                       aria-label={t('projects.ariaLabels.viewImage', {
                         index: index + DISPLAY_INDEX_OFFSET,
                         title: project.title,

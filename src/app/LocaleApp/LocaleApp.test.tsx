@@ -5,15 +5,16 @@ import { ThemeProvider } from 'styled-components';
 import { theme } from '../../styles/theme';
 import { LocaleApp } from './LocaleApp';
 import i18n from '../../i18n/i18n';
+import { SLASH_PATH_SPLIT } from '../../config';
 
 function renderLocaleApp(lang: string) {
   render(
     <HelmetProvider>
       <ThemeProvider theme={theme}>
-        <MemoryRouter initialEntries={[`/${lang}`]}>
+        <MemoryRouter initialEntries={[`${SLASH_PATH_SPLIT}${lang}`]}>
           <Routes>
             <Route
-              path={`/${lang}`}
+              path={`${SLASH_PATH_SPLIT}${lang}`}
               element={<LocaleApp />}
             />
           </Routes>

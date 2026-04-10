@@ -5,13 +5,24 @@ export enum SectionId {
   Contact = 'contact',
 }
 
+export enum AriaRole {
+  Article = 'article',
+  Button = 'button',
+  Dialog = 'dialog',
+  List = 'list',
+  ListItem = 'listitem',
+  Menu = 'menu',
+  MenuItem = 'menuitem',
+  Navigation = 'navigation',
+}
+
 export const KeyboardKey = {
   Enter: 'Enter',
   Space: ' ',
   Escape: 'Escape',
   ArrowLeft: 'ArrowLeft',
   ArrowRight: 'ArrowRight',
-};
+} as const;
 
 export type Skill = {
   name: string;

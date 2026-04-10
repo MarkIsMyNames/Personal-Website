@@ -4,7 +4,7 @@ import { Contact } from './Contact';
 import { theme } from '../../styles/theme';
 import type { Profile } from '../../types';
 import en from '../../i18n/locales/en.json';
-import { EXPECTED_CONTACT_METHODS } from '../../config';
+import { EXPECTED_CONTACT_METHODS, EXTERNAL_LINK_REL, EXTERNAL_LINK_TARGET } from '../../config';
 import type React from 'react';
 
 const mockProfile: Profile = {
@@ -51,8 +51,8 @@ describe('Contact Component', () => {
     const githubLink = screen.getByLabelText(
       en.contact.ariaLabels.github.replace('{{username}}', mockProfile.github),
     );
-    expect(githubLink).toHaveAttribute('target', '_blank');
-    expect(githubLink).toHaveAttribute('rel', 'noopener noreferrer');
+    expect(githubLink).toHaveAttribute('target', EXTERNAL_LINK_TARGET);
+    expect(githubLink).toHaveAttribute('rel', EXTERNAL_LINK_REL);
   });
 
   it('email link does not open in new tab', () => {
@@ -60,7 +60,7 @@ describe('Contact Component', () => {
     const emailLink = screen.getByLabelText(
       en.contact.ariaLabels.email.replace('{{email}}', mockProfile.email),
     );
-    expect(emailLink).not.toHaveAttribute('target', '_blank');
+    expect(emailLink).not.toHaveAttribute('target', EXTERNAL_LINK_TARGET);
   });
 
   it('renders email and GitHub as visible text', () => {

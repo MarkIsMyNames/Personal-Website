@@ -4,6 +4,7 @@ import { vi } from 'vitest';
 import { Navigation } from './Navigation';
 import { theme } from '../../styles/theme';
 import en from '../../i18n/locales/en.json';
+import { SCROLL_BEHAVIOR, SCROLL_TOP_ZERO } from '../../config';
 import type React from 'react';
 
 const renderWithTheme = (component: React.ReactElement): ReturnType<typeof render> => {
@@ -61,7 +62,7 @@ describe('Navigation Component', () => {
     renderWithTheme(<Navigation />);
     const brand = screen.getByText(en.profile.name);
     fireEvent.click(brand);
-    expect(scrollToMock).toHaveBeenCalledWith({ top: 0, behavior: 'smooth' });
+    expect(scrollToMock).toHaveBeenCalledWith({ top: SCROLL_TOP_ZERO, behavior: SCROLL_BEHAVIOR });
   });
 
   it('hides navigation when scrolling down', () => {
@@ -142,7 +143,7 @@ describe('Navigation Component', () => {
     });
 
     fireEvent.click(nameButton);
-    expect(scrollToMock).toHaveBeenCalledWith({ top: 0, behavior: 'smooth' });
+    expect(scrollToMock).toHaveBeenCalledWith({ top: SCROLL_TOP_ZERO, behavior: SCROLL_BEHAVIOR });
   });
 
   it('does not reattach scroll listener on every scroll event', () => {

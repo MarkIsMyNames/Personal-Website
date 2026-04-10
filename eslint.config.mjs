@@ -104,6 +104,8 @@ export default [
       ],
       '@typescript-eslint/no-useless-constructor': 'error',
       '@typescript-eslint/no-explicit-any': 'error',
+      '@typescript-eslint/no-unsafe-assignment': 'error',
+      '@typescript-eslint/no-unsafe-enum-comparison': 'error',
       '@typescript-eslint/no-non-null-assertion': 'error',
       '@typescript-eslint/no-floating-promises': 'error',
       '@typescript-eslint/no-misused-promises': 'error',
@@ -167,6 +169,46 @@ export default [
         {
           selector: 'Literal[value=/^#[0-9a-fA-F]{3,8}$/]',
           message: 'Raw hex colour values must be defined in src/styles/theme.ts',
+        },
+        {
+          selector: 'JSXAttribute[name.name="role"] > Literal',
+          message: 'Use AriaRole constant instead of a string literal for role attributes',
+        },
+        {
+          selector: 'Literal[value="_blank"]',
+          message: 'Use EXTERNAL_LINK_TARGET constant from src/config.ts',
+        },
+        {
+          selector: 'Literal[value="noopener noreferrer"]',
+          message: 'Use EXTERNAL_LINK_REL constant from src/config.ts',
+        },
+        {
+          selector: 'Literal[value="smooth"]',
+          message: 'Use SCROLL_BEHAVIOR constant from src/config.ts',
+        },
+        {
+          selector: 'Literal[value="hidden"][parent.type!="Property"]',
+          message: 'Use OVERFLOW_LOCKED constant from src/config.ts',
+        },
+        {
+          selector: 'Literal[value="alternate"]',
+          message: 'Use HREFLANG_REL constant from src/config.ts',
+        },
+        {
+          selector: 'Literal[value="high"]',
+          message: 'Use FETCH_PRIORITY_HIGH constant from src/config.ts',
+        },
+        {
+          selector: 'JSXAttribute > Literal[value!=""]',
+          message: 'String literals in JSX attributes must be named constants in src/config.ts or src/types.ts',
+        },
+        {
+          selector: 'TemplateLiteral > TemplateElement[value.raw="/"]',
+          message: 'Use ROOT_PATH constant instead of a literal "/" in template strings',
+        },
+        {
+          selector: 'JSXExpressionContainer > Literal[raw=/^[0-9]/]',
+          message: 'Numeric literals in JSX props must be named constants in src/config.ts',
         },
       ],
     },

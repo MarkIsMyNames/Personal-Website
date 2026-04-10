@@ -3,6 +3,7 @@ import { HelmetProvider } from 'react-helmet-async';
 import { LangRedirect } from './LangRedirect/LangRedirect';
 import { LocaleApp } from './LocaleApp/LocaleApp';
 import { SUPPORTED_LANGS, DEFAULT_LANG } from '../i18n/localeConfig';
+import { SLASH_PATH_SPLIT, STAR_PATH } from '../config';
 
 export default function App() {
   return (
@@ -10,21 +11,21 @@ export default function App() {
       <BrowserRouter>
         <Routes>
           <Route
-            path="/"
+            path={SLASH_PATH_SPLIT}
             element={<LangRedirect />}
           />
           {SUPPORTED_LANGS.map((lang) => (
             <Route
               key={lang}
-              path={`/${lang}`}
+              path={`${SLASH_PATH_SPLIT}${lang}`}
               element={<LocaleApp />}
             />
           ))}
           <Route
-            path="*"
+            path={STAR_PATH}
             element={
               <Navigate
-                to={`/${DEFAULT_LANG}`}
+                to={`${SLASH_PATH_SPLIT}${DEFAULT_LANG}`}
                 replace
               />
             }

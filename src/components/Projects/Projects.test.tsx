@@ -2,7 +2,7 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import { ThemeProvider } from 'styled-components';
 import { Projects } from './Projects';
 import { theme } from '../../styles/theme';
-import type { Project } from '../../types';
+import { AriaRole, type Project } from '../../types';
 import en from '../../i18n/locales/en.json';
 import type React from 'react';
 
@@ -154,7 +154,7 @@ describe('Projects Component', () => {
     const { container } = renderWithTheme(<Projects projects={mockProjects} />);
     fireEvent.click(screen.getByAltText(`${secondMockProject.title} screenshot 2 of 3`));
     fireEvent.click(screen.getByLabelText(en.imageModal.ariaLabels.previous));
-    expect(container.querySelector('[role="dialog"] img')).toHaveAttribute(
+    expect(container.querySelector(`[role="${AriaRole.Dialog}"] img`)).toHaveAttribute(
       'alt',
       en.imageModal.ariaLabels.image.replace('{{index}}', '1'),
     );
