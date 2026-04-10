@@ -27,7 +27,7 @@
     "format:check": "prettier --check \"src/**/*.{ts,tsx,css,json}\"",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "test-storybook": "vitest --project=storybook"
+    "test-storybook": "VITEST_STORYBOOK=false vitest --project=storybook"
   },
   "devDependencies": {
     "@eslint/compat": "^1.4.1",

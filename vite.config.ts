@@ -36,9 +36,6 @@ export default defineConfig({
       },
       {
         plugins: [react(), storybookTest()],
-        define: {
-          'import.meta.env.VITEST_STORYBOOK': JSON.stringify('false'),
-        },
         test: {
           name: 'storybook',
           browser: {
