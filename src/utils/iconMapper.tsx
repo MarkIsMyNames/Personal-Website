@@ -9,6 +9,7 @@ import {
   FaDatabase,
   FaMobileAlt,
   FaProjectDiagram,
+  FaQuestion,
 } from 'react-icons/fa';
 import { DiRuby } from 'react-icons/di';
 import {
@@ -53,11 +54,12 @@ type IconProps = {
 };
 
 export function Icon({ iconName, size }: IconProps) {
-  const IconComponent = iconMap[iconName];
+  const IconComponent = iconMap[iconName] ?? FaQuestion;
 
-  if (!IconComponent) {
-    return <span>?</span>;
-  }
-
-  return <IconComponent size={size} />;
+  return (
+    <IconComponent
+      size={size}
+      aria-hidden
+    />
+  );
 }

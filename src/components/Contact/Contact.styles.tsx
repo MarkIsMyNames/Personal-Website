@@ -14,11 +14,12 @@ export const ContactSection = styled.section`
   }
 `;
 
-export const ContactLinks = styled.div`
+export const ContactLinks = styled.ul`
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
   align-items: center;
+  list-style: none;
 `;
 
 export const ContactLink = styled.a`
@@ -30,7 +31,7 @@ export const ContactLink = styled.a`
   border: 1px solid ${({ theme }) => theme.colors.border};
   border-radius: 12px;
   text-decoration: none;
-  color: ${({ theme }) => theme.colors.headingText};
+  color: ${({ theme }) => theme.colors.textDefault};
   font-size: 1.125rem;
   transition: all 0.3s ease;
   min-width: 300px;

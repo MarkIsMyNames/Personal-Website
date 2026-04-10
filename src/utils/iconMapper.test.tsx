@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import { Icon } from './iconMapper';
 
 const knownIconNames = [
@@ -35,13 +35,13 @@ describe('iconMapper', () => {
     expect(container.querySelector('svg')).toBeInTheDocument();
   });
 
-  it('renders fallback for unknown icon', () => {
-    render(
+  it('renders fallback icon for unknown icon name', () => {
+    const { container } = render(
       <Icon
         size={24}
         iconName="UnknownIcon"
       />,
     );
-    expect(screen.getByText('?')).toBeInTheDocument();
+    expect(container.querySelector('svg')).toBeInTheDocument();
   });
 });

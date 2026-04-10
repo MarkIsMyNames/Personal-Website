@@ -1,3 +1,4 @@
+import storybook from "eslint-plugin-storybook";
 import js from '@eslint/js';
 import { fixupPluginRules } from '@eslint/compat';
 import tsPlugin from '@typescript-eslint/eslint-plugin';
@@ -15,6 +16,21 @@ export default [
   // InfiniteDepthConfigWithExtends constraint which is incompatible with CompatibleConfig[])
   ...tsPlugin.configs['flat/recommended-type-checked'],
   ...tsPlugin.configs['flat/strict'],
+  {
+    files: ['.storybook/**/*.{ts,tsx}'],
+    languageOptions: {
+      globals: {
+        ...globals.browser,
+        ...globals.es2021,
+        ...globals.node,
+      },
+      parserOptions: {
+        project: './tsconfig.json',
+        tsconfigRootDir: import.meta.dirname,
+      },
+    },
+  },
+
   {
     files: ['src/**/*.{ts,tsx}'],
     languageOptions: {
@@ -153,6 +169,14 @@ export default [
           message: 'Raw hex colour values must be defined in src/styles/theme.ts',
         },
       ],
+    },
+  },
+  ...storybook.configs["flat/recommended"],
+  {
+    files: ['src/**/*.stories.tsx'],
+    rules: {
+      // Meta and StoryObj must be imported from @storybook/react (the renderer) in Storybook v10
+      'storybook/no-renderer-packages': 'off',
     },
   },
 ];

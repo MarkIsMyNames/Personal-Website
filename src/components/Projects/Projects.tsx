@@ -24,6 +24,7 @@ import {
   DISPLAY_INDEX_OFFSET,
   FIRST_INDEX,
   SINGLE_ITEM_COUNT,
+  EMPTY_LENGTH,
 } from '../../config';
 
 type ProjectsProps = {
@@ -57,61 +58,63 @@ export function Projects({ projects }: ProjectsProps) {
       aria-label={t('common.ariaLabels.section', { title: t('navigation.sections.projects') })}
     >
       <SectionTitle>{t('projects.sectionTitle')}</SectionTitle>
-      <ProjectsContainer
-        role="list"
-        aria-label={t('projects.ariaLabels.list')}
-      >
-        {projects.map((project) => {
-          const isSingleImage = project.images.length === SINGLE_ITEM_COUNT;
-          return (
-            <ProjectCard
-              key={project.title}
-              role="listitem"
-              aria-label={t('projects.ariaLabels.card', { title: project.title })}
-            >
-              <ProjectImages $isSingle={isSingleImage}>
-                {project.images.map((image, index) => (
-                  <ProjectImage
-                    key={image}
-                    src={image}
-                    alt={`${project.title} screenshot ${index + DISPLAY_INDEX_OFFSET} of ${project.images.length}`}
-                    height={PROJECT_IMAGE_HEIGHT}
-                    $isSingle={isSingleImage}
-                    onClick={() => openModal(project.images, index)}
-                    role="button"
-                    aria-label={t('projects.ariaLabels.viewImage', {
-                      index: index + DISPLAY_INDEX_OFFSET,
-                      title: project.title,
-                    })}
-                    tabIndex={FOCUSABLE_TAB_INDEX}
-                    onKeyDown={(e) => {
-                      if (e.key === KeyboardKey.Enter || e.key === KeyboardKey.Space) {
-                        e.preventDefault();
-                        openModal(project.images, index);
-                      }
-                    }}
-                  />
-                ))}
-              </ProjectImages>
-              <ProjectContent>
-                <ProjectTitle>{project.title}</ProjectTitle>
-                <ProjectRole>{project.role}</ProjectRole>
-                <ProjectDescription>{project.description}</ProjectDescription>
-                <ProjectHighlights>
-                  {project.highlights.map((highlight) => (
-                    <HighlightItem key={highlight}>{highlight}</HighlightItem>
+      {projects.length > EMPTY_LENGTH && (
+        <ProjectsContainer
+          role="list"
+          aria-label={t('projects.ariaLabels.list')}
+        >
+          {projects.map((project) => {
+            const isSingleImage = project.images.length === SINGLE_ITEM_COUNT;
+            return (
+              <ProjectCard
+                key={project.title}
+                role="listitem"
+                aria-label={t('projects.ariaLabels.card', { title: project.title })}
+              >
+                <ProjectImages $isSingle={isSingleImage}>
+                  {project.images.map((image, index) => (
+                    <ProjectImage
+                      key={image}
+                      src={image}
+                      alt={`${project.title} screenshot ${index + DISPLAY_INDEX_OFFSET} of ${project.images.length}`}
+                      height={PROJECT_IMAGE_HEIGHT}
+                      $isSingle={isSingleImage}
+                      onClick={() => openModal(project.images, index)}
+                      role="button"
+                      aria-label={t('projects.ariaLabels.viewImage', {
+                        index: index + DISPLAY_INDEX_OFFSET,
+                        title: project.title,
+                      })}
+                      tabIndex={FOCUSABLE_TAB_INDEX}
+                      onKeyDown={(e) => {
+                        if (e.key === KeyboardKey.Enter || e.key === KeyboardKey.Space) {
+                          e.preventDefault();
+                          openModal(project.images, index);
+                        }
+                      }}
+                    />
                   ))}
-                </ProjectHighlights>
-                <ProjectTags>
-                  {project.tags.map((tag) => (
-                    <ProjectTag key={tag}>{tag}</ProjectTag>
-                  ))}
-                </ProjectTags>
-              </ProjectContent>
-            </ProjectCard>
-          );
-        })}
-      </ProjectsContainer>
+                </ProjectImages>
+                <ProjectContent>
+                  <ProjectTitle>{project.title}</ProjectTitle>
+                  <ProjectRole>{project.role}</ProjectRole>
+                  <ProjectDescription>{project.description}</ProjectDescription>
+                  <ProjectHighlights>
+                    {project.highlights.map((highlight) => (
+                      <HighlightItem key={highlight}>{highlight}</HighlightItem>
+                    ))}
+                  </ProjectHighlights>
+                  <ProjectTags>
+                    {project.tags.map((tag) => (
+                      <ProjectTag key={tag}>{tag}</ProjectTag>
+                    ))}
+                  </ProjectTags>
+                </ProjectContent>
+              </ProjectCard>
+            );
+          })}
+        </ProjectsContainer>
+      )}
       {modal !== null && (
         <ImageModal
           imageUrl={modal.images[modal.index] ?? ''}

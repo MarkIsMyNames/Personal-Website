@@ -71,7 +71,7 @@ export const BioSubtitle = styled.h2`
 
 export const BioText = styled.p`
   font-size: 1.25rem;
-  color: ${({ theme }) => theme.colors.bodyText};
+  color: ${({ theme }) => theme.colors.textMuted};
   line-height: 1.8;
   margin-bottom: 1rem;
 
@@ -83,7 +83,7 @@ export const BioText = styled.p`
 
 export const BioEducation = styled.p`
   font-size: 1.1rem;
-  color: ${({ theme }) => theme.colors.bodyText};
+  color: ${({ theme }) => theme.colors.textMuted};
   font-style: italic;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {

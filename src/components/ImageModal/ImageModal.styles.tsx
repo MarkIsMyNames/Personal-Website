@@ -37,7 +37,7 @@ export const CloseButton = styled.button`
   right: 2rem;
   background: ${({ theme }) => theme.colors.cardBackground};
   border: 2px solid ${({ theme }) => theme.colors.border};
-  color: ${({ theme }) => theme.colors.headingText};
+  color: ${({ theme }) => theme.colors.textDefault};
   width: 3rem;
   height: 3rem;
   border-radius: 50%;
@@ -66,7 +66,7 @@ export const NavigationButton = styled.button`
   transform: translateY(-50%);
   background: ${({ theme }) => theme.colors.cardBackground};
   border: 2px solid ${({ theme }) => theme.colors.border};
-  color: ${({ theme }) => theme.colors.headingText};
+  color: ${({ theme }) => theme.colors.textDefault};
   width: 3.5rem;
   height: 3.5rem;
   border-radius: 50%;
