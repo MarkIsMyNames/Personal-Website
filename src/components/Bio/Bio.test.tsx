@@ -4,7 +4,7 @@ import { Bio } from './Bio';
 import { theme } from '../../styles/theme';
 import type { Profile } from '../../types';
 import en from '../../i18n/locales/en.json';
-import { FIRST_INDEX, BIO_SENTENCE_DELIMITER } from '../../config';
+import { FIRST_INDEX, BIO_SENTENCE_DELIMITER, FETCH_PRIORITY_HIGH } from '../../config';
 import type React from 'react';
 
 const mockProfile: Profile = {
@@ -67,7 +67,7 @@ describe('Bio Component', () => {
         .replace('{{name}}', mockProfile.name)
         .replace('{{title}}', en.profile.title),
     );
-    expect(imageElement).toHaveAttribute('fetchpriority', 'high');
+    expect(imageElement).toHaveAttribute('fetchpriority', FETCH_PRIORITY_HIGH);
   });
 
   it('renders about section with correct aria-label', () => {
