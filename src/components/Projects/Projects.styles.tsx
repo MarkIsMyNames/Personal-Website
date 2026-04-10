@@ -120,6 +120,7 @@ export const HighlightItem = styled.li`
   display: flex;
   margin-bottom: 0.75rem;
   line-height: 1.6;
+  color: ${({ theme }) => theme.colors.bodyText};
 
   &::before {
     content: '▹';
