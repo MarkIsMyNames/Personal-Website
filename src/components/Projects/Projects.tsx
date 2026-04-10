@@ -57,6 +57,7 @@ export function Projects({ projects }: ProjectsProps) {
       aria-label={t('common.ariaLabels.section', { title: t('navigation.sections.projects') })}
     >
       <SectionTitle>{t('projects.sectionTitle')}</SectionTitle>
+      {projects.length > 0 && (
       <ProjectsContainer
         role="list"
         aria-label={t('projects.ariaLabels.list')}
@@ -112,6 +113,7 @@ export function Projects({ projects }: ProjectsProps) {
           );
         })}
       </ProjectsContainer>
+      )}
       {modal !== null && (
         <ImageModal
           imageUrl={modal.images[modal.index] ?? ''}
