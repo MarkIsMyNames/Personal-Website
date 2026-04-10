@@ -38,6 +38,7 @@ export default defineConfig({
         plugins: [react(), storybookTest()],
         test: {
           name: 'storybook',
+          setupFiles: ['.storybook/vitest.setup.ts'],
           browser: {
             enabled: true,
             headless: true,
