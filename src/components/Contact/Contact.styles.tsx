@@ -14,11 +14,18 @@ export const ContactSection = styled.section`
   }
 `;
 
-export const ContactLinks = styled.div`
+export const ContactLinks = styled.ul`
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
   align-items: center;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+`;
+
+export const ContactItem = styled.li`
+  display: contents;
 `;
 
 export const ContactLink = styled.a`
