@@ -1,5 +1,5 @@
 import type { StorybookConfig } from '@storybook/react-vite';
-import { theme } from '../src/styles/theme';
+import { theme } from '../src/styles/theme.ts';
 
 export default {
   stories: ['../src/**/*.stories.tsx'],

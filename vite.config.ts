@@ -35,8 +35,7 @@ export default defineConfig({
         },
       },
       {
-        extends: true,
-        plugins: [storybookTest()],
+        plugins: [react(), storybookTest()],
         test: {
           name: 'storybook',
           browser: {
