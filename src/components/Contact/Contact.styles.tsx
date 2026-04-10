@@ -22,7 +22,6 @@ export const ContactLinks = styled.ul`
   list-style: none;
 `;
 
-
 export const ContactLink = styled.a`
   display: flex;
   align-items: center;
