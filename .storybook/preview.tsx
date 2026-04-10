@@ -17,4 +17,9 @@ export default {
     (Story) => <ThemeProvider theme={theme}><Story /></ThemeProvider>,
     (Story) => <I18nextProvider i18n={i18n}><Story /></I18nextProvider>,
   ],
+  parameters: {
+    a11y: {
+      test: 'error',
+    },
+  },
 } satisfies Preview;
