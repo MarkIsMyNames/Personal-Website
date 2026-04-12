@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { Skills } from './Skills';
 import { defaultLocale } from '../../i18n/localeConfig';
 import { AriaRole, ErrorMessage } from '../../types';
-import { FIRST_INDEX, UNKNOWN_ICON_NAME, UNKNOWN_SKILL_NAME } from '../../config';
+import { FIRST_INDEX } from '../../config';
 
 const firstSkill = defaultLocale.skillsData[FIRST_INDEX];
 if (!firstSkill) {
@@ -21,12 +21,6 @@ export const Default: Story = {
 export const SingleSkill: Story = {
   args: {
     skills: [firstSkill],
-  },
-};
-
-export const UnknownIcon: Story = {
-  args: {
-    skills: [{ name: UNKNOWN_SKILL_NAME, iconName: UNKNOWN_ICON_NAME }],
   },
 };
 

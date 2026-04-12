@@ -126,4 +126,3 @@ export const TOUCH_VERTICAL_END_Y = 400;
 export const SINGLE_CALL = 1;
 export const EMPTY_LENGTH = 0;
 export const UNKNOWN_ICON_NAME = 'UnknownIcon';
-export const UNKNOWN_SKILL_NAME = 'Unknown';
