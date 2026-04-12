@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { AriaRole, KeyboardKey, type Project } from '../../types';
+import { AriaRole, KeyboardKey, ErrorMessage, type Project } from '../../types';
 import { ImageModal } from '../ImageModal/ImageModal';
 import { SectionTitle } from '../../styles/Shared.styles';
 import {
@@ -35,6 +35,14 @@ type ModalState = {
   images: string[];
   index: number;
 };
+
+export function getModalImageUrl(modal: ModalState): string {
+  const imageUrl = modal.images[modal.index];
+  if (!imageUrl) {
+    throw new Error(ErrorMessage.NoImageAtIndex);
+  }
+  return imageUrl;
+}
 
 export function Projects({ projects }: ProjectsProps) {
   const { t } = useTranslation();
@@ -76,7 +84,11 @@ export function Projects({ projects }: ProjectsProps) {
                     <ProjectImage
                       key={image}
                       src={image}
-                      alt={`${project.title} screenshot ${index + DISPLAY_INDEX_OFFSET} of ${project.images.length}`}
+                      alt={t('projects.ariaLabels.screenshotAlt', {
+                        title: project.title,
+                        index: index + DISPLAY_INDEX_OFFSET,
+                        total: project.images.length,
+                      })}
                       height={PROJECT_IMAGE_HEIGHT}
                       $isSingle={isSingleImage}
                       onClick={() => openModal(project.images, index)}
@@ -115,17 +127,23 @@ export function Projects({ projects }: ProjectsProps) {
           })}
         </ProjectsContainer>
       )}
-      {modal !== null && (
-        <ImageModal
-          imageUrl={modal.images[modal.index] ?? ''}
-          altText={t('imageModal.ariaLabels.image', { index: modal.index + DISPLAY_INDEX_OFFSET })}
-          onClose={closeModal}
-          onPrevious={prevImage}
-          onNext={nextImage}
-          hasPrevious={modal.index > FIRST_INDEX}
-          hasNext={modal.index < modal.images.length - DISPLAY_INDEX_OFFSET}
-        />
-      )}
+      {modal !== null &&
+        (() => {
+          const imageUrl = getModalImageUrl(modal);
+          return (
+            <ImageModal
+              imageUrl={imageUrl}
+              altText={t('imageModal.ariaLabels.image', {
+                index: modal.index + DISPLAY_INDEX_OFFSET,
+              })}
+              onClose={closeModal}
+              onPrevious={prevImage}
+              onNext={nextImage}
+              hasPrevious={modal.index > FIRST_INDEX}
+              hasNext={modal.index < modal.images.length - DISPLAY_INDEX_OFFSET}
+            />
+          );
+        })()}
     </ProjectsSection>
   );
 }

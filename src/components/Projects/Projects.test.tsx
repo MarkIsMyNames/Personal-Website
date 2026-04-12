@@ -1,39 +1,58 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { ThemeProvider } from 'styled-components';
-import { Projects } from './Projects';
+import { Projects, getModalImageUrl } from './Projects';
 import { theme } from '../../styles/theme';
-import { AriaRole, type Project } from '../../types';
-import en from '../../i18n/locales/en.json';
+import { AriaRole, ErrorMessage, HtmlAttr, HtmlTag, KeyboardKey, KeyCode } from '../../types';
+import { defaultLocale } from '../../i18n/localeConfig';
+import {
+  DISPLAY_INDEX_OFFSET,
+  FIRST_INDEX,
+  IMAGE_INDEX_FIRST,
+  IMAGE_INDEX_SECOND,
+  SINGLE_ITEM_COUNT,
+} from '../../config';
 import type React from 'react';
 
-const firstMockProject: Project = {
-  title: 'Test Project 1',
-  role: 'Test Role 1',
-  description: 'This is a test project description.',
-  highlights: ['First highlight', 'Second highlight'],
-  images: ['test1.jpg'],
-  tags: ['React', 'TypeScript'],
-};
+const firstMockProject = defaultLocale.projectsData.find(
+  (p) => p.images.length === SINGLE_ITEM_COUNT,
+);
+if (!firstMockProject) {
+  throw new Error(ErrorMessage.NoSingleImageProject);
+}
 
-const secondMockProject: Project = {
-  title: 'Test Project 2',
-  role: 'Test Role 2',
-  description: 'Another test project.',
-  highlights: ['Third highlight'],
-  images: ['test2.jpg', 'test3.jpg', 'test4.jpg'],
-  tags: ['Node.js', 'Express'],
-};
+const secondMockProject = defaultLocale.projectsData.find(
+  (p) => p.images.length > SINGLE_ITEM_COUNT,
+);
+if (!secondMockProject) {
+  throw new Error(ErrorMessage.NoMultiImageProject);
+}
 
-const mockProjects: Project[] = [firstMockProject, secondMockProject];
+const mockProjects = [firstMockProject, secondMockProject];
 
 const renderWithTheme = (component: React.ReactElement): ReturnType<typeof render> => {
   return render(<ThemeProvider theme={theme}>{component}</ThemeProvider>);
 };
 
+const screenshotAlt = (title: string, index: number, total: number): string =>
+  defaultLocale.projects.ariaLabels.screenshotAlt
+    .replace('{{title}}', title)
+    .replace('{{index}}', String(index))
+    .replace('{{total}}', String(total));
+
+describe('getModalImageUrl', () => {
+  it('returns the image url at the given index', () => {
+    const image = firstMockProject.images[FIRST_INDEX];
+    if (!image) {
+      throw new Error(ErrorMessage.NoImageAtIndex);
+    }
+    expect(getModalImageUrl({ images: [image], index: FIRST_INDEX })).toBe(image);
+  });
+});
+
 describe('Projects Component', () => {
   it('renders section title', () => {
     renderWithTheme(<Projects projects={mockProjects} />);
-    expect(screen.getByText(en.projects.sectionTitle)).toBeInTheDocument();
+    expect(screen.getByText(defaultLocale.projects.sectionTitle)).toBeInTheDocument();
   });
 
   it('renders all project titles from props', () => {
@@ -56,35 +75,49 @@ describe('Projects Component', () => {
 
   it('renders project highlights from props', () => {
     renderWithTheme(<Projects projects={mockProjects} />);
-    expect(screen.getByText('First highlight')).toBeInTheDocument();
-    expect(screen.getByText('Second highlight')).toBeInTheDocument();
-    expect(screen.getByText('Third highlight')).toBeInTheDocument();
+    [...firstMockProject.highlights, ...secondMockProject.highlights].forEach((highlight) => {
+      expect(screen.getByText(highlight)).toBeInTheDocument();
+    });
   });
 
   it('renders project tags from props', () => {
     renderWithTheme(<Projects projects={mockProjects} />);
-    expect(screen.getByText('React')).toBeInTheDocument();
-    expect(screen.getByText('TypeScript')).toBeInTheDocument();
-    expect(screen.getByText('Node.js')).toBeInTheDocument();
-    expect(screen.getByText('Express')).toBeInTheDocument();
+    [...firstMockProject.tags, ...secondMockProject.tags].forEach((tag) => {
+      expect(screen.getAllByText(tag)[FIRST_INDEX]).toBeInTheDocument();
+    });
   });
 
   it('renders project images with translated screenshot alt text', () => {
     renderWithTheme(<Projects projects={mockProjects} />);
-    expect(screen.getByAltText(`${firstMockProject.title} screenshot 1 of 1`)).toBeInTheDocument();
-    expect(screen.getByAltText(`${secondMockProject.title} screenshot 1 of 3`)).toBeInTheDocument();
+    expect(
+      screen.getByAltText(
+        screenshotAlt(firstMockProject.title, DISPLAY_INDEX_OFFSET, firstMockProject.images.length),
+      ),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByAltText(
+        screenshotAlt(
+          secondMockProject.title,
+          DISPLAY_INDEX_OFFSET,
+          secondMockProject.images.length,
+        ),
+      ),
+    ).toBeInTheDocument();
   });
 
   it('renders empty project list', () => {
     renderWithTheme(<Projects projects={[]} />);
-    expect(screen.getByText(en.projects.sectionTitle)).toBeInTheDocument();
+    expect(screen.getByText(defaultLocale.projects.sectionTitle)).toBeInTheDocument();
   });
 
   it('renders section with correct aria-label', () => {
     renderWithTheme(<Projects projects={mockProjects} />);
     expect(
       screen.getByLabelText(
-        en.common.ariaLabels.section.replace('{{title}}', en.navigation.sections.projects),
+        defaultLocale.common.ariaLabels.section.replace(
+          '{{title}}',
+          defaultLocale.navigation.sections.projects,
+        ),
       ),
     ).toBeInTheDocument();
   });
@@ -93,7 +126,7 @@ describe('Projects Component', () => {
     renderWithTheme(<Projects projects={mockProjects} />);
     expect(
       screen.getByLabelText(
-        en.projects.ariaLabels.card.replace('{{title}}', firstMockProject.title),
+        defaultLocale.projects.ariaLabels.card.replace('{{title}}', firstMockProject.title),
       ),
     ).toBeInTheDocument();
   });
@@ -110,60 +143,105 @@ describe('Projects Component', () => {
 
   it('opens modal when clicking a project image', () => {
     renderWithTheme(<Projects projects={mockProjects} />);
-    fireEvent.click(screen.getByAltText(`${firstMockProject.title} screenshot 1 of 1`));
-    expect(screen.getByRole('dialog')).toBeVisible();
+    fireEvent.click(
+      screen.getByAltText(
+        screenshotAlt(firstMockProject.title, DISPLAY_INDEX_OFFSET, firstMockProject.images.length),
+      ),
+    );
+    expect(screen.getByRole(AriaRole.Dialog)).toBeVisible();
   });
 
   it('opens modal when pressing Enter on a project image', () => {
     renderWithTheme(<Projects projects={mockProjects} />);
-    fireEvent.keyDown(screen.getByAltText(`${firstMockProject.title} screenshot 1 of 1`), {
-      key: 'Enter',
-      code: 'Enter',
-    });
-    expect(screen.getByRole('dialog')).toBeVisible();
+    fireEvent.keyDown(
+      screen.getByAltText(
+        screenshotAlt(firstMockProject.title, DISPLAY_INDEX_OFFSET, firstMockProject.images.length),
+      ),
+      {
+        key: KeyboardKey.Enter,
+        code: KeyCode.Enter,
+      },
+    );
+    expect(screen.getByRole(AriaRole.Dialog)).toBeVisible();
   });
 
   it('opens modal when pressing Space on a project image', () => {
     renderWithTheme(<Projects projects={mockProjects} />);
-    fireEvent.keyDown(screen.getByAltText(`${firstMockProject.title} screenshot 1 of 1`), {
-      key: ' ',
-      code: 'Space',
-    });
-    expect(screen.getByRole('dialog')).toBeVisible();
+    fireEvent.keyDown(
+      screen.getByAltText(
+        screenshotAlt(firstMockProject.title, DISPLAY_INDEX_OFFSET, firstMockProject.images.length),
+      ),
+      {
+        key: KeyboardKey.Space,
+        code: KeyCode.Space,
+      },
+    );
+    expect(screen.getByRole(AriaRole.Dialog)).toBeVisible();
   });
 
   it('does not open modal when pressing other keys', () => {
     renderWithTheme(<Projects projects={mockProjects} />);
-    fireEvent.keyDown(screen.getByAltText(`${firstMockProject.title} screenshot 1 of 1`), {
-      key: 'a',
-      code: 'KeyA',
-    });
-    expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    fireEvent.keyDown(
+      screen.getByAltText(
+        screenshotAlt(firstMockProject.title, DISPLAY_INDEX_OFFSET, firstMockProject.images.length),
+      ),
+      {
+        key: KeyboardKey.A,
+        code: KeyCode.KeyA,
+      },
+    );
+    expect(screen.queryByRole(AriaRole.Dialog)).not.toBeInTheDocument();
   });
 
   it('navigates to next image in modal', () => {
     renderWithTheme(<Projects projects={mockProjects} />);
-    fireEvent.click(screen.getByAltText(`${secondMockProject.title} screenshot 1 of 3`));
-    fireEvent.click(screen.getByLabelText(en.imageModal.ariaLabels.next));
+    fireEvent.click(
+      screen.getByAltText(
+        screenshotAlt(
+          secondMockProject.title,
+          DISPLAY_INDEX_OFFSET,
+          secondMockProject.images.length,
+        ),
+      ),
+    );
+    fireEvent.click(screen.getByLabelText(defaultLocale.imageModal.ariaLabels.next));
     expect(
-      screen.getByAltText(en.imageModal.ariaLabels.image.replace('{{index}}', '2')),
+      screen.getByAltText(
+        defaultLocale.imageModal.ariaLabels.image.replace('{{index}}', IMAGE_INDEX_SECOND),
+      ),
     ).toBeInTheDocument();
   });
 
   it('navigates to previous image in modal', () => {
-    const { container } = renderWithTheme(<Projects projects={mockProjects} />);
-    fireEvent.click(screen.getByAltText(`${secondMockProject.title} screenshot 2 of 3`));
-    fireEvent.click(screen.getByLabelText(en.imageModal.ariaLabels.previous));
-    expect(container.querySelector(`[role="${AriaRole.Dialog}"] img`)).toHaveAttribute(
-      'alt',
-      en.imageModal.ariaLabels.image.replace('{{index}}', '1'),
+    renderWithTheme(<Projects projects={mockProjects} />);
+    fireEvent.click(
+      screen.getByAltText(
+        screenshotAlt(
+          secondMockProject.title,
+          DISPLAY_INDEX_OFFSET + SINGLE_ITEM_COUNT,
+          secondMockProject.images.length,
+        ),
+      ),
+    );
+    fireEvent.click(screen.getByLabelText(defaultLocale.imageModal.ariaLabels.previous));
+    const img = screen.getByRole(AriaRole.Dialog).querySelector(HtmlTag.Img);
+    if (!img) {
+      throw new Error(ErrorMessage.NoImageAtIndex);
+    }
+    expect(img).toHaveAttribute(
+      HtmlAttr.Alt,
+      defaultLocale.imageModal.ariaLabels.image.replace('{{index}}', IMAGE_INDEX_FIRST),
     );
   });
 
   it('closes modal when close button is clicked', () => {
     renderWithTheme(<Projects projects={mockProjects} />);
-    fireEvent.click(screen.getByAltText(`${firstMockProject.title} screenshot 1 of 1`));
-    fireEvent.click(screen.getByLabelText(en.imageModal.ariaLabels.close));
-    expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    fireEvent.click(
+      screen.getByAltText(
+        screenshotAlt(firstMockProject.title, DISPLAY_INDEX_OFFSET, firstMockProject.images.length),
+      ),
+    );
+    fireEvent.click(screen.getByLabelText(defaultLocale.imageModal.ariaLabels.close));
+    expect(screen.queryByRole(AriaRole.Dialog)).not.toBeInTheDocument();
   });
 });

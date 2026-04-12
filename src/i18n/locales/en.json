@@ -7,7 +7,8 @@
   "navigation": {
     "ariaLabels": {
       "nav": "Main navigation",
-      "link": "Navigate to {{section}} section"
+      "link": "Navigate to {{section}} section",
+      "profileImage": "{{name}} profile picture"
     },
     "sections": {
       "about": "About",
@@ -36,7 +37,8 @@
     "ariaLabels": {
       "list": "List of projects",
       "card": "{{title}} project",
-      "viewImage": "View full size image {{index}} of {{title}}"
+      "viewImage": "View full size image {{index}} of {{title}}",
+      "screenshotAlt": "{{title}} screenshot {{index}} of {{total}}"
     }
   },
   "imageModal": {

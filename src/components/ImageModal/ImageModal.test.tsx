@@ -3,9 +3,23 @@ import { ThemeProvider } from 'styled-components';
 import { vi } from 'vitest';
 import { ImageModal } from './ImageModal';
 import { theme } from '../../styles/theme';
-import en from '../../i18n/locales/en.json';
-import { SINGLE_CALL, SINGLE_ITEM_COUNT, FIRST_INDEX, OVERFLOW_LOCKED } from '../../config';
-import { AriaRole } from '../../types';
+import { defaultLocale } from '../../i18n/localeConfig';
+import {
+  SINGLE_CALL,
+  SINGLE_ITEM_COUNT,
+  FIRST_INDEX,
+  TOUCH_X_HIGH,
+  TOUCH_X_MID,
+  TOUCH_X_LOW,
+  TOUCH_Y,
+  TOUCH_BELOW_THRESHOLD_END_X,
+  TOUCH_VERTICAL_START_Y,
+  TOUCH_VERTICAL_END_X,
+  TOUCH_VERTICAL_END_Y,
+  TEST_IMAGE_URL,
+  TEST_IMAGE_ALT,
+} from '../../config';
+import { AriaRole, HtmlAttr, HtmlTag, KeyboardKey, OverflowValue } from '../../types';
 import type React from 'react';
 
 const renderWithTheme = (component: React.ReactElement): ReturnType<typeof render> => {
@@ -16,8 +30,8 @@ describe('ImageModal Component', () => {
   const mockOnClose = vi.fn();
   const mockOnPrevious = vi.fn();
   const mockOnNext = vi.fn();
-  const testImageUrl = 'test-image.jpg';
-  const testAltText = 'Test Image';
+  const testImageUrl = TEST_IMAGE_URL;
+  const testAltText = TEST_IMAGE_ALT;
 
   beforeEach(() => {
     vi.clearAllMocks();
@@ -50,7 +64,7 @@ describe('ImageModal Component', () => {
         hasNext={false}
       />,
     );
-    expect(screen.getByAltText(testAltText)).toHaveAttribute('src', testImageUrl);
+    expect(screen.getByAltText(testAltText)).toHaveAttribute(HtmlAttr.Src, testImageUrl);
   });
 
   it('calls onClose when close button is clicked', () => {
@@ -65,7 +79,7 @@ describe('ImageModal Component', () => {
         hasNext={false}
       />,
     );
-    fireEvent.click(screen.getByLabelText(en.imageModal.ariaLabels.close));
+    fireEvent.click(screen.getByLabelText(defaultLocale.imageModal.ariaLabels.close));
     expect(mockOnClose).toHaveBeenCalledTimes(SINGLE_CALL);
   });
 
@@ -81,7 +95,7 @@ describe('ImageModal Component', () => {
         hasNext={false}
       />,
     );
-    expect(screen.getByLabelText(en.imageModal.ariaLabels.close)).toBeInTheDocument();
+    expect(screen.getByLabelText(defaultLocale.imageModal.ariaLabels.close)).toBeInTheDocument();
   });
 
   it('calls onClose when Escape key is pressed', () => {
@@ -96,7 +110,7 @@ describe('ImageModal Component', () => {
         hasNext={false}
       />,
     );
-    fireEvent.keyDown(document, { key: 'Escape' });
+    fireEvent.keyDown(document, { key: KeyboardKey.Escape });
     expect(mockOnClose).toHaveBeenCalledTimes(SINGLE_CALL);
   });
 
@@ -112,7 +126,7 @@ describe('ImageModal Component', () => {
         hasNext={false}
       />,
     );
-    fireEvent.click(screen.getByRole('dialog'));
+    fireEvent.click(screen.getByRole(AriaRole.Dialog));
     expect(mockOnClose).toHaveBeenCalledTimes(SINGLE_CALL);
   });
 
@@ -144,7 +158,7 @@ describe('ImageModal Component', () => {
         hasNext={false}
       />,
     );
-    expect(screen.getByLabelText(en.imageModal.ariaLabels.modal)).toBeInTheDocument();
+    expect(screen.getByLabelText(defaultLocale.imageModal.ariaLabels.modal)).toBeInTheDocument();
   });
 
   it('renders navigation buttons with translated aria-labels when hasPrevious and hasNext are true', () => {
@@ -159,9 +173,9 @@ describe('ImageModal Component', () => {
         hasNext
       />,
     );
-    expect(screen.getByLabelText(en.imageModal.ariaLabels.previous)).toBeInTheDocument();
-    expect(screen.getByLabelText(en.imageModal.ariaLabels.next)).toBeInTheDocument();
-    expect(screen.getByLabelText(en.imageModal.ariaLabels.close)).toBeInTheDocument();
+    expect(screen.getByLabelText(defaultLocale.imageModal.ariaLabels.previous)).toBeInTheDocument();
+    expect(screen.getByLabelText(defaultLocale.imageModal.ariaLabels.next)).toBeInTheDocument();
+    expect(screen.getByLabelText(defaultLocale.imageModal.ariaLabels.close)).toBeInTheDocument();
   });
 
   it('calls onPrevious when left arrow key is pressed', () => {
@@ -176,7 +190,7 @@ describe('ImageModal Component', () => {
         hasNext={false}
       />,
     );
-    fireEvent.keyDown(document, { key: 'ArrowLeft' });
+    fireEvent.keyDown(document, { key: KeyboardKey.ArrowLeft });
     expect(mockOnPrevious).toHaveBeenCalledTimes(SINGLE_CALL);
   });
 
@@ -192,7 +206,7 @@ describe('ImageModal Component', () => {
         hasNext
       />,
     );
-    fireEvent.keyDown(document, { key: 'ArrowRight' });
+    fireEvent.keyDown(document, { key: KeyboardKey.ArrowRight });
     expect(mockOnNext).toHaveBeenCalledTimes(SINGLE_CALL);
   });
 
@@ -208,7 +222,7 @@ describe('ImageModal Component', () => {
         hasNext={false}
       />,
     );
-    fireEvent.keyDown(document, { key: 'ArrowLeft' });
+    fireEvent.keyDown(document, { key: KeyboardKey.ArrowLeft });
     expect(mockOnPrevious).not.toHaveBeenCalled();
   });
 
@@ -224,7 +238,7 @@ describe('ImageModal Component', () => {
         hasNext={false}
       />,
     );
-    fireEvent.keyDown(document, { key: 'ArrowRight' });
+    fireEvent.keyDown(document, { key: KeyboardKey.ArrowRight });
     expect(mockOnNext).not.toHaveBeenCalled();
   });
 
@@ -240,9 +254,9 @@ describe('ImageModal Component', () => {
         hasNext
       />,
     );
-    fireEvent.click(screen.getByLabelText(en.imageModal.ariaLabels.previous));
+    fireEvent.click(screen.getByLabelText(defaultLocale.imageModal.ariaLabels.previous));
     expect(mockOnPrevious).toHaveBeenCalledTimes(SINGLE_CALL);
-    fireEvent.click(screen.getByLabelText(en.imageModal.ariaLabels.next));
+    fireEvent.click(screen.getByLabelText(defaultLocale.imageModal.ariaLabels.next));
     expect(mockOnNext).toHaveBeenCalledTimes(SINGLE_CALL);
   });
 
@@ -258,8 +272,8 @@ describe('ImageModal Component', () => {
         hasNext
       />,
     );
-    fireEvent.touchStart(document, { touches: [{ clientX: 300, clientY: 200 }] });
-    fireEvent.touchEnd(document, { changedTouches: [{ clientX: 100, clientY: 200 }] });
+    fireEvent.touchStart(document, { touches: [{ clientX: TOUCH_X_HIGH, clientY: TOUCH_Y }] });
+    fireEvent.touchEnd(document, { changedTouches: [{ clientX: TOUCH_X_LOW, clientY: TOUCH_Y }] });
     expect(mockOnNext).toHaveBeenCalledTimes(SINGLE_CALL);
   });
 
@@ -275,8 +289,8 @@ describe('ImageModal Component', () => {
         hasNext={false}
       />,
     );
-    fireEvent.touchStart(document, { touches: [{ clientX: 100, clientY: 200 }] });
-    fireEvent.touchEnd(document, { changedTouches: [{ clientX: 300, clientY: 200 }] });
+    fireEvent.touchStart(document, { touches: [{ clientX: TOUCH_X_LOW, clientY: TOUCH_Y }] });
+    fireEvent.touchEnd(document, { changedTouches: [{ clientX: TOUCH_X_HIGH, clientY: TOUCH_Y }] });
     expect(mockOnPrevious).toHaveBeenCalledTimes(SINGLE_CALL);
   });
 
@@ -292,8 +306,10 @@ describe('ImageModal Component', () => {
         hasNext
       />,
     );
-    fireEvent.touchStart(document, { touches: [{ clientX: 200, clientY: 200 }] });
-    fireEvent.touchEnd(document, { changedTouches: [{ clientX: 180, clientY: 200 }] });
+    fireEvent.touchStart(document, { touches: [{ clientX: TOUCH_X_MID, clientY: TOUCH_Y }] });
+    fireEvent.touchEnd(document, {
+      changedTouches: [{ clientX: TOUCH_BELOW_THRESHOLD_END_X, clientY: TOUCH_Y }],
+    });
     expect(mockOnNext).not.toHaveBeenCalled();
   });
 
@@ -309,8 +325,12 @@ describe('ImageModal Component', () => {
         hasNext
       />,
     );
-    fireEvent.touchStart(document, { touches: [{ clientX: 200, clientY: 100 }] });
-    fireEvent.touchEnd(document, { changedTouches: [{ clientX: 190, clientY: 400 }] });
+    fireEvent.touchStart(document, {
+      touches: [{ clientX: TOUCH_X_MID, clientY: TOUCH_VERTICAL_START_Y }],
+    });
+    fireEvent.touchEnd(document, {
+      changedTouches: [{ clientX: TOUCH_VERTICAL_END_X, clientY: TOUCH_VERTICAL_END_Y }],
+    });
     expect(mockOnNext).not.toHaveBeenCalled();
   });
 
@@ -326,7 +346,7 @@ describe('ImageModal Component', () => {
         hasNext={false}
       />,
     );
-    expect(document.body.style.overflow).toBe(OVERFLOW_LOCKED);
+    expect(document.body.style.overflow).toBe(OverflowValue.Locked);
   });
 
   it('restores body overflow when unmounted', () => {
@@ -342,11 +362,11 @@ describe('ImageModal Component', () => {
       />,
     );
     unmount();
-    expect(document.body.style.overflow).toBe('unset');
+    expect(document.body.style.overflow).toBe(OverflowValue.Restored);
   });
 
   it('only renders the viewed image', () => {
-    const { container } = renderWithTheme(
+    renderWithTheme(
       <ImageModal
         imageUrl={testImageUrl}
         altText={testAltText}
@@ -357,8 +377,9 @@ describe('ImageModal Component', () => {
         hasNext={false}
       />,
     );
-    const imgs = container.querySelectorAll(`[role="${AriaRole.Dialog}"] img`);
-    expect(imgs).toHaveLength(SINGLE_ITEM_COUNT);
-    expect(imgs[FIRST_INDEX]).toHaveAttribute('src', testImageUrl);
+    const dialog = screen.getByRole(AriaRole.Dialog);
+    const images = dialog.querySelectorAll(HtmlTag.Img);
+    expect(images).toHaveLength(SINGLE_ITEM_COUNT);
+    expect(images[FIRST_INDEX]).toHaveAttribute(HtmlAttr.Src, testImageUrl);
   });
 });

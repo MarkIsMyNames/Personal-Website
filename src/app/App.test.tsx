@@ -1,27 +1,28 @@
 import { render, screen, within } from '@testing-library/react';
 import App from './App';
-import en from '../i18n/locales/en.json';
+import { defaultLocale } from '../i18n/localeConfig';
+import { AriaRole, SectionId } from '../types';
 
 describe('App Component', () => {
   describe('Sections', () => {
     it('renders about section', () => {
       render(<App />);
-      expect(document.getElementById('about')).toBeInTheDocument();
+      expect(document.getElementById(SectionId.About)).toBeInTheDocument();
     });
 
     it('renders skills section', () => {
       render(<App />);
-      expect(document.getElementById('skills')).toBeInTheDocument();
+      expect(document.getElementById(SectionId.Skills)).toBeInTheDocument();
     });
 
     it('renders projects section', () => {
       render(<App />);
-      expect(document.getElementById('projects')).toBeInTheDocument();
+      expect(document.getElementById(SectionId.Projects)).toBeInTheDocument();
     });
 
     it('renders contact section', () => {
       render(<App />);
-      expect(document.getElementById('contact')).toBeInTheDocument();
+      expect(document.getElementById(SectionId.Contact)).toBeInTheDocument();
     });
   });
 
@@ -29,7 +30,7 @@ describe('App Component', () => {
     it('renders navigation landmark with translated aria-label', () => {
       render(<App />);
       expect(
-        screen.getByRole('navigation', { name: en.navigation.ariaLabels.nav }),
+        screen.getByRole(AriaRole.Navigation, { name: defaultLocale.navigation.ariaLabels.nav }),
       ).toBeInTheDocument();
     });
   });
@@ -37,60 +38,57 @@ describe('App Component', () => {
   describe('Skills', () => {
     it('renders all translated skill names', () => {
       render(<App />);
-      const skillsSections = screen.getAllByLabelText(
-        en.common.ariaLabels.section.replace('{{title}}', en.navigation.sections.skills),
-      );
-      const skillsSection = skillsSections.find((el) => el.tagName.toLowerCase() === 'section');
-      if (!skillsSection) {
-        throw new Error('Skills section not found');
-      }
-      en.skillsData.forEach((skill) => {
+      const skillsSection = screen.getByRole(AriaRole.Region, {
+        name: defaultLocale.common.ariaLabels.section.replace(
+          '{{title}}',
+          defaultLocale.navigation.sections.skills,
+        ),
+      });
+      defaultLocale.skillsData.forEach((skill) => {
         expect(within(skillsSection).getByText(skill.name)).toBeInTheDocument();
       });
     });
 
     it('renders correct number of skill cards matching skillsData', () => {
       render(<App />);
-      const skillsSections = screen.getAllByLabelText(
-        en.common.ariaLabels.section.replace('{{title}}', en.navigation.sections.skills),
+      const skillsSection = screen.getByRole(AriaRole.Region, {
+        name: defaultLocale.common.ariaLabels.section.replace(
+          '{{title}}',
+          defaultLocale.navigation.sections.skills,
+        ),
+      });
+      expect(within(skillsSection).getAllByRole(AriaRole.ListItem)).toHaveLength(
+        defaultLocale.skillsData.length,
       );
-      const skillsSection = skillsSections.find((el) => el.tagName.toLowerCase() === 'section');
-      if (!skillsSection) {
-        throw new Error('Skills section not found');
-      }
-      expect(within(skillsSection).getAllByRole('listitem')).toHaveLength(en.skillsData.length);
     });
   });
 
   describe('Projects', () => {
     it('renders all translated project titles', () => {
       render(<App />);
-      en.projectsData.forEach((project) => {
+      defaultLocale.projectsData.forEach((project) => {
         expect(screen.getByText(project.title)).toBeInTheDocument();
       });
     });
 
     it('renders translated project roles', () => {
       render(<App />);
-      en.projectsData.forEach((project) => {
+      defaultLocale.projectsData.forEach((project) => {
         expect(screen.getByText(project.role)).toBeInTheDocument();
       });
     });
 
     it('renders translated project descriptions', () => {
       render(<App />);
-      en.projectsData.forEach((project) => {
+      defaultLocale.projectsData.forEach((project) => {
         expect(screen.getByText(project.description)).toBeInTheDocument();
       });
     });
 
     it('renders correct number of project cards matching projectsData', () => {
       render(<App />);
-      const projectsList = screen.getByLabelText(en.projects.ariaLabels.list);
-      const directCards = Array.from(projectsList.children).filter(
-        (child) => child.getAttribute('role') === 'listitem',
-      );
-      expect(directCards).toHaveLength(en.projectsData.length);
+      const projectsList = screen.getByLabelText(defaultLocale.projects.ariaLabels.list);
+      expect(Array.from(projectsList.children)).toHaveLength(defaultLocale.projectsData.length);
     });
   });
 });

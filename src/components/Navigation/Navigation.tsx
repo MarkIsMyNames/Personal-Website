@@ -8,7 +8,7 @@ import {
   NavLinks,
   NavLink,
 } from './Navigation.styles';
-import { AriaRole, SectionId } from '../../types';
+import { AriaRole, DomEvent, SectionId } from '../../types';
 import { useTranslation } from 'react-i18next';
 import {
   NAV_SCROLL_TOP_THRESHOLD,
@@ -38,9 +38,9 @@ export function Navigation() {
   }, []);
 
   useEffect(() => {
-    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener(DomEvent.Scroll, handleScroll, { passive: true });
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener(DomEvent.Scroll, handleScroll);
     };
   }, [handleScroll]);
 
@@ -75,7 +75,7 @@ export function Navigation() {
         >
           <NavProfileImage
             src={profile.image}
-            alt={`${profile.name} profile picture`}
+            alt={t('navigation.ariaLabels.profileImage', { name: profile.name })}
           />
           <NavBrand>{profile.name}</NavBrand>
         </NavBrandContainer>

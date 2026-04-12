@@ -1,4 +1,5 @@
 import storybook from "eslint-plugin-storybook";
+import sonarjs from "eslint-plugin-sonarjs";
 import js from '@eslint/js';
 import { fixupPluginRules } from '@eslint/compat';
 import tsPlugin from '@typescript-eslint/eslint-plugin';
@@ -175,28 +176,8 @@ export default [
           message: 'Use AriaRole constant instead of a string literal for role attributes',
         },
         {
-          selector: 'Literal[value="_blank"]',
-          message: 'Use EXTERNAL_LINK_TARGET constant from src/config.ts',
-        },
-        {
-          selector: 'Literal[value="noopener noreferrer"]',
-          message: 'Use EXTERNAL_LINK_REL constant from src/config.ts',
-        },
-        {
-          selector: 'Literal[value="smooth"]',
-          message: 'Use SCROLL_BEHAVIOR constant from src/config.ts',
-        },
-        {
-          selector: 'Literal[value="hidden"][parent.type!="Property"]',
-          message: 'Use OVERFLOW_LOCKED constant from src/config.ts',
-        },
-        {
-          selector: 'Literal[value="alternate"]',
-          message: 'Use HREFLANG_REL constant from src/config.ts',
-        },
-        {
-          selector: 'Literal[value="high"]',
-          message: 'Use FETCH_PRIORITY_HIGH constant from src/config.ts',
+          selector: 'Literal[value=/^(_blank|noopener noreferrer|smooth|alternate|high)$/]',
+          message: 'Use a named constant from src/config.ts instead of this string literal',
         },
         {
           selector: 'JSXAttribute > Literal[value!=""]',
@@ -210,7 +191,165 @@ export default [
           selector: 'JSXExpressionContainer > Literal[raw=/^[0-9]/]',
           message: 'Numeric literals in JSX props must be named constants in src/config.ts',
         },
+        {
+          selector: 'BinaryExpression > CallExpression > MemberExpression[property.name="getAttribute"]',
+          message: 'Use getByRole/getAllByRole instead of getAttribute("role") comparisons',
+        },
+        {
+          selector: 'CallExpression[callee.property.name=/^(get|find|query)(All)?ByRole$/] > Literal',
+          message: 'Use AriaRole enum instead of a string literal for role queries',
+        },
+        {
+          selector: 'JSXText[value=/\\S/]',
+          message: 'Standalone text in JSX must be a named constant or translation — no bare text nodes',
+        },
+        {
+          selector: 'JSXAttribute[name.name=/^(alt|title|placeholder|aria-label)$/] JSXExpressionContainer > TemplateLiteral',
+          message: 'Template literals in alt/title/placeholder/aria-label must use translation keys via t()',
+        },
+        {
+          selector: 'CallExpression[callee.property.name=/^(get|find|query)(All)?ByAltText$/] > TemplateLiteral',
+          message: 'Template literals in getByAltText must use a translation key helper, not a hardcoded string',
+        },
+        {
+          selector: 'ArrayExpression > Literal[value=/^(Fa|Si|Di|Ai|Io|Bi)[A-Z]/]',
+          message: 'Icon names must be derived from Object.keys(iconMap), not hardcoded in arrays',
+        },
+        {
+          selector: 'ObjectExpression:has(Property[key.name="iconName"]) > Property[key.name=/^(name|iconName)$/] > Literal',
+          message: 'Skill objects must use data from en.skillsData, not hardcoded literals',
+        },
+        {
+          selector: 'ObjectExpression:has(Property[key.name="highlights"]) > Property[key.name=/^(title|role|description)$/] > Literal',
+          message: 'Project objects must use data from en.projectsData, not hardcoded literals',
+        },
+        {
+          selector: 'ObjectExpression:has(Property[key.name="email"]):has(Property[key.name="github"]) > Property[key.name=/^(name|title|bio|image|email|github|university)$/] > Literal',
+          message: 'Profile objects must use data from en.profile, not hardcoded literals',
+        },
+        {
+          selector: 'VariableDeclarator[id.name=/^(mock|test)[A-Z]/] > Literal[raw=/^[\'\"]/]',
+          message: 'Test variable string literals must be named constants in src/config.ts or use data from en.json',
+        },
+        {
+          selector: 'Property[key.name="key"] > Literal',
+          message: 'Use KeyboardKey constant instead of a string literal for key event values',
+        },
+        {
+          selector: 'Property[key.name="code"] > Literal',
+          message: 'Use KeyCode constant instead of a string literal for key code values',
+        },
+        {
+          selector: 'BinaryExpression:not([left.type="UnaryExpression"][left.operator="typeof"]):not([right.type="UnaryExpression"][right.operator="typeof"]) > Literal[raw=/^[\'\"]/][value!=""]',
+          message: 'String literals in comparisons must be named constants in src/config.ts or src/types.ts',
+        },
+        {
+          selector: 'CallExpression[callee.property.name=/^(toHaveAttribute|toHaveProperty|toHaveStyle)$/] > Literal',
+          message: 'Strings in toHaveAttribute/toHaveProperty/toHaveStyle must be named constants in src/config.ts',
+        },
+        {
+          selector: 'Property[key.name=/^(clientX|clientY|pageX|pageY)$/] > Literal',
+          message: 'Touch/mouse coordinates must be named constants in src/config.ts',
+        },
+        {
+          selector: 'Property[key.name=/^(top|left|bottom|right|width|height)$/] > Literal[raw=/^[0-9]/]',
+          message: 'Bounding rect dimensions must be named constants in src/config.ts',
+        },
+        {
+          selector: 'CallExpression[callee.property.name=/^(add|remove)EventListener$/] > Literal',
+          message: 'Use DomEvent constant instead of a string literal for event names',
+        },
+        {
+          selector: 'CallExpression[callee.property.name="createElement"] > Literal',
+          message: 'Use HtmlTag constant instead of a string literal for element tag names',
+        },
+        {
+          selector: 'AssignmentExpression[left.property.name="id"] > Literal',
+          message: 'Use SectionId enum instead of a string literal when assigning element IDs',
+        },
+        {
+          selector: 'CallExpression[callee.property.name=/^(getElementById|querySelector)$/] > Literal[raw=/^[\'\"]/]',
+          message: 'Use a named constant (e.g. ROOT_ELEMENT_ID, HtmlTag) instead of a string literal in getElementById/querySelector',
+        },
+        {
+          selector: 'CallExpression[callee.object.name="Object"][callee.property.name="defineProperty"] > Literal[raw=/^[\'\"]/]',
+          message: 'Use a named constant instead of a string literal in Object.defineProperty',
+        },
+        {
+          selector: 'CallExpression[callee.property.name="toBe"] > Literal[raw=/^[\'\"]/][value!=""]',
+          message: 'String literals in toBe() must come from en.json or named constants in src/config.ts',
+        },
+        {
+          selector: 'CallExpression[callee.property.name="toEqual"] > ArrayExpression > Literal[raw=/^[\'\"]/]',
+          message: 'String literals in toEqual([...]) must come from named constants in src/config.ts',
+        },
+        {
+          selector: 'Property[key.name="lng"] > Literal[raw=/^[\'\"]/]',
+          message: 'Use a named language constant (e.g. UNSUPPORTED_LANG_CODE, DEFAULT_LANG) instead of a string literal for the lng option',
+        },
+        {
+          selector: 'CallExpression[callee.property.name=/^(changeLanguage|addResourceBundle)$/] > Literal[raw=/^[\'\"]/]',
+          message: 'Use a named language constant (e.g. TEST_LANG_FR, DEFAULT_LANG, I18N_TRANSLATION_NAMESPACE) instead of a string literal',
+        },
+        {
+          selector: 'CallExpression[callee.name=/^(detectLang|isSupportedLang)$/] > Literal[raw=/^[\'\"]/][value!=""]',
+          message: 'Use a named locale constant (e.g. TEST_LOCALE_EN_US, TEST_LANG_FR, UNSUPPORTED_LANG_CODE) instead of a string literal',
+        },
+        {
+          selector: 'CallExpression[callee.property.name="replace"] > Literal[raw=/^[\'\"]/][value!=""][value!=/\\{\\{/]',
+          message: 'String replacement values must be named constants in src/config.ts',
+        },
+        {
+          selector: 'CallExpression[callee.property.name="split"] > Literal[raw=/^[\'\"]/]',
+          message: 'Use a named constant instead of a string literal in split()',
+        },
+        {
+          selector: 'CallExpression[callee.object.name="vi"][callee.property.name=/^(spyOn|stubGlobal)$/] > Literal',
+          message: 'Use a named constant (e.g. WindowGlobal, I18N_CHANGE_LANGUAGE) instead of a string literal in vi.spyOn/vi.stubGlobal',
+        },
+        {
+          selector: 'NewExpression[callee.name="RegExp"] > Literal[raw=/^[\'\"]/]',
+          message: 'Use REGEX_FLAG_CASE_INSENSITIVE or other named constant instead of a string literal in RegExp',
+        },
+        {
+          selector: 'ThrowStatement > NewExpression[callee.name="Error"] > Literal',
+          message: 'Error messages must be named constants in src/config.ts',
+        },
+        {
+          selector: 'TSUnknownKeyword',
+          message: 'Avoid unknown — use a specific type such as LocaleValue, LocaleRecord, or a union instead',
+        },
+        {
+          selector: 'CallExpression[callee.property.name="resolve"] > Literal[raw=/^[\'\"]/]',
+          message: 'Use PUBLIC_DIR or another named constant instead of a string literal in resolve()',
+        },
+        {
+          selector: 'CallExpression[callee.name="resolve"] > Literal[raw=/^[\'\"]/][value!=""]',
+          message: 'Use a named constant (e.g. LOCALES_DIR_NAME, PUBLIC_DIR) instead of a string literal in resolve()',
+        },
+        {
+          selector: 'BinaryExpression[left.type="UnaryExpression"][left.operator="typeof"] > Literal[raw=/^[\'\"]/]',
+          message: 'Use a named constant (e.g. TYPEOF_OBJECT) instead of a string literal in typeof comparisons',
+        },
+        {
+          selector: 'TemplateLiteral > Identifier[name="LOCALE_SEPARATOR"]',
+          message: 'Use a pre-combined TEST_LOCALE_* constant instead of building locale tags with LOCALE_SEPARATOR in template literals',
+        },
+        {
+          selector:
+            'TemplateLiteral:not(TaggedTemplateExpression > TemplateLiteral) > TemplateElement[value.raw=/[a-zA-Z]{3,}/]',
+          message:
+            'Human-readable text in template literals must be named constants in src/config.ts',
+        },
       ],
+    },
+  },
+  {
+    files: ['src/**/*.{ts,tsx}'],
+    plugins: { sonarjs },
+    rules: {
+      'sonarjs/no-identical-functions': 'error',
+      'sonarjs/no-duplicated-branches': 'error',
     },
   },
   ...storybook.configs["flat/recommended"],
@@ -219,6 +358,14 @@ export default [
     rules: {
       // Meta and StoryObj must be imported from @storybook/react (the renderer) in Storybook v10
       'storybook/no-renderer-packages': 'off',
+      // Story args must use data from en.json, not hardcoded object literals
+      'no-restricted-syntax': [
+        'error',
+        {
+          selector: 'Property[key.name="args"] Property[key.name=/^(name|iconName|altText|imageUrl|title|role|description)$/] > Literal',
+          message: 'Story args must use data from en.json (e.g. en.skillsData, en.projectsData) rather than hardcoded literals',
+        },
+      ],
     },
   },
 ];

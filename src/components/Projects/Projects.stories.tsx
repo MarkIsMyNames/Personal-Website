@@ -1,19 +1,19 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Projects } from './Projects';
-import en from '../../i18n/locales/en.json';
+import { defaultLocale } from '../../i18n/localeConfig';
 import { SINGLE_ITEM_COUNT } from '../../config';
-import { AriaRole } from '../../types';
+import { AriaRole, ErrorMessage } from '../../types';
 
-const allProjects = en.projectsData;
+const allProjects = defaultLocale.projectsData;
 
 const multiImageProject = allProjects.find((p) => p.images.length > SINGLE_ITEM_COUNT);
 if (!multiImageProject) {
-  throw new Error('No multi-image project found in en.json');
+  throw new Error(ErrorMessage.NoMultiImageProject);
 }
 
 const singleImageProject = allProjects.find((p) => p.images.length === SINGLE_ITEM_COUNT);
 if (!singleImageProject) {
-  throw new Error('No single-image project found in en.json');
+  throw new Error(ErrorMessage.NoSingleImageProject);
 }
 
 export default { component: Projects } satisfies Meta<typeof Projects>;

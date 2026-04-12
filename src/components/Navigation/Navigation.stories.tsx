@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Navigation } from './Navigation';
-import en from '../../i18n/locales/en.json';
+import { defaultLocale } from '../../i18n/localeConfig';
 import { AriaRole } from '../../types';
 
 export default { component: Navigation } satisfies Meta<typeof Navigation>;
@@ -17,25 +17,25 @@ export const HoverBrand: Story = {
 export const HoverAbout: Story = {
   parameters: {
     pseudo: {
-      hover: `[aria-label*="${en.navigation.sections.about}"][role="${AriaRole.MenuItem}"]`,
+      hover: `[aria-label*="${defaultLocale.navigation.sections.about}"][role="${AriaRole.MenuItem}"]`,
     },
   },
 };
 
 export const HoverSkills: Story = {
   parameters: {
-    pseudo: { hover: `[aria-label*="${en.navigation.sections.skills}"]` },
+    pseudo: { hover: `[aria-label*="${defaultLocale.navigation.sections.skills}"]` },
   },
 };
 
 export const HoverProjects: Story = {
   parameters: {
-    pseudo: { hover: `[aria-label*="${en.navigation.sections.projects}"]` },
+    pseudo: { hover: `[aria-label*="${defaultLocale.navigation.sections.projects}"]` },
   },
 };
 
 export const HoverContact: Story = {
   parameters: {
-    pseudo: { hover: `[aria-label*="${en.navigation.sections.contact}"]` },
+    pseudo: { hover: `[aria-label*="${defaultLocale.navigation.sections.contact}"]` },
   },
 };

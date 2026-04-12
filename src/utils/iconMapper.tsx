@@ -9,8 +9,8 @@ import {
   FaDatabase,
   FaMobileAlt,
   FaProjectDiagram,
-  FaQuestion,
 } from 'react-icons/fa';
+import { ErrorMessage } from '../types';
 import { DiRuby } from 'react-icons/di';
 import {
   SiCplusplus,
@@ -25,7 +25,7 @@ import { BiCodeBlock } from 'react-icons/bi';
 import { AiOutlineDatabase } from 'react-icons/ai';
 import type { IconType } from 'react-icons';
 
-const iconMap: Record<string, IconType> = {
+export const iconMap: Record<string, IconType> = {
   FaJava,
   FaPython,
   DiRuby,
@@ -54,7 +54,10 @@ type IconProps = {
 };
 
 export function Icon({ iconName, size }: IconProps) {
-  const IconComponent = iconMap[iconName] ?? FaQuestion;
+  const IconComponent = iconMap[iconName];
+  if (!IconComponent) {
+    throw new Error(ErrorMessage.IconNotFound);
+  }
 
   return (
     <IconComponent
