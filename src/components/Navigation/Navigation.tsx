@@ -8,7 +8,7 @@ import {
   NavLinks,
   NavLink,
 } from './Navigation.styles';
-import { SectionId } from '../../types';
+import { AriaRole, DomEvent, SectionId } from '../../types';
 import { useTranslation } from 'react-i18next';
 import {
   NAV_SCROLL_TOP_THRESHOLD,
@@ -38,9 +38,9 @@ export function Navigation() {
   }, []);
 
   useEffect(() => {
-    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener(DomEvent.Scroll, handleScroll, { passive: true });
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener(DomEvent.Scroll, handleScroll);
     };
   }, [handleScroll]);
 
@@ -64,25 +64,25 @@ export function Navigation() {
   return (
     <Nav
       $isVisible={isVisible}
-      role="navigation"
+      role={AriaRole.Navigation}
       aria-label={t('navigation.ariaLabels.nav')}
     >
       <NavContainer>
         <NavBrandContainer
           onClick={() => scrollTo()}
-          role="button"
+          role={AriaRole.Button}
           aria-label={t('navigation.ariaLabels.link', { section: t('navigation.sections.about') })}
         >
           <NavProfileImage
             src={profile.image}
-            alt={`${profile.name} profile picture`}
+            alt={t('navigation.ariaLabels.profileImage', { name: profile.name })}
           />
           <NavBrand>{profile.name}</NavBrand>
         </NavBrandContainer>
-        <NavLinks role="menu">
+        <NavLinks role={AriaRole.Menu}>
           <NavLink
             onClick={() => scrollTo()}
-            role="menuitem"
+            role={AriaRole.MenuItem}
             aria-label={t('navigation.ariaLabels.link', {
               section: t('navigation.sections.about'),
             })}
@@ -91,7 +91,7 @@ export function Navigation() {
           </NavLink>
           <NavLink
             onClick={() => scrollTo(SectionId.Skills)}
-            role="menuitem"
+            role={AriaRole.MenuItem}
             aria-label={t('navigation.ariaLabels.link', {
               section: t('navigation.sections.skills'),
             })}
@@ -100,7 +100,7 @@ export function Navigation() {
           </NavLink>
           <NavLink
             onClick={() => scrollTo(SectionId.Projects)}
-            role="menuitem"
+            role={AriaRole.MenuItem}
             aria-label={t('navigation.ariaLabels.link', {
               section: t('navigation.sections.projects'),
             })}
@@ -109,7 +109,7 @@ export function Navigation() {
           </NavLink>
           <NavLink
             onClick={() => scrollTo(SectionId.Contact)}
-            role="menuitem"
+            role={AriaRole.MenuItem}
             aria-label={t('navigation.ariaLabels.link', {
               section: t('navigation.sections.contact'),
             })}

@@ -3,13 +3,13 @@ import { ThemeProvider } from 'styled-components';
 import { I18nextProvider, initReactI18next } from 'react-i18next';
 import i18n from 'i18next';
 import { theme } from '../src/styles/theme';
-import en from '../src/i18n/locales/en.json';
+import { DEFAULT_LANG, LOCALES } from '../src/i18n/localeConfig';
 
 document.body.style.backgroundColor = theme.colors.pageBackground;
 
 void i18n.use(initReactI18next).init({
-  resources: { en: { translation: en } },
-  lng: 'en',
+  resources: { [DEFAULT_LANG]: { translation: LOCALES[DEFAULT_LANG] } },
+  lng: DEFAULT_LANG,
 });
 
 export default {

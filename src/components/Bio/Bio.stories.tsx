@@ -1,12 +1,12 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Bio } from './Bio';
-import en from '../../i18n/locales/en.json';
+import { defaultLocale } from '../../i18n/localeConfig';
 
 export default { component: Bio } satisfies Meta<typeof Bio>;
 type Story = StoryObj<typeof Bio>;
 
 export const Default: Story = {
   args: {
-    profile: en.profile,
+    profile: defaultLocale.profile,
   },
 };

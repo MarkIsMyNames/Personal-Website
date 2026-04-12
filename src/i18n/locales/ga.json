@@ -7,7 +7,8 @@
   "navigation": {
     "ariaLabels": {
       "nav": "Príomh-nascleanúint",
-      "link": "Téigh go dtí alt {{section}}"
+      "link": "Téigh go dtí alt {{section}}",
+      "profileImage": "Grianghraf próifíle {{name}}"
     },
     "sections": {
       "about": "Fúm",
@@ -36,7 +37,8 @@
     "ariaLabels": {
       "list": "Liosta de thionscadail",
       "card": "Tionscadal {{title}}",
-      "viewImage": "Féach ar íomhá {{index}} de {{title}} i méid iomlán"
+      "viewImage": "Féach ar íomhá {{index}} de {{title}} i méid iomlán",
+      "screenshotAlt": "{{title}} scáileán {{index}} de {{total}}"
     }
   },
   "imageModal": {

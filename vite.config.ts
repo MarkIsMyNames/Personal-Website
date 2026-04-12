@@ -3,8 +3,9 @@ import react from '@vitejs/plugin-react';
 import { createHtmlPlugin } from 'vite-plugin-html';
 import { storybookTest } from '@storybook/addon-vitest/vitest-plugin';
 import { playwright } from '@vitest/browser-playwright';
-import en from './src/i18n/locales/en.json';
 import { theme } from './src/styles/theme';
+import { FAVICON_PATH, ENTRY_POINT_PATH, SLASH_PATH_SPLIT, ROOT_ELEMENT_ID, FETCH_PRIORITY_HIGH, CHARSET_UTF8 } from './src/config';
+import { DEFAULT_LANG, defaultLocale } from './src/i18n/localeConfig';
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -13,8 +14,15 @@ export default defineConfig({
     createHtmlPlugin({
       inject: {
         data: {
-          name: en.profile.name,
-          pageBackgroundStyle: `<style>body{background-color:${theme.colors.pageBackground}}</style>`,
+          name: defaultLocale.profile.name,
+          pageBackgroundStyle: `<style>body{background-color:${theme.colors.pageBackground};color:${theme.colors.textDefault}}</style>`,
+          defaultLang: DEFAULT_LANG,
+          charset: CHARSET_UTF8,
+          faviconPath: FAVICON_PATH,
+          fetchPriority: FETCH_PRIORITY_HIGH,
+          profileImagePath: `${SLASH_PATH_SPLIT}${defaultLocale.profile.image}`,
+          rootElementId: ROOT_ELEMENT_ID,
+          entryPointPath: ENTRY_POINT_PATH,
         },
       },
     }),

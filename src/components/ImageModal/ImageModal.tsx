@@ -6,14 +6,15 @@ import {
   NavigationButtonLeft,
   NavigationButtonRight,
 } from './ImageModal.styles';
-import { KeyboardKey } from '../../types';
+import { AriaRole, DomEvent, KeyboardKey, OverflowValue } from '../../types';
 import { useTranslation } from 'react-i18next';
 import {
   SWIPE_THRESHOLD_PX,
-  OVERFLOW_LOCKED,
-  OVERFLOW_RESTORED,
   FIRST_INDEX,
   NO_MOVEMENT,
+  CLOSE_SYMBOL,
+  PREV_SYMBOL,
+  NEXT_SYMBOL,
 } from '../../config';
 
 type ImageModalProps = {
@@ -72,24 +73,24 @@ export function ImageModal({
       }
     };
 
-    document.addEventListener('keydown', handleKeyDown);
-    document.addEventListener('touchstart', handleTouchStart, { passive: true });
-    document.addEventListener('touchend', handleTouchEnd);
-    document.body.style.overflow = OVERFLOW_LOCKED;
+    document.addEventListener(DomEvent.KeyDown, handleKeyDown);
+    document.addEventListener(DomEvent.TouchStart, handleTouchStart, { passive: true });
+    document.addEventListener(DomEvent.TouchEnd, handleTouchEnd);
+    document.body.style.overflow = OverflowValue.Locked;
 
     return () => {
-      document.removeEventListener('keydown', handleKeyDown);
-      document.removeEventListener('touchstart', handleTouchStart);
-      document.removeEventListener('touchend', handleTouchEnd);
-      document.body.style.overflow = OVERFLOW_RESTORED;
+      document.removeEventListener(DomEvent.KeyDown, handleKeyDown);
+      document.removeEventListener(DomEvent.TouchStart, handleTouchStart);
+      document.removeEventListener(DomEvent.TouchEnd, handleTouchEnd);
+      document.body.style.overflow = OverflowValue.Restored;
     };
   }, [onClose, onPrevious, onNext, hasPrevious, hasNext]);
 
   return (
     <ModalOverlay
       onClick={onClose}
-      role="dialog"
-      aria-modal="true"
+      role={AriaRole.Dialog}
+      aria-modal
       aria-label={t('imageModal.ariaLabels.modal')}
     >
       <CloseButton
@@ -99,7 +100,7 @@ export function ImageModal({
         }}
         aria-label={t('imageModal.ariaLabels.close')}
       >
-        ✕
+        {CLOSE_SYMBOL}
       </CloseButton>
       {hasPrevious && (
         <NavigationButtonLeft
@@ -109,7 +110,7 @@ export function ImageModal({
           }}
           aria-label={t('imageModal.ariaLabels.previous')}
         >
-          ‹
+          {PREV_SYMBOL}
         </NavigationButtonLeft>
       )}
       {hasNext && (
@@ -120,7 +121,7 @@ export function ImageModal({
           }}
           aria-label={t('imageModal.ariaLabels.next')}
         >
-          ›
+          {NEXT_SYMBOL}
         </NavigationButtonRight>
       )}
       <ModalImage

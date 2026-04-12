@@ -6,7 +6,7 @@ Guidance for Claude Code when working with this repository.
 
 Personal portfolio website for Mark Drohan, built with React + TypeScript. Static single-page site showcasing skills, projects, and experience. Deployed to Vercel at https://markdrohan.vercel.app (auto-deploys on push to `main`).
 
-**Stack:** React 19 | TypeScript (strict) | styled-components 6 | Vite 7 | Vitest 4 | Vercel
+**Stack:** React 19 | TypeScript (strict) | styled-components 6 | Vite 7 | Vitest 4 | Storybook 10 | Vercel
 
 ---
 
@@ -22,9 +22,12 @@ npm start          # Dev server at http://localhost:5173
 | Command | Purpose |
 |---------|---------|
 | `npm start` | Dev server (Vite, port 5173) |
-| `npm test` | Run all tests (vitest run) |
-| `npm run test:watch` | Watch mode for tests |
-| `npm run test:ui` | Vitest browser UI |
+| `npm test` | Run unit tests (vitest run --project=unit) |
+| `npm run test:watch` | Watch mode for unit tests |
+| `npm run test:ui` | Vitest browser UI for unit tests |
+| `npm run storybook` | Storybook dev server (port 6006) |
+| `npm run test-storybook` | Run Storybook/a11y tests via Vitest |
+| `npm run build-storybook` | Build static Storybook |
 | `npm run lint` | ESLint check |
 | `npm run lint:fix` | ESLint auto-fix |
 | `npm run format` | Prettier auto-format |
@@ -55,10 +58,14 @@ Personal-Website/
 ├── eslint.config.mjs                  # ESLint flat config (very strict)
 ├── .prettierrc.json                   # Prettier config (single quotes, 100 char width)
 │
+├── .storybook/
+│   ├── main.ts                        # Storybook config — @storybook/react-vite, addon-vitest, addon-a11y
+│   └── preview.tsx                    # Global decorators (ThemeProvider, I18nextProvider) + a11y: error
+│
 ├── src/
 │   ├── index.tsx                      # React entry point (StrictMode) — imports i18n first
 │   ├── config.ts                      # Named constants (no magic values)
-│   ├── types.ts                       # Shared types: Profile, Skill, Project, SectionId, KeyboardKey
+│   ├── types.ts                       # Shared types + enums: Profile, Skill, Project, SectionId, AriaRole, KeyboardKey
 │   ├── setupTests.ts                  # jest-dom + global react-i18next mock
 │   ├── styled.d.ts                    # Augments DefaultTheme for styled-components typing
 │   │
@@ -120,7 +127,7 @@ Personal-Website/
 │   │   └── Shared.styles.tsx          # CSS only — Reusable styled components (SectionTitle)
 │   │
 │   └── utils/
-│       ├── iconMapper.tsx             # Maps icon name strings → react-icons components
+│       ├── iconMapper.tsx             # Maps icon name strings → react-icons components; FaQuestion fallback; aria-hidden hardcoded
 │       └── iconMapper.test.tsx
 │
 ├── vercel.json                        # Vercel routing config (language URL rewrites)
@@ -185,14 +192,15 @@ When adding a new language, copy `en.json` and translate only the human-readable
 
 ### Data Model (src/types.ts)
 
-**Enums and constants:**
+**Enums:**
 
 | Name | Kind | Values | Purpose |
 |------|------|--------|---------|
-| `SectionId` | enum | `About`, `Skills`, `Projects`, `Contact` | Anchor IDs used in LocaleApp.tsx and Navigation.tsx |
-| `KeyboardKey` | const object | `Enter`, `Space`, `Escape`, `ArrowLeft`, `ArrowRight` | Keyboard event key values (const instead of enum because DOM `e.key` returns `string`) |
+| `SectionId` | string enum | `About`, `Skills`, `Projects`, `Contact` | Anchor IDs used in LocaleApp.tsx and Navigation.tsx |
+| `AriaRole` | string enum | `Article`, `Button`, `Dialog`, `List`, `ListItem`, `Menu`, `MenuItem`, `Navigation` | WAI-ARIA role attribute values — use instead of string literals in `role=` props |
+| `KeyboardKey` | `as const` object | `Enter`, `Space`, `Escape`, `ArrowLeft`, `ArrowRight` | Keyboard event key values compared against DOM `e.key` |
 
-**Use enums for categorical values where both producer and consumer are in our code** (e.g., `SectionId`). Use `as const` objects for values compared against external APIs (e.g., `KeyboardKey` vs DOM `e.key`).
+**Rule:** use a string enum when values are only ever *written* by our code (e.g. set as a JSX prop). Use `as const` when values are *compared against* a DOM API that returns `string` — `KeyboardKey` values are compared against `e.key: string`, and the `@typescript-eslint/no-unsafe-enum-comparison` rule would flag that. With `as const`, `KeyboardKey.Escape` has type `'Escape'` (string literal), so `e.key === KeyboardKey.Escape` is `string === 'Escape'` — valid. An ESLint `no-restricted-syntax` rule prevents using string literals directly in `role=` JSX attributes.
 
 **Types:**
 
@@ -204,12 +212,14 @@ When adding a new language, copy `en.json` and translate only the human-readable
 
 ### Icon System (src/utils/iconMapper.tsx)
 
-Maps icon name strings to `react-icons` components via a lookup table. To add a new icon:
+Maps icon name strings to `react-icons` components via a lookup table. The `Icon` component handles `aria-hidden={true}` internally — callers must never pass `aria-hidden` as a prop. Unknown icon names render `FaQuestion` as a fallback (never add raw `?` text).
+
+To add a new icon:
 1. Import from `react-icons` (e.g., `import { FaDocker } from 'react-icons/fa'`)
 2. Add to `iconMap`: `FaDocker,`
 3. Set `iconName: 'FaDocker'` on the skill entry in `en.json`
 
-Unknown icon names render a `?` fallback. `IconName` is exported as a utility type for hardcoding icon names directly in TypeScript.
+`IconName` is exported as a utility type for hardcoding icon names directly in TypeScript. The `UNKNOWN_ICON_NAME` test constant in `config.ts` must be used in tests to reference unknown icon names.
 
 ### Image References
 
@@ -264,7 +274,21 @@ Key rules beyond TypeScript:
 - `no-nested-ternary` — no chained ternaries
 - `react-hooks/exhaustive-deps: error` — hook deps must be complete
 - `@typescript-eslint/no-unnecessary-condition` — no redundant boolean checks
+- `@typescript-eslint/no-unsafe-assignment: error` — no unsafe assignments
 - `i18next/no-literal-string` — no hardcoded strings in JSX or aria/alt/title attributes
+
+**`no-restricted-syntax` rules** (catching magic string literals):
+- `JSXAttribute[name.name="role"] > Literal` — use `AriaRole` enum, not string literals
+- `JSXAttribute > Literal[value!=""]` — all non-empty JSX attribute strings must be named constants
+- `TemplateLiteral > TemplateElement[value.raw="/"]` — use `SLASH_PATH` constant, not literal `/`
+- Literal `_blank` → use `EXTERNAL_LINK_TARGET`
+- Literal `noopener noreferrer` → use `EXTERNAL_LINK_REL`
+- Literal `smooth` → use `SCROLL_BEHAVIOR`
+- Literal `hidden` (non-property) → use `OVERFLOW_LOCKED`
+- Literal `alternate` → use `HREFLANG_REL`
+- Literal `high` → use `FETCH_PRIORITY_HIGH`
+- URL strings (`https://`, `mailto:`) → must be in `config.ts`
+- Raw hex colour values → must be in `theme.ts`
 
 ### Prettier
 
@@ -300,7 +324,7 @@ background: ${({ theme }) => theme.gradients.accent};
 **Design tokens:**
 - **Dark theme** — cyan (`#00d9ff`) to purple (`#7b2cbf`) gradient accents
 - **Backgrounds:** `pageBackground` (#0a0e27) > `sectionBackground` (#151934) > `cardBackground` (#1a1f3a)
-- **Text:** `headingText` (#e4e6eb) for headings, `bodyText` (#b0b3b8) for body
+- **Text:** `textDefault` (#e4e6eb) for headings and primary text, `textMuted` (#b0b3b8) for body/secondary text
 - **Border:** `border` (#2a2f4a)
 - **Accent:** `accentHighlight` (cyan, gradient start), `accentGradientEnd` (purple, gradient end)
 - **Gradient:** built from named constants — `linear-gradient(135deg, ${accentHighlight} 0%, ${accentGradientEnd} 100%)` — used on section titles via `background-clip: text`
@@ -437,12 +461,42 @@ Email and GitHub links using the `Icon` component.
 
 ---
 
+## Storybook
+
+**Storybook 10** with `@storybook/react-vite` renderer, `@storybook/addon-vitest` (runs stories as Vitest tests), and `@storybook/addon-a11y` (axe accessibility checks).
+
+### Configuration
+
+- **`.storybook/main.ts`** — configures addons and Vitest project (`storybook`)
+- **`.storybook/preview.tsx`** — global decorators: `ThemeProvider` (with `theme`) and `I18nextProvider` (with `en` locale). Sets `parameters.a11y.test: 'error'` globally so all a11y violations fail the test run.
+
+### Running Storybook tests
+
+```bash
+npm run test-storybook   # runs VITEST_STORYBOOK=false vitest --project=storybook
+npm run storybook        # interactive dev server at port 6006
+```
+
+The `VITEST_STORYBOOK=false` env var is required — when unset, the addon treats all violations as warnings only.
+
+### Stories
+
+Each component that has visual or interactive behaviour should have a `Component.stories.tsx` alongside its other files. Stories use `Meta` and `StoryObj` from `@storybook/react`.
+
+### Accessibility in Storybook
+
+- All a11y violations are errors (not warnings) — any axe violation will fail CI
+- `background-clip: text` gradient text is fundamentally incompatible with axe colour-contrast checking. This is a known limitation — do not remove `SectionTitle` gradient styling to work around it; accept the inconclusive result for that specific element if axe flags it.
+- `aria-hidden` on icons is handled internally by `iconMapper` — never set it in stories or JSX
+
+---
+
 ## Accessibility
 
 - Semantic HTML: `<nav>`, `<section>`, `<ul>`/`<li>` with `role="list"`/`role="listitem"`
 - ARIA labels on all interactive elements and sections
-- ARIA roles: `role="dialog"` + `aria-modal="true"` on ImageModal, `role="navigation"`, `role="menu"`/`role="menuitem"`
-- Keyboard: clickable images have `tabIndex={0}` + `onKeyDown` (Enter/Space)
+- ARIA roles use `AriaRole` enum — `AriaRole.Dialog` + `aria-modal="true"` on ImageModal, `AriaRole.Navigation`, `AriaRole.Menu`/`AriaRole.MenuItem`
+- Keyboard: clickable images have `tabIndex={0}` + `onKeyDown` (Enter/Space) using `KeyboardKey` enum
 - Alt text with context (e.g., `"NASA Space Apps Challenge screenshot 1 of 3"`)
 - Modal supports keyboard (Escape, Arrows) and touch swipe
 

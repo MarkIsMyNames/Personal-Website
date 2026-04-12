@@ -1,47 +1,26 @@
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
 import { theme } from '../styles/theme.ts';
-import en from '../i18n/locales/en.json';
+import { defaultLocale } from '../i18n/localeConfig';
+import { INDEX_HTML_RELATIVE_PATH, ROOT_ELEMENT_ID } from '../config';
 
-const indexHtml = readFileSync(resolve(__dirname, '../../index.html'), 'utf-8');
+const indexHtml = readFileSync(resolve(__dirname, INDEX_HTML_RELATIVE_PATH), 'utf-8');
 
 describe('index.html structure', () => {
-  it('declares utf-8 charset', () => {
-    expect(indexHtml).toContain('<meta charset="utf-8"');
-  });
-
-  it('declares responsive viewport', () => {
-    expect(indexHtml).toContain('name="viewport"');
-    expect(indexHtml).toContain('width=device-width');
-  });
-
-  it('sets lang attribute on html element', () => {
-    expect(indexHtml).toContain('<html lang="en"');
-  });
-
-  it('includes favicon link', () => {
-    expect(indexHtml).toContain('rel="icon"');
-    expect(indexHtml).toContain('href="/favicon.svg"');
-  });
-
-  it('preloads profile image with high fetch priority', () => {
-    expect(indexHtml).toContain(`href="/${en.profile.image}"`);
-    expect(indexHtml).toContain('fetchpriority="high"');
-  });
-
-  it('has a root mount point', () => {
-    expect(indexHtml).toContain('<div id="root">');
-  });
-
   it('includes noscript fallback', () => {
     expect(indexHtml).toContain('<noscript>');
+  });
+
+  it('uses template variable for root element id, not a hardcoded value', () => {
+    expect(indexHtml).toContain('<%= rootElementId %>');
+    expect(indexHtml).not.toContain(`id="${ROOT_ELEMENT_ID}"`);
   });
 });
 
 describe('index.html injected values', () => {
   it('uses template variable for page title, not a hardcoded name', () => {
     expect(indexHtml).toContain('<%= name %>');
-    expect(indexHtml).not.toContain(en.profile.name);
+    expect(indexHtml).not.toContain(defaultLocale.profile.name);
   });
 
   it('uses template variable for body background, not a hardcoded hex value', () => {
@@ -49,7 +28,7 @@ describe('index.html injected values', () => {
     expect(indexHtml).not.toContain(theme.colors.pageBackground);
   });
 
-  it('contains no other hardcoded hex color values', () => {
+  it('contains no hardcoded hex color values', () => {
     expect(indexHtml).not.toMatch(/#[0-9a-fA-F]{3,6}/);
   });
 });

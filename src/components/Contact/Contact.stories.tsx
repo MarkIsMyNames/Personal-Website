@@ -1,11 +1,17 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Contact } from './Contact';
-import en from '../../i18n/locales/en.json';
+import { defaultLocale } from '../../i18n/localeConfig';
 
-const defaultProfile = en.profile;
+const defaultProfile = defaultLocale.profile;
 
-const emailLabel = en.contact.ariaLabels.email.replace('{{email}}', en.profile.email);
-const githubLabel = en.contact.ariaLabels.github.replace('{{username}}', en.profile.github);
+const emailLabel = defaultLocale.contact.ariaLabels.email.replace(
+  '{{email}}',
+  defaultLocale.profile.email,
+);
+const githubLabel = defaultLocale.contact.ariaLabels.github.replace(
+  '{{username}}',
+  defaultLocale.profile.github,
+);
 
 export default { component: Contact } satisfies Meta<typeof Contact>;
 type Story = StoryObj<typeof Contact>;

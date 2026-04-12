@@ -45,13 +45,17 @@ export const ProjectImage = styled.img<{ $isSingle: boolean }>`
   border-radius: 8px;
   object-fit: contain;
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
   transition:
     transform 0.3s ease,
     opacity 0.3s ease;
 
-  &:hover {
-    transform: scale(1.02);
-    opacity: 0.9;
+  @media (hover: hover) {
+    &:hover {
+      transform: scale(1.02);
+      opacity: 0.9;
+    }
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {

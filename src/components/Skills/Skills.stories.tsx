@@ -1,33 +1,34 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Skills } from './Skills';
-import en from '../../i18n/locales/en.json';
+import { defaultLocale } from '../../i18n/localeConfig';
+import { AriaRole, ErrorMessage } from '../../types';
+import { FIRST_INDEX } from '../../config';
+
+const firstSkill = defaultLocale.skillsData[FIRST_INDEX];
+if (!firstSkill) {
+  throw new Error(ErrorMessage.NoSkillData);
+}
 
 export default { component: Skills } satisfies Meta<typeof Skills>;
 type Story = StoryObj<typeof Skills>;
 
 export const Default: Story = {
   args: {
-    skills: en.skillsData,
+    skills: defaultLocale.skillsData,
   },
 };
 
 export const SingleSkill: Story = {
   args: {
-    skills: [{ name: 'TypeScript', iconName: 'SiTypescript' }],
-  },
-};
-
-export const UnknownIcon: Story = {
-  args: {
-    skills: [{ name: 'Unknown', iconName: '' }],
+    skills: [firstSkill],
   },
 };
 
 export const HoverSkillCard: Story = {
   args: {
-    skills: [{ name: 'TypeScript', iconName: 'SiTypescript' }],
+    skills: [firstSkill],
   },
   parameters: {
-    pseudo: { hover: '[role="listitem"]' },
+    pseudo: { hover: `[role="${AriaRole.ListItem}"]` },
   },
 };

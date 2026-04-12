@@ -1,5 +1,5 @@
 import { Fragment } from 'react';
-import type { Profile } from '../../types';
+import { AriaRole, type Profile } from '../../types';
 import {
   BioSection,
   BioContent,
@@ -10,7 +10,7 @@ import {
   BioEducation,
 } from './Bio.styles';
 import { useTranslation } from 'react-i18next';
-import { BIO_SENTENCE_DELIMITER, DISPLAY_INDEX_OFFSET } from '../../config';
+import { BIO_SENTENCE_DELIMITER, DISPLAY_INDEX_OFFSET, FETCH_PRIORITY_HIGH } from '../../config';
 
 type BioProps = {
   profile: Profile;
@@ -18,9 +18,7 @@ type BioProps = {
 
 export function Bio({ profile }: BioProps) {
   const { t } = useTranslation();
-  const bioSentences = profile.bio
-    .split(BIO_SENTENCE_DELIMITER)
-    .filter((sentence) => sentence.trim() !== '');
+  const bioSentences = profile.bio.split(BIO_SENTENCE_DELIMITER).filter(Boolean);
 
   return (
     <BioSection
@@ -30,23 +28,18 @@ export function Bio({ profile }: BioProps) {
         <ProfileImage
           src={profile.image}
           alt={t('bio.ariaLabels.image', { name: profile.name, title: profile.title })}
-          fetchPriority="high"
+          fetchPriority={FETCH_PRIORITY_HIGH}
         />
         <BioTitle>{profile.name}</BioTitle>
         <BioSubtitle>{profile.title}</BioSubtitle>
         <BioText
-          role="article"
+          role={AriaRole.Article}
           aria-label={t('bio.ariaLabels.biography')}
         >
           {bioSentences.map((sentence, index) => (
             <Fragment key={sentence}>
               {sentence}
-              {index < bioSentences.length - DISPLAY_INDEX_OFFSET && (
-                <>
-                  .
-                  <br />
-                </>
-              )}
+              {index < bioSentences.length - DISPLAY_INDEX_OFFSET && <br />}
             </Fragment>
           ))}
         </BioText>

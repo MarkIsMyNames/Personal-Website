@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="<%= defaultLang %>">
   <head>
-    <meta charset="utf-8" />
+    <meta charset="<%= charset %>" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="preload" as="image" href="/PersonalProfile.jpg" fetchpriority="high" />
+    <link rel="icon" type="image/svg+xml" href="<%= faviconPath %>" />
+    <link rel="preload" as="image" href="<%= profileImagePath %>" fetchpriority="<%= fetchPriority %>" />
     <title><%= name %></title>
     <%- pageBackgroundStyle %>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
-    <script type="module" src="/src/index.tsx"></script>
+    <div id="<%= rootElementId %>"></div>
+    <script type="module" src="<%= entryPointPath %>"></script>
   </body>
 </html>

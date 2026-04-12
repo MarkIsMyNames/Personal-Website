@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { ImageModal } from './ImageModal';
-import en from '../../i18n/locales/en.json';
+import { defaultLocale } from '../../i18n/localeConfig';
 
 export default { component: ImageModal } satisfies Meta<typeof ImageModal>;
 type Story = StoryObj<typeof ImageModal>;
@@ -29,20 +29,20 @@ export const SingleImage: Story = {
 export const HoverClose: Story = {
   args: { ...baseArgs, hasPrevious: true, hasNext: true },
   parameters: {
-    pseudo: { hover: `[aria-label="${en.imageModal.ariaLabels.close}"]` },
+    pseudo: { hover: `[aria-label="${defaultLocale.imageModal.ariaLabels.close}"]` },
   },
 };
 
 export const HoverNext: Story = {
   args: { ...baseArgs, hasPrevious: true, hasNext: true },
   parameters: {
-    pseudo: { hover: `[aria-label="${en.imageModal.ariaLabels.next}"]` },
+    pseudo: { hover: `[aria-label="${defaultLocale.imageModal.ariaLabels.next}"]` },
   },
 };
 
 export const HoverPrevious: Story = {
   args: { ...baseArgs, hasPrevious: true, hasNext: true },
   parameters: {
-    pseudo: { hover: `[aria-label="${en.imageModal.ariaLabels.previous}"]` },
+    pseudo: { hover: `[aria-label="${defaultLocale.imageModal.ariaLabels.previous}"]` },
   },
 };
