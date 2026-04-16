@@ -39,7 +39,8 @@ export const ProfileImage = styled.img`
 export const BioTitle = styled.h1`
   font-size: 3rem;
   font-weight: 700;
-  margin-bottom: 0.5rem;
+  width: fit-content;
+  margin: 0 auto 0.5rem;
   background: ${({ theme }) => theme.gradients.accent};
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;

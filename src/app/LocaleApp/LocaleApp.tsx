@@ -33,9 +33,8 @@ import {
 export function LocaleApp() {
   const location = useLocation();
   const { t, i18n: i18nInstance } = useTranslation();
-  const lang: SupportedLang = isSupportedLang(i18nInstance.language)
-    ? i18nInstance.language
-    : DEFAULT_LANG;
+  const lang: SupportedLang =
+    isSupportedLang(i18nInstance.language) ? i18nInstance.language : DEFAULT_LANG;
 
   useEffect(() => {
     const pathLang = location.pathname.split(SLASH_PATH_SPLIT)[PATH_LANG_SEGMENT];

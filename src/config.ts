@@ -68,6 +68,26 @@ export const I18N_CHANGE_LANGUAGE = 'changeLanguage';
 export const I18N_RETURN_OBJECTS_OPTION = 'returnObjects';
 export const I18N_PLUGIN_TYPE = '3rdParty';
 
+// Test — WCAG colour contrast (sRGB formulae per WCAG 2.1)
+export const WCAG_AA_LARGE_TEXT_MIN_RATIO = 3;
+export const WCAG_LUMINANCE_OFFSET = 0.05;
+export const WCAG_RED_COEFFICIENT = 0.2126;
+export const WCAG_GREEN_COEFFICIENT = 0.7152;
+export const WCAG_BLUE_COEFFICIENT = 0.0722;
+export const SRGB_LINEARIZATION_THRESHOLD = 0.04045;
+export const SRGB_LINEARIZATION_DIVISOR = 12.92;
+export const SRGB_GAMMA_ADDEND = 0.055;
+export const SRGB_GAMMA_DIVISOR = 1.055;
+export const SRGB_GAMMA_EXPONENT = 2.4;
+export const HEX_CHANNEL_RADIX = 16;
+export const HEX_CHANNEL_MAX_VALUE = 255;
+export const HEX_R_START = 1;
+export const HEX_R_END = 3;
+export const HEX_G_START = 3;
+export const HEX_G_END = 5;
+export const HEX_B_START = 5;
+export const HEX_B_END = 7;
+
 // Test — assertion messages
 export const PUBLIC_DIR = 'public';
 export const MSG_MUST_BE_NON_EMPTY = 'must be non-empty';

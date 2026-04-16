@@ -4,7 +4,8 @@ export const SectionTitle = styled.h2`
   font-size: 2.5rem;
   font-weight: 700;
   text-align: center;
-  margin-bottom: 2rem;
+  width: fit-content;
+  margin: 0 auto 2rem;
   background: ${({ theme }) => theme.gradients.accent};
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
