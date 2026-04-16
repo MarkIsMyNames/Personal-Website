@@ -1,5 +1,6 @@
 const accentHighlight = '#00d9ff';
-const accentGradientEnd = '#7b2cbf';
+const accentGradientMid = '#4895ef';
+const accentGradientEnd = '#9d4edd';
 
 export const theme = {
   colors: {
@@ -9,11 +10,12 @@ export const theme = {
     textDefault: '#e4e6eb',
     textMuted: '#b0b3b8',
     accentHighlight,
+    accentGradientMid,
     accentGradientEnd,
     border: '#2a2f4a',
   },
   gradients: {
-    accent: `linear-gradient(135deg, ${accentHighlight} 0%, ${accentGradientEnd} 100%)`,
+    accent: `linear-gradient(90deg, ${accentHighlight} 0%, ${accentGradientMid} 50%, ${accentGradientEnd} 100%)`,
   },
   shadows: {
     small: '0 4px 6px rgba(0, 0, 0, 0.3)',

@@ -56,9 +56,9 @@ export function Projects({ projects }: ProjectsProps) {
     );
   const nextImage = () =>
     setModal((m) =>
-      m && m.index < m.images.length - DISPLAY_INDEX_OFFSET
-        ? { ...m, index: m.index + DISPLAY_INDEX_OFFSET }
-        : m,
+      m && m.index < m.images.length - DISPLAY_INDEX_OFFSET ?
+        { ...m, index: m.index + DISPLAY_INDEX_OFFSET }
+      : m,
     );
 
   return (
