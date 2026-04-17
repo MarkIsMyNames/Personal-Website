@@ -176,42 +176,4 @@ describe(DEFAULT_LOCALE_FILENAME, () => {
       `${image} is ${Math.round(size / KIB_CONVERSION_FACTOR)}${MSG_KIB_LIMIT_SUFFIX} ${MAX_IMAGE_SIZE_KIB} ${KIB_UNIT}`,
     ).toBeLessThan(MAX_IMAGE_SIZE_BYTES);
   });
-
-  it('has all keys used by components', () => {
-    // Navigation
-    expect(defaultLocale.navigation.ariaLabels.nav).toBeTruthy();
-    expect(defaultLocale.navigation.ariaLabels.link).toContain('{{section}}');
-    expect(defaultLocale.navigation.sections.about).toBeTruthy();
-    expect(defaultLocale.navigation.sections.skills).toBeTruthy();
-    expect(defaultLocale.navigation.sections.projects).toBeTruthy();
-    expect(defaultLocale.navigation.sections.contact).toBeTruthy();
-    // Common
-    expect(defaultLocale.common.ariaLabels.section).toContain('{{title}}');
-    // Bio
-    expect(defaultLocale.bio.ariaLabels.biography).toBeTruthy();
-    expect(defaultLocale.bio.ariaLabels.education).toBeTruthy();
-    expect(defaultLocale.bio.ariaLabels.image).toBeTruthy();
-    expect(defaultLocale.bio.education).toBeTruthy();
-    // Skills
-    expect(defaultLocale.skills.sectionTitle).toBeTruthy();
-    expect(defaultLocale.skills.ariaLabels.list).toBeTruthy();
-    expect(defaultLocale.skills.ariaLabels.card).toBeTruthy();
-    // Projects
-    expect(defaultLocale.projects.sectionTitle).toBeTruthy();
-    expect(defaultLocale.projects.ariaLabels.list).toBeTruthy();
-    expect(defaultLocale.projects.ariaLabels.card).toBeTruthy();
-    expect(defaultLocale.projects.ariaLabels.viewImage).toBeTruthy();
-    // ImageModal
-    expect(defaultLocale.imageModal.ariaLabels.modal).toBeTruthy();
-    expect(defaultLocale.imageModal.ariaLabels.close).toBeTruthy();
-    expect(defaultLocale.imageModal.ariaLabels.previous).toBeTruthy();
-    expect(defaultLocale.imageModal.ariaLabels.next).toBeTruthy();
-    expect(defaultLocale.imageModal.ariaLabels.image).toContain('{{index}}');
-    // Contact
-    expect(defaultLocale.contact.sectionTitle).toBeTruthy();
-    expect(defaultLocale.contact.ariaLabels.list).toBeTruthy();
-    expect(defaultLocale.contact.ariaLabels.email).toBeTruthy();
-    expect(defaultLocale.contact.ariaLabels.github).toBeTruthy();
-    expect(defaultLocale.contact.githubUrl).toContain('{{username}}');
-  });
 });

@@ -43,7 +43,6 @@ export enum AriaRole {
   Menu = 'menu',
   MenuItem = 'menuitem',
   Navigation = 'navigation',
-  Region = 'region',
 }
 
 export const WindowGlobal = {
@@ -66,6 +65,7 @@ export const HtmlAttr = {
   Href: 'href',
   Target: 'target',
   Rel: 'rel',
+  AriaModal: 'aria-modal',
 };
 
 export const EnTopLevelKeys = [

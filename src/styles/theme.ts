@@ -30,3 +30,15 @@ export const theme = {
 };
 
 export type Theme = typeof theme;
+
+export const gradientColours = {
+  accentHighlight: theme.colors.accentHighlight,
+  accentGradientMid: theme.colors.accentGradientMid,
+  accentGradientEnd: theme.colors.accentGradientEnd,
+} as const;
+
+export const sectionBackgrounds = {
+  pageBackground: theme.colors.pageBackground,
+  sectionBackground: theme.colors.sectionBackground,
+  cardBackground: theme.colors.cardBackground,
+} as const;

@@ -46,36 +46,36 @@ describe('LangRedirect', () => {
 
   it('redirects to /default when browser language is unknown', () => {
     renderWithRoutes(UNSUPPORTED_LANG_CODE);
-    expect(screen.getByText(DEFAULT_LANG)).toBeInTheDocument();
+    screen.getByText(DEFAULT_LANG);
   });
 
   it('redirects to /fr when browser language is fr', () => {
     renderWithRoutes(TEST_LOCALE_FR_FR);
-    expect(screen.getByText(TEST_LANG_FR)).toBeInTheDocument();
+    screen.getByText(TEST_LANG_FR);
   });
 
   it('redirects to /en when browser language is en-US', () => {
     renderWithRoutes(TEST_LOCALE_EN_US);
-    expect(screen.getByText(TEST_LANG_EN)).toBeInTheDocument();
+    screen.getByText(TEST_LANG_EN);
   });
 
   it('redirects to /de when browser language is de-DE', () => {
     renderWithRoutes(TEST_LOCALE_DE_DE);
-    expect(screen.getByText(TEST_LANG_DE)).toBeInTheDocument();
+    screen.getByText(TEST_LANG_DE);
   });
 
   it('redirects to /es when browser language is es-ES', () => {
     renderWithRoutes(TEST_LOCALE_ES_ES);
-    expect(screen.getByText(TEST_LANG_ES)).toBeInTheDocument();
+    screen.getByText(TEST_LANG_ES);
   });
 
   it('redirects to /es when browser language is es', () => {
     renderWithRoutes(TEST_LANG_ES);
-    expect(screen.getByText(TEST_LANG_ES)).toBeInTheDocument();
+    screen.getByText(TEST_LANG_ES);
   });
 
   it('redirects to /ga when browser language is ga-IE', () => {
     renderWithRoutes(TEST_LOCALE_GA_IE);
-    expect(screen.getByText(TEST_LANG_GA)).toBeInTheDocument();
+    screen.getByText(TEST_LANG_GA);
   });
 });

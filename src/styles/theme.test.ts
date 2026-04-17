@@ -1,4 +1,4 @@
-import { theme } from './theme';
+import { gradientColours, sectionBackgrounds } from './theme';
 import {
   WCAG_AA_LARGE_TEXT_MIN_RATIO,
   WCAG_LUMINANCE_OFFSET,
@@ -10,7 +10,7 @@ import {
   SRGB_GAMMA_ADDEND,
   SRGB_GAMMA_DIVISOR,
   SRGB_GAMMA_EXPONENT,
-  HEX_CHANNEL_RADIX,
+  HEX_PREFIX,
   HEX_CHANNEL_MAX_VALUE,
   HEX_R_START,
   HEX_R_END,
@@ -20,48 +20,44 @@ import {
   HEX_B_END,
 } from '../config';
 
-function toLinearRgb(c: number): number {
-  return c <= SRGB_LINEARIZATION_THRESHOLD ?
-      c / SRGB_LINEARIZATION_DIVISOR
-    : ((c + SRGB_GAMMA_ADDEND) / SRGB_GAMMA_DIVISOR) ** SRGB_GAMMA_EXPONENT;
+function toLinearRgb(colourDecimal: number): number {
+  return colourDecimal <= SRGB_LINEARIZATION_THRESHOLD ?
+      colourDecimal / SRGB_LINEARIZATION_DIVISOR
+    : ((colourDecimal + SRGB_GAMMA_ADDEND) / SRGB_GAMMA_DIVISOR) ** SRGB_GAMMA_EXPONENT;
 }
 
-function relativeLuminance(hex: string): number {
-  const r = parseInt(hex.slice(HEX_R_START, HEX_R_END), HEX_CHANNEL_RADIX) / HEX_CHANNEL_MAX_VALUE;
-  const g = parseInt(hex.slice(HEX_G_START, HEX_G_END), HEX_CHANNEL_RADIX) / HEX_CHANNEL_MAX_VALUE;
-  const b = parseInt(hex.slice(HEX_B_START, HEX_B_END), HEX_CHANNEL_RADIX) / HEX_CHANNEL_MAX_VALUE;
+function relativeLuminance(hexColour: string): number {
+  const parseHexChannel = (start: number, end: number): number =>
+    Number(`${HEX_PREFIX}${hexColour.slice(start, end)}`) / HEX_CHANNEL_MAX_VALUE;
   return (
-    WCAG_RED_COEFFICIENT * toLinearRgb(r) +
-    WCAG_GREEN_COEFFICIENT * toLinearRgb(g) +
-    WCAG_BLUE_COEFFICIENT * toLinearRgb(b)
+    WCAG_RED_COEFFICIENT * toLinearRgb(parseHexChannel(HEX_R_START, HEX_R_END)) +
+    WCAG_GREEN_COEFFICIENT * toLinearRgb(parseHexChannel(HEX_G_START, HEX_G_END)) +
+    WCAG_BLUE_COEFFICIENT * toLinearRgb(parseHexChannel(HEX_B_START, HEX_B_END))
   );
 }
 
-function contrastRatio(hex1: string, hex2: string): number {
-  const l1 = relativeLuminance(hex1);
-  const l2 = relativeLuminance(hex2);
-  const lighter = Math.max(l1, l2);
-  const darker = Math.min(l1, l2);
-  return (lighter + WCAG_LUMINANCE_OFFSET) / (darker + WCAG_LUMINANCE_OFFSET);
+function contrastRatio(foreground: string, background: string): number {
+  const l1 = relativeLuminance(foreground);
+  const l2 = relativeLuminance(background);
+  return (Math.max(l1, l2) + WCAG_LUMINANCE_OFFSET) / (Math.min(l1, l2) + WCAG_LUMINANCE_OFFSET);
 }
 
-// SectionTitle (h2) is bold 2.5rem — qualifies as WCAG large text, threshold is 3:1 for AA.
-const sectionBackgrounds: [string, string][] = [
-  ['pageBackground', theme.colors.pageBackground],
-  ['sectionBackground', theme.colors.sectionBackground],
-  ['cardBackground', theme.colors.cardBackground],
-];
+type ContrastPair = { colourName: string; bgName: string; colourHex: string; bgHex: string };
 
-const gradientColours: [string, string][] = [
-  ['accentHighlight', theme.colors.accentHighlight],
-  ['accentGradientMid', theme.colors.accentGradientMid],
-  ['accentGradientEnd', theme.colors.accentGradientEnd],
-];
+// SectionTitle (h2) is bold 2.5rem — qualifies as WCAG large text, threshold is 3:1 for AA.
+// Add entries to gradientColours/sectionBackgrounds in theme.ts to extend coverage automatically.
+const contrastPairs: ContrastPair[] = Object.entries(gradientColours).flatMap(
+  ([colourName, colourHex]) =>
+    Object.entries(sectionBackgrounds).map(([bgName, bgHex]) => ({
+      colourName,
+      bgName,
+      colourHex,
+      bgHex,
+    })),
+);
 
 describe('gradient text colours meet WCAG AA large text contrast (3:1) on all section backgrounds', () => {
-  it.each(gradientColours)('%s', (_colour, hex) => {
-    sectionBackgrounds.forEach(([_bg, bg]) => {
-      expect(contrastRatio(hex, bg)).toBeGreaterThanOrEqual(WCAG_AA_LARGE_TEXT_MIN_RATIO);
-    });
+  it.each(contrastPairs)('$colourName on $bgName', ({ colourHex, bgHex }) => {
+    expect(contrastRatio(colourHex, bgHex)).toBeGreaterThanOrEqual(WCAG_AA_LARGE_TEXT_MIN_RATIO);
   });
 });

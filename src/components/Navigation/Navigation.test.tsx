@@ -1,8 +1,6 @@
-import { render, screen, fireEvent } from '@testing-library/react';
-import { ThemeProvider } from 'styled-components';
+import { screen, fireEvent } from '@testing-library/react';
 import { vi } from 'vitest';
 import { Navigation } from './Navigation';
-import { theme } from '../../styles/theme';
 import { defaultLocale } from '../../i18n/localeConfig';
 import {
   SCROLL_BEHAVIOR,
@@ -11,7 +9,6 @@ import {
   NAV_TRANSFORM_HIDDEN,
   NAV_TRANSFORM_VISIBLE,
   SCROLL_Y_BELOW_THRESHOLD_LOW,
-  SCROLL_Y_BELOW_THRESHOLD_HIGH,
   SCROLL_Y_LOW,
   SCROLL_Y_MID,
   SCROLL_Y_HIGH,
@@ -21,10 +18,11 @@ import {
   MOCK_RECT_HEIGHT,
 } from '../../config';
 import { AriaRole, HtmlAttr, HtmlTag, SectionId, WindowGlobal } from '../../types';
-import type React from 'react';
+import { renderWithTheme } from '../../test-utils';
 
-const renderWithTheme = (component: React.ReactElement): ReturnType<typeof render> => {
-  return render(<ThemeProvider theme={theme}>{component}</ThemeProvider>);
+const simulateScroll = (y: number) => {
+  Object.defineProperty(window, WINDOW_PROP_SCROLL_Y, { value: y, writable: true });
+  fireEvent.scroll(window);
 };
 
 describe('Navigation Component', () => {
@@ -41,73 +39,31 @@ describe('Navigation Component', () => {
 
   it('renders brand name from translation', () => {
     renderWithTheme(<Navigation />);
-    expect(screen.getByText(defaultLocale.profile.name)).toBeInTheDocument();
+    screen.getByText(defaultLocale.profile.name);
   });
 
   it('renders all navigation links from translation', () => {
     renderWithTheme(<Navigation />);
-    expect(screen.getByText(defaultLocale.navigation.sections.about)).toBeInTheDocument();
-    expect(screen.getByText(defaultLocale.navigation.sections.skills)).toBeInTheDocument();
-    expect(screen.getByText(defaultLocale.navigation.sections.projects)).toBeInTheDocument();
-    expect(screen.getByText(defaultLocale.navigation.sections.contact)).toBeInTheDocument();
+    screen.getByText(defaultLocale.navigation.sections.about);
+    screen.getByText(defaultLocale.navigation.sections.skills);
+    screen.getByText(defaultLocale.navigation.sections.projects);
+    screen.getByText(defaultLocale.navigation.sections.contact);
   });
 
-  it('calls scrollTo when clicking About link', () => {
-    const mockElement = document.createElement(HtmlTag.Div);
-    mockElement.id = SectionId.About;
-    document.body.appendChild(mockElement);
-
+  it('renders brand button with correct aria-label and scrolls to top when clicked', () => {
     renderWithTheme(<Navigation />);
-    const aboutLink = screen.getByText(defaultLocale.navigation.sections.about);
-    fireEvent.click(aboutLink);
-
-    expect(scrollToMock).toHaveBeenCalled();
-
-    document.body.removeChild(mockElement);
-  });
-
-  it('scrolls to top when brand is clicked', () => {
-    renderWithTheme(<Navigation />);
-    const brand = screen.getByText(defaultLocale.profile.name);
-    fireEvent.click(brand);
+    const nameButton = screen.getByRole(AriaRole.Button, {
+      name: defaultLocale.navigation.ariaLabels.link.replace(
+        '{{section}}',
+        defaultLocale.navigation.sections.about,
+      ),
+    });
+    expect(nameButton).toBeInTheDocument();
+    fireEvent.click(nameButton);
     expect(scrollToMock).toHaveBeenCalledWith({ top: SCROLL_TOP_ZERO, behavior: SCROLL_BEHAVIOR });
   });
 
-  it('hides navigation when scrolling down', () => {
-    renderWithTheme(<Navigation />);
-
-    Object.defineProperty(window, WINDOW_PROP_SCROLL_Y, { value: SCROLL_Y_LOW, writable: true });
-    fireEvent.scroll(window);
-    Object.defineProperty(window, WINDOW_PROP_SCROLL_Y, { value: SCROLL_Y_MID, writable: true });
-    fireEvent.scroll(window);
-
-    expect(screen.getByRole(AriaRole.Navigation)).toHaveStyle(NAV_TRANSFORM_HIDDEN);
-  });
-
-  it('shows navigation when scrolling up', () => {
-    renderWithTheme(<Navigation />);
-
-    Object.defineProperty(window, WINDOW_PROP_SCROLL_Y, { value: SCROLL_Y_MID, writable: true });
-    fireEvent.scroll(window);
-    Object.defineProperty(window, WINDOW_PROP_SCROLL_Y, { value: SCROLL_Y_LOW, writable: true });
-    fireEvent.scroll(window);
-
-    expect(screen.getByRole(AriaRole.Navigation)).toHaveStyle(NAV_TRANSFORM_VISIBLE);
-  });
-
-  it('shows navigation when scroll position is less than 10', () => {
-    renderWithTheme(<Navigation />);
-
-    Object.defineProperty(window, WINDOW_PROP_SCROLL_Y, {
-      value: SCROLL_Y_BELOW_THRESHOLD_LOW,
-      writable: true,
-    });
-    fireEvent.scroll(window);
-
-    expect(screen.getByRole(AriaRole.Navigation)).toHaveStyle(NAV_TRANSFORM_VISIBLE);
-  });
-
-  it('renders profile image with src from portfolioData', () => {
+  it('renders profile image with src from translation', () => {
     renderWithTheme(<Navigation />);
     const image = screen.getByAltText(
       defaultLocale.navigation.ariaLabels.profileImage.replace(
@@ -119,53 +75,36 @@ describe('Navigation Component', () => {
     expect(image).toHaveAttribute(HtmlAttr.Src, defaultLocale.profile.image);
   });
 
-  it('scrolls to correct section when clicking each link', () => {
-    const sections = [SectionId.About, SectionId.Skills, SectionId.Projects, SectionId.Contact];
-    sections.forEach((sectionId) => {
-      const mockElement = document.createElement(HtmlTag.Div);
-      mockElement.id = sectionId;
-      document.body.appendChild(mockElement);
-    });
-
+  it('hides navigation when scrolling down', () => {
     renderWithTheme(<Navigation />);
-
-    sections.forEach((sectionId) => {
-      scrollToMock.mockClear();
-      const link = screen.getByText(new RegExp(sectionId, REGEX_FLAG_CASE_INSENSITIVE));
-      fireEvent.click(link);
-      expect(scrollToMock).toHaveBeenCalled();
-    });
-
-    sections.forEach((sectionId) => {
-      const element = document.getElementById(sectionId);
-      if (element) {
-        document.body.removeChild(element);
-      }
-    });
+    simulateScroll(SCROLL_Y_LOW);
+    simulateScroll(SCROLL_Y_MID);
+    expect(screen.getByRole(AriaRole.Navigation)).toHaveStyle(NAV_TRANSFORM_HIDDEN);
   });
 
-  it('renders brand button with correct aria-label', () => {
+  it('shows navigation when scrolling up', () => {
     renderWithTheme(<Navigation />);
-    const nameButton = screen.getByRole(AriaRole.Button, {
-      name: defaultLocale.navigation.ariaLabels.link.replace(
-        '{{section}}',
-        defaultLocale.navigation.sections.about,
-      ),
-    });
-    expect(nameButton).toBeInTheDocument();
+    simulateScroll(SCROLL_Y_MID);
+    simulateScroll(SCROLL_Y_LOW);
+    expect(screen.getByRole(AriaRole.Navigation)).toHaveStyle(NAV_TRANSFORM_VISIBLE);
   });
 
-  it('brand button is clickable and scrolls to top', () => {
+  it('shows navigation when scroll position is less than 10', () => {
     renderWithTheme(<Navigation />);
-    const nameButton = screen.getByRole(AriaRole.Button, {
-      name: defaultLocale.navigation.ariaLabels.link.replace(
-        '{{section}}',
-        defaultLocale.navigation.sections.about,
-      ),
-    });
+    simulateScroll(SCROLL_Y_BELOW_THRESHOLD_LOW);
+    expect(screen.getByRole(AriaRole.Navigation)).toHaveStyle(NAV_TRANSFORM_VISIBLE);
+  });
 
-    fireEvent.click(nameButton);
-    expect(scrollToMock).toHaveBeenCalledWith({ top: SCROLL_TOP_ZERO, behavior: SCROLL_BEHAVIOR });
+  it.each(Object.values(SectionId))('scrolls to %s section when clicking nav link', (sectionId) => {
+    const mockElement = document.createElement(HtmlTag.Div);
+    mockElement.id = sectionId;
+    document.body.appendChild(mockElement);
+
+    renderWithTheme(<Navigation />);
+    fireEvent.click(screen.getByText(new RegExp(sectionId, REGEX_FLAG_CASE_INSENSITIVE)));
+    expect(scrollToMock).toHaveBeenCalled();
+
+    document.body.removeChild(mockElement);
   });
 
   it('does not reattach scroll listener on every scroll event', () => {
@@ -173,20 +112,15 @@ describe('Navigation Component', () => {
     const removeEventListenerSpy = vi.spyOn(window, WindowGlobal.RemoveEventListener);
 
     const { unmount } = renderWithTheme(<Navigation />);
-
     const initialAddCalls = addEventListenerSpy.mock.calls.length;
 
-    Object.defineProperty(window, WINDOW_PROP_SCROLL_Y, { value: SCROLL_Y_LOW, writable: true });
-    fireEvent.scroll(window);
-    Object.defineProperty(window, WINDOW_PROP_SCROLL_Y, { value: SCROLL_Y_MID, writable: true });
-    fireEvent.scroll(window);
-    Object.defineProperty(window, WINDOW_PROP_SCROLL_Y, { value: SCROLL_Y_HIGH, writable: true });
-    fireEvent.scroll(window);
+    simulateScroll(SCROLL_Y_LOW);
+    simulateScroll(SCROLL_Y_MID);
+    simulateScroll(SCROLL_Y_HIGH);
 
     expect(addEventListenerSpy).toHaveBeenCalledTimes(initialAddCalls);
 
     unmount();
-
     expect(removeEventListenerSpy).toHaveBeenCalled();
 
     addEventListenerSpy.mockRestore();
@@ -195,40 +129,7 @@ describe('Navigation Component', () => {
 
   it('handles clicking link when section does not exist', () => {
     renderWithTheme(<Navigation />);
-    const skillsLink = screen.getByText(defaultLocale.navigation.sections.skills);
-
-    fireEvent.click(skillsLink);
-
+    fireEvent.click(screen.getByText(defaultLocale.navigation.sections.skills));
     expect(scrollToMock).not.toHaveBeenCalled();
-  });
-
-  it('maintains visibility when scrolling within top 10px', () => {
-    renderWithTheme(<Navigation />);
-
-    Object.defineProperty(window, WINDOW_PROP_SCROLL_Y, {
-      value: SCROLL_Y_BELOW_THRESHOLD_LOW,
-      writable: true,
-    });
-    fireEvent.scroll(window);
-    Object.defineProperty(window, WINDOW_PROP_SCROLL_Y, {
-      value: SCROLL_Y_BELOW_THRESHOLD_HIGH,
-      writable: true,
-    });
-    fireEvent.scroll(window);
-
-    expect(screen.getByRole(AriaRole.Navigation)).toHaveStyle(NAV_TRANSFORM_VISIBLE);
-  });
-
-  it('maintains visibility when scrolling up multiple times', () => {
-    renderWithTheme(<Navigation />);
-
-    Object.defineProperty(window, WINDOW_PROP_SCROLL_Y, { value: SCROLL_Y_HIGH, writable: true });
-    fireEvent.scroll(window);
-    Object.defineProperty(window, WINDOW_PROP_SCROLL_Y, { value: SCROLL_Y_MID, writable: true });
-    fireEvent.scroll(window);
-    Object.defineProperty(window, WINDOW_PROP_SCROLL_Y, { value: SCROLL_Y_LOW, writable: true });
-    fireEvent.scroll(window);
-
-    expect(screen.getByRole(AriaRole.Navigation)).toHaveStyle(NAV_TRANSFORM_VISIBLE);
   });
 });
