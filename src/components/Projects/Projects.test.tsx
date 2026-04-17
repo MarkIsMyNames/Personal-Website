@@ -1,6 +1,14 @@
 import { screen, fireEvent } from '@testing-library/react';
 import { Projects, getModalImageUrl } from './Projects';
-import { AriaRole, ErrorMessage, HtmlAttr, HtmlTag, KeyboardKey, KeyCode } from '../../types';
+import {
+  AriaRole,
+  ErrorMessage,
+  TestErrorMessage,
+  HtmlAttr,
+  HtmlTag,
+  KeyboardKey,
+  KeyCode,
+} from '../../types';
 import { defaultLocale } from '../../i18n/localeConfig';
 import {
   DISPLAY_INDEX_OFFSET,
@@ -15,14 +23,14 @@ const firstMockProject = defaultLocale.projectsData.find(
   (p) => p.images.length === SINGLE_ITEM_COUNT,
 );
 if (!firstMockProject) {
-  throw new Error(ErrorMessage.NoSingleImageProject);
+  throw new Error(TestErrorMessage.NoSingleImageProject);
 }
 
 const secondMockProject = defaultLocale.projectsData.find(
   (p) => p.images.length > SINGLE_ITEM_COUNT,
 );
 if (!secondMockProject) {
-  throw new Error(ErrorMessage.NoMultiImageProject);
+  throw new Error(TestErrorMessage.NoMultiImageProject);
 }
 
 const mockProjects = [firstMockProject, secondMockProject];

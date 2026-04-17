@@ -1,6 +1,6 @@
 import { screen, within } from '@testing-library/react';
 import { Bio } from './Bio';
-import { AriaRole, HtmlAttr, ErrorMessage } from '../../types';
+import { AriaRole, HtmlAttr, TestErrorMessage } from '../../types';
 import { defaultLocale } from '../../i18n/localeConfig';
 import {
   FIRST_INDEX,
@@ -27,7 +27,7 @@ describe('Bio Component', () => {
     renderWithTheme(<Bio profile={mockProfile} />);
     const firstSentence = defaultLocale.profile.bio.split(BIO_SENTENCE_DELIMITER)[FIRST_INDEX];
     if (!firstSentence) {
-      throw new Error(ErrorMessage.NoBioSentence);
+      throw new Error(TestErrorMessage.NoBioSentence);
     }
     screen.getByText(new RegExp(firstSentence, REGEX_FLAG_CASE_INSENSITIVE));
   });

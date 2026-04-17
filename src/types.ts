@@ -3,12 +3,15 @@ import { TYPEOF_OBJECT } from './config';
 export enum ErrorMessage {
   RootElementNotFound = 'Root element not found',
   NoImageAtIndex = 'No image found at modal index',
+  IconNotFound = 'Icon not found in icon map',
+}
+
+export enum TestErrorMessage {
   NoBioSentence = 'No bio sentence found in the default locale',
   NoMultiImageProject = 'No multi-image project found in the default locale',
   NoSingleImageProject = 'No single-image project found in the default locale',
   NoSkillData = 'No skill data found in the default locale',
   LocaleKeyNotFound = 'Locale key not found in default locale',
-  IconNotFound = 'Icon not found in icon map',
 }
 
 export enum SectionId {
