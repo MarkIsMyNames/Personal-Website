@@ -276,6 +276,10 @@ export default [
           message: 'Use a named constant instead of a string literal in Object.defineProperty',
         },
         {
+          selector: 'CallExpression[callee.property.name="toBeInTheDocument"][callee.object.callee.name="expect"][callee.object.arguments.0.callee.property.name=/^getBy/]',
+          message: 'getBy* already throws when the element is not found — expect(getBy*(...)).toBeInTheDocument() is redundant. Remove the expect wrapper or use queryBy* with .not.toBeInTheDocument() to assert absence.',
+        },
+        {
           selector: 'CallExpression[callee.property.name="toBe"] > Literal[raw=/^[\'\"]/][value!=""]',
           message: 'String literals in toBe() must come from en.json or named constants in src/config.ts',
         },
@@ -292,7 +296,7 @@ export default [
           message: 'Use a named language constant (e.g. TEST_LANG_FR, DEFAULT_LANG, I18N_TRANSLATION_NAMESPACE) instead of a string literal',
         },
         {
-          selector: 'CallExpression[callee.name=/^(detectLang|isSupportedLang)$/] > Literal[raw=/^[\'\"]/][value!=""]',
+          selector: 'CallExpression[callee.name=/^(detectLang|isSupportedLang)$/] > Literal[raw=/^[\'\"]/]',
           message: 'Use a named locale constant (e.g. TEST_LOCALE_EN_US, TEST_LANG_FR, UNSUPPORTED_LANG_CODE) instead of a string literal',
         },
         {
@@ -340,6 +344,10 @@ export default [
             'TemplateLiteral:not(TaggedTemplateExpression > TemplateLiteral) > TemplateElement[value.raw=/[a-zA-Z]{3,}/]',
           message:
             'Human-readable text in template literals must be named constants in src/config.ts',
+        },
+        {
+          selector: 'TemplateLiteral > TemplateElement[value.raw=/0x/]',
+          message: 'Use HEX_PREFIX constant instead of a literal "0x" in template strings',
         },
       ],
     },

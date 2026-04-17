@@ -1,27 +1,21 @@
-import { render, screen } from '@testing-library/react';
-import { ThemeProvider } from 'styled-components';
+import { screen } from '@testing-library/react';
 import { Skills } from './Skills';
-import { theme } from '../../styles/theme';
 import { AriaRole } from '../../types';
 import { defaultLocale } from '../../i18n/localeConfig';
-import type React from 'react';
+import { renderWithTheme } from '../../test-utils';
 
 const mockSkills = defaultLocale.skillsData;
-
-const renderWithTheme = (component: React.ReactElement): ReturnType<typeof render> => {
-  return render(<ThemeProvider theme={theme}>{component}</ThemeProvider>);
-};
 
 describe('Skills Component', () => {
   it('renders section title', () => {
     renderWithTheme(<Skills skills={mockSkills} />);
-    expect(screen.getByText(defaultLocale.skills.sectionTitle)).toBeInTheDocument();
+    screen.getByText(defaultLocale.skills.sectionTitle);
   });
 
   it('renders skill names from props', () => {
     renderWithTheme(<Skills skills={mockSkills} />);
     mockSkills.forEach((skill) => {
-      expect(screen.getByText(skill.name)).toBeInTheDocument();
+      screen.getByText(skill.name);
     });
   });
 
@@ -32,27 +26,23 @@ describe('Skills Component', () => {
 
   it('renders section with correct aria-label', () => {
     renderWithTheme(<Skills skills={mockSkills} />);
-    expect(
-      screen.getByLabelText(
-        defaultLocale.common.ariaLabels.section.replace(
-          '{{title}}',
-          defaultLocale.navigation.sections.skills,
-        ),
+    screen.getByLabelText(
+      defaultLocale.common.ariaLabels.section.replace(
+        '{{title}}',
+        defaultLocale.navigation.sections.skills,
       ),
-    ).toBeInTheDocument();
+    );
   });
 
   it('renders skill list with correct aria-label', () => {
     renderWithTheme(<Skills skills={mockSkills} />);
-    expect(screen.getByLabelText(defaultLocale.skills.ariaLabels.list)).toBeInTheDocument();
+    screen.getByLabelText(defaultLocale.skills.ariaLabels.list);
   });
 
   it('renders each skill card with aria-label from props', () => {
     renderWithTheme(<Skills skills={mockSkills} />);
     mockSkills.forEach((skill) => {
-      expect(
-        screen.getByLabelText(defaultLocale.skills.ariaLabels.card.replace('{{name}}', skill.name)),
-      ).toBeInTheDocument();
+      screen.getByLabelText(defaultLocale.skills.ariaLabels.card.replace('{{name}}', skill.name));
     });
   });
 });
