@@ -7,7 +7,7 @@ import {
   I18N_PLUGIN_TYPE,
   TYPEOF_STRING,
 } from './config';
-import { isRecord, ErrorMessage, type LocaleValue } from './types';
+import { isRecord, TestErrorMessage, type LocaleValue } from './types';
 
 function isString(value: LocaleValue): value is string {
   return typeof value === TYPEOF_STRING;
@@ -16,11 +16,11 @@ function isString(value: LocaleValue): value is string {
 function getNestedValue(key: string): LocaleValue {
   return key.split(I18N_KEY_SEPARATOR).reduce<LocaleValue>((current, segment) => {
     if (!isRecord(current)) {
-      throw new Error(ErrorMessage.LocaleKeyNotFound);
+      throw new Error(TestErrorMessage.LocaleKeyNotFound);
     }
     const next = current[segment];
     if (next === undefined) {
-      throw new Error(ErrorMessage.LocaleKeyNotFound);
+      throw new Error(TestErrorMessage.LocaleKeyNotFound);
     }
     return next;
   }, LOCALES[DEFAULT_LANG]);

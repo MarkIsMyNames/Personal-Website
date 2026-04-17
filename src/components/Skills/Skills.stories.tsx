@@ -1,12 +1,12 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Skills } from './Skills';
 import { defaultLocale } from '../../i18n/localeConfig';
-import { AriaRole, ErrorMessage } from '../../types';
+import { AriaRole, TestErrorMessage } from '../../types';
 import { FIRST_INDEX } from '../../config';
 
 const firstSkill = defaultLocale.skillsData[FIRST_INDEX];
 if (!firstSkill) {
-  throw new Error(ErrorMessage.NoSkillData);
+  throw new Error(TestErrorMessage.NoSkillData);
 }
 
 export default { component: Skills } satisfies Meta<typeof Skills>;
