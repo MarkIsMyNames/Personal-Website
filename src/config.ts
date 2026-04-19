@@ -1,5 +1,4 @@
 import { HtmlTag, HtmlAttr, AriaRole, SectionId, LinkRel, LinkTarget } from './types';
-import { DEFAULT_LANG } from './i18n/localeConfig';
 
 // Navigation
 export const NAV_SCROLL_TOP_THRESHOLD = 10;
@@ -39,7 +38,8 @@ export const PRODUCTION_BASE_URL = 'https://markdrohan.vercel.app';
 
 // Routing
 export const ROOT_PATH = '/';
-export const E2E_DEFAULT_LANG_PATH = `${ROOT_PATH}${DEFAULT_LANG}`;
+export const DEFAULT_LANG_CODE = 'en';
+export const E2E_DEFAULT_LANG_PATH = `${ROOT_PATH}${DEFAULT_LANG_CODE}`;
 export const SLASH_PATH_SPLIT = '/';
 export const STAR_PATH = '*';
 
