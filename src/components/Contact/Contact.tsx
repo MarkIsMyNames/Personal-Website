@@ -1,7 +1,7 @@
 import { LinkRel, LinkTarget, type Profile } from '../../types';
 import { Icon } from '../../utils/iconMapper';
 import { SectionTitle } from '../../styles/Shared.styles';
-import { ContactSection, ContactLinks, ContactLink } from './Contact.styles';
+import { ContactSection, ContactLinks, ContactItem, ContactLink } from './Contact.styles';
 import { useTranslation } from 'react-i18next';
 import {
   CONTACT_ICON_SIZE,
@@ -23,7 +23,7 @@ export function Contact({ profile }: ContactProps) {
     >
       <SectionTitle>{t('contact.sectionTitle')}</SectionTitle>
       <ContactLinks aria-label={t('contact.ariaLabels.list')}>
-        <li>
+        <ContactItem>
           <ContactLink
             href={`${MAILTO_PREFIX}${profile.email}`}
             aria-label={t('contact.ariaLabels.email', { email: profile.email })}
@@ -34,8 +34,8 @@ export function Contact({ profile }: ContactProps) {
             />
             <span>{profile.email}</span>
           </ContactLink>
-        </li>
-        <li>
+        </ContactItem>
+        <ContactItem>
           <ContactLink
             href={`${GITHUB_BASE_URL}${profile.github}`}
             target={LinkTarget.Blank}
@@ -48,7 +48,7 @@ export function Contact({ profile }: ContactProps) {
             />
             <span>{t('contact.githubUrl', { username: profile.github })}</span>
           </ContactLink>
-        </li>
+        </ContactItem>
       </ContactLinks>
     </ContactSection>
   );

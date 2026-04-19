@@ -127,24 +127,15 @@ export const TEST_IMAGE_ALT = 'Test Image';
 export const WINDOW_PROP_SCROLL_Y = 'scrollY';
 export const NAV_TRANSFORM_HIDDEN = 'transform: translateY(-100%)';
 export const NAV_TRANSFORM_VISIBLE = 'transform: translateY(0)';
-export const SCROLL_Y_BELOW_THRESHOLD_LOW = 5;
-export const SCROLL_Y_LOW = 100;
-export const SCROLL_Y_MID = 200;
-export const SCROLL_Y_HIGH = 300;
-export const TOUCH_X_HIGH = 300;
-export const TOUCH_X_MID = 200;
-export const TOUCH_X_LOW = 100;
-export const TOUCH_BELOW_THRESHOLD_END_X = 180;
+export const SCROLL_Y = { BELOW_THRESHOLD: 5, LOW: 100, MID: 200, HIGH: 300 } as const;
+export const TOUCH_X = { LOW: 100, BELOW_THRESHOLD: 180, MID: 200, HIGH: 300 } as const;
 export const SINGLE_CALL = 1;
 export const EMPTY_LENGTH = 0;
 export const EMPTY_STRING = '';
 export const UNKNOWN_ICON_NAME = 'UnknownIcon';
 
 // E2E — scroll positions
-export const E2E_SCROLL_X = 0;
-export const E2E_SCROLL_DOWN_Y = 600;
-export const E2E_SCROLL_MID_Y = 400;
-export const E2E_SCROLL_TOP_THRESHOLD = 50;
+export const E2E_SCROLL = { X: 0, DOWN_Y: 600, MID_Y: 400, TOP_THRESHOLD: 50 } as const;
 
 // E2E — timeouts
 export const E2E_SCROLL_WAIT_TIMEOUT_MS = 5000;
@@ -182,15 +173,12 @@ export const E2E_INTERACTIVE_SELECTORS = [
 ] as const;
 
 // E2E — gallery scroll
-export const E2E_GALLERY_SCROLL_PX = 200;
-export const E2E_GALLERY_SCROLL_INITIAL = 0;
+export const E2E_GALLERY_SCROLL = { PX: 200 } as const;
 
 // E2E — click and swipe positions
 export const E2E_MODAL_OUTSIDE_CLICK_X = 10;
 export const E2E_MODAL_OUTSIDE_CLICK_Y = 10;
-export const E2E_SWIPE_START_X = 300;
-export const E2E_SWIPE_END_X = 50;
-export const E2E_SWIPE_Y = 400;
+export const E2E_SWIPE = { START_X: 300, END_X: 50 } as const;
 
 // E2E — assertion patterns
 export const E2E_REGEX_ANY_TEXT = /.+/;
@@ -202,3 +190,5 @@ export const E2E_ARIA_HIDDEN_TRUE = 'true' as const;
 export const E2E_NAV_SCROLL_TEST_PREFIX = 'scrolls to';
 export const E2E_NAV_SCROLL_TEST_SUFFIX = 'section when nav link clicked';
 export const E2E_ROUTE_RENDERS_AT = 'renders page at';
+export const E2E_KEYBOARD_OPEN_TEST_PREFIX = 'is keyboard accessible — opens with';
+export const E2E_KEYBOARD_OPEN_TEST_SUFFIX = 'key';

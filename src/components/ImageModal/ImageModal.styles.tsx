@@ -45,6 +45,7 @@ export const CloseButton = styled.button`
   font-size: 1.5rem;
   cursor: pointer;
   z-index: 1001;
+  transition: all 0.3s ease;
 
   &:hover {
     background: ${({ theme }) => theme.colors.accentHighlight};

@@ -6,15 +6,12 @@ import {
   SINGLE_CALL,
   SINGLE_ITEM_COUNT,
   FIRST_INDEX,
-  TOUCH_X_HIGH,
-  TOUCH_X_MID,
-  TOUCH_X_LOW,
-  TOUCH_BELOW_THRESHOLD_END_X,
+  TOUCH_X,
   TEST_IMAGE_URL,
   TEST_IMAGE_ALT,
 } from '../../config';
 import { AriaRole, HtmlAttr, HtmlTag, KeyboardKey, OverflowValue } from '../../types';
-import { renderWithTheme } from '../../test-utils';
+import { renderWithTheme } from '../../utils/test-utils';
 
 describe('ImageModal Component', () => {
   const mockOnClose = vi.fn();
@@ -131,36 +128,36 @@ describe('ImageModal Component', () => {
 
   it('calls onNext when swiped left', () => {
     renderDefault({ hasNext: true });
-    fireEvent.pointerDown(document, { clientX: TOUCH_X_HIGH });
-    fireEvent.pointerUp(document, { clientX: TOUCH_X_LOW });
+    fireEvent.pointerDown(document, { clientX: TOUCH_X.HIGH });
+    fireEvent.pointerUp(document, { clientX: TOUCH_X.LOW });
     expect(mockOnNext).toHaveBeenCalledTimes(SINGLE_CALL);
   });
 
   it('calls onPrevious when swiped right', () => {
     renderDefault({ hasPrevious: true });
-    fireEvent.pointerDown(document, { clientX: TOUCH_X_LOW });
-    fireEvent.pointerUp(document, { clientX: TOUCH_X_HIGH });
+    fireEvent.pointerDown(document, { clientX: TOUCH_X.LOW });
+    fireEvent.pointerUp(document, { clientX: TOUCH_X.HIGH });
     expect(mockOnPrevious).toHaveBeenCalledTimes(SINGLE_CALL);
   });
 
   it('does not call onNext when swiped left but hasNext is false', () => {
     renderDefault();
-    fireEvent.pointerDown(document, { clientX: TOUCH_X_HIGH });
-    fireEvent.pointerUp(document, { clientX: TOUCH_X_LOW });
+    fireEvent.pointerDown(document, { clientX: TOUCH_X.HIGH });
+    fireEvent.pointerUp(document, { clientX: TOUCH_X.LOW });
     expect(mockOnNext).not.toHaveBeenCalled();
   });
 
   it('does not call onPrevious when swiped right but hasPrevious is false', () => {
     renderDefault();
-    fireEvent.pointerDown(document, { clientX: TOUCH_X_LOW });
-    fireEvent.pointerUp(document, { clientX: TOUCH_X_HIGH });
+    fireEvent.pointerDown(document, { clientX: TOUCH_X.LOW });
+    fireEvent.pointerUp(document, { clientX: TOUCH_X.HIGH });
     expect(mockOnPrevious).not.toHaveBeenCalled();
   });
 
   it('does not trigger swipe for small movements', () => {
     renderDefault({ hasNext: true });
-    fireEvent.pointerDown(document, { clientX: TOUCH_X_MID });
-    fireEvent.pointerUp(document, { clientX: TOUCH_BELOW_THRESHOLD_END_X });
+    fireEvent.pointerDown(document, { clientX: TOUCH_X.MID });
+    fireEvent.pointerUp(document, { clientX: TOUCH_X.BELOW_THRESHOLD });
     expect(mockOnNext).not.toHaveBeenCalled();
   });
 

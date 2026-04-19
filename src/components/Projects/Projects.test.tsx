@@ -17,7 +17,7 @@ import {
   IMAGE_INDEX_SECOND,
   SINGLE_ITEM_COUNT,
 } from '../../config';
-import { renderWithTheme } from '../../test-utils';
+import { renderWithTheme } from '../../utils/test-utils';
 
 const firstMockProject = defaultLocale.projectsData.find(
   (p) => p.images.length === SINGLE_ITEM_COUNT,
