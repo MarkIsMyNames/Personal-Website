@@ -33,7 +33,7 @@
     "noPropertyAccessFromIndexSignature": true,
 
     /* Testing */
-    "types": ["node", "vitest/globals", "@testing-library/jest-dom"],
+    "types": ["node", "vitest/globals", "@testing-library/jest-dom", "@playwright/test"],
 
     /* Other */
     "allowJs": true,
@@ -41,5 +41,5 @@
     "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true
   },
-  "include": ["src", "scripts", ".storybook/**/*.ts", ".storybook/**/*.tsx"]
+  "include": ["src", "scripts", ".storybook/**/*.ts", ".storybook/**/*.tsx", "e2e/**/*.ts", "playwright.config.ts"],
 }

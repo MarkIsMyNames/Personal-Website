@@ -4,7 +4,8 @@ import { createHtmlPlugin } from 'vite-plugin-html';
 import { storybookTest } from '@storybook/addon-vitest/vitest-plugin';
 import { playwright } from '@vitest/browser-playwright';
 import { theme } from './src/styles/theme';
-import { FAVICON_PATH, ENTRY_POINT_PATH, SLASH_PATH_SPLIT, ROOT_ELEMENT_ID, FETCH_PRIORITY_HIGH, CHARSET_UTF8 } from './src/config';
+import { FAVICON_PATH, ENTRY_POINT_PATH, SLASH_PATH_SPLIT, ROOT_ELEMENT_ID, CHARSET_UTF8 } from './src/config';
+import { FetchPriority } from './src/types';
 import { DEFAULT_LANG, defaultLocale } from './src/i18n/localeConfig';
 
 // https://vite.dev/config/
@@ -19,7 +20,7 @@ export default defineConfig({
           defaultLang: DEFAULT_LANG,
           charset: CHARSET_UTF8,
           faviconPath: FAVICON_PATH,
-          fetchPriority: FETCH_PRIORITY_HIGH,
+          fetchPriority: FetchPriority.High,
           profileImagePath: `${SLASH_PATH_SPLIT}${defaultLocale.profile.image}`,
           rootElementId: ROOT_ELEMENT_ID,
           entryPointPath: ENTRY_POINT_PATH,
@@ -39,7 +40,7 @@ export default defineConfig({
           globals: true,
           environment: 'jsdom',
           setupFiles: './src/setupTests.ts',
-          exclude: ['**/*.styles.test.{ts,tsx}', 'node_modules/**'],
+          exclude: ['**/*.styles.test.{ts,tsx}', 'e2e/**', 'node_modules/**'],
         },
       },
       {

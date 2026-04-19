@@ -1,5 +1,3 @@
-import { TYPEOF_OBJECT } from './config';
-
 export enum ErrorMessage {
   RootElementNotFound = 'Root element not found',
   NoImageAtIndex = 'No image found at modal index',
@@ -12,6 +10,7 @@ export enum TestErrorMessage {
   NoSingleImageProject = 'No single-image project found in the default locale',
   NoSkillData = 'No skill data found in the default locale',
   LocaleKeyNotFound = 'Locale key not found in default locale',
+  EmailLinkNoBoundingBox = 'email link has no bounding box',
 }
 
 export enum SectionId {
@@ -35,18 +34,20 @@ export enum Field {
 export enum OverflowValue {
   Locked = 'hidden',
   Restored = 'unset',
+  Auto = 'auto',
+  Scroll = 'scroll',
 }
 
-export enum AriaRole {
-  Article = 'article',
-  Button = 'button',
-  Dialog = 'dialog',
-  List = 'list',
-  ListItem = 'listitem',
-  Menu = 'menu',
-  MenuItem = 'menuitem',
-  Navigation = 'navigation',
-}
+export const AriaRole = {
+  Article: 'article',
+  Button: 'button',
+  Dialog: 'dialog',
+  List: 'list',
+  ListItem: 'listitem',
+  Menu: 'menu',
+  MenuItem: 'menuitem',
+  Navigation: 'navigation',
+} as const;
 
 export const WindowGlobal = {
   AddEventListener: 'addEventListener',
@@ -56,8 +57,14 @@ export const WindowGlobal = {
 } as const;
 
 export const HtmlTag = {
+  A: 'a',
+  Button: 'button',
   Div: 'div',
+  Html: 'html',
   Img: 'img',
+  Link: 'link',
+  Meta: 'meta',
+  Nav: 'nav',
   Svg: 'svg',
 };
 
@@ -68,7 +75,13 @@ export const HtmlAttr = {
   Href: 'href',
   Target: 'target',
   Rel: 'rel',
+  Lang: 'lang',
+  Content: 'content',
+  Name: 'name',
+  TabIndex: 'tabindex',
   AriaModal: 'aria-modal',
+  AriaHidden: 'aria-hidden',
+  AriaLabel: 'aria-label',
 };
 
 export const EnTopLevelKeys = [
@@ -84,6 +97,33 @@ export const EnTopLevelKeys = [
 ];
 
 export const ContactMethods = ['email', 'github'];
+
+export const Typeof = {
+  Object: 'object',
+  String: 'string',
+} as const;
+
+export const LinkRel = {
+  Alternate: 'alternate',
+  Icon: 'icon',
+  NoopenerNoreferrer: 'noopener noreferrer',
+} as const;
+
+export const Hreflang = {
+  XDefault: 'x-default',
+} as const;
+
+export const LinkTarget = {
+  Blank: '_blank',
+} as const;
+
+export const FetchPriority = {
+  High: 'high',
+} as const;
+
+export const ScrollBehavior = {
+  Smooth: 'smooth',
+} as const;
 
 export const DomEvent = {
   KeyDown: 'keydown',
@@ -104,6 +144,9 @@ export const KeyboardKey = {
 export const KeyCode = {
   Enter: 'Enter',
   Space: 'Space',
+  Escape: 'Escape',
+  ArrowLeft: 'ArrowLeft',
+  ArrowRight: 'ArrowRight',
   KeyA: 'KeyA',
 };
 
@@ -111,7 +154,7 @@ export type LocaleRecord = { [key: string]: LocaleValue };
 export type LocaleValue = string | number | boolean | null | LocaleRecord | LocaleValue[];
 
 export function isRecord(value: LocaleValue): value is LocaleRecord {
-  return typeof value === TYPEOF_OBJECT && value !== null && !Array.isArray(value);
+  return typeof value === Typeof.Object && value !== null && !Array.isArray(value);
 }
 
 export type Skill = {

@@ -1,13 +1,8 @@
 import { screen, within } from '@testing-library/react';
 import { Bio } from './Bio';
-import { AriaRole, HtmlAttr, TestErrorMessage } from '../../types';
+import { AriaRole, FetchPriority, HtmlAttr, TestErrorMessage } from '../../types';
 import { defaultLocale } from '../../i18n/localeConfig';
-import {
-  FIRST_INDEX,
-  BIO_SENTENCE_DELIMITER,
-  FETCH_PRIORITY_HIGH,
-  REGEX_FLAG_CASE_INSENSITIVE,
-} from '../../config';
+import { FIRST_INDEX, BIO_SENTENCE_DELIMITER, REGEX_FLAG_CASE_INSENSITIVE } from '../../config';
 import { renderWithTheme } from '../../test-utils';
 
 const mockProfile = defaultLocale.profile;
@@ -50,7 +45,7 @@ describe('Bio Component', () => {
         .replace('{{title}}', defaultLocale.profile.title),
     );
     expect(imageElement).toHaveAttribute(HtmlAttr.Src, mockProfile.image);
-    expect(imageElement).toHaveAttribute(HtmlAttr.FetchPriority, FETCH_PRIORITY_HIGH);
+    expect(imageElement).toHaveAttribute(HtmlAttr.FetchPriority, FetchPriority.High);
   });
 
   it('renders about section with correct aria-label', () => {

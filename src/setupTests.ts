@@ -1,16 +1,11 @@
 import '@testing-library/jest-dom';
 import { vi } from 'vitest';
 import { DEFAULT_LANG, LOCALES } from './i18n/localeConfig';
-import {
-  I18N_KEY_SEPARATOR,
-  I18N_RETURN_OBJECTS_OPTION,
-  I18N_PLUGIN_TYPE,
-  TYPEOF_STRING,
-} from './config';
-import { isRecord, TestErrorMessage, type LocaleValue } from './types';
+import { I18N_KEY_SEPARATOR, I18N_RETURN_OBJECTS_OPTION, I18N_PLUGIN_TYPE } from './config';
+import { isRecord, Typeof, TestErrorMessage, type LocaleValue } from './types';
 
 function isString(value: LocaleValue): value is string {
-  return typeof value === TYPEOF_STRING;
+  return typeof value === Typeof.String;
 }
 
 function getNestedValue(key: string): LocaleValue {

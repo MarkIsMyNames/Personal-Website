@@ -14,12 +14,10 @@ import { Bio } from '../../components/Bio/Bio';
 import { Skills } from '../../components/Skills/Skills';
 import { Projects } from '../../components/Projects/Projects';
 import { Contact } from '../../components/Contact/Contact';
-import { SectionId } from '../../types';
+import { SectionId, LinkRel, Hreflang } from '../../types';
 import {
   PRODUCTION_BASE_URL,
   PATH_LANG_SEGMENT,
-  HREFLANG_REL,
-  HREFLANG_X_DEFAULT,
   META_DESCRIPTION,
   SLASH_PATH_SPLIT,
 } from '../../config';
@@ -57,14 +55,14 @@ export function LocaleApp() {
         {SUPPORTED_LANGS.map((supportedLang) => (
           <link
             key={supportedLang}
-            rel={HREFLANG_REL}
+            rel={LinkRel.Alternate}
             hrefLang={supportedLang}
             href={`${PRODUCTION_BASE_URL}${SLASH_PATH_SPLIT}${supportedLang}`}
           />
         ))}
         <link
-          rel={HREFLANG_REL}
-          hrefLang={HREFLANG_X_DEFAULT}
+          rel={LinkRel.Alternate}
+          hrefLang={Hreflang.XDefault}
           href={`${PRODUCTION_BASE_URL}${SLASH_PATH_SPLIT}${DEFAULT_LANG}`}
         />
       </Helmet>
