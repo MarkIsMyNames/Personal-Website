@@ -9,9 +9,10 @@ import {
   REGEX_FLAG_CASE_INSENSITIVE,
   E2E_MODAL_OUTSIDE_CLICK_X,
   E2E_MODAL_OUTSIDE_CLICK_Y,
-  E2E_SWIPE_START_X,
-  E2E_SWIPE_END_X,
-  E2E_SWIPE_Y,
+  E2E_SWIPE,
+  E2E_SCROLL,
+  E2E_KEYBOARD_OPEN_TEST_PREFIX,
+  E2E_KEYBOARD_OPEN_TEST_SUFFIX,
 } from '../src/config';
 import { OverflowValue, HtmlTag, HtmlAttr, AriaRole, KeyCode, DomEvent } from '../src/types';
 import { defaultLocale } from '../src/i18n/localeConfig';
@@ -106,9 +107,9 @@ test.describe('Image modal', () => {
         );
       },
       {
-        startX: E2E_SWIPE_START_X,
-        endX: E2E_SWIPE_END_X,
-        y: E2E_SWIPE_Y,
+        startX: E2E_SWIPE.START_X,
+        endX: E2E_SWIPE.END_X,
+        y: E2E_SCROLL.MID_Y,
         pointerDown: DomEvent.PointerDown,
         pointerUp: DomEvent.PointerUp,
       },
@@ -147,15 +148,13 @@ test.describe('Image modal', () => {
     expect(await page.evaluate(() => document.body.style.overflow)).toBe(OverflowValue.Restored);
   });
 
-  test('is keyboard accessible — opens with Enter key', async ({ page }) => {
-    await page.locator(E2E_PROJECTS_BUTTON_SELECTOR).first().focus();
-    await page.keyboard.press(KeyCode.Enter);
-    await expect(page.getByRole(AriaRole.Dialog)).toBeVisible();
-  });
-
-  test('is keyboard accessible — opens with Space key', async ({ page }) => {
-    await page.locator(E2E_PROJECTS_BUTTON_SELECTOR).first().focus();
-    await page.keyboard.press(KeyCode.Space);
-    await expect(page.getByRole(AriaRole.Dialog)).toBeVisible();
-  });
+  for (const key of [KeyCode.Enter, KeyCode.Space]) {
+    test(`${E2E_KEYBOARD_OPEN_TEST_PREFIX} ${key} ${E2E_KEYBOARD_OPEN_TEST_SUFFIX}`, async ({
+      page,
+    }) => {
+      await page.locator(E2E_PROJECTS_BUTTON_SELECTOR).first().focus();
+      await page.keyboard.press(key);
+      await expect(page.getByRole(AriaRole.Dialog)).toBeVisible();
+    });
+  }
 });

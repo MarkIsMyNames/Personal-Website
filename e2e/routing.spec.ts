@@ -49,13 +49,15 @@ test.describe('i18n content', () => {
 });
 
 test.describe('SEO', () => {
-  test('page title is set', async ({ page }) => {
+  test.beforeEach(async ({ page }) => {
     await page.goto(E2E_DEFAULT_LANG_PATH);
+  });
+
+  test('page title is set', async ({ page }) => {
     await expect(page).toHaveTitle(new RegExp(defaultLocale.profile.name));
   });
 
   test('meta description is set', async ({ page }) => {
-    await page.goto(E2E_DEFAULT_LANG_PATH);
     await expect(page.locator(E2E_META_DESCRIPTION_SELECTOR)).toHaveAttribute(
       HtmlAttr.Content,
       E2E_REGEX_ANY_TEXT,
@@ -63,7 +65,6 @@ test.describe('SEO', () => {
   });
 
   test('favicon is linked', async ({ page }) => {
-    await page.goto(E2E_DEFAULT_LANG_PATH);
     await expect(page.locator(E2E_FAVICON_SELECTOR)).toHaveAttribute(
       HtmlAttr.Href,
       E2E_FAVICON_PATTERN,

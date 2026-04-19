@@ -2,7 +2,7 @@ import { screen } from '@testing-library/react';
 import { Skills } from './Skills';
 import { AriaRole } from '../../types';
 import { defaultLocale } from '../../i18n/localeConfig';
-import { renderWithTheme } from '../../test-utils';
+import { renderWithTheme } from '../../utils/test-utils';
 
 const mockSkills = defaultLocale.skillsData;
 

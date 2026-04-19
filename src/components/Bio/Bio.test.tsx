@@ -3,7 +3,7 @@ import { Bio } from './Bio';
 import { AriaRole, FetchPriority, HtmlAttr, TestErrorMessage } from '../../types';
 import { defaultLocale } from '../../i18n/localeConfig';
 import { FIRST_INDEX, BIO_SENTENCE_DELIMITER, REGEX_FLAG_CASE_INSENSITIVE } from '../../config';
-import { renderWithTheme } from '../../test-utils';
+import { renderWithTheme } from '../../utils/test-utils';
 
 const mockProfile = defaultLocale.profile;
 

@@ -20,6 +20,16 @@ export const ContactLinks = styled.ul`
   gap: 1.5rem;
   align-items: center;
   list-style: none;
+  max-width: 350px;
+  margin: 0 auto;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    max-width: 300px;
+  }
+`;
+
+export const ContactItem = styled.li`
+  width: 100%;
 `;
 
 export const ContactLink = styled.a`
@@ -34,7 +44,6 @@ export const ContactLink = styled.a`
   color: ${({ theme }) => theme.colors.textDefault};
   font-size: 1.125rem;
   transition: all 0.3s ease;
-  min-width: 300px;
   justify-content: center;
 
   &:hover {
@@ -45,13 +54,10 @@ export const ContactLink = styled.a`
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
-    min-width: 250px;
     font-size: 1rem;
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    min-width: 200px;
-    padding: 0.75rem 1rem;
     font-size: 0.875rem;
   }
 `;

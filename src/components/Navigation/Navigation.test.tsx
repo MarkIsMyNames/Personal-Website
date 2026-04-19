@@ -7,17 +7,14 @@ import {
   WINDOW_PROP_SCROLL_Y,
   NAV_TRANSFORM_HIDDEN,
   NAV_TRANSFORM_VISIBLE,
-  SCROLL_Y_BELOW_THRESHOLD_LOW,
-  SCROLL_Y_LOW,
-  SCROLL_Y_MID,
-  SCROLL_Y_HIGH,
+  SCROLL_Y,
   REGEX_FLAG_CASE_INSENSITIVE,
   MOCK_RECT_ZERO,
   MOCK_RECT_TOP,
   MOCK_RECT_HEIGHT,
 } from '../../config';
 import { AriaRole, HtmlAttr, HtmlTag, ScrollBehavior, SectionId, WindowGlobal } from '../../types';
-import { renderWithTheme } from '../../test-utils';
+import { renderWithTheme } from '../../utils/test-utils';
 
 const simulateScroll = (y: number) => {
   Object.defineProperty(window, WINDOW_PROP_SCROLL_Y, { value: y, writable: true });
@@ -79,21 +76,21 @@ describe('Navigation Component', () => {
 
   it('hides navigation when scrolling down', () => {
     renderWithTheme(<Navigation />);
-    simulateScroll(SCROLL_Y_LOW);
-    simulateScroll(SCROLL_Y_MID);
+    simulateScroll(SCROLL_Y.LOW);
+    simulateScroll(SCROLL_Y.MID);
     expect(screen.getByRole(AriaRole.Navigation)).toHaveStyle(NAV_TRANSFORM_HIDDEN);
   });
 
   it('shows navigation when scrolling up', () => {
     renderWithTheme(<Navigation />);
-    simulateScroll(SCROLL_Y_MID);
-    simulateScroll(SCROLL_Y_LOW);
+    simulateScroll(SCROLL_Y.MID);
+    simulateScroll(SCROLL_Y.LOW);
     expect(screen.getByRole(AriaRole.Navigation)).toHaveStyle(NAV_TRANSFORM_VISIBLE);
   });
 
   it('shows navigation when scroll position is less than 10', () => {
     renderWithTheme(<Navigation />);
-    simulateScroll(SCROLL_Y_BELOW_THRESHOLD_LOW);
+    simulateScroll(SCROLL_Y.BELOW_THRESHOLD);
     expect(screen.getByRole(AriaRole.Navigation)).toHaveStyle(NAV_TRANSFORM_VISIBLE);
   });
 
@@ -116,9 +113,9 @@ describe('Navigation Component', () => {
     const { unmount } = renderWithTheme(<Navigation />);
     const initialAddCalls = addEventListenerSpy.mock.calls.length;
 
-    simulateScroll(SCROLL_Y_LOW);
-    simulateScroll(SCROLL_Y_MID);
-    simulateScroll(SCROLL_Y_HIGH);
+    simulateScroll(SCROLL_Y.LOW);
+    simulateScroll(SCROLL_Y.MID);
+    simulateScroll(SCROLL_Y.HIGH);
 
     expect(addEventListenerSpy).toHaveBeenCalledTimes(initialAddCalls);
 

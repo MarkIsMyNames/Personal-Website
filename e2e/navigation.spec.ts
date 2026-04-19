@@ -1,9 +1,6 @@
 import { test, expect } from '@playwright/test';
 import {
-  E2E_SCROLL_X,
-  E2E_SCROLL_DOWN_Y,
-  E2E_SCROLL_MID_Y,
-  E2E_SCROLL_TOP_THRESHOLD,
+  E2E_SCROLL,
   E2E_SCROLL_WAIT_TIMEOUT_MS,
   E2E_VIEWPORT_RATIO,
   E2E_NAV_SCROLL_TEST_PREFIX,
@@ -25,13 +22,13 @@ test.describe('Navigation bar', () => {
       name: defaultLocale.navigation.ariaLabels.nav,
     });
     await page.evaluate(({ x, y }) => window.scrollTo(x, y), {
-      x: E2E_SCROLL_X,
-      y: E2E_SCROLL_DOWN_Y,
+      x: E2E_SCROLL.X,
+      y: E2E_SCROLL.DOWN_Y,
     });
     await expect(nav).not.toBeInViewport();
     await page.evaluate(({ x, y }) => window.scrollTo(x, y), {
-      x: E2E_SCROLL_X,
-      y: E2E_SCROLL_MID_Y,
+      x: E2E_SCROLL.X,
+      y: E2E_SCROLL.MID_Y,
     });
     await expect(nav).toBeInViewport();
   });
@@ -40,8 +37,8 @@ test.describe('Navigation bar', () => {
     test.skip(isMobile, 'Brand logo is hidden on mobile viewports');
     await page.locator(E2E_SECTION_CONTACT).scrollIntoViewIfNeeded();
     await page.evaluate(({ x, y }) => window.scrollTo(x, y), {
-      x: E2E_SCROLL_X,
-      y: E2E_SCROLL_MID_Y,
+      x: E2E_SCROLL.X,
+      y: E2E_SCROLL.DOWN_Y,
     });
     const brandLabel = defaultLocale.navigation.ariaLabels.link.replace(
       '{{section}}',
@@ -56,7 +53,7 @@ test.describe('Navigation bar', () => {
     await brandBtn.click({ force: true });
     await page.waitForFunction(
       (threshold) => window.scrollY < threshold,
-      E2E_SCROLL_TOP_THRESHOLD,
+      E2E_SCROLL.TOP_THRESHOLD,
       { timeout: E2E_SCROLL_WAIT_TIMEOUT_MS },
     );
   });

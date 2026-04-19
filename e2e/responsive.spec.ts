@@ -12,8 +12,8 @@ import {
   E2E_SECTION_CONTACT,
   SINGLE_ITEM_COUNT,
   E2E_DEFAULT_LANG_PATH,
-  E2E_GALLERY_SCROLL_PX,
-  E2E_GALLERY_SCROLL_INITIAL,
+  E2E_GALLERY_SCROLL,
+  E2E_SCROLL,
 } from '../src/config';
 import { HtmlTag, AriaRole, KeyCode, TestErrorMessage } from '../src/types';
 import { defaultLocale } from '../src/i18n/localeConfig';
@@ -65,11 +65,11 @@ test.describe('Mobile layout', () => {
         minCount: SINGLE_ITEM_COUNT,
         imgSelector: E2E_PROJECTS_IMG_SELECTOR,
         imgTag: HtmlTag.Img,
-        scrollPx: E2E_GALLERY_SCROLL_PX,
+        scrollPx: E2E_GALLERY_SCROLL.PX,
       },
     );
-    expect(initial).toBe(E2E_GALLERY_SCROLL_INITIAL);
-    expect(scrolled).toBeGreaterThan(E2E_GALLERY_SCROLL_INITIAL);
+    expect(initial).toBe(E2E_SCROLL.X);
+    expect(scrolled).toBeGreaterThan(E2E_SCROLL.X);
   });
 
   test('modal is usable on mobile', async ({ page }) => {

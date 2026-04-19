@@ -20,27 +20,18 @@ test.beforeEach(async ({ page }) => {
 });
 
 test.describe('Bio / About section', () => {
-  test('renders profile image', async ({ page }) => {
+  test('renders profile image, name, and education', async ({ page }) => {
     const img = page.locator(E2E_ABOUT_IMG_SELECTOR).first();
     await expect(img).toBeVisible();
     await expect(img).toHaveAttribute(HtmlAttr.Src, new RegExp(defaultLocale.profile.image));
-  });
-
-  test('renders bio text', async ({ page }) => {
     await expect(page.locator(E2E_SECTION_ABOUT)).toContainText(defaultLocale.profile.name);
-  });
-
-  test('renders education details', async ({ page }) => {
     await expect(page.locator(E2E_SECTION_ABOUT)).toContainText(defaultLocale.profile.university);
   });
 });
 
 test.describe('Skills section', () => {
-  test('renders section title', async ({ page }) => {
-    await expect(page.getByText(defaultLocale.skills.sectionTitle)).toBeVisible();
-  });
-
   test('renders correct number of skill cards each with an icon', async ({ page }) => {
+    await expect(page.getByText(defaultLocale.skills.sectionTitle)).toBeVisible();
     const cards = page.locator(E2E_SKILLS_LISTITEM_SELECTOR);
     await expect(cards).toHaveCount(defaultLocale.skillsData.length);
     await expect(cards.first().locator(HtmlTag.Svg)).toBeVisible();
@@ -48,38 +39,26 @@ test.describe('Skills section', () => {
 });
 
 test.describe('Projects section', () => {
-  test('renders section title', async ({ page }) => {
+  test('renders section title, all project titles, and images', async ({ page }) => {
     await expect(page.getByText(defaultLocale.projects.sectionTitle)).toBeVisible();
-  });
-
-  test('renders all project titles', async ({ page }) => {
     for (const { title } of defaultLocale.projectsData) {
       await expect(page.locator(E2E_SECTION_PROJECTS).getByText(title).first()).toBeVisible();
     }
-  });
-
-  test('project images are visible', async ({ page }) => {
     await expect(page.locator(E2E_PROJECTS_IMG_SELECTOR).first()).toBeVisible();
   });
 });
 
 test.describe('Contact section', () => {
-  test('renders section title', async ({ page }) => {
-    await expect(page.getByText(defaultLocale.contact.sectionTitle)).toBeVisible();
-  });
-
-  test('renders email link', async ({ page }) => {
+  test('renders email and GitHub links', async ({ page }) => {
     await page.locator(E2E_SECTION_CONTACT).scrollIntoViewIfNeeded();
+
     const emailLink = page.locator(E2E_CONTACT_EMAIL_SELECTOR);
     await expect(emailLink).toBeVisible();
     await expect(emailLink).toHaveAttribute(
       HtmlAttr.Href,
       `${MAILTO_PREFIX}${defaultLocale.profile.email}`,
     );
-  });
 
-  test('renders GitHub link', async ({ page }) => {
-    await page.locator(E2E_SECTION_CONTACT).scrollIntoViewIfNeeded();
     const githubLink = page.locator(E2E_CONTACT_GITHUB_SELECTOR);
     await expect(githubLink).toBeVisible();
     await expect(githubLink).toHaveAttribute(

@@ -3,7 +3,7 @@ import { Contact } from './Contact';
 import { AriaRole, HtmlAttr, ContactMethods, LinkRel, LinkTarget } from '../../types';
 import { defaultLocale } from '../../i18n/localeConfig';
 import { GITHUB_BASE_URL, MAILTO_PREFIX } from '../../config';
-import { renderWithTheme } from '../../test-utils';
+import { renderWithTheme } from '../../utils/test-utils';
 
 const mockProfile = defaultLocale.profile;
 

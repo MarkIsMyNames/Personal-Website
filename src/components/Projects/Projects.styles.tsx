@@ -14,7 +14,6 @@ export const ProjectCard = styled.div`
   background: ${({ theme }) => theme.colors.sectionBackground};
   border: 1px solid ${({ theme }) => theme.colors.border};
   border-radius: 16px;
-  overflow: hidden;
   box-shadow: ${({ theme }) => theme.shadows.large};
 `;
 
@@ -53,7 +52,7 @@ export const ProjectImage = styled.img<{ $isSingle: boolean }>`
 
   @media (hover: hover) {
     &:hover {
-      transform: scale(1.02);
+      transform: scale(1.05);
       opacity: 0.9;
     }
   }
