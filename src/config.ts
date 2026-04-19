@@ -101,7 +101,7 @@ export const KIB_UNIT = 'KiB';
 export const MSG_IS_UNDER = 'is under';
 
 // Test — locale
-export const UNSUPPORTED_LANG_CODE = 'ff';
+export const UNSUPPORTED_LANG_CODE = 'ffasdf';
 export const TEST_LANG_EN = 'en';
 export const TEST_LANG_FR = 'fr';
 export const TEST_LANG_DE = 'de';
@@ -112,7 +112,7 @@ export const TEST_LOCALE_FR_FR = 'fr-FR';
 export const TEST_LOCALE_DE_DE = 'de-DE';
 export const TEST_LOCALE_ES_ES = 'es-ES';
 export const TEST_LOCALE_GA_IE = 'ga-IE';
-export const TEST_LOCALE_UNSUPPORTED = 'ja-JP';
+export const TEST_LOCALE_UNSUPPORTED = 'ffasdf';
 
 // Test — mock values
 export const LOCALE_FILE_EXTENSION = '.json';
