@@ -34,8 +34,6 @@ export enum Field {
 export enum OverflowValue {
   Locked = 'hidden',
   Restored = 'unset',
-  Auto = 'auto',
-  Scroll = 'scroll',
 }
 
 export const AriaRole = {
@@ -127,8 +125,8 @@ export const ScrollBehavior = {
 
 export const DomEvent = {
   KeyDown: 'keydown',
-  TouchStart: 'touchstart',
-  TouchEnd: 'touchend',
+  PointerDown: 'pointerdown',
+  PointerUp: 'pointerup',
   Scroll: 'scroll',
 } as const;
 

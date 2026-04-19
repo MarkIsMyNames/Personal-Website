@@ -36,7 +36,8 @@ test.describe('Navigation bar', () => {
     await expect(nav).toBeInViewport();
   });
 
-  test('scrolls to top when brand logo is clicked', async ({ page }) => {
+  test('scrolls to top when brand logo is clicked', async ({ page, isMobile }) => {
+    test.skip(isMobile, 'Brand logo is hidden on mobile viewports');
     await page.locator(E2E_SECTION_CONTACT).scrollIntoViewIfNeeded();
     await page.evaluate(({ x, y }) => window.scrollTo(x, y), {
       x: E2E_SCROLL_X,

@@ -13,7 +13,7 @@ import {
   E2E_SWIPE_END_X,
   E2E_SWIPE_Y,
 } from '../src/config';
-import { OverflowValue, HtmlTag, HtmlAttr, AriaRole, KeyCode, DomEvent } from '../src/types';
+import { OverflowValue, HtmlTag, HtmlAttr, AriaRole, KeyCode } from '../src/types';
 import { defaultLocale } from '../src/i18n/localeConfig';
 
 test.beforeEach(async ({ page }) => {
@@ -93,28 +93,13 @@ test.describe('Image modal', () => {
     expect(await getModalImageAlt(page)).toBe(firstAlt);
   });
 
-  test('navigates with touch swipe', async ({ page }) => {
+  test('navigates with swipe gesture', async ({ page }) => {
     await openMultiImageModal(page);
     const firstAlt = await getModalImageAlt(page);
-    await page.evaluate(
-      ({ startX, endX, y, touchStart, touchEnd }) => {
-        const touch = (x: number): Touch =>
-          new Touch({ identifier: 1, target: document.body, clientX: x, clientY: y });
-        document.dispatchEvent(
-          new TouchEvent(touchStart, { touches: [touch(startX)], bubbles: true }),
-        );
-        document.dispatchEvent(
-          new TouchEvent(touchEnd, { changedTouches: [touch(endX)], bubbles: true }),
-        );
-      },
-      {
-        startX: E2E_SWIPE_START_X,
-        endX: E2E_SWIPE_END_X,
-        y: E2E_SWIPE_Y,
-        touchStart: DomEvent.TouchStart,
-        touchEnd: DomEvent.TouchEnd,
-      },
-    );
+    await page.mouse.move(E2E_SWIPE_START_X, E2E_SWIPE_Y);
+    await page.mouse.down();
+    await page.mouse.move(E2E_SWIPE_END_X, E2E_SWIPE_Y);
+    await page.mouse.up();
     expect(await getModalImageAlt(page)).not.toBe(firstAlt);
   });
 

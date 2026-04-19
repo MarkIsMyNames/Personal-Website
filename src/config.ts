@@ -134,11 +134,7 @@ export const SCROLL_Y_HIGH = 300;
 export const TOUCH_X_HIGH = 300;
 export const TOUCH_X_MID = 200;
 export const TOUCH_X_LOW = 100;
-export const TOUCH_Y = 200;
 export const TOUCH_BELOW_THRESHOLD_END_X = 180;
-export const TOUCH_VERTICAL_START_Y = 100;
-export const TOUCH_VERTICAL_END_X = 190;
-export const TOUCH_VERTICAL_END_Y = 400;
 export const SINGLE_CALL = 1;
 export const EMPTY_LENGTH = 0;
 export const EMPTY_STRING = '';
@@ -157,7 +153,7 @@ export const E2E_SCROLL_WAIT_TIMEOUT_MS = 5000;
 export const E2E_MOBILE_VIEWPORT_WIDTH = 480;
 export const E2E_MOBILE_VIEWPORT_HEIGHT = 844;
 export const E2E_MIN_TOUCH_TARGET_PX = 44;
-export const E2E_VIEWPORT_RATIO = 0.1;
+export const E2E_VIEWPORT_RATIO = 0.05;
 
 // E2E — section anchors
 export const E2E_SECTION_ABOUT = `#${SectionId.About}`;

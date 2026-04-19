@@ -42,7 +42,7 @@ test.describe('Accessibility', () => {
     const sectionTemplate = defaultLocale.common.ariaLabels.section;
     for (const title of Object.values(defaultLocale.navigation.sections)) {
       const label = sectionTemplate.replace('{{title}}', title);
-      await expect(page.getByLabel(label).first()).toBeVisible();
+      await expect(page.getByLabel(label, { exact: true }).first()).toBeVisible();
     }
   });
 

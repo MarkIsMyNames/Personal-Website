@@ -37,7 +37,7 @@ export function ImageModal({
   hasNext,
 }: ImageModalProps) {
   const { t } = useTranslation();
-  const touchStartXRef = useRef(FIRST_INDEX);
+  const pointerStartXRef = useRef(FIRST_INDEX);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent): void => {
@@ -50,19 +50,12 @@ export function ImageModal({
       }
     };
 
-    const handleTouchStart = (e: TouchEvent): void => {
-      const touch = e.touches[FIRST_INDEX];
-      if (touch) {
-        touchStartXRef.current = touch.clientX;
-      }
+    const handlePointerDown = (e: PointerEvent): void => {
+      pointerStartXRef.current = e.clientX;
     };
 
-    const handleTouchEnd = (e: TouchEvent): void => {
-      const touch = e.changedTouches[FIRST_INDEX];
-      if (!touch) {
-        return;
-      }
-      const deltaX = touchStartXRef.current - touch.clientX;
+    const handlePointerUp = (e: PointerEvent): void => {
+      const deltaX = pointerStartXRef.current - e.clientX;
       if (Math.abs(deltaX) < SWIPE_THRESHOLD_PX) {
         return;
       }
@@ -74,14 +67,14 @@ export function ImageModal({
     };
 
     document.addEventListener(DomEvent.KeyDown, handleKeyDown);
-    document.addEventListener(DomEvent.TouchStart, handleTouchStart, { passive: true });
-    document.addEventListener(DomEvent.TouchEnd, handleTouchEnd);
+    document.addEventListener(DomEvent.PointerDown, handlePointerDown, { passive: true });
+    document.addEventListener(DomEvent.PointerUp, handlePointerUp);
     document.body.style.overflow = OverflowValue.Locked;
 
     return () => {
       document.removeEventListener(DomEvent.KeyDown, handleKeyDown);
-      document.removeEventListener(DomEvent.TouchStart, handleTouchStart);
-      document.removeEventListener(DomEvent.TouchEnd, handleTouchEnd);
+      document.removeEventListener(DomEvent.PointerDown, handlePointerDown);
+      document.removeEventListener(DomEvent.PointerUp, handlePointerUp);
       document.body.style.overflow = OverflowValue.Restored;
     };
   }, [onClose, onPrevious, onNext, hasPrevious, hasNext]);
