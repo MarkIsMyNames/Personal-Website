@@ -13,7 +13,7 @@ import {
   E2E_SWIPE_END_X,
   E2E_SWIPE_Y,
 } from '../src/config';
-import { OverflowValue, HtmlTag, HtmlAttr, AriaRole, KeyCode } from '../src/types';
+import { OverflowValue, HtmlTag, HtmlAttr, AriaRole, KeyCode, DomEvent } from '../src/types';
 import { defaultLocale } from '../src/i18n/localeConfig';
 
 test.beforeEach(async ({ page }) => {
@@ -96,10 +96,23 @@ test.describe('Image modal', () => {
   test('navigates with swipe gesture', async ({ page }) => {
     await openMultiImageModal(page);
     const firstAlt = await getModalImageAlt(page);
-    await page.mouse.move(E2E_SWIPE_START_X, E2E_SWIPE_Y);
-    await page.mouse.down();
-    await page.mouse.move(E2E_SWIPE_END_X, E2E_SWIPE_Y);
-    await page.mouse.up();
+    await page.evaluate(
+      ({ startX, endX, y, pointerDown, pointerUp }) => {
+        document.dispatchEvent(
+          new PointerEvent(pointerDown, { clientX: startX, clientY: y, bubbles: true }),
+        );
+        document.dispatchEvent(
+          new PointerEvent(pointerUp, { clientX: endX, clientY: y, bubbles: true }),
+        );
+      },
+      {
+        startX: E2E_SWIPE_START_X,
+        endX: E2E_SWIPE_END_X,
+        y: E2E_SWIPE_Y,
+        pointerDown: DomEvent.PointerDown,
+        pointerUp: DomEvent.PointerUp,
+      },
+    );
     expect(await getModalImageAlt(page)).not.toBe(firstAlt);
   });
 
