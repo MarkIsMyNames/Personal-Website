@@ -1,4 +1,4 @@
-import type { Profile } from '../../types';
+import { LinkRel, LinkTarget, type Profile } from '../../types';
 import { Icon } from '../../utils/iconMapper';
 import { SectionTitle } from '../../styles/Shared.styles';
 import { ContactSection, ContactLinks, ContactLink } from './Contact.styles';
@@ -7,8 +7,6 @@ import {
   CONTACT_ICON_SIZE,
   GITHUB_BASE_URL,
   MAILTO_PREFIX,
-  EXTERNAL_LINK_REL,
-  EXTERNAL_LINK_TARGET,
   ICON_EMAIL,
   ICON_GITHUB,
 } from '../../config';
@@ -40,8 +38,8 @@ export function Contact({ profile }: ContactProps) {
         <li>
           <ContactLink
             href={`${GITHUB_BASE_URL}${profile.github}`}
-            target={EXTERNAL_LINK_TARGET}
-            rel={EXTERNAL_LINK_REL}
+            target={LinkTarget.Blank}
+            rel={LinkRel.NoopenerNoreferrer}
             aria-label={t('contact.ariaLabels.github', { username: profile.github })}
           >
             <Icon

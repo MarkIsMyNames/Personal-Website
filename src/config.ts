@@ -1,7 +1,8 @@
+import { HtmlTag, HtmlAttr, AriaRole, SectionId, LinkRel, LinkTarget } from './types';
+
 // Navigation
 export const NAV_SCROLL_TOP_THRESHOLD = 10;
 export const NAV_CLICK_SCROLL_LOCK_MS = 1000;
-export const SCROLL_BEHAVIOR = 'smooth';
 export const SCROLL_TOP_ZERO = 0;
 
 // Gestures
@@ -18,7 +19,6 @@ export const PROJECT_IMAGE_HEIGHT = 300;
 export const KIB_CONVERSION_FACTOR = 1024;
 export const MAX_IMAGE_SIZE_BYTES = 120 * KIB_CONVERSION_FACTOR;
 export const MAX_IMAGE_SIZE_KIB = MAX_IMAGE_SIZE_BYTES / KIB_CONVERSION_FACTOR;
-export const FETCH_PRIORITY_HIGH = 'high';
 
 // Text
 export const BIO_SENTENCE_DELIMITER = /(?<=\.) /;
@@ -34,17 +34,16 @@ export const NO_MOVEMENT = 0;
 // External links
 export const GITHUB_BASE_URL = 'https://github.com/';
 export const MAILTO_PREFIX = 'mailto:';
-export const EXTERNAL_LINK_REL = 'noopener noreferrer';
-export const EXTERNAL_LINK_TARGET = '_blank';
 export const PRODUCTION_BASE_URL = 'https://markdrohan.vercel.app';
 
 // Routing
+export const ROOT_PATH = '/';
+export const DEFAULT_LANG_CODE = 'en';
+export const E2E_DEFAULT_LANG_PATH = `${ROOT_PATH}${DEFAULT_LANG_CODE}`;
 export const SLASH_PATH_SPLIT = '/';
 export const STAR_PATH = '*';
 
 // SEO / hreflang
-export const HREFLANG_REL = 'alternate';
-export const HREFLANG_X_DEFAULT = 'x-default';
 export const META_DESCRIPTION = 'description';
 
 // HTML / DOM
@@ -96,15 +95,13 @@ export const MSG_SKILL_AT_INDEX = 'skill at index';
 export const MSG_KEYS_MISSING_FROM = 'Keys missing from';
 export const MSG_EXTRA_KEYS_IN = 'Extra keys in';
 export const MSG_NOT_IN_DEFAULT_LOCALE = 'not in the default locale';
-export const TYPEOF_OBJECT = 'object';
-export const TYPEOF_STRING = 'string';
 export const INDEX_HTML_RELATIVE_PATH = '../../index.html';
 export const MSG_PROJECT = 'project';
 export const KIB_UNIT = 'KiB';
 export const MSG_IS_UNDER = 'is under';
 
 // Test — locale
-export const UNSUPPORTED_LANG_CODE = 'ff';
+export const UNSUPPORTED_LANG_CODE = 'ffasdf';
 export const TEST_LANG_EN = 'en';
 export const TEST_LANG_FR = 'fr';
 export const TEST_LANG_DE = 'de';
@@ -115,7 +112,7 @@ export const TEST_LOCALE_FR_FR = 'fr-FR';
 export const TEST_LOCALE_DE_DE = 'de-DE';
 export const TEST_LOCALE_ES_ES = 'es-ES';
 export const TEST_LOCALE_GA_IE = 'ga-IE';
-export const TEST_LOCALE_UNSUPPORTED = 'ja-JP';
+export const TEST_LOCALE_UNSUPPORTED = 'ffasdf';
 
 // Test — mock values
 export const LOCALE_FILE_EXTENSION = '.json';
@@ -137,12 +134,71 @@ export const SCROLL_Y_HIGH = 300;
 export const TOUCH_X_HIGH = 300;
 export const TOUCH_X_MID = 200;
 export const TOUCH_X_LOW = 100;
-export const TOUCH_Y = 200;
 export const TOUCH_BELOW_THRESHOLD_END_X = 180;
-export const TOUCH_VERTICAL_START_Y = 100;
-export const TOUCH_VERTICAL_END_X = 190;
-export const TOUCH_VERTICAL_END_Y = 400;
 export const SINGLE_CALL = 1;
 export const EMPTY_LENGTH = 0;
 export const EMPTY_STRING = '';
 export const UNKNOWN_ICON_NAME = 'UnknownIcon';
+
+// E2E — scroll positions
+export const E2E_SCROLL_X = 0;
+export const E2E_SCROLL_DOWN_Y = 600;
+export const E2E_SCROLL_MID_Y = 400;
+export const E2E_SCROLL_TOP_THRESHOLD = 50;
+
+// E2E — timeouts
+export const E2E_SCROLL_WAIT_TIMEOUT_MS = 5000;
+
+// E2E — viewport
+export const E2E_MOBILE_VIEWPORT_WIDTH = 480;
+export const E2E_MOBILE_VIEWPORT_HEIGHT = 844;
+export const E2E_MIN_TOUCH_TARGET_PX = 44;
+export const E2E_VIEWPORT_RATIO = 0.05;
+
+// E2E — section anchors
+export const E2E_SECTION_ABOUT = `#${SectionId.About}`;
+export const E2E_SECTION_SKILLS = `#${SectionId.Skills}`;
+export const E2E_SECTION_PROJECTS = `#${SectionId.Projects}`;
+export const E2E_SECTION_CONTACT = `#${SectionId.Contact}`;
+
+// E2E — CSS selectors
+export const E2E_SELECTOR_EXTERNAL_LINK = `${HtmlTag.A}[${HtmlAttr.Target}="${LinkTarget.Blank}"]`;
+export const E2E_ABOUT_IMG_SELECTOR = `${E2E_SECTION_ABOUT} ${HtmlTag.Img}`;
+export const E2E_PROJECTS_IMG_SELECTOR = `${E2E_SECTION_PROJECTS} ${HtmlTag.Img}`;
+export const E2E_PROJECTS_BUTTON_SELECTOR = `${E2E_SECTION_PROJECTS} [role="${AriaRole.Button}"]`;
+export const E2E_PROJECTS_LISTITEM_SELECTOR = `${E2E_SECTION_PROJECTS} [role="${AriaRole.ListItem}"]`;
+export const E2E_LISTITEM_BUTTON_SELECTOR = `[role="${AriaRole.Button}"]`;
+export const E2E_LISTITEM_BUTTON_NTH_SELECTOR = `[role="${AriaRole.Button}"]:nth-child(2)`;
+export const E2E_SKILLS_LISTITEM_SELECTOR = `${E2E_SECTION_SKILLS} [role="${AriaRole.ListItem}"]`;
+export const E2E_SKILLS_SVG_SELECTOR = `${E2E_SECTION_SKILLS} ${HtmlTag.Svg}`;
+export const E2E_META_DESCRIPTION_SELECTOR = `${HtmlTag.Meta}[${HtmlAttr.Name}="${META_DESCRIPTION}"]`;
+export const E2E_FAVICON_SELECTOR = `${HtmlTag.Link}[${HtmlAttr.Rel}="${LinkRel.Icon}"]`;
+export const E2E_CONTACT_EMAIL_SELECTOR = `${E2E_SECTION_CONTACT} ${HtmlTag.A}[${HtmlAttr.Href}^="${MAILTO_PREFIX}"]`;
+export const E2E_CONTACT_GITHUB_SELECTOR = `${E2E_SECTION_CONTACT} ${HtmlTag.A}[${HtmlAttr.Href}*="${GITHUB_BASE_URL}"]`;
+export const E2E_INTERACTIVE_SELECTORS = [
+  `${HtmlTag.A}[${HtmlAttr.Href}]`,
+  HtmlTag.Button,
+  `[role="${AriaRole.Button}"][${HtmlAttr.TabIndex}="${FOCUSABLE_TAB_INDEX}"]`,
+] as const;
+
+// E2E — gallery scroll
+export const E2E_GALLERY_SCROLL_PX = 200;
+export const E2E_GALLERY_SCROLL_INITIAL = 0;
+
+// E2E — click and swipe positions
+export const E2E_MODAL_OUTSIDE_CLICK_X = 10;
+export const E2E_MODAL_OUTSIDE_CLICK_Y = 10;
+export const E2E_SWIPE_START_X = 300;
+export const E2E_SWIPE_END_X = 50;
+export const E2E_SWIPE_Y = 400;
+
+// E2E — assertion patterns
+export const E2E_REGEX_ANY_TEXT = /.+/;
+export const E2E_NOOPENER_PATTERN = /noopener/;
+export const E2E_FAVICON_PATTERN = /favicon/;
+export const E2E_ARIA_HIDDEN_TRUE = 'true' as const;
+
+// E2E — test description text
+export const E2E_NAV_SCROLL_TEST_PREFIX = 'scrolls to';
+export const E2E_NAV_SCROLL_TEST_SUFFIX = 'section when nav link clicked';
+export const E2E_ROUTE_RENDERS_AT = 'renders page at';

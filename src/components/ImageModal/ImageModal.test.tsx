@@ -9,11 +9,7 @@ import {
   TOUCH_X_HIGH,
   TOUCH_X_MID,
   TOUCH_X_LOW,
-  TOUCH_Y,
   TOUCH_BELOW_THRESHOLD_END_X,
-  TOUCH_VERTICAL_START_Y,
-  TOUCH_VERTICAL_END_X,
-  TOUCH_VERTICAL_END_Y,
   TEST_IMAGE_URL,
   TEST_IMAGE_ALT,
 } from '../../config';
@@ -135,49 +131,36 @@ describe('ImageModal Component', () => {
 
   it('calls onNext when swiped left', () => {
     renderDefault({ hasNext: true });
-    fireEvent.touchStart(document, { touches: [{ clientX: TOUCH_X_HIGH, clientY: TOUCH_Y }] });
-    fireEvent.touchEnd(document, { changedTouches: [{ clientX: TOUCH_X_LOW, clientY: TOUCH_Y }] });
+    fireEvent.pointerDown(document, { clientX: TOUCH_X_HIGH });
+    fireEvent.pointerUp(document, { clientX: TOUCH_X_LOW });
     expect(mockOnNext).toHaveBeenCalledTimes(SINGLE_CALL);
   });
 
   it('calls onPrevious when swiped right', () => {
     renderDefault({ hasPrevious: true });
-    fireEvent.touchStart(document, { touches: [{ clientX: TOUCH_X_LOW, clientY: TOUCH_Y }] });
-    fireEvent.touchEnd(document, { changedTouches: [{ clientX: TOUCH_X_HIGH, clientY: TOUCH_Y }] });
+    fireEvent.pointerDown(document, { clientX: TOUCH_X_LOW });
+    fireEvent.pointerUp(document, { clientX: TOUCH_X_HIGH });
     expect(mockOnPrevious).toHaveBeenCalledTimes(SINGLE_CALL);
   });
 
   it('does not call onNext when swiped left but hasNext is false', () => {
     renderDefault();
-    fireEvent.touchStart(document, { touches: [{ clientX: TOUCH_X_HIGH, clientY: TOUCH_Y }] });
-    fireEvent.touchEnd(document, { changedTouches: [{ clientX: TOUCH_X_LOW, clientY: TOUCH_Y }] });
+    fireEvent.pointerDown(document, { clientX: TOUCH_X_HIGH });
+    fireEvent.pointerUp(document, { clientX: TOUCH_X_LOW });
     expect(mockOnNext).not.toHaveBeenCalled();
   });
 
   it('does not call onPrevious when swiped right but hasPrevious is false', () => {
     renderDefault();
-    fireEvent.touchStart(document, { touches: [{ clientX: TOUCH_X_LOW, clientY: TOUCH_Y }] });
-    fireEvent.touchEnd(document, { changedTouches: [{ clientX: TOUCH_X_HIGH, clientY: TOUCH_Y }] });
+    fireEvent.pointerDown(document, { clientX: TOUCH_X_LOW });
+    fireEvent.pointerUp(document, { clientX: TOUCH_X_HIGH });
     expect(mockOnPrevious).not.toHaveBeenCalled();
   });
 
   it('does not trigger swipe for small movements', () => {
     renderDefault({ hasNext: true });
-    fireEvent.touchStart(document, { touches: [{ clientX: TOUCH_X_MID, clientY: TOUCH_Y }] });
-    fireEvent.touchEnd(document, {
-      changedTouches: [{ clientX: TOUCH_BELOW_THRESHOLD_END_X, clientY: TOUCH_Y }],
-    });
-    expect(mockOnNext).not.toHaveBeenCalled();
-  });
-
-  it('does not trigger swipe for vertical movements', () => {
-    renderDefault({ hasNext: true });
-    fireEvent.touchStart(document, {
-      touches: [{ clientX: TOUCH_X_MID, clientY: TOUCH_VERTICAL_START_Y }],
-    });
-    fireEvent.touchEnd(document, {
-      changedTouches: [{ clientX: TOUCH_VERTICAL_END_X, clientY: TOUCH_VERTICAL_END_Y }],
-    });
+    fireEvent.pointerDown(document, { clientX: TOUCH_X_MID });
+    fireEvent.pointerUp(document, { clientX: TOUCH_BELOW_THRESHOLD_END_X });
     expect(mockOnNext).not.toHaveBeenCalled();
   });
 

@@ -3,6 +3,9 @@ import { theme } from '../src/styles/theme.ts';
 
 export default {
   stories: ['../src/**/*.stories.tsx'],
+  core: {
+    disableTelemetry: true
+  },
   addons: ['@storybook/addon-a11y', '@storybook/addon-vitest', 'storybook-addon-pseudo-states'],
   framework: '@storybook/react-vite',
   previewHead: (head) =>

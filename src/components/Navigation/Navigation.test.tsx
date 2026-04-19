@@ -3,7 +3,6 @@ import { vi } from 'vitest';
 import { Navigation } from './Navigation';
 import { defaultLocale } from '../../i18n/localeConfig';
 import {
-  SCROLL_BEHAVIOR,
   SCROLL_TOP_ZERO,
   WINDOW_PROP_SCROLL_Y,
   NAV_TRANSFORM_HIDDEN,
@@ -17,7 +16,7 @@ import {
   MOCK_RECT_TOP,
   MOCK_RECT_HEIGHT,
 } from '../../config';
-import { AriaRole, HtmlAttr, HtmlTag, SectionId, WindowGlobal } from '../../types';
+import { AriaRole, HtmlAttr, HtmlTag, ScrollBehavior, SectionId, WindowGlobal } from '../../types';
 import { renderWithTheme } from '../../test-utils';
 
 const simulateScroll = (y: number) => {
@@ -60,7 +59,10 @@ describe('Navigation Component', () => {
     });
     expect(nameButton).toBeInTheDocument();
     fireEvent.click(nameButton);
-    expect(scrollToMock).toHaveBeenCalledWith({ top: SCROLL_TOP_ZERO, behavior: SCROLL_BEHAVIOR });
+    expect(scrollToMock).toHaveBeenCalledWith({
+      top: SCROLL_TOP_ZERO,
+      behavior: ScrollBehavior.Smooth,
+    });
   });
 
   it('renders profile image with src from translation', () => {

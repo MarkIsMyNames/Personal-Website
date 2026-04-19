@@ -33,7 +33,7 @@ export default [
   },
 
   {
-    files: ['src/**/*.{ts,tsx}'],
+    files: ['src/**/*.{ts,tsx}', 'e2e/**/*.ts'],
     languageOptions: {
       globals: {
         ...globals.browser,
@@ -41,7 +41,8 @@ export default [
         ...globals.node,
       },
       parserOptions: {
-        project: true,
+        project: ['./tsconfig.json'],
+        tsconfigRootDir: import.meta.dirname,
       },
     },
     plugins: {
@@ -154,8 +155,8 @@ export default [
     },
   },
   {
-    files: ['src/**/*.{ts,tsx}'],
-    ignores: ['src/styles/theme.ts'],
+    files: ['src/**/*.{ts,tsx}', 'e2e/**/*.ts'],
+    ignores: ['src/styles/theme.ts', 'src/types.ts'],
     rules: {
       'no-restricted-syntax': [
         'error',
@@ -256,6 +257,14 @@ export default [
           message: 'Bounding rect dimensions must be named constants in src/config.ts',
         },
         {
+          selector: 'ForStatement > VariableDeclaration > VariableDeclarator > Literal[value=0]',
+          message: 'Use FIRST_INDEX instead of a literal 0 in for loop initializers',
+        },
+        {
+          selector: 'Property[key.name="position"] > ObjectExpression > Property[key.name=/^(x|y)$/] > Literal[raw=/^[0-9]/]',
+          message: 'Click position coordinates must be named constants in src/config.ts',
+        },
+        {
           selector: 'CallExpression[callee.property.name=/^(add|remove)EventListener$/] > Literal',
           message: 'Use DomEvent constant instead of a string literal for event names',
         },
@@ -349,11 +358,47 @@ export default [
           selector: 'TemplateLiteral > TemplateElement[value.raw=/0x/]',
           message: 'Use HEX_PREFIX constant instead of a literal "0x" in template strings',
         },
+        {
+          selector: 'Literal[value=/^(img|alt|src|href|target|rel|tabindex|name|button|html|link|meta)$/]',
+          message: 'Use HtmlTag or HtmlAttr constants from src/types instead of bare HTML attribute/tag strings',
+        },
+        {
+          selector: 'CallExpression[callee.property.name="locator"] > Literal[raw=/^[\'\"]/]',
+          message: 'CSS selector strings in locator() must be named constants in src/config.ts',
+        },
+        {
+          selector: 'CallExpression[callee.property.name="press"] > Literal[raw=/^[\'\"]/]',
+          message: 'Use KeyCode constant from src/types instead of a string literal in keyboard.press()',
+        },
+        {
+          selector: 'CallExpression[callee.property.name="getByLabel"] > Literal[raw=/^[\'\"]/]',
+          message: 'Use defaultLocale aria label strings instead of a hardcoded string in getByLabel()',
+        },
+        {
+          selector: 'CallExpression[callee.property.name="goto"] > Literal[raw=/^[\'\"]/]',
+          message: 'Use ROOT_PATH, E2E_DEFAULT_LANG_PATH, or a named constant from src/config.ts instead of a string literal in goto()',
+        },
+        {
+          selector: 'CallExpression[callee.property.name="getByText"] > Literal[raw=/^[\'\"]/]',
+          message: 'Use defaultLocale text strings instead of a hardcoded string in getByText()',
+        },
+        {
+          selector: 'CallExpression[callee.property.name="toContainText"] > Literal[raw=/^[\'\"]/]',
+          message: 'Use defaultLocale text strings instead of a hardcoded string in toContainText()',
+        },
+        {
+          selector: 'CallExpression[callee.property.name="toHaveTitle"] > Literal',
+          message: 'Use new RegExp(defaultLocale.profile.name) instead of a hardcoded regex or string in toHaveTitle()',
+        },
+        {
+          selector: 'NewExpression[callee.name=/(Event|TouchEvent|MouseEvent|KeyboardEvent|CustomEvent)$/] > Literal[raw=/^[\'\"]/]',
+          message: 'Use DomEvent constant from src/types instead of a string literal for event type names',
+        },
       ],
     },
   },
   {
-    files: ['src/**/*.{ts,tsx}'],
+    files: ['src/**/*.{ts,tsx}', 'e2e/**/*.ts'],
     plugins: { sonarjs },
     rules: {
       'sonarjs/no-identical-functions': 'error',

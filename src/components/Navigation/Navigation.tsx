@@ -8,12 +8,11 @@ import {
   NavLinks,
   NavLink,
 } from './Navigation.styles';
-import { AriaRole, DomEvent, SectionId } from '../../types';
+import { AriaRole, DomEvent, ScrollBehavior, SectionId } from '../../types';
 import { useTranslation } from 'react-i18next';
 import {
   NAV_SCROLL_TOP_THRESHOLD,
   NAV_CLICK_SCROLL_LOCK_MS,
-  SCROLL_BEHAVIOR,
   FIRST_INDEX,
   SCROLL_TOP_ZERO,
 } from '../../config';
@@ -53,7 +52,7 @@ export function Navigation() {
     isNavClickScrollRef.current = true;
     window.scrollTo({
       top: element ? element.getBoundingClientRect().top + window.scrollY : SCROLL_TOP_ZERO,
-      behavior: SCROLL_BEHAVIOR,
+      behavior: ScrollBehavior.Smooth,
     });
     setTimeout(() => {
       isNavClickScrollRef.current = false;

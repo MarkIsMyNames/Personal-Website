@@ -1,13 +1,8 @@
 import { screen } from '@testing-library/react';
 import { Contact } from './Contact';
-import { AriaRole, HtmlAttr, ContactMethods } from '../../types';
+import { AriaRole, HtmlAttr, ContactMethods, LinkRel, LinkTarget } from '../../types';
 import { defaultLocale } from '../../i18n/localeConfig';
-import {
-  EXTERNAL_LINK_REL,
-  EXTERNAL_LINK_TARGET,
-  GITHUB_BASE_URL,
-  MAILTO_PREFIX,
-} from '../../config';
+import { GITHUB_BASE_URL, MAILTO_PREFIX } from '../../config';
 import { renderWithTheme } from '../../test-utils';
 
 const mockProfile = defaultLocale.profile;
@@ -24,7 +19,7 @@ describe('Contact Component', () => {
       defaultLocale.contact.ariaLabels.email.replace('{{email}}', mockProfile.email),
     );
     expect(emailLink).toHaveAttribute(HtmlAttr.Href, `${MAILTO_PREFIX}${mockProfile.email}`);
-    expect(emailLink).not.toHaveAttribute(HtmlAttr.Target, EXTERNAL_LINK_TARGET);
+    expect(emailLink).not.toHaveAttribute(HtmlAttr.Target, LinkTarget.Blank);
   });
 
   it('renders GitHub link with correct href and opens in new tab', () => {
@@ -33,8 +28,8 @@ describe('Contact Component', () => {
       defaultLocale.contact.ariaLabels.github.replace('{{username}}', mockProfile.github),
     );
     expect(githubLink).toHaveAttribute(HtmlAttr.Href, `${GITHUB_BASE_URL}${mockProfile.github}`);
-    expect(githubLink).toHaveAttribute(HtmlAttr.Target, EXTERNAL_LINK_TARGET);
-    expect(githubLink).toHaveAttribute(HtmlAttr.Rel, EXTERNAL_LINK_REL);
+    expect(githubLink).toHaveAttribute(HtmlAttr.Target, LinkTarget.Blank);
+    expect(githubLink).toHaveAttribute(HtmlAttr.Rel, LinkRel.NoopenerNoreferrer);
   });
 
   it('renders email and GitHub as visible text', () => {
