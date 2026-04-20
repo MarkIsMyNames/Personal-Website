@@ -66,13 +66,13 @@ The visual regression tests (`npm run test:storybook-visual`) start Storybook, r
 
 ### Approving visual changes
 
-When you intentionally change a component's appearance, the old baseline will no longer match. After verifying the new screenshots look correct, update the baselines:
+When you intentionally change a component's appearance, the PR visual test will fail. To approve the new look:
 
-```bash
-npm run test:storybook-visual:update
-```
+1. Review the diff images uploaded as artifacts in the failing CI run
+2. If the changes are correct, go to **Actions → Update Visual Baselines → Run workflow** on GitHub
+3. The workflow regenerates all baselines from the current `main` state and commits them
 
-This overwrites the stored snapshots with the new output. Commit the updated snapshots alongside your component changes so the new appearance becomes the accepted baseline.
+Until the baselines are updated, the visual tests will continue to fail on any PR that includes that component.
 
 ### How diffs are reported
 
