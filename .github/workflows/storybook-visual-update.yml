@@ -39,7 +39,7 @@ jobs:
 
       - name: Generate baseline snapshots
         run: |
-          npx serve storybook-static -p 6006 &
+          npm run serve-storybook &
           npx wait-on http://localhost:6006
           npm run test:storybook-visual:update
 

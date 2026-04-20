@@ -19,16 +19,18 @@ type StoriesIndex = {
   entries: Record<string, Story>;
 };
 
-test('Visual regression — all stories', async ({ page, request }) => {
+test('Visual regression — all stories', async ({ browser, request }) => {
   const response = await request.get(STORYBOOK_INDEX_PATH);
   const index = (await response.json()) as StoriesIndex;
   const stories = Object.values(index.entries).filter((s) => s.type === Typeof.Story);
 
   for (const story of stories) {
     await test.step(`${story.title} / ${story.name}`, async () => {
+      const page = await browser.newPage();
       await page.goto(`${STORYBOOK_IFRAME_PREFIX}${story.id}${STORYBOOK_IFRAME_SUFFIX}`);
       await page.waitForLoadState(STORYBOOK_LOAD_STATE);
       await expect.soft(page).toHaveScreenshot(`${story.id}${STORYBOOK_SNAPSHOT_EXT}`);
+      await page.close();
     });
   }
 });
