@@ -9,7 +9,7 @@ export enum TestErrorMessage {
   NoMultiImageProject = 'No multi-image projects found in the default locale',
   NoSingleImageProject = 'No single-image projects found in the default locale',
   NoSkillData = 'No skill data found in the default locale',
-  LocaleKeyNotFound = 'Locale key not found in default locale',
+  LocaleKeyNotFound = 'Locale key not found',
   EmailLinkNoBoundingBox = 'email link has no bounding box',
 }
 
