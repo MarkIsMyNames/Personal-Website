@@ -26,7 +26,7 @@ export const SkillsGrid = styled.div`
 export const SkillCard = styled.div`
   background: ${({ theme }) => theme.colors.cardBackground};
   border: 1px solid ${({ theme }) => theme.colors.border};
-  border-radius: 32px;
+  border-radius: 16px;
   padding: 2rem 1.5rem;
   display: flex;
   flex-direction: column;
