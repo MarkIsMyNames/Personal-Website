@@ -4,10 +4,11 @@ import { I18nextProvider, initReactI18next } from 'react-i18next';
 import i18n from 'i18next';
 import { theme } from '../src/styles/theme';
 import { GlobalStyles } from '../src/styles/Global.styles';
-import { DEFAULT_LANG, LOCALES } from '../src/i18n/localeConfig';
+import { DEFAULT_LANG, defaultLocale } from '../src/i18n/localeConfig';
+import { STORYBOOK_A11Y_TEST_MODE, STORYBOOK_BACKGROUND_DARK_NAME } from '../src/config';
 
 void i18n.use(initReactI18next).init({
-  resources: { [DEFAULT_LANG]: { translation: LOCALES[DEFAULT_LANG] } },
+  resources: { [DEFAULT_LANG]: { translation: defaultLocale } },
   lng: DEFAULT_LANG,
 });
 
@@ -23,10 +24,10 @@ export default {
   ],
   parameters: {
     a11y: {
-      test: 'error',
+      test: STORYBOOK_A11Y_TEST_MODE,
     },
     backgrounds: {
-      values: [{ name: 'dark', value: theme.colors.pageBackground }],
+      values: [{ name: STORYBOOK_BACKGROUND_DARK_NAME, value: theme.colors.pageBackground }],
     },
   },
   initialGlobals: {
