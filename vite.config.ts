@@ -40,13 +40,13 @@ export default defineConfig({
           globals: true,
           environment: 'jsdom',
           setupFiles: './src/setupTests.ts',
-          exclude: ['**/*.styles.test.{ts,tsx}', 'e2e/**', 'node_modules/**'],
+          exclude: ['**/*.styles.test.{ts,tsx}', 'e2e/**', 'storybook-tests/**', 'node_modules/**'],
         },
       },
       {
         plugins: [react(), storybookTest()],
         test: {
-          name: 'storybook',
+          name: 'accessibility-tests',
           browser: {
             enabled: true,
             headless: true,

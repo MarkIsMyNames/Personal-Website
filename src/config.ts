@@ -192,3 +192,10 @@ export const E2E_NAV_SCROLL_TEST_SUFFIX = 'section when nav link clicked';
 export const E2E_ROUTE_RENDERS_AT = 'renders page at';
 export const E2E_KEYBOARD_OPEN_TEST_PREFIX = 'is keyboard accessible — opens with';
 export const E2E_KEYBOARD_OPEN_TEST_SUFFIX = 'key';
+
+// Storybook visual tests
+export const STORYBOOK_INDEX_PATH = '/index.json';
+export const STORYBOOK_LOAD_STATE = 'networkidle';
+export const STORYBOOK_IFRAME_PREFIX = '/iframe.html?id=';
+export const STORYBOOK_IFRAME_SUFFIX = '&viewMode=story';
+export const STORYBOOK_SNAPSHOT_EXT = '.png';

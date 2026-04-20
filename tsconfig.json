@@ -41,5 +41,5 @@
     "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true
   },
-  "include": ["src", "scripts", ".storybook/**/*.ts", ".storybook/**/*.tsx", "e2e/**/*.ts", "playwright.config.ts"],
+  "include": ["src", "scripts", ".storybook/**/*.ts", ".storybook/**/*.tsx", "e2e/**/*.ts", "storybook-tests/**/*.ts", "playwright.config.ts", "playwright-storybook.config.ts"],
 }

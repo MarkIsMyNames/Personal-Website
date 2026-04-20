@@ -31,9 +31,8 @@ export default [
       },
     },
   },
-
   {
-    files: ['src/**/*.{ts,tsx}', 'e2e/**/*.ts'],
+    files: ['src/**/*.{ts,tsx}', 'e2e/**/*.ts', 'storybook-tests/**/*.ts'],
     languageOptions: {
       globals: {
         ...globals.browser,
@@ -155,7 +154,7 @@ export default [
     },
   },
   {
-    files: ['src/**/*.{ts,tsx}', 'e2e/**/*.ts'],
+    files: ['src/**/*.{ts,tsx}', 'e2e/**/*.ts', 'storybook-tests/**/*.ts'],
     ignores: ['src/styles/theme.ts', 'src/types.ts'],
     rules: {
       'no-restricted-syntax': [
@@ -398,7 +397,7 @@ export default [
     },
   },
   {
-    files: ['src/**/*.{ts,tsx}', 'e2e/**/*.ts'],
+    files: ['src/**/*.{ts,tsx}', 'e2e/**/*.ts', 'storybook-tests/**/*.ts'],
     plugins: { sonarjs },
     rules: {
       'sonarjs/no-identical-functions': 'error',
