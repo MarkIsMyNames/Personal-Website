@@ -7,6 +7,11 @@ export const GlobalStyles = createGlobalStyle`
     box-sizing: border-box;
   }
 
+  body * {
+    background-color: transparent;
+    color: inherit;
+  }
+
   body {
     background-color: ${({ theme }) => theme.colors.pageBackground};
     color: ${({ theme }) => theme.colors.textDefault};

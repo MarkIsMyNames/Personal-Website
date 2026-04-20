@@ -27,6 +27,7 @@
     "format:check": "prettier --check \"src/**/*.{ts,tsx,css,json}\" \"e2e/**/*.ts\"",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
+    "serve-storybook": "python3 -m http.server 6006 --directory storybook-static",
     "test-storybook": "VITEST_STORYBOOK=false vitest --project=accessibility-tests",
     "test:storybook-visual": "playwright test --config=playwright-storybook.config.ts",
     "test:storybook-visual:update": "playwright test --config=playwright-storybook.config.ts --update-snapshots",

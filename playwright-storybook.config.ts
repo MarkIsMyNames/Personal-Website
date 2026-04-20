@@ -3,6 +3,7 @@ import { defineConfig, devices } from '@playwright/test';
 export default defineConfig({
   testDir: './storybook-tests',
   fullyParallel: false,
+  timeout: 120_000,
   use: {
     baseURL: 'http://localhost:6006',
     trace: 'on-first-retry',

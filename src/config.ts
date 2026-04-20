@@ -199,3 +199,5 @@ export const STORYBOOK_LOAD_STATE = 'networkidle';
 export const STORYBOOK_IFRAME_PREFIX = '/iframe.html?id=';
 export const STORYBOOK_IFRAME_SUFFIX = '&viewMode=story';
 export const STORYBOOK_SNAPSHOT_EXT = '.png';
+export const STORYBOOK_A11Y_TEST_MODE = 'error';
+export const STORYBOOK_BACKGROUND_DARK_NAME = 'dark';
