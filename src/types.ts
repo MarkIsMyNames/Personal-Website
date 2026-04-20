@@ -99,6 +99,7 @@ export const ContactMethods = ['email', 'github'];
 export const Typeof = {
   Object: 'object',
   String: 'string',
+  Story: 'story',
 } as const;
 
 export const LinkRel = {

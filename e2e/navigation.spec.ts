@@ -25,11 +25,13 @@ test.describe('Navigation bar', () => {
       x: E2E_SCROLL.X,
       y: E2E_SCROLL.DOWN_Y,
     });
+    await page.waitForFunction((minY: number) => window.scrollY >= minY, E2E_SCROLL.TOP_THRESHOLD);
     await expect(nav).not.toBeInViewport();
     await page.evaluate(({ x, y }) => window.scrollTo(x, y), {
       x: E2E_SCROLL.X,
       y: E2E_SCROLL.MID_Y,
     });
+    await page.waitForFunction((maxY: number) => window.scrollY <= maxY, E2E_SCROLL.MID_Y);
     await expect(nav).toBeInViewport();
   });
 
