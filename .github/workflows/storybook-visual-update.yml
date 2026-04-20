@@ -1,7 +1,16 @@
 name: Update Visual Baselines
 
 on:
-  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - 'src/**'
+      - '.storybook/**'
+      - 'storybook-tests/**'
+      - 'public/**'
+      - 'package.json'
+      - 'package-lock.json'
 
 permissions:
   contents: write
