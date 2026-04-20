@@ -6,8 +6,8 @@ export enum ErrorMessage {
 
 export enum TestErrorMessage {
   NoBioSentence = 'No bio sentence found in the default locale',
-  NoMultiImageProject = 'No multi-image project found in the default locale',
-  NoSingleImageProject = 'No single-image project found in the default locale',
+  NoMultiImageProject = 'No multi-image projects found in the default locale',
+  NoSingleImageProject = 'No single-image projects found in the default locale',
   NoSkillData = 'No skill data found in the default locale',
   LocaleKeyNotFound = 'Locale key not found in default locale',
   EmailLinkNoBoundingBox = 'email link has no bounding box',

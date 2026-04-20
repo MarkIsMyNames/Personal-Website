@@ -1,0 +1,4 @@
+# Snapshot PNGs are managed exclusively by CI (storybook-visual-update workflow).
+# Always keep main's version when merging — requires merge.ours.driver=true in git config.
+# Run once locally: git config --global merge.ours.driver true
+storybook-tests/__snapshots__/*.png merge=ours
