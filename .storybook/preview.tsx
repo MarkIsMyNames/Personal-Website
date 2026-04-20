@@ -25,7 +25,9 @@ export default {
   parameters: {
     a11y: {
       test: STORYBOOK_A11Y_TEST_MODE,
-      options: { resultTypes: ['violations', 'incomplete'] },
+      config: {
+        rules: [{ id: 'color-contrast', reviewOnFail: false }],
+      },
     },
     backgrounds: {
       values: [{ name: STORYBOOK_BACKGROUND_DARK_NAME, value: theme.colors.pageBackground }],
