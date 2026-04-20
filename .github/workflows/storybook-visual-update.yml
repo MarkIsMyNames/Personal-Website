@@ -1,0 +1,52 @@
+name: Update Visual Baselines
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'src/**'
+      - '.storybook/**'
+      - 'storybook-tests/**'
+      - 'public/**'
+      - 'package.json'
+      - 'package-lock.json'
+
+permissions:
+  contents: write
+
+jobs:
+  update-baselines:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
+
+      - name: Build Storybook
+        run: npm run build-storybook
+
+      - name: Generate baseline snapshots
+        run: |
+          npx serve storybook-static -p 6006 &
+          npx wait-on http://localhost:6006
+          npm run test:storybook-visual:update
+
+      - name: Commit updated snapshots
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add storybook-tests/__snapshots__/
+          git diff --staged --quiet || git commit -m "chore: update visual regression baselines [skip ci]"
+          git push
