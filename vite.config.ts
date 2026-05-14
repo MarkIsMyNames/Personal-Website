@@ -45,9 +45,6 @@ export default defineConfig({
       },
       {
         plugins: [react(), storybookTest()],
-        optimizeDeps: {
-          include: ['axe-core'],
-        },
         test: {
           name: 'accessibility-tests',
           browser: {

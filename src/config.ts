@@ -201,5 +201,3 @@ export const STORYBOOK_IFRAME_SUFFIX = '&viewMode=story';
 export const STORYBOOK_SNAPSHOT_EXT = '.png';
 export const STORYBOOK_A11Y_TEST_MODE = 'error';
 export const STORYBOOK_BACKGROUND_DARK_NAME = 'dark';
-export const STORYBOOK_HOVER_SETTLE_MS = 350;
-export const VITEST_BROWSER_MODULE = 'vitest/browser' as const;
