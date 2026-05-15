@@ -119,6 +119,7 @@ export default [
       '@typescript-eslint/consistent-type-imports': ['error', { prefer: 'type-imports' }],
       '@typescript-eslint/consistent-type-exports': 'error',
       '@typescript-eslint/no-empty-function': 'error',
+      '@typescript-eslint/no-empty-object-type': ['error', { allowInterfaces: 'with-single-extends' }],
       '@typescript-eslint/dot-notation': 'error',
       '@typescript-eslint/naming-convention': [
         'error',
@@ -402,6 +403,183 @@ export default [
     rules: {
       'sonarjs/no-identical-functions': 'error',
       'sonarjs/no-duplicated-branches': 'error',
+    },
+  },
+  {
+    files: ['src/**/*.styles.tsx', 'src/styles/Global.styles.tsx', 'src/styles/App.styles.tsx', 'src/styles/Shared.styles.tsx'],
+    ignores: ['src/styles/theme.ts'],
+    rules: {
+      'no-restricted-syntax': [
+        'error',
+        {
+          selector: 'TemplateElement[value.raw=/font-size:\\s*[^\\s$]/]',
+          message: 'Use theme.text.fontSize.* instead of a raw font-size value',
+        },
+        {
+          selector: 'TemplateElement[value.raw=/font-weight:\\s*[^\\s$]/]',
+          message: 'Use theme.text.fontWeight.* instead of a raw font-weight value',
+        },
+        {
+          selector: 'TemplateElement[value.raw=/font-family:\\s*[^\\s$]/]',
+          message: 'Use theme.fonts.* instead of a raw font-family value',
+        },
+        {
+          selector: 'TemplateElement[value.raw=/font-style:\\s*[^\\s$]/]',
+          message: 'Use theme.cssValues.fontStyle.* instead of a raw font-style value',
+        },
+        {
+          selector: 'TemplateElement[value.raw=/line-height:\\s*[^\\s$]/]',
+          message: 'Use theme.text.lineHeight.* instead of a raw line-height value',
+        },
+        {
+          selector: 'TemplateElement[value.raw=/text-align:\\s*[^\\s$]/]',
+          message: 'Use theme.cssValues.textAlign.* instead of a raw text-align value',
+        },
+        {
+          selector: 'TemplateElement[value.raw=/text-decoration:\\s*[^\\s$]/]',
+          message: 'Use theme.cssValues.textDecoration.* instead of a raw text-decoration value',
+        },
+        {
+          selector: 'TemplateElement[value.raw=/border-radius:\\s*[^\\s$]/]',
+          message: 'Use theme.borderRadius.* instead of a raw border-radius value',
+        },
+        {
+          selector: 'TemplateElement[value.raw=/(?<![a-z-])border:\\s*[^\\s$]/]',
+          message: 'Use theme.borders.* instead of a raw border value',
+        },
+        {
+          selector: 'TemplateElement[value.raw=/z-index:\\s*[^\\s$]/]',
+          message: 'Use theme.zIndex.* instead of a raw z-index value',
+        },
+        {
+          selector: 'TemplateElement[value.raw=/transition:\\s*[^\\s$]/]',
+          message: 'Use theme.transitions.* instead of a raw transition value',
+        },
+        {
+          selector: 'TemplateElement[value.raw=/display:\\s*[^\\s$]/]',
+          message: 'Use theme.cssValues.display.* instead of a raw display value',
+        },
+        {
+          selector: 'TemplateElement[value.raw=/align-items:\\s*[^\\s$]/]',
+          message: 'Use theme.cssValues.alignItems.* instead of a raw align-items value',
+        },
+        {
+          selector: 'TemplateElement[value.raw=/justify-content:\\s*[^\\s$]/]',
+          message: 'Use theme.cssValues.justifyContent.* instead of a raw justify-content value',
+        },
+        {
+          selector: 'TemplateElement[value.raw=/flex-direction:\\s*[^\\s$]/]',
+          message: 'Use theme.cssValues.flexDirection.* instead of a raw flex-direction value',
+        },
+        {
+          selector: 'TemplateElement[value.raw=/flex-wrap:\\s*[^\\s$]/]',
+          message: 'Use theme.cssValues.flexWrap.* instead of a raw flex-wrap value',
+        },
+        {
+          selector: 'TemplateElement[value.raw=/(?<![a-z-])position:\\s*[^\\s$]/]',
+          message: 'Use theme.cssValues.position.* instead of a raw position value',
+        },
+        {
+          selector: 'TemplateElement[value.raw=/cursor:\\s*[^\\s$]/]',
+          message: 'Use theme.cssValues.cursor.* instead of a raw cursor value',
+        },
+        {
+          selector: 'TemplateElement[value.raw=/user-select:\\s*[^\\s$]/]',
+          message: 'Use theme.cssValues.userSelect.* instead of a raw user-select value',
+        },
+        {
+          selector: 'TemplateElement[value.raw=/touch-action:\\s*[^\\s$]/]',
+          message: 'Use theme.cssValues.touchAction.* instead of a raw touch-action value',
+        },
+        {
+          selector: 'TemplateElement[value.raw=/overflow(?:-x)?:\\s*[^\\s$]/]',
+          message: 'Use theme.cssValues.overflow.* instead of a raw overflow value',
+        },
+        {
+          selector: 'TemplateElement[value.raw=/object-fit:\\s*[^\\s$]/]',
+          message: 'Use theme.cssValues.objectFit.* instead of a raw object-fit value',
+        },
+        {
+          selector: 'TemplateElement[value.raw=/(?<![a-z-])opacity:\\s*[^\\s$]/]',
+          message: 'Use theme.cssValues.opacity.* instead of a raw opacity value',
+        },
+        {
+          selector: 'TemplateElement[value.raw=/backdrop-filter:\\s*[^\\s$]/]',
+          message: 'Use theme.cssValues.backdropFilter.* instead of a raw backdrop-filter value',
+        },
+        {
+          selector: 'TemplateElement[value.raw=/-webkit-font-smoothing:\\s*[^\\s$]/]',
+          message: 'Use theme.cssValues.fontSmoothing.antialiased instead of a raw -webkit-font-smoothing value',
+        },
+        {
+          selector: 'TemplateElement[value.raw=/-moz-osx-font-smoothing:\\s*[^\\s$]/]',
+          message: 'Use theme.cssValues.fontSmoothing.grayscale instead of a raw -moz-osx-font-smoothing value',
+        },
+        {
+          selector: 'TemplateElement[value.raw=/-webkit-background-clip:\\s*[^\\s$]/]',
+          message: 'Use gradientTextMixin from Shared.styles instead of raw -webkit-background-clip',
+        },
+        {
+          selector: 'TemplateElement[value.raw=/-webkit-text-fill-color:\\s*[^\\s$]/]',
+          message: 'Use gradientTextMixin from Shared.styles instead of raw -webkit-text-fill-color',
+        },
+        {
+          selector: 'TemplateElement[value.raw=/background-clip:\\s*[^\\s$]/]',
+          message: 'Use gradientTextMixin from Shared.styles instead of raw background-clip',
+        },
+        {
+          selector: 'TemplateElement[value.raw=/box-sizing:\\s*[^\\s$]/]',
+          message: 'Use theme.cssValues.boxSizing.* instead of a raw box-sizing value',
+        },
+        {
+          selector: 'TemplateElement[value.raw=/list-style:\\s*[^\\s$]/]',
+          message: 'Use theme.cssValues.listStyle.* instead of a raw list-style value',
+        },
+        {
+          selector: 'TemplateElement[value.raw=/scroll-snap-type:\\s*[^\\s$]/]',
+          message: 'Use theme.cssValues.scrollSnap.* instead of a raw scroll-snap-type value',
+        },
+        {
+          selector: 'TemplateElement[value.raw=/scrollbar-width:\\s*[^\\s$]/]',
+          message: 'Use theme.cssValues.scrollbarWidth.* instead of a raw scrollbar-width value',
+        },
+        {
+          selector: 'TemplateElement[value.raw=/-webkit-overflow-scrolling:\\s*[^\\s$]/]',
+          message: 'Use theme.cssValues.overflowScrolling.* instead of a raw -webkit-overflow-scrolling value',
+        },
+        {
+          selector: 'TemplateElement[value.raw=/(?<![a-z-])width:\\s*[^\\s$]/]',
+          message: 'Use theme.sizes.* or theme.cssValues.width.* instead of a raw width value',
+        },
+        {
+          selector: 'TemplateElement[value.raw=/(?<![a-z-])height:\\s*[^\\s$]/]',
+          message: 'Use theme.sizes.* instead of a raw height value',
+        },
+        {
+          selector: 'TemplateElement[value.raw=/max-width:\\s*[^\\s$]/]',
+          message: 'Use theme.sizes.* instead of a raw max-width value',
+        },
+        {
+          selector: 'TemplateElement[value.raw=/max-height:\\s*[^\\s$]/]',
+          message: 'Use theme.sizes.* instead of a raw max-height value',
+        },
+        {
+          selector: 'TemplateElement[value.raw=/min-height:\\s*[^\\s$]/]',
+          message: 'Use theme.sizes.* instead of a raw min-height value',
+        },
+        {
+          selector: 'TemplateElement[value.raw=/(?<![a-z-])padding(?:-top|-bottom|-left|-right)?:\\s*[^\\s$]/]',
+          message: 'Use theme.spacing.* instead of a raw padding value',
+        },
+        {
+          selector: 'TemplateElement[value.raw=/(?<![a-z-])margin(?:-top|-bottom|-left|-right)?:\\s*[^\\s$]/]',
+          message: 'Use theme.spacing.* instead of a raw margin value',
+        },
+        {
+          selector: 'TemplateElement[value.raw=/(?<![a-z-])gap:\\s*[^\\s$]/]',
+          message: 'Use theme.spacing.* instead of a raw gap value',
+        },
+      ],
     },
   },
   ...storybook.configs["flat/recommended"],

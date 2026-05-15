@@ -9,8 +9,6 @@ export const SCROLL_TOP_ZERO = 0;
 export const SWIPE_THRESHOLD_PX = 50;
 
 // Icons
-export const SKILL_ICON_SIZE = 50;
-export const CONTACT_ICON_SIZE = 24;
 export const ICON_EMAIL = 'FaEnvelope';
 export const ICON_GITHUB = 'FaGithub';
 

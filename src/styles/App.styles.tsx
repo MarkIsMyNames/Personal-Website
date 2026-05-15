@@ -1,12 +1,14 @@
 import styled from 'styled-components';
 
 export const AppContainer = styled.main`
-  min-height: 100vh;
-  max-width: 1240px;
-  margin: auto;
-  padding: 3rem 1rem 2rem;
+  min-height: ${({ theme }) => theme.sizes.screenHeight};
+  max-width: ${({ theme }) => theme.sizes.appMaxWidth};
+  margin: ${({ theme }) => theme.cssValues.margin.auto};
+  padding: ${({ theme }) => theme.spacing.spacious} ${({ theme }) => theme.spacing.standard}
+    ${({ theme }) => theme.spacing.relaxed};
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    padding: 5rem 1rem 1rem;
+    padding: ${({ theme }) => theme.spacing.navOffset} ${({ theme }) => theme.spacing.standard}
+      ${({ theme }) => theme.spacing.standard};
   }
 `;
