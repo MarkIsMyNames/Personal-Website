@@ -6,7 +6,7 @@ export const Nav = styled.nav<{ $isVisible: boolean }>`
   top: ${({ theme }) => theme.cssValues.inset.zero};
   width: ${({ theme }) => theme.cssValues.width.full};
   border-bottom: ${({ theme }) => theme.borders.standard};
-  padding: ${({ theme }) => theme.spacing.comfortable} ${({ theme }) => theme.spacing.relaxed};
+  padding: ${({ theme }) => theme.spacing.standard} ${({ theme }) => theme.spacing.relaxed};
   z-index: ${({ theme }) => theme.zIndex.nav};
   backdrop-filter: ${({ theme }) => theme.cssValues.backdropFilter.navBlur};
   background: ${({ theme }) => theme.colors.navBackground};
