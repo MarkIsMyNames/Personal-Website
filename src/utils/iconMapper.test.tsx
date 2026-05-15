@@ -1,5 +1,6 @@
 import { render } from '@testing-library/react';
-import { UNKNOWN_ICON_NAME, CONTACT_ICON_SIZE } from '../config';
+import { UNKNOWN_ICON_NAME } from '../config';
+import { theme } from '../styles/theme';
 import { HtmlTag, ErrorMessage } from '../types';
 import { Icon, iconMap } from './iconMapper';
 
@@ -9,7 +10,7 @@ describe('iconMapper', () => {
   it.each(knownIconNames)('renders %s icon', (iconName) => {
     const { container } = render(
       <Icon
-        size={CONTACT_ICON_SIZE}
+        size={theme.sizes.contactIcon}
         iconName={iconName}
       />,
     );
@@ -20,7 +21,7 @@ describe('iconMapper', () => {
     expect(() =>
       render(
         <Icon
-          size={CONTACT_ICON_SIZE}
+          size={theme.sizes.contactIcon}
           iconName={UNKNOWN_ICON_NAME}
         />,
       ),

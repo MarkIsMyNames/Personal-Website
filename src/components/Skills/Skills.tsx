@@ -3,7 +3,7 @@ import { Icon } from '../../utils/iconMapper';
 import { SectionTitle } from '../../styles/Shared.styles';
 import { SkillsSection, SkillsGrid, SkillCard, SkillName } from './Skills.styles';
 import { useTranslation } from 'react-i18next';
-import { SKILL_ICON_SIZE } from '../../config';
+import { useTheme } from 'styled-components';
 
 type SkillsProps = {
   skills: Skill[];
@@ -11,6 +11,7 @@ type SkillsProps = {
 
 export function Skills({ skills }: SkillsProps) {
   const { t } = useTranslation();
+  const theme = useTheme();
 
   return (
     <SkillsSection
@@ -29,7 +30,7 @@ export function Skills({ skills }: SkillsProps) {
           >
             <Icon
               iconName={skill.iconName}
-              size={SKILL_ICON_SIZE}
+              size={theme.sizes.skillIcon}
             />
             <SkillName>{skill.name}</SkillName>
           </SkillCard>

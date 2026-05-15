@@ -1,111 +1,111 @@
 import styled from 'styled-components';
 
 export const ModalOverlay = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.9);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-  touch-action: none;
+  position: ${({ theme }) => theme.cssValues.position.fixed};
+  top: ${({ theme }) => theme.cssValues.inset.zero};
+  left: ${({ theme }) => theme.cssValues.inset.zero};
+  right: ${({ theme }) => theme.cssValues.inset.zero};
+  bottom: ${({ theme }) => theme.cssValues.inset.zero};
+  background: ${({ theme }) => theme.colors.modalOverlay};
+  display: ${({ theme }) => theme.cssValues.display.flex};
+  justify-content: ${({ theme }) => theme.cssValues.justifyContent.center};
+  align-items: ${({ theme }) => theme.cssValues.alignItems.center};
+  z-index: ${({ theme }) => theme.zIndex.modalBackdrop};
+  touch-action: ${({ theme }) => theme.cssValues.touchAction.none};
 `;
 
 export const ModalImage = styled.img`
-  width: 75vw;
-  height: 75vh;
-  object-fit: contain;
-  animation: zoomIn 0.3s ease;
+  width: ${({ theme }) => theme.sizes.modalImageWidth};
+  height: ${({ theme }) => theme.sizes.modalImageHeight};
+  object-fit: ${({ theme }) => theme.cssValues.objectFit.contain};
+  animation: ${({ theme }) => theme.animations.zoomIn};
 
   @keyframes zoomIn {
     from {
-      transform: scale(0.8);
-      opacity: 0;
+      transform: scale(${({ theme }) => theme.animations.scaleFrom});
+      opacity: ${({ theme }) => theme.cssValues.opacity.zero};
     }
     to {
-      transform: scale(1);
-      opacity: 1;
+      transform: ${({ theme }) => theme.transforms.scaleIdentity};
+      opacity: ${({ theme }) => theme.cssValues.opacity.full};
     }
   }
 `;
 
 export const CloseButton = styled.button`
-  position: absolute;
-  top: 2rem;
-  right: 2rem;
+  position: ${({ theme }) => theme.cssValues.position.absolute};
+  top: ${({ theme }) => theme.spacing.relaxed};
+  right: ${({ theme }) => theme.spacing.relaxed};
   background: ${({ theme }) => theme.colors.cardBackground};
-  border: 2px solid ${({ theme }) => theme.colors.border};
+  border: ${({ theme }) => theme.borders.standard};
   color: ${({ theme }) => theme.colors.textDefault};
-  width: 3rem;
-  height: 3rem;
-  border-radius: 50%;
-  font-size: 1.5rem;
-  cursor: pointer;
-  z-index: 1001;
-  transition: all 0.3s ease;
+  width: ${({ theme }) => theme.sizes.closeButton};
+  height: ${({ theme }) => theme.sizes.closeButton};
+  border-radius: ${({ theme }) => theme.borderRadius.circle};
+  font-size: ${({ theme }) => theme.text.fontSize.subheading};
+  cursor: ${({ theme }) => theme.cssValues.cursor.pointer};
+  z-index: ${({ theme }) => theme.zIndex.modalContent};
+  transition: ${({ theme }) => theme.transitions.hoverAll};
 
   &:hover {
     background: ${({ theme }) => theme.colors.accentHighlight};
     border-color: ${({ theme }) => theme.colors.accentHighlight};
-    transform: rotate(90deg);
+    transform: ${({ theme }) => theme.transforms.rotateClose};
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    top: 1rem;
-    right: 1rem;
-    width: 2.5rem;
-    height: 2.5rem;
-    font-size: 1.25rem;
+    top: ${({ theme }) => theme.spacing.standard};
+    right: ${({ theme }) => theme.spacing.standard};
+    width: ${({ theme }) => theme.sizes.closeButtonMobile};
+    height: ${({ theme }) => theme.sizes.closeButtonMobile};
+    font-size: ${({ theme }) => theme.text.fontSize.leadText};
   }
 `;
 
 export const NavigationButton = styled.button`
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
+  position: ${({ theme }) => theme.cssValues.position.absolute};
+  top: ${({ theme }) => theme.cssValues.inset.half};
+  transform: ${({ theme }) => theme.transforms.centerVertical};
   background: ${({ theme }) => theme.colors.cardBackground};
-  border: 2px solid ${({ theme }) => theme.colors.border};
+  border: ${({ theme }) => theme.borders.standard};
   color: ${({ theme }) => theme.colors.textDefault};
-  width: 3.5rem;
-  height: 3.5rem;
-  border-radius: 50%;
-  font-size: 2.5rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  padding-bottom: 0.3rem;
-  font-family: Arial, sans-serif;
-  font-weight: 300;
-  z-index: 1001;
+  width: ${({ theme }) => theme.sizes.navButton};
+  height: ${({ theme }) => theme.sizes.navButton};
+  border-radius: ${({ theme }) => theme.borderRadius.circle};
+  font-size: ${({ theme }) => theme.text.fontSize.sectionTitle};
+  cursor: ${({ theme }) => theme.cssValues.cursor.pointer};
+  transition: ${({ theme }) => theme.transitions.hoverAll};
+  padding-bottom: ${({ theme }) => theme.spacing.micro};
+  font-family: ${({ theme }) => theme.fonts.fallback};
+  font-weight: ${({ theme }) => theme.text.fontWeight.light};
+  z-index: ${({ theme }) => theme.zIndex.modalContent};
 
   &:hover {
     background: ${({ theme }) => theme.colors.accentHighlight};
     border-color: ${({ theme }) => theme.colors.accentHighlight};
-    transform: translateY(-50%) scale(1.1);
+    transform: ${({ theme }) => theme.transforms.centerVerticalScaleUp};
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    width: 3rem;
-    height: 3rem;
-    font-size: 2rem;
-    padding-bottom: 0.15rem;
+    width: ${({ theme }) => theme.sizes.navButtonMobile};
+    height: ${({ theme }) => theme.sizes.navButtonMobile};
+    font-size: ${({ theme }) => theme.text.fontSize.pageHeading};
+    padding-bottom: ${({ theme }) => theme.spacing.linkUnderlinePadding};
   }
 `;
 
 export const NavigationButtonLeft = styled(NavigationButton)`
-  left: 2rem;
+  left: ${({ theme }) => theme.spacing.relaxed};
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    left: 1rem;
+    left: ${({ theme }) => theme.spacing.standard};
   }
 `;
 
 export const NavigationButtonRight = styled(NavigationButton)`
-  right: 2rem;
+  right: ${({ theme }) => theme.spacing.relaxed};
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    right: 1rem;
+    right: ${({ theme }) => theme.spacing.standard};
   }
 `;

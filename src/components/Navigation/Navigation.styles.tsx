@@ -1,122 +1,123 @@
 import styled from 'styled-components';
+import { gradientTextMixin } from '../../styles/Shared.styles';
 
 export const Nav = styled.nav<{ $isVisible: boolean }>`
-  position: fixed;
-  top: 0;
-  width: 100%;
-  border-bottom: 2px solid ${({ theme }) => theme.colors.border};
-  padding: 1.25rem 2rem;
-  z-index: 100;
-  backdrop-filter: blur(12px);
-  background: ${({ theme }) => theme.colors.pageBackground}f0;
+  position: ${({ theme }) => theme.cssValues.position.fixed};
+  top: ${({ theme }) => theme.cssValues.inset.zero};
+  width: ${({ theme }) => theme.cssValues.width.full};
+  border-bottom: ${({ theme }) => theme.borders.standard};
+  padding: ${({ theme }) => theme.spacing.standard} ${({ theme }) => theme.spacing.relaxed};
+  z-index: ${({ theme }) => theme.zIndex.nav};
+  backdrop-filter: ${({ theme }) => theme.cssValues.backdropFilter.navBlur};
+  background: ${({ theme }) => theme.colors.navBackground};
   box-shadow: ${({ theme }) => theme.shadows.small};
-  transform: translateY(${({ $isVisible }) => ($isVisible ? '0' : '-100%')});
-  transition: transform 0.3s ease-in-out;
+  transform: ${({ $isVisible, theme }) =>
+    $isVisible ? theme.transforms.navVisible : theme.transforms.navHidden};
+  transition: ${({ theme }) => theme.transitions.navSlide};
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    padding: 1rem 1.5rem;
+    padding: ${({ theme }) => theme.spacing.standard} ${({ theme }) => theme.spacing.comfortable};
   }
 `;
 
 export const NavContainer = styled.div`
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 0 2rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  max-width: ${({ theme }) => theme.sizes.navMaxWidth};
+  margin: ${({ theme }) => theme.cssValues.inset.zero} ${({ theme }) => theme.cssValues.margin.auto};
+  padding: ${({ theme }) => theme.cssValues.inset.zero} ${({ theme }) => theme.spacing.relaxed};
+  display: ${({ theme }) => theme.cssValues.display.flex};
+  justify-content: ${({ theme }) => theme.cssValues.justifyContent.spaceBetween};
+  align-items: ${({ theme }) => theme.cssValues.alignItems.center};
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    padding: 0 1rem;
-    justify-content: center;
+    padding: ${({ theme }) => theme.cssValues.inset.zero} ${({ theme }) => theme.spacing.standard};
+    justify-content: ${({ theme }) => theme.cssValues.justifyContent.center};
   }
 `;
 
 export const NavBrandContainer = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  cursor: pointer;
-  transition: transform 0.2s ease;
+  display: ${({ theme }) => theme.cssValues.display.flex};
+  align-items: ${({ theme }) => theme.cssValues.alignItems.center};
+  gap: ${({ theme }) => theme.spacing.tight};
+  cursor: ${({ theme }) => theme.cssValues.cursor.pointer};
+  transition: ${({ theme }) => theme.transitions.buttonScale};
 
   &:hover {
-    transform: scale(1.05);
+    transform: ${({ theme }) => theme.transforms.hoverScale};
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    display: none;
+    display: ${({ theme }) => theme.cssValues.display.none};
   }
 `;
 
 export const NavProfileImage = styled.img`
-  width: 2.5rem;
-  height: 2.5rem;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 2px solid ${({ theme }) => theme.colors.accentHighlight};
+  width: ${({ theme }) => theme.sizes.navProfileImage};
+  height: ${({ theme }) => theme.sizes.navProfileImage};
+  border-radius: ${({ theme }) => theme.borderRadius.circle};
+  object-fit: ${({ theme }) => theme.cssValues.objectFit.cover};
+  border: ${({ theme }) => theme.borders.standardAccent};
 `;
 
 export const NavBrand = styled.div`
-  font-size: 1.75rem;
-  font-weight: 700;
+  font-size: ${({ theme }) => theme.text.fontSize.cardHeading};
+  font-weight: ${({ theme }) => theme.text.fontWeight.bold};
   background: ${({ theme }) => theme.gradients.accent};
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  ${gradientTextMixin}
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    font-size: 1.35rem;
+    font-size: ${({ theme }) => theme.text.fontSize.cardTitle};
   }
 `;
 
 export const NavLinks = styled.div`
-  display: flex;
-  gap: 2.5rem;
-  align-items: center;
-  padding-right: 1rem;
+  display: ${({ theme }) => theme.cssValues.display.flex};
+  gap: ${({ theme }) => theme.spacing.navLinkGap};
+  align-items: ${({ theme }) => theme.cssValues.alignItems.center};
+  padding-right: ${({ theme }) => theme.spacing.standard};
 
   @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
-    gap: 1.75rem;
-    padding-right: 0.5rem;
+    gap: ${({ theme }) => theme.spacing.navLinkGapTablet};
+    padding-right: ${({ theme }) => theme.spacing.compact};
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    gap: 1.25rem;
-    padding-right: 0;
+    gap: ${({ theme }) => theme.spacing.navLinkGapMobile};
+    padding-right: ${({ theme }) => theme.cssValues.inset.zero};
   }
 `;
 
 export const NavLink = styled.a`
   color: ${({ theme }) => theme.colors.textDefault};
-  text-decoration: none;
-  font-size: 1.15rem;
-  font-weight: 600;
-  transition: color 0.3s ease;
-  cursor: pointer;
-  position: relative;
-  padding: 0.25rem 0;
-  display: inline-block;
+  text-decoration: ${({ theme }) => theme.cssValues.textDecoration.none};
+  font-size: ${({ theme }) => theme.text.fontSize.navLink};
+  font-weight: ${({ theme }) => theme.text.fontWeight.semiBold};
+  transition: ${({ theme }) => theme.transitions.hoverColor};
+  cursor: ${({ theme }) => theme.cssValues.cursor.pointer};
+  position: ${({ theme }) => theme.cssValues.position.relative};
+  padding: ${({ theme }) => theme.spacing.linkUnderlinePadding}
+    ${({ theme }) => theme.cssValues.inset.zero};
+  display: ${({ theme }) => theme.cssValues.display.inlineBlock};
 
   &::after {
-    content: '';
-    position: absolute;
-    bottom: -2px;
-    left: 0;
-    width: 0;
-    height: 2px;
+    content: ${({ theme }) => theme.cssValues.content.empty};
+    position: ${({ theme }) => theme.cssValues.position.absolute};
+    bottom: ${({ theme }) => theme.sizes.navLinkUnderlineOffset};
+    left: ${({ theme }) => theme.cssValues.inset.zero};
+    width: ${({ theme }) => theme.cssValues.width.zero};
+    height: ${({ theme }) => theme.sizes.navLinkUnderlineHeight};
     background: ${({ theme }) => theme.gradients.accent};
-    transition: width 0.3s ease;
+    transition: ${({ theme }) => theme.transitions.hoverWidth};
   }
 
   &:hover {
     color: ${({ theme }) => theme.colors.accentHighlight};
 
     &::after {
-      width: 100%;
+      width: ${({ theme }) => theme.cssValues.width.full};
     }
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    font-size: 1.05rem;
+    font-size: ${({ theme }) => theme.text.fontSize.bodyMedium};
   }
 `;

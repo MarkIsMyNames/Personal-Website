@@ -3,13 +3,8 @@ import { Icon } from '../../utils/iconMapper';
 import { SectionTitle } from '../../styles/Shared.styles';
 import { ContactSection, ContactLinks, ContactItem, ContactLink } from './Contact.styles';
 import { useTranslation } from 'react-i18next';
-import {
-  CONTACT_ICON_SIZE,
-  GITHUB_BASE_URL,
-  MAILTO_PREFIX,
-  ICON_EMAIL,
-  ICON_GITHUB,
-} from '../../config';
+import { useTheme } from 'styled-components';
+import { GITHUB_BASE_URL, MAILTO_PREFIX, ICON_EMAIL, ICON_GITHUB } from '../../config';
 
 type ContactProps = {
   profile: Profile;
@@ -17,6 +12,7 @@ type ContactProps = {
 
 export function Contact({ profile }: ContactProps) {
   const { t } = useTranslation();
+  const theme = useTheme();
   return (
     <ContactSection
       aria-label={t('common.ariaLabels.section', { title: t('navigation.sections.contact') })}
@@ -30,7 +26,7 @@ export function Contact({ profile }: ContactProps) {
           >
             <Icon
               iconName={ICON_EMAIL}
-              size={CONTACT_ICON_SIZE}
+              size={theme.sizes.contactIcon}
             />
             <span>{profile.email}</span>
           </ContactLink>
@@ -44,7 +40,7 @@ export function Contact({ profile }: ContactProps) {
           >
             <Icon
               iconName={ICON_GITHUB}
-              size={CONTACT_ICON_SIZE}
+              size={theme.sizes.contactIcon}
             />
             <span>{t('contact.githubUrl', { username: profile.github })}</span>
           </ContactLink>

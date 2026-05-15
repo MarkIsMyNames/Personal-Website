@@ -1,67 +1,67 @@
 import styled from 'styled-components';
 
 export const SkillsSection = styled.section`
-  padding-bottom: 3.5rem;
+  padding-bottom: ${({ theme }) => theme.spacing.sectionLarge};
 `;
 
 export const SkillsGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-auto-rows: 1fr;
-  gap: 2rem;
-  max-width: 1000px;
-  margin: 0 auto;
+  display: ${({ theme }) => theme.cssValues.display.grid};
+  grid-template-columns: ${({ theme }) => theme.grid.cols4};
+  grid-auto-rows: ${({ theme }) => theme.grid.autoRows1fr};
+  gap: ${({ theme }) => theme.spacing.relaxed};
+  max-width: ${({ theme }) => theme.sizes.skillsGridMaxWidth};
+  margin: ${({ theme }) => theme.cssValues.inset.zero} ${({ theme }) => theme.cssValues.margin.auto};
 
   @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem;
+    grid-template-columns: ${({ theme }) => theme.grid.cols3};
+    gap: ${({ theme }) => theme.spacing.comfortable};
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
+    grid-template-columns: ${({ theme }) => theme.grid.cols2};
+    gap: ${({ theme }) => theme.spacing.standard};
   }
 `;
 
 export const SkillCard = styled.div`
   background: ${({ theme }) => theme.colors.cardBackground};
-  border: 1px solid ${({ theme }) => theme.colors.border};
-  border-radius: 16px;
-  padding: 2rem 1.5rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
-  transition: all 0.3s ease;
+  border: ${({ theme }) => theme.borders.thin};
+  border-radius: ${({ theme }) => theme.borderRadius.card};
+  padding: ${({ theme }) => theme.spacing.relaxed} ${({ theme }) => theme.spacing.comfortable};
+  display: ${({ theme }) => theme.cssValues.display.flex};
+  flex-direction: ${({ theme }) => theme.cssValues.flexDirection.column};
+  align-items: ${({ theme }) => theme.cssValues.alignItems.center};
+  gap: ${({ theme }) => theme.spacing.standard};
+  transition: ${({ theme }) => theme.transitions.hoverAll};
   box-shadow: ${({ theme }) => theme.shadows.small};
   color: ${({ theme }) => theme.colors.textDefault};
 
   &:hover {
-    transform: translateY(-5px);
+    transform: ${({ theme }) => theme.transforms.liftMedium};
     border-color: ${({ theme }) => theme.colors.accentHighlight};
     box-shadow: ${({ theme }) => theme.shadows.large};
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
-    padding: 1.5rem 1rem;
+    padding: ${({ theme }) => theme.spacing.comfortable} ${({ theme }) => theme.spacing.standard};
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    padding: 1.25rem 0.75rem;
-    gap: 0.75rem;
+    padding: ${({ theme }) => theme.spacing.comfortable} ${({ theme }) => theme.spacing.tight};
+    gap: ${({ theme }) => theme.spacing.tight};
   }
 `;
 
 export const SkillName = styled.span`
-  font-size: 1.1rem;
-  font-weight: 500;
-  text-align: center;
+  font-size: ${({ theme }) => theme.text.fontSize.bodyLarge};
+  font-weight: ${({ theme }) => theme.text.fontWeight.medium};
+  text-align: ${({ theme }) => theme.cssValues.textAlign.center};
 
   @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
-    font-size: 1rem;
+    font-size: ${({ theme }) => theme.text.fontSize.bodyMedium};
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    font-size: 0.9rem;
+    font-size: ${({ theme }) => theme.text.fontSize.bodySmall};
   }
 `;

@@ -1,162 +1,164 @@
 import styled from 'styled-components';
 
 export const ProjectsSection = styled.section`
-  padding-bottom: 2rem;
+  padding-bottom: ${({ theme }) => theme.spacing.relaxed};
 `;
 
 export const ProjectsContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 3rem;
+  display: ${({ theme }) => theme.cssValues.display.flex};
+  flex-direction: ${({ theme }) => theme.cssValues.flexDirection.column};
+  gap: ${({ theme }) => theme.spacing.spacious};
 `;
 
 export const ProjectCard = styled.div`
   background: ${({ theme }) => theme.colors.sectionBackground};
-  border: 1px solid ${({ theme }) => theme.colors.border};
-  border-radius: 16px;
+  border: ${({ theme }) => theme.borders.thin};
+  border-radius: ${({ theme }) => theme.borderRadius.card};
   box-shadow: ${({ theme }) => theme.shadows.large};
 `;
 
 export const ProjectImages = styled.div<{ $isSingle: boolean }>`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 1rem;
-  padding: ${({ $isSingle }) => ($isSingle ? '3rem 2rem' : '2rem')};
+  display: ${({ theme }) => theme.cssValues.display.flex};
+  justify-content: ${({ theme }) => theme.cssValues.justifyContent.center};
+  align-items: ${({ theme }) => theme.cssValues.alignItems.center};
+  gap: ${({ theme }) => theme.spacing.standard};
+  padding: ${({ $isSingle, theme }) =>
+    $isSingle ? `${theme.spacing.spacious} ${theme.spacing.relaxed}` : theme.spacing.relaxed};
   background: ${({ theme }) => theme.colors.cardBackground};
-  overflow-x: auto;
+  overflow-x: ${({ theme }) => theme.cssValues.overflow.auto};
 
   @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
-    justify-content: flex-start;
-    padding: 1.5rem 1rem;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
+    justify-content: ${({ theme }) => theme.cssValues.justifyContent.flexStart};
+    padding: ${({ theme }) => theme.spacing.comfortable} ${({ theme }) => theme.spacing.standard};
+    scroll-snap-type: ${({ theme }) => theme.cssValues.scrollSnap.xMandatory};
+    -webkit-overflow-scrolling: ${({ theme }) => theme.cssValues.overflowScrolling.touch};
+    scrollbar-width: ${({ theme }) => theme.cssValues.scrollbarWidth.none};
 
     &::-webkit-scrollbar {
-      display: none;
+      display: ${({ theme }) => theme.cssValues.display.none};
     }
   }
 `;
 
 export const ProjectImage = styled.img<{ $isSingle: boolean }>`
-  max-width: ${({ $isSingle }) => ($isSingle ? '100%' : '400px')};
-  border-radius: 8px;
-  object-fit: contain;
-  cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
-  user-select: none;
+  max-width: ${({ $isSingle, theme }) =>
+    $isSingle ? theme.cssValues.width.full : theme.sizes.projectImageMultiMax};
+  border-radius: ${({ theme }) => theme.borderRadius.button};
+  object-fit: ${({ theme }) => theme.cssValues.objectFit.contain};
+  cursor: ${({ theme }) => theme.cssValues.cursor.pointer};
+  -webkit-tap-highlight-color: ${({ theme }) => theme.cssValues.color.transparent};
+  user-select: ${({ theme }) => theme.cssValues.userSelect.none};
   transition:
-    transform 0.3s ease,
-    opacity 0.3s ease;
+    ${({ theme }) => theme.transitions.hoverTransform},
+    ${({ theme }) => theme.transitions.hoverOpacity};
 
   @media (hover: hover) {
     &:hover {
-      transform: scale(1.05);
-      opacity: 0.9;
+      transform: ${({ theme }) => theme.transforms.hoverScale};
+      opacity: ${({ theme }) => theme.cssValues.opacity.imageHover};
     }
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
-    max-width: 80vw;
-    max-height: 250px;
+    max-width: ${({ theme }) => theme.sizes.projectImageTabletMax};
+    max-height: ${({ theme }) => theme.sizes.projectImageTabletHeight};
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    max-width: 85vw;
-    max-height: 200px;
+    max-width: ${({ theme }) => theme.sizes.projectImageMobileMax};
+    max-height: ${({ theme }) => theme.sizes.projectImageMobileHeight};
   }
 `;
 
 export const ProjectContent = styled.div`
-  padding: 2rem;
+  padding: ${({ theme }) => theme.spacing.relaxed};
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    padding: 1.25rem;
+    padding: ${({ theme }) => theme.spacing.comfortable};
   }
 `;
 
 export const ProjectTitle = styled.h3`
-  font-size: 2rem;
-  font-weight: 700;
-  margin-bottom: 0.5rem;
+  font-size: ${({ theme }) => theme.text.fontSize.pageHeading};
+  font-weight: ${({ theme }) => theme.text.fontWeight.bold};
+  margin-bottom: ${({ theme }) => theme.spacing.compact};
   color: ${({ theme }) => theme.colors.accentHighlight};
 
   @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
-    font-size: 1.5rem;
+    font-size: ${({ theme }) => theme.text.fontSize.subheading};
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    font-size: 1.35rem;
+    font-size: ${({ theme }) => theme.text.fontSize.cardTitle};
   }
 `;
 
 export const ProjectRole = styled.p`
-  font-size: 1.125rem;
+  font-size: ${({ theme }) => theme.text.fontSize.bodyLarge};
   color: ${({ theme }) => theme.colors.textMuted};
-  margin-bottom: 1rem;
-  font-style: italic;
+  margin-bottom: ${({ theme }) => theme.spacing.standard};
+  font-style: ${({ theme }) => theme.cssValues.fontStyle.italic};
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    font-size: 1rem;
+    font-size: ${({ theme }) => theme.text.fontSize.bodyMedium};
   }
 `;
 
 export const ProjectDescription = styled.p`
-  font-size: 1.125rem;
-  line-height: 1.8;
-  margin-bottom: 1.5rem;
+  font-size: ${({ theme }) => theme.text.fontSize.bodyLarge};
+  line-height: ${({ theme }) => theme.text.lineHeight.relaxed};
+  margin-bottom: ${({ theme }) => theme.spacing.comfortable};
   color: ${({ theme }) => theme.colors.textMuted};
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    font-size: 0.9rem;
-    line-height: 1.7;
+    font-size: ${({ theme }) => theme.text.fontSize.bodySmall};
+    line-height: ${({ theme }) => theme.text.lineHeight.normal};
   }
 `;
 
 export const ProjectHighlights = styled.ul`
-  list-style: none;
-  margin-bottom: 1.5rem;
+  list-style: ${({ theme }) => theme.cssValues.listStyle.none};
+  margin-bottom: ${({ theme }) => theme.spacing.comfortable};
 `;
 
 export const HighlightItem = styled.li`
-  display: flex;
-  margin-bottom: 0.75rem;
-  line-height: 1.6;
+  display: ${({ theme }) => theme.cssValues.display.flex};
+  margin-bottom: ${({ theme }) => theme.spacing.tight};
+  line-height: ${({ theme }) => theme.text.lineHeight.tight};
   color: ${({ theme }) => theme.colors.textDefault};
 
   &::before {
-    content: '▹';
-    margin-right: 0.5rem;
-    margin-top: -0.35rem;
+    content: ${({ theme }) => theme.cssValues.content.bullet};
+    margin-right: ${({ theme }) => theme.spacing.compact};
+    margin-top: ${({ theme }) => theme.spacing.negativeListMarkerOffset};
     color: ${({ theme }) => theme.colors.accentHighlight};
-    font-size: 1.25rem;
-    line-height: 1.6;
+    font-size: ${({ theme }) => theme.text.fontSize.leadText};
+    line-height: ${({ theme }) => theme.text.lineHeight.tight};
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    font-size: 0.9rem;
+    font-size: ${({ theme }) => theme.text.fontSize.bodySmall};
   }
 `;
 
 export const ProjectTags = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
+  display: ${({ theme }) => theme.cssValues.display.flex};
+  flex-wrap: ${({ theme }) => theme.cssValues.flexWrap.wrap};
+  gap: ${({ theme }) => theme.spacing.tight};
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    gap: 0.5rem;
+    gap: ${({ theme }) => theme.spacing.compact};
   }
 `;
 
 export const ProjectTag = styled.span`
   background: ${({ theme }) => theme.colors.cardBackground};
   color: ${({ theme }) => theme.colors.accentHighlight};
-  padding: 0.5rem 1rem;
-  border-radius: 20px;
-  font-size: 0.875rem;
-  border: 1px solid ${({ theme }) => theme.colors.border};
-  transition: all 0.3s ease;
+  padding: ${({ theme }) => theme.spacing.compact} ${({ theme }) => theme.spacing.standard};
+  border-radius: ${({ theme }) => theme.borderRadius.pill};
+  font-size: ${({ theme }) => theme.text.fontSize.caption};
+  border: ${({ theme }) => theme.borders.thin};
+  transition: ${({ theme }) => theme.transitions.hoverAll};
 
   &:hover {
     border-color: ${({ theme }) => theme.colors.accentHighlight};
@@ -164,7 +166,7 @@ export const ProjectTag = styled.span`
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    font-size: 0.8rem;
-    padding: 0.375rem 0.75rem;
+    font-size: ${({ theme }) => theme.text.fontSize.tag};
+    padding: ${({ theme }) => theme.spacing.micro} ${({ theme }) => theme.spacing.tight};
   }
 `;
