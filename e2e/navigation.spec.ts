@@ -21,16 +21,10 @@ test.describe('Navigation bar', () => {
     const nav = page.getByRole(AriaRole.Navigation, {
       name: defaultLocale.navigation.ariaLabels.nav,
     });
-    await page.evaluate(({ x, y }) => window.scrollTo(x, y), {
-      x: E2E_SCROLL.X,
-      y: E2E_SCROLL.DOWN_Y,
-    });
+    await page.mouse.wheel(E2E_SCROLL.X, E2E_SCROLL.DOWN_Y);
     await page.waitForFunction((minY: number) => window.scrollY >= minY, E2E_SCROLL.TOP_THRESHOLD);
     await expect(nav).not.toBeInViewport();
-    await page.evaluate(({ x, y }) => window.scrollTo(x, y), {
-      x: E2E_SCROLL.X,
-      y: E2E_SCROLL.MID_Y,
-    });
+    await page.mouse.wheel(E2E_SCROLL.X, -(E2E_SCROLL.DOWN_Y - E2E_SCROLL.MID_Y));
     await page.waitForFunction((maxY: number) => window.scrollY <= maxY, E2E_SCROLL.MID_Y);
     await expect(nav).toBeInViewport();
   });
