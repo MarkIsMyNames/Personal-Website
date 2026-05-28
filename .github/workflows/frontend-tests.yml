@@ -1,17 +1,7 @@
 name: Frontend Tests
 
 on:
-  pull_request:
-    branches:
-      - main
-    paths:
-      - 'src/**'
-      - 'public/**'
-      - 'package.json'
-      - 'package-lock.json'
-      - 'tsconfig.json'
-      - 'vite.config.ts'
-      - '.github/workflows/frontend-tests.yml'
+  push:
 
 jobs:
   test:

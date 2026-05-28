@@ -8,6 +8,7 @@ import {
   REGEX_FLAG_CASE_INSENSITIVE,
   E2E_DEFAULT_LANG_PATH,
   E2E_SECTION_CONTACT,
+  E2E_SECTION_ABOUT,
 } from '../src/config';
 import { AriaRole } from '../src/types';
 import { defaultLocale } from '../src/i18n/localeConfig';
@@ -21,16 +22,12 @@ test.describe('Navigation bar', () => {
     const nav = page.getByRole(AriaRole.Navigation, {
       name: defaultLocale.navigation.ariaLabels.nav,
     });
-    await page.evaluate(({ x, y }) => window.scrollTo(x, y), {
-      x: E2E_SCROLL.X,
-      y: E2E_SCROLL.DOWN_Y,
-    });
+    // scrollIntoViewIfNeeded works on all platforms including mobile WebKit
+    // (window.scrollTo and mouse.wheel are not supported on mobile Safari)
+    await page.locator(E2E_SECTION_CONTACT).scrollIntoViewIfNeeded();
     await page.waitForFunction((minY: number) => window.scrollY >= minY, E2E_SCROLL.TOP_THRESHOLD);
     await expect(nav).not.toBeInViewport();
-    await page.evaluate(({ x, y }) => window.scrollTo(x, y), {
-      x: E2E_SCROLL.X,
-      y: E2E_SCROLL.MID_Y,
-    });
+    await page.locator(E2E_SECTION_ABOUT).scrollIntoViewIfNeeded();
     await page.waitForFunction((maxY: number) => window.scrollY <= maxY, E2E_SCROLL.MID_Y);
     await expect(nav).toBeInViewport();
   });

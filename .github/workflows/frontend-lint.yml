@@ -1,17 +1,7 @@
 name: Frontend Linting
 
 on:
-  pull_request:
-    branches:
-      - main
-    paths:
-      - 'src/**'
-      - 'e2e/**'
-      - 'eslint.config.mjs'
-      - 'package.json'
-      - 'package-lock.json'
-      - 'tsconfig.json'
-      - '.github/workflows/frontend-lint.yml'
+  push:
 
 jobs:
   lint:

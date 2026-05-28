@@ -1,14 +1,7 @@
 name: Accessibility Tests
 
 on:
-  pull_request:
-    branches:
-      - main
-    paths:
-      - 'src/**'
-      - '.storybook/**'
-      - 'package.json'
-      - 'package-lock.json'
+  push:
 
 jobs:
   accessibility-tests:

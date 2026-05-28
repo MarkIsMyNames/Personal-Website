@@ -1,15 +1,7 @@
 name: Frontend Formatting
 
 on:
-  pull_request:
-    branches:
-      - main
-    paths:
-      - 'src/**'
-      - '.prettierrc'
-      - 'package.json'
-      - 'package-lock.json'
-      - '.github/workflows/frontend-format.yml'
+  push:
 
 jobs:
   format:
