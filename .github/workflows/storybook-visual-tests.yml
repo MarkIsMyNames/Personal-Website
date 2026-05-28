@@ -1,16 +1,7 @@
 name: Storybook Visual Tests
 
 on:
-  pull_request:
-    branches:
-      - main
-    paths:
-      - 'src/**'
-      - '.storybook/**'
-      - 'storybook-tests/**'
-      - 'public/**'
-      - 'package.json'
-      - 'package-lock.json'
+  push:
 
 jobs:
   storybook-visual-tests:

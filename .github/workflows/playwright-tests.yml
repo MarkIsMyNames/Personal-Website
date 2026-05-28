@@ -1,18 +1,7 @@
 name: Playwright Tests
 
 on:
-  pull_request:
-    branches:
-      - main
-    paths:
-      - 'src/**'
-      - 'public/**'
-      - 'e2e/**'
-      - 'playwright.config.ts'
-      - 'package.json'
-      - 'package-lock.json'
-      - 'vite.config.ts'
-      - '.github/workflows/playwright-tests.yml'
+  push:
 
 jobs:
   playwright:
