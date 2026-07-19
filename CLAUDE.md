@@ -151,11 +151,9 @@ Personal-Website/
 │   ├── manifest.json                  # Auto-generated (do NOT edit manually)
 │   └── robots.txt
 │
-└── .github/workflows/                 # PR checks (all required for merge)
-    ├── frontend-tests.yml             # npm test
-    ├── frontend-lint.yml              # npm run lint
-    ├── frontend-format.yml            # npm run format:check
-    └── frontend-build.yml             # npm run build
+└── .github/workflows/                 # CI checks (required for merge)
+    ├── ci.yml                         # test, lint, format, build, audit (matrix) + a11y, e2e, visual tests
+    └── storybook-visual-update.yml    # Regenerates visual baselines, commits to main
 ```
 
 ---
@@ -535,6 +533,6 @@ Each component that has visual or interactive behaviour should have a `Component
 1. `build`: `tsc` (type checking) then `vite build` (bundling to `build/` with sourcemaps)
 2. `vite-plugin-html` injects `profile.name` and `profile.bio` into HTML meta tags (reads directly from `en.json` at build time)
 
-**CI/CD:** Four GitHub Actions workflows run on PRs to `main` (Node.js 20, ubuntu-latest). They only trigger when relevant files change (src/, public/, package.json, config files).
+**CI/CD:** A single GitHub Actions workflow (`ci.yml`, Node.js 22, ubuntu-latest) runs on every push: a matrix job covering test/lint/format/build/audit, plus accessibility, Playwright e2e, and Storybook visual test jobs. `storybook-visual-update.yml` separately regenerates visual baselines on pushes to `main`.
 
 **Deployment:** Vercel auto-deploys on push to `main`. No manual deployment needed.

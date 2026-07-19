@@ -45,6 +45,9 @@ export default defineConfig({
       },
       {
         plugins: [react(), storybookTest()],
+        optimizeDeps: {
+          include: ['aria-query', 'lz-string', '@testing-library/dom'],
+        },
         test: {
           name: 'accessibility-tests',
           browser: {
