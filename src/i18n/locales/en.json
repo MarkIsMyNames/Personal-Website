@@ -62,7 +62,7 @@
   "profile": {
     "name": "Mark Drohan",
     "title": "Software Engineer",
-    "bio": "Immersive Software Engineering student at the University of Limerick, graduating in 2027. Interested in mathematics, AI, and algorithm design. Outside of coding, I like playing chess, hurling and archery.",
+    "bio": "Immersive Software Engineering student at the University of Limerick, graduating in 2027. Interested in mathematics, AI, and algorithm design. Outside of coding, I like playing chess, poker and archery.",
     "image": "PersonalProfile.jpg",
     "email": "MarkDrohan@protonmail.com",
     "github": "MarkIsMyNames",
@@ -86,10 +86,31 @@
     { "name": "Data Structures", "iconName": "AiOutlineDatabase" },
     { "name": "Algorithmic Design", "iconName": "FaProjectDiagram" },
     { "name": "Mobile Development", "iconName": "FaMobileAlt" },
+    { "name": "Machine Learning", "iconName": "FaBrain" },
+    { "name": "Quantitative Finance", "iconName": "FaChartLine" },
     { "name": "MCP Servers", "iconName": "FaServer" },
     { "name": "Linux", "iconName": "FaLinux" }
   ],
   "projectsData": [
+    {
+      "title": "Susquehanna",
+      "role": "Software Intern",
+      "description": "Software intern at Susquehanna International Group, a quantitative trading firm. Developed software that supports traders, and took part in an internal hackathon building tools to forecast future stock prices.",
+      "highlights": [
+        "Built and maintained systems supporting quantitative trading in C#, C++, and Python",
+        "Applied machine learning during a company hackathon to forecast stock price movements"
+      ],
+      "tags": [
+        "Python",
+        "C#",
+        "C++",
+        "AI/ML",
+        "Machine Learning",
+        "Quantitative Finance",
+        "FinTech"
+      ],
+      "images": ["Susquehanna.png"]
+    },
     {
       "title": "Intercom",
       "role": "Software Engineer - Messenger Team",

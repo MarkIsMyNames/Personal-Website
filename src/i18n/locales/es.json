@@ -62,7 +62,7 @@
   "profile": {
     "name": "Mark Drohan",
     "title": "Ingeniero de Software",
-    "bio": "Estudiante de Ingeniería de Software Inmersiva en la Universidad de Limerick, graduándose en 2027. Interesado en matemáticas, IA y diseño de algoritmos. Fuera de la programación, me gusta jugar al ajedrez, al hurling y al tiro con arco.",
+    "bio": "Estudiante de Ingeniería de Software Inmersiva en la Universidad de Limerick, graduándose en 2027. Interesado en matemáticas, IA y diseño de algoritmos. Fuera de la programación, me gusta jugar al ajedrez, al póker y al tiro con arco.",
     "image": "PersonalProfile.jpg",
     "email": "MarkDrohan@protonmail.com",
     "github": "MarkIsMyNames",
@@ -70,26 +70,107 @@
     "graduationYear": 2027
   },
   "skillsData": [
-    { "name": "Java", "iconName": "FaJava" },
-    { "name": "Kotlin", "iconName": "SiKotlin" },
-    { "name": "JavaScript", "iconName": "IoLogoJavascript" },
-    { "name": "TypeScript", "iconName": "SiTypescript" },
-    { "name": "Python", "iconName": "FaPython" },
-    { "name": "C/C++", "iconName": "SiCplusplus" },
-    { "name": "Ruby", "iconName": "DiRuby" },
-    { "name": "SQL", "iconName": "FaDatabase" },
-    { "name": "React", "iconName": "FaReact" },
-    { "name": "Ember", "iconName": "SiEmberdotjs" },
-    { "name": "Flask", "iconName": "SiFlask" },
-    { "name": "Rails", "iconName": "SiRubyonrails" },
-    { "name": "Programación Orientada a Objetos", "iconName": "BiCodeBlock" },
-    { "name": "Estructuras de Datos", "iconName": "AiOutlineDatabase" },
-    { "name": "Diseño Algorítmico", "iconName": "FaProjectDiagram" },
-    { "name": "Desarrollo Móvil", "iconName": "FaMobileAlt" },
-    { "name": "Servidores MCP", "iconName": "FaServer" },
-    { "name": "Linux", "iconName": "FaLinux" }
+    {
+      "name": "Java",
+      "iconName": "FaJava"
+    },
+    {
+      "name": "Kotlin",
+      "iconName": "SiKotlin"
+    },
+    {
+      "name": "JavaScript",
+      "iconName": "IoLogoJavascript"
+    },
+    {
+      "name": "TypeScript",
+      "iconName": "SiTypescript"
+    },
+    {
+      "name": "Python",
+      "iconName": "FaPython"
+    },
+    {
+      "name": "C/C++",
+      "iconName": "SiCplusplus"
+    },
+    {
+      "name": "Ruby",
+      "iconName": "DiRuby"
+    },
+    {
+      "name": "SQL",
+      "iconName": "FaDatabase"
+    },
+    {
+      "name": "React",
+      "iconName": "FaReact"
+    },
+    {
+      "name": "Ember",
+      "iconName": "SiEmberdotjs"
+    },
+    {
+      "name": "Flask",
+      "iconName": "SiFlask"
+    },
+    {
+      "name": "Rails",
+      "iconName": "SiRubyonrails"
+    },
+    {
+      "name": "Programación Orientada a Objetos",
+      "iconName": "BiCodeBlock"
+    },
+    {
+      "name": "Estructuras de Datos",
+      "iconName": "AiOutlineDatabase"
+    },
+    {
+      "name": "Diseño Algorítmico",
+      "iconName": "FaProjectDiagram"
+    },
+    {
+      "name": "Desarrollo Móvil",
+      "iconName": "FaMobileAlt"
+    },
+    {
+      "name": "Aprendizaje automático",
+      "iconName": "FaBrain"
+    },
+    {
+      "name": "Finanzas cuantitativas",
+      "iconName": "FaChartLine"
+    },
+    {
+      "name": "Servidores MCP",
+      "iconName": "FaServer"
+    },
+    {
+      "name": "Linux",
+      "iconName": "FaLinux"
+    }
   ],
   "projectsData": [
+    {
+      "title": "Susquehanna",
+      "role": "Becario de software",
+      "description": "Becario de software en Susquehanna International Group, una firma de trading cuantitativo. Desarrolló software de apoyo a los traders y participó en un hackathon interno creando herramientas para pronosticar los precios futuros de las acciones.",
+      "highlights": [
+        "Construyó y mantuvo sistemas de apoyo al trading cuantitativo en C#, C++ y Python",
+        "Aplicó aprendizaje automático en un hackathon de la empresa para pronosticar los movimientos de los precios bursátiles"
+      ],
+      "tags": [
+        "Python",
+        "C#",
+        "C++",
+        "IA/ML",
+        "Aprendizaje Automático",
+        "Finanzas Cuantitativas",
+        "FinTech"
+      ],
+      "images": ["Susquehanna.png"]
+    },
     {
       "title": "Intercom",
       "role": "Ingeniero de Software – Equipo Messenger",

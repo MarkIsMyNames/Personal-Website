@@ -9,6 +9,8 @@ import {
   FaDatabase,
   FaMobileAlt,
   FaProjectDiagram,
+  FaBrain,
+  FaChartLine,
 } from 'react-icons/fa';
 import { ErrorMessage } from '../types';
 import { DiRuby } from 'react-icons/di';
@@ -46,6 +48,8 @@ export const iconMap: Record<string, IconType> = {
   SiKotlin,
   SiFlask,
   SiRubyonrails,
+  FaBrain,
+  FaChartLine,
 };
 
 type IconProps = {

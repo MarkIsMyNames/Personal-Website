@@ -62,7 +62,7 @@
   "profile": {
     "name": "Mark Drohan",
     "title": "Innealtóir Bogearraí",
-    "bio": "Mac léinn Innealtóireachta Bogearraí Tumtha in Ollscoil Luimnigh, ag céimniú in 2027. Spéis agam i matamaitic, AI, agus dearadh algartam. Lasmuigh den chódú, is maith liom ficheall, iománaíocht agus boghdóireacht a imirt.",
+    "bio": "Mac léinn Innealtóireachta Bogearraí Tumtha in Ollscoil Luimnigh, ag céimniú in 2027. Spéis agam i matamaitic, AI, agus dearadh algartam. Lasmuigh den chódú, is maith liom ficheall, pócar agus boghdóireacht a imirt.",
     "image": "PersonalProfile.jpg",
     "email": "MarkDrohan@protonmail.com",
     "github": "MarkIsMyNames",
@@ -70,26 +70,107 @@
     "graduationYear": 2027
   },
   "skillsData": [
-    { "name": "Java", "iconName": "FaJava" },
-    { "name": "Kotlin", "iconName": "SiKotlin" },
-    { "name": "JavaScript", "iconName": "IoLogoJavascript" },
-    { "name": "TypeScript", "iconName": "SiTypescript" },
-    { "name": "Python", "iconName": "FaPython" },
-    { "name": "C/C++", "iconName": "SiCplusplus" },
-    { "name": "Ruby", "iconName": "DiRuby" },
-    { "name": "SQL", "iconName": "FaDatabase" },
-    { "name": "React", "iconName": "FaReact" },
-    { "name": "Ember", "iconName": "SiEmberdotjs" },
-    { "name": "Flask", "iconName": "SiFlask" },
-    { "name": "Rails", "iconName": "SiRubyonrails" },
-    { "name": "Ríomhchlárú Réad-Dhírithe", "iconName": "BiCodeBlock" },
-    { "name": "Struchtúir Sonraí", "iconName": "AiOutlineDatabase" },
-    { "name": "Dearadh Algartam", "iconName": "FaProjectDiagram" },
-    { "name": "Forbairt Mhóibíleach", "iconName": "FaMobileAlt" },
-    { "name": "Freastalaithe MCP", "iconName": "FaServer" },
-    { "name": "Linux", "iconName": "FaLinux" }
+    {
+      "name": "Java",
+      "iconName": "FaJava"
+    },
+    {
+      "name": "Kotlin",
+      "iconName": "SiKotlin"
+    },
+    {
+      "name": "JavaScript",
+      "iconName": "IoLogoJavascript"
+    },
+    {
+      "name": "TypeScript",
+      "iconName": "SiTypescript"
+    },
+    {
+      "name": "Python",
+      "iconName": "FaPython"
+    },
+    {
+      "name": "C/C++",
+      "iconName": "SiCplusplus"
+    },
+    {
+      "name": "Ruby",
+      "iconName": "DiRuby"
+    },
+    {
+      "name": "SQL",
+      "iconName": "FaDatabase"
+    },
+    {
+      "name": "React",
+      "iconName": "FaReact"
+    },
+    {
+      "name": "Ember",
+      "iconName": "SiEmberdotjs"
+    },
+    {
+      "name": "Flask",
+      "iconName": "SiFlask"
+    },
+    {
+      "name": "Rails",
+      "iconName": "SiRubyonrails"
+    },
+    {
+      "name": "Ríomhchlárú Réad-Dhírithe",
+      "iconName": "BiCodeBlock"
+    },
+    {
+      "name": "Struchtúir Sonraí",
+      "iconName": "AiOutlineDatabase"
+    },
+    {
+      "name": "Dearadh Algartam",
+      "iconName": "FaProjectDiagram"
+    },
+    {
+      "name": "Forbairt Mhóibíleach",
+      "iconName": "FaMobileAlt"
+    },
+    {
+      "name": "Meaisínfhoghlaim",
+      "iconName": "FaBrain"
+    },
+    {
+      "name": "Airgeadas Cainníochtúil",
+      "iconName": "FaChartLine"
+    },
+    {
+      "name": "Freastalaithe MCP",
+      "iconName": "FaServer"
+    },
+    {
+      "name": "Linux",
+      "iconName": "FaLinux"
+    }
   ],
   "projectsData": [
+    {
+      "title": "Susquehanna",
+      "role": "Intéirneach Bogearraí",
+      "description": "Intéirneach bogearraí ag Susquehanna International Group, gnólacht trádála cainníochtúla. D'fhorbair bogearraí a thacaíonn le trádálaithe, agus ghlac páirt i hacatón inmheánach ag tógáil uirlisí chun praghsanna stoc amach anseo a thuar.",
+      "highlights": [
+        "Thóg agus chothabháil córais a thacaíonn le trádáil chainníochtúil in C#, C++ agus Python",
+        "Chuir meaisínfhoghlaim i bhfeidhm le linn hacatón comhlachta chun gluaiseachtaí praghsanna stoc a thuar"
+      ],
+      "tags": [
+        "Python",
+        "C#",
+        "C++",
+        "AI/ML",
+        "Meaisínfhoghlaim",
+        "Airgeadas Cainníochtúil",
+        "FinTech"
+      ],
+      "images": ["Susquehanna.png"]
+    },
     {
       "title": "Intercom",
       "role": "Innealtóir Bogearraí – Foireann Messenger",
