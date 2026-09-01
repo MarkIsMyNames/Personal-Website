@@ -72,5 +72,10 @@
     "vite": "^8.0.0",
     "vite-plugin-html": "^3.2.2",
     "vitest": "^4.1.10"
+  },
+  "overrides": {
+    "eslint-plugin-react": {
+      "eslint": "$eslint"
+    }
   }
 }
