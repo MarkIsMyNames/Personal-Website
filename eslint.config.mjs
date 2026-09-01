@@ -46,11 +46,9 @@ export default [
     },
     plugins: {
       react: fixupPluginRules(reactPlugin),
-      // Expose only meta+rules — configs.recommended.plugins is string[] (legacy) which
-      // conflicts with the Plugin type expected by ESLint flat config
-      'react-hooks': { meta: reactHooksPlugin.meta, rules: reactHooksPlugin.rules },
+      'react-hooks': reactHooksPlugin,
       prettier: prettierPlugin,
-      i18next: fixupPluginRules(i18nextPlugin),
+      i18next: i18nextPlugin,
     },
     settings: {
       react: { version: 'detect' },
