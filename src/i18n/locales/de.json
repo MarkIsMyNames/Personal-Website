@@ -154,16 +154,18 @@
   "projectsData": [
     {
       "title": "Susquehanna",
-      "role": "Software-Praktikant",
-      "description": "Software-Praktikant bei der Susquehanna International Group, einem quantitativen Handelsunternehmen. Entwickelte Software zur Unterstützung von Tradern und nahm an einem internen Hackathon teil, bei dem Tools zur Prognose zukünftiger Aktienkurse entstanden.",
+      "role": "Praktikant Softwareentwicklung",
+      "description": "Absolvierte ein Praktikum bei der Susquehanna International Group, einem global tätigen quantitativen Handelsunternehmen. Arbeitete über den gesamten Handels-Stack hinweg in C++, C# und Python, von der Börsenanbindung im Produktivbetrieb über interne Testwerkzeuge bis hin zum maschinellen Lernen.",
       "highlights": [
-        "Entwickelte und wartete Systeme zur Unterstützung des quantitativen Handels in C#, C++ und Python",
-        "Wandte bei einem Firmen-Hackathon maschinelles Lernen an, um Aktienkursbewegungen zu prognostizieren"
+        "Entwickelte latenzarme Komponenten mit hohem Durchsatz für die Datenübertragung zwischen internen Systemen und Börsen und brachte sie in Produktion",
+        "Entwickelte eine Testbörse mit Unterstützung mehrerer Matching-Engines und Verbindungsprotokolle, die die Validierung von Handelsstrategien und der Kommunikation zwischen Systemen vor dem Deployment ermöglicht",
+        "Konzipierte bei einem internen Hackathon ein ML-basiertes Marktanalysesystem zur Schätzung der Wahrscheinlichkeit von Aktienkursbewegungen"
       ],
       "tags": [
         "Python",
         "C#",
         "C++",
+        "Niedrige Latenz",
         "KI/ML",
         "Maschinelles Lernen",
         "Quantitative Finanzen",

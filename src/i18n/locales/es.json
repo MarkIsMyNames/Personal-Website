@@ -154,16 +154,18 @@
   "projectsData": [
     {
       "title": "Susquehanna",
-      "role": "Becario de software",
-      "description": "Becario de software en Susquehanna International Group, una firma de trading cuantitativo. Desarrolló software de apoyo a los traders y participó en un hackathon interno creando herramientas para pronosticar los precios futuros de las acciones.",
+      "role": "Becario de ingeniería de software",
+      "description": "Realizó unas prácticas en Susquehanna International Group, una firma global de trading cuantitativo. Trabajó en toda la pila de trading en C++, C# y Python, desde la conectividad con los mercados en producción hasta las herramientas de prueba internas y el aprendizaje automático.",
       "highlights": [
-        "Construyó y mantuvo sistemas de apoyo al trading cuantitativo en C#, C++ y Python",
-        "Aplicó aprendizaje automático en un hackathon de la empresa para pronosticar los movimientos de los precios bursátiles"
+        "Diseñó componentes de baja latencia y alto rendimiento para transportar datos entre sistemas internos y mercados, desplegándolos en producción",
+        "Desarrolló un mercado de pruebas compatible con múltiples motores de emparejamiento y protocolos de conexión, permitiendo validar estrategias de trading y la comunicación entre sistemas antes del despliegue",
+        "Durante un hackathon interno, diseñó un sistema de análisis de mercado basado en aprendizaje automático para estimar la probabilidad de movimiento de los precios bursátiles"
       ],
       "tags": [
         "Python",
         "C#",
         "C++",
+        "Baja Latencia",
         "IA/ML",
         "Aprendizaje Automático",
         "Finanzas Cuantitativas",
