@@ -143,7 +143,6 @@ export const theme = {
     fallback: 'Arial, sans-serif',
   },
   animations: {
-    duration: '0.3s',
     scaleFrom: '0.8',
     zoomIn: 'zoomIn 0.3s ease',
   },

@@ -62,7 +62,7 @@ export const CloseButton = styled.button`
   }
 `;
 
-export const NavigationButton = styled.button`
+const NavigationButton = styled.button`
   position: ${({ theme }) => theme.cssValues.position.absolute};
   top: ${({ theme }) => theme.cssValues.inset.half};
   transform: ${({ theme }) => theme.transforms.centerVertical};
