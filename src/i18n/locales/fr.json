@@ -154,16 +154,18 @@
   "projectsData": [
     {
       "title": "Susquehanna",
-      "role": "Stagiaire en développement logiciel",
-      "description": "Stagiaire en développement logiciel chez Susquehanna International Group, une société de trading quantitatif. A développé des logiciels au service des traders et a participé à un hackathon interne en créant des outils pour prévoir les cours futurs des actions.",
+      "role": "Stagiaire en ingénierie logicielle",
+      "description": "A effectué un stage chez Susquehanna International Group, une société internationale de trading quantitatif. A travaillé sur l'ensemble de la chaîne de trading en C++, C# et Python, de la connectivité aux places de marché en production aux outils de test internes et à l'apprentissage automatique.",
       "highlights": [
-        "A construit et maintenu des systèmes au service du trading quantitatif en C#, C++ et Python",
-        "A appliqué l'apprentissage automatique lors d'un hackathon d'entreprise pour prévoir l'évolution des cours boursiers"
+        "A conçu des composants à faible latence et à haut débit pour le transport de données entre les systèmes internes et les places de marché, en les déployant en production",
+        "A développé une place de marché de test prenant en charge plusieurs moteurs d'appariement et protocoles de connexion, permettant de valider les stratégies de trading et les communications entre systèmes avant le déploiement",
+        "Lors d'un hackathon interne, a conçu un système d'analyse de marché fondé sur l'apprentissage automatique pour estimer la probabilité de mouvement des cours boursiers"
       ],
       "tags": [
         "Python",
         "C#",
         "C++",
+        "Faible Latence",
         "IA/ML",
         "Apprentissage Automatique",
         "Finance Quantitative",

@@ -94,16 +94,18 @@
   "projectsData": [
     {
       "title": "Susquehanna",
-      "role": "Software Intern",
-      "description": "Software intern at Susquehanna International Group, a quantitative trading firm. Developed software that supports traders, and took part in an internal hackathon building tools to forecast future stock prices.",
+      "role": "Software Engineering Intern",
+      "description": "Interned at Susquehanna International Group, a global quantitative trading firm. Worked across the trading stack in C++, C#, and Python, spanning production exchange connectivity, internal testing tools, and machine learning.",
       "highlights": [
-        "Built and maintained systems supporting quantitative trading in C#, C++, and Python",
-        "Applied machine learning during a company hackathon to forecast stock price movements"
+        "Engineered low-latency, high-throughput components for transporting data between internal systems and exchanges, deploying them to production",
+        "Developed a test exchange supporting multiple matching engines and connection protocols, enabling validation of trading strategies and inter-system communication prior to deployment",
+        "During an internal hackathon, designed a ML-based market analysis system to estimate the likelihood of stock price movement"
       ],
       "tags": [
         "Python",
         "C#",
         "C++",
+        "Low Latency",
         "AI/ML",
         "Machine Learning",
         "Quantitative Finance",

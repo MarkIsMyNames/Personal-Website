@@ -154,16 +154,18 @@
   "projectsData": [
     {
       "title": "Susquehanna",
-      "role": "Intéirneach Bogearraí",
-      "description": "Intéirneach bogearraí ag Susquehanna International Group, gnólacht trádála cainníochtúla. D'fhorbair bogearraí a thacaíonn le trádálaithe, agus ghlac páirt i hacatón inmheánach ag tógáil uirlisí chun praghsanna stoc amach anseo a thuar.",
+      "role": "Intéirneach Innealtóireachta Bogearraí",
+      "description": "Rinne intéirneacht ag Susquehanna International Group, gnólacht domhanda trádála cainníochtúla. D'oibrigh ar fud an chruachta trádála in C++, C# agus Python, ó nascacht le malartáin sa táirgeadh go huirlisí tástála inmheánacha agus meaisínfhoghlaim.",
       "highlights": [
-        "Thóg agus chothabháil córais a thacaíonn le trádáil chainníochtúil in C#, C++ agus Python",
-        "Chuir meaisínfhoghlaim i bhfeidhm le linn hacatón comhlachta chun gluaiseachtaí praghsanna stoc a thuar"
+        "D'fhorbair comhpháirteanna ar aga folaigh íseal agus ardtréchur chun sonraí a iompar idir córais inmheánacha agus malartáin, á n-imscaradh sa táirgeadh",
+        "D'fhorbair malartán tástála a thacaíonn le hinnill mheaitseála agus prótacail cheangail éagsúla, rud a chuireann ar chumas straitéisí trádála agus cumarsáid idir córais a bhailíochtú roimh imscaradh",
+        "Le linn hacatóin inmheánaigh, dhear córas anailíse margaidh bunaithe ar mheaisínfhoghlaim chun an dóchúlacht go mbogfaidh praghsanna stoc a mheas"
       ],
       "tags": [
         "Python",
         "C#",
         "C++",
+        "Aga Folaigh Íseal",
         "AI/ML",
         "Meaisínfhoghlaim",
         "Airgeadas Cainníochtúil",
