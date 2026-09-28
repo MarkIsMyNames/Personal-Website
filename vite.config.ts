@@ -16,32 +16,17 @@ import {
   SITEMAP_PLUGIN_NAME,
   SITEMAP_XML_DECLARATION,
   SITEMAP_NAMESPACE,
-  XHTML_NAMESPACE,
   XMLNS_ATTR,
-  XMLNS_XHTML_ATTR,
-  NEWLINE,
 } from './src/config';
-import { FetchPriority, LinkRel, Hreflang } from './src/types';
+import { FetchPriority } from './src/types';
 import { DEFAULT_LANG, defaultLocale, SUPPORTED_LANGS } from './src/i18n/localeConfig';
 
-// Emits sitemap.xml listing every locale URL with hreflang alternates.
+// Emits sitemap.xml listing every locale URL. Hreflang alternates live in LocaleApp's <head>.
 function sitemapPlugin(): Plugin {
-  const localeUrl = (lang: string) => `${PRODUCTION_BASE_URL}${SLASH_PATH_SPLIT}${lang}`;
-  const alternate = (hreflang: string, href: string) =>
-    `<xhtml:link rel="${LinkRel.Alternate}" hreflang="${hreflang}" href="${href}"/>`;
-  const alternates = [
-    ...SUPPORTED_LANGS.map((lang) => alternate(lang, localeUrl(lang))),
-    alternate(Hreflang.XDefault, localeUrl(DEFAULT_LANG)),
-  ];
-  const urls = SUPPORTED_LANGS.map((lang) =>
-    [`<url>`, `<loc>${localeUrl(lang)}</loc>`, ...alternates, `</url>`].join(NEWLINE),
-  );
-  const source = [
-    SITEMAP_XML_DECLARATION,
-    `<urlset ${XMLNS_ATTR}="${SITEMAP_NAMESPACE}" ${XMLNS_XHTML_ATTR}="${XHTML_NAMESPACE}">`,
-    ...urls,
-    `</urlset>`,
-  ].join(NEWLINE);
+  const urls = SUPPORTED_LANGS.map(
+    (lang) => `<url><loc>${PRODUCTION_BASE_URL}${SLASH_PATH_SPLIT}${lang}</loc></url>`,
+  ).join('');
+  const source = `${SITEMAP_XML_DECLARATION}<urlset ${XMLNS_ATTR}="${SITEMAP_NAMESPACE}">${urls}</urlset>`;
   return {
     name: SITEMAP_PLUGIN_NAME,
     apply: 'build',
