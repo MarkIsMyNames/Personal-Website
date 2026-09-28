@@ -44,16 +44,16 @@ export const STAR_PATH = '*';
 // SEO / hreflang
 export const META_DESCRIPTION = 'description';
 
-// Sitemap
-export const SITEMAP_FILENAME = 'sitemap.xml';
-export const SITEMAP_PLUGIN_NAME = 'sitemap';
-export const SITEMAP_XML_DECLARATION = '<?xml version="1.0" encoding="UTF-8"?>';
-export const SITEMAP_NAMESPACE = 'http://www.sitemaps.org/schemas/sitemap/0.9';
-export const XMLNS_ATTR = 'xmlns';
-
 // HTML / DOM
 export const ROOT_ELEMENT_ID = 'root';
 export const CHARSET_UTF8 = 'utf-8';
+
+// Sitemap
+export const SITEMAP_FILENAME = 'sitemap.xml';
+export const SITEMAP_PLUGIN_NAME = 'sitemap';
+export const SITEMAP_XML_DECLARATION = `<?xml version="1.0" encoding="${CHARSET_UTF8}"?>`;
+export const SITEMAP_NAMESPACE = 'http://www.sitemaps.org/schemas/sitemap/0.9';
+export const XMLNS_ATTR = 'xmlns';
 
 // Static asset paths
 export const FAVICON_PATH = '/favicon.svg';
