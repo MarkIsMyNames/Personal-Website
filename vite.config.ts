@@ -17,6 +17,8 @@ import {
   SITEMAP_XML_DECLARATION,
   SITEMAP_NAMESPACE,
   XHTML_NAMESPACE,
+  XMLNS_ATTR,
+  XMLNS_XHTML_ATTR,
   NEWLINE,
 } from './src/config';
 import { FetchPriority, LinkRel, Hreflang } from './src/types';
@@ -36,7 +38,7 @@ function sitemapPlugin(): Plugin {
   );
   const source = [
     SITEMAP_XML_DECLARATION,
-    `<urlset xmlns="${SITEMAP_NAMESPACE}" xmlns:xhtml="${XHTML_NAMESPACE}">`,
+    `<urlset ${XMLNS_ATTR}="${SITEMAP_NAMESPACE}" ${XMLNS_XHTML_ATTR}="${XHTML_NAMESPACE}">`,
     ...urls,
     `</urlset>`,
   ].join(NEWLINE);
