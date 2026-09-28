@@ -2,8 +2,6 @@ import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { ThemeProvider } from 'styled-components';
-import { Analytics } from '@vercel/analytics/react';
-import { SpeedInsights } from '@vercel/speed-insights/react';
 import { useTranslation } from 'react-i18next';
 import i18n from '../../i18n/i18n';
 import { theme } from '../../styles/theme';
@@ -81,8 +79,6 @@ export function LocaleApp() {
         <div id={SectionId.Contact}>
           <Contact profile={profile} />
         </div>
-        <Analytics />
-        <SpeedInsights />
       </AppContainer>
     </ThemeProvider>
   );

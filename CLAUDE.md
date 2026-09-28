@@ -173,9 +173,7 @@ index.tsx (imports i18n first)
                                 ├── <div id="about">    → Bio(profile)
                                 ├── <div id="skills">   → Skills(skills)
                                 ├── <div id="projects"> → Projects(projects)
-                                ├── <div id="contact">  → Contact(profile)
-                                ├── <Analytics />
-                                └── <SpeedInsights />
+                                └── <div id="contact">  → Contact(profile)
 ```
 
 `LocaleApp.tsx` uses `useTranslation()` to fetch `profile`, `skills`, and `projects` from i18next via `t('profile', { returnObjects: true })` etc., passing them as props to components. Navigation fetches profile the same way independently.

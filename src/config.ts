@@ -48,6 +48,13 @@ export const META_DESCRIPTION = 'description';
 export const ROOT_ELEMENT_ID = 'root';
 export const CHARSET_UTF8 = 'utf-8';
 
+// Sitemap
+export const SITEMAP_FILENAME = 'sitemap.xml';
+export const SITEMAP_PLUGIN_NAME = 'sitemap';
+export const SITEMAP_XML_DECLARATION = `<?xml version="1.0" encoding="${CHARSET_UTF8}"?>`;
+export const SITEMAP_NAMESPACE = 'http://www.sitemaps.org/schemas/sitemap/0.9';
+export const XMLNS_ATTR = 'xmlns';
+
 // Static asset paths
 export const FAVICON_PATH = '/favicon.svg';
 export const ENTRY_POINT_PATH = '/src/index.tsx';
