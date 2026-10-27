@@ -8,6 +8,7 @@
     "ariaLabels": {
       "nav": "Navegación principal",
       "link": "Navegar a la sección {{section}}",
+      "brand": "{{name}}, navegar a la sección {{section}}",
       "profileImage": "Foto de perfil de {{name}}"
     },
     "sections": {
@@ -56,7 +57,7 @@
     "ariaLabels": {
       "list": "Información de contacto",
       "email": "Enviar correo a {{email}}",
-      "github": "Visitar perfil de GitHub de {{username}}"
+      "github": "Visitar el perfil de GitHub github.com/{{username}}"
     }
   },
   "profile": {

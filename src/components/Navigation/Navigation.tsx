@@ -70,7 +70,10 @@ export function Navigation() {
         <NavBrandContainer
           onClick={() => scrollTo()}
           role={AriaRole.Button}
-          aria-label={t('navigation.ariaLabels.link', { section: t('navigation.sections.about') })}
+          aria-label={t('navigation.ariaLabels.brand', {
+            name: profile.name,
+            section: t('navigation.sections.about'),
+          })}
         >
           <NavProfileImage
             src={profile.image}

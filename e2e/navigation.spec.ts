@@ -39,10 +39,9 @@ test.describe('Navigation bar', () => {
       x: E2E_SCROLL.X,
       y: E2E_SCROLL.DOWN_Y,
     });
-    const brandLabel = defaultLocale.navigation.ariaLabels.link.replace(
-      '{{section}}',
-      defaultLocale.navigation.sections.about,
-    );
+    const brandLabel = defaultLocale.navigation.ariaLabels.brand
+      .replace('{{name}}', defaultLocale.profile.name)
+      .replace('{{section}}', defaultLocale.navigation.sections.about);
     const brandBtn = page.getByRole(AriaRole.Button, {
       name: new RegExp(brandLabel, REGEX_FLAG_CASE_INSENSITIVE),
     });
