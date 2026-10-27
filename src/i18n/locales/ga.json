@@ -8,6 +8,7 @@
     "ariaLabels": {
       "nav": "Príomh-nascleanúint",
       "link": "Téigh go dtí alt {{section}}",
+      "brand": "{{name}}, téigh go dtí alt {{section}}",
       "profileImage": "Grianghraf próifíle {{name}}"
     },
     "sections": {
@@ -56,7 +57,7 @@
     "ariaLabels": {
       "list": "Faisnéis teagmhála",
       "email": "Seol ríomhphost chuig {{email}}",
-      "github": "Tabhair cuairt ar phróifíl GitHub {{username}}"
+      "github": "Tabhair cuairt ar phróifíl GitHub github.com/{{username}}"
     }
   },
   "profile": {

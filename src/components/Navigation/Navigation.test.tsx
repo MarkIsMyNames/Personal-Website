@@ -49,10 +49,9 @@ describe('Navigation Component', () => {
   it('renders brand button with correct aria-label and scrolls to top when clicked', () => {
     renderWithTheme(<Navigation />);
     const nameButton = screen.getByRole(AriaRole.Button, {
-      name: defaultLocale.navigation.ariaLabels.link.replace(
-        '{{section}}',
-        defaultLocale.navigation.sections.about,
-      ),
+      name: defaultLocale.navigation.ariaLabels.brand
+        .replace('{{name}}', defaultLocale.profile.name)
+        .replace('{{section}}', defaultLocale.navigation.sections.about),
     });
     expect(nameButton).toBeInTheDocument();
     fireEvent.click(nameButton);
