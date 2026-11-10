@@ -41,35 +41,40 @@ test.describe('Mobile layout', () => {
 
   test('project image gallery is horizontally scrollable', async ({ page }) => {
     await page.locator(E2E_SECTION_PROJECTS).scrollIntoViewIfNeeded();
-    const { initial, scrolled } = await page.evaluate(
-      ({
-        minCount,
-        imgSelector,
-        imgTag,
-        scrollPx,
-      }): { initial: number | null; scrolled: number | null } => {
-        const galleries = Array.from(document.querySelectorAll<HTMLImageElement>(imgSelector)).map(
-          (img) => img.parentElement,
+    // Images load lazily, so the gallery may not overflow yet; retry until it does.
+    await expect
+      .poll(async () => {
+        const { initial, scrolled } = await page.evaluate(
+          ({
+            minCount,
+            imgSelector,
+            imgTag,
+            scrollPx,
+          }): { initial: number | null; scrolled: number | null } => {
+            const galleries = Array.from(
+              document.querySelectorAll<HTMLImageElement>(imgSelector),
+            ).map((img) => img.parentElement);
+            const multiGallery = galleries.find(
+              (el): el is HTMLElement =>
+                el !== null && el.querySelectorAll(imgTag).length > minCount,
+            );
+            if (!multiGallery) {
+              return { initial: null, scrolled: null };
+            }
+            const initial = multiGallery.scrollLeft;
+            multiGallery.scrollLeft = scrollPx;
+            return { initial, scrolled: multiGallery.scrollLeft };
+          },
+          {
+            minCount: SINGLE_ITEM_COUNT,
+            imgSelector: E2E_PROJECTS_IMG_SELECTOR,
+            imgTag: HtmlTag.Img,
+            scrollPx: E2E_GALLERY_SCROLL.PX,
+          },
         );
-        const multiGallery = galleries.find(
-          (el): el is HTMLElement => el !== null && el.querySelectorAll(imgTag).length > minCount,
-        );
-        if (!multiGallery) {
-          return { initial: null, scrolled: null };
-        }
-        const initial = multiGallery.scrollLeft;
-        multiGallery.scrollLeft = scrollPx;
-        return { initial, scrolled: multiGallery.scrollLeft };
-      },
-      {
-        minCount: SINGLE_ITEM_COUNT,
-        imgSelector: E2E_PROJECTS_IMG_SELECTOR,
-        imgTag: HtmlTag.Img,
-        scrollPx: E2E_GALLERY_SCROLL.PX,
-      },
-    );
-    expect(initial).toBe(E2E_SCROLL.X);
-    expect(scrolled).toBeGreaterThan(E2E_SCROLL.X);
+        return initial === E2E_SCROLL.X && scrolled !== null && scrolled > E2E_SCROLL.X;
+      })
+      .toBe(true);
   });
 
   test('modal is usable on mobile', async ({ page }) => {
