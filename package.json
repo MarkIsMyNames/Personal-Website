@@ -72,6 +72,8 @@
   "overrides": {
     "eslint-plugin-react": {
       "eslint": "$eslint"
-    }
+    },
+    "minimatch": "^11.0.5",
+    "glob": "^14.0.4"
   }
 }
